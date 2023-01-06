@@ -16,6 +16,7 @@ export class UpdateUserInput extends PickType(PartialType(User), [
   'password',
   'isManager',
   'name',
+  'joinDate',
 ]) {
   @Field((type) => String, { nullable: true })
   @IsOptional()

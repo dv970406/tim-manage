@@ -1,13 +1,19 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Position } from 'src/position/entities/position.entity';
-import { Team } from 'src/team/entities/team.entity';
-import { User } from './entities/user.entity';
+import { CustomTypeOrmModule } from 'src/core/repository/custom-typeorm.module';
+import { PositionRepository } from 'src/position/position.repository';
+import { TeamRepository } from 'src/team/team.repository';
+import { UserRepository } from './user.repository';
 import { UserResolver } from './user.resolver';
 import { UserService } from './user.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Position, Team])],
+  imports: [
+    CustomTypeOrmModule.forCustomRepository([
+      UserRepository,
+      PositionRepository,
+      TeamRepository,
+    ]),
+  ],
   providers: [UserResolver, UserService],
   exports: [UserService],
 })

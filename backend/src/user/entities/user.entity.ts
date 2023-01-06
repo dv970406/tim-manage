@@ -22,6 +22,11 @@ import * as bcrypt from 'bcrypt';
 import { Vacation } from 'src/vacation/entities/vacation.entity';
 import { Position } from 'src/position/entities/position.entity';
 import { Team } from 'src/team/entities/team.entity';
+import { Post } from 'src/post/entities/post.entity';
+import { Like } from 'src/post/entities/like.entity';
+import { Comment } from 'src/post/entities/comment.entity';
+import { Answer } from 'src/survey/entities/answer.entity';
+import { Survey } from 'src/survey/entities/survey.entity';
 @InputType('UserInputType', { isAbstract: true })
 @Entity()
 @ObjectType()
@@ -45,6 +50,11 @@ export class User extends CoreEntity {
   @Field((type) => String)
   @IsString()
   name: string;
+
+  @Column({ nullable: true }) // 나중에 required로 가야됨
+  @Field((type) => Date)
+  @IsString()
+  joinDate: Date;
 
   @BeforeInsert()
   @BeforeUpdate()
@@ -81,4 +91,24 @@ export class User extends CoreEntity {
   @ManyToOne((type) => Team, (team) => team.users)
   @Field((type) => Team)
   team: Team;
+
+  @OneToMany((type) => Post, (post) => post.user)
+  @Field((type) => [Post])
+  posts: Post[];
+
+  @OneToMany((type) => Like, (like) => like.user)
+  @Field((type) => [Like])
+  likes: Like[];
+
+  @OneToMany((type) => Comment, (comment) => comment.user)
+  @Field((type) => [Comment])
+  comments: Comment[];
+
+  @OneToMany((type) => Survey, (survey) => survey.user)
+  @Field((type) => [Survey])
+  surveys: Survey[];
+
+  @OneToMany((type) => Answer, (answer) => answer.user)
+  @Field((type) => [Answer])
+  answers: Answer[];
 }

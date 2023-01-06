@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from 'src/jwt/jwt.service';
-import { Position } from 'src/position/entities/position.entity';
-import { Team } from 'src/team/entities/team.entity';
-import { Repository } from 'typeorm';
+import { PositionRepository } from 'src/position/position.repository';
+import { TeamRepository } from 'src/team/team.repository';
 import { CreateUserInput, CreateUserOutput } from './dtos/create-user.dto';
 import { DeleteUserInput, DeleteUserOutput } from './dtos/delete-user.dto';
 import { GetUserInput, GetUserOutput } from './dtos/get-user.dto';
@@ -11,15 +10,16 @@ import { GetUsersOutput } from './dtos/get-users.dto';
 import { LoginInput, LoginOutput } from './dtos/login.dto';
 import { UpdateUserInput, UpdateUserOutput } from './dtos/update-user.dto';
 import { User } from './entities/user.entity';
+import { UserRepository } from './user.repository';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User) private readonly userRepo: Repository<User>,
+    @InjectRepository(UserRepository) private readonly userRepo: UserRepository,
     private readonly jwtService: JwtService,
-    @InjectRepository(Position)
-    private readonly positionRepo: Repository<Position>,
-    @InjectRepository(Team) private readonly teamRepo: Repository<Team>,
+    @InjectRepository(PositionRepository)
+    private readonly positionRepo: PositionRepository,
+    @InjectRepository(TeamRepository) private readonly teamRepo: TeamRepository,
   ) {}
 
   async getUsers(): Promise<GetUsersOutput> {
@@ -27,6 +27,7 @@ export class UserService {
       const findUsers = await this.userRepo.find({
         order: { createdAt: 'DESC' },
       });
+
       return {
         ok: true,
         users: findUsers,
@@ -65,7 +66,15 @@ export class UserService {
 
   async createUser(
     loggedInUser: User,
-    { email, password, isManager, name, position, team }: CreateUserInput,
+    {
+      email,
+      password,
+      isManager,
+      name,
+      position,
+      team,
+      joinDate,
+    }: CreateUserInput,
   ): Promise<CreateUserOutput> {
     try {
       const isExistEmail = await this.userRepo.countBy({ email });
@@ -109,6 +118,7 @@ export class UserService {
         password,
         isManager,
         name,
+        joinDate,
         position: findPosition,
         team: findTeam,
       });

@@ -9,6 +9,7 @@ export class CreateUserInput extends PickType(User, [
   'password',
   'isManager',
   'name',
+  'joinDate',
 ]) {
   @Field((type) => String)
   @IsString()

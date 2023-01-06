@@ -7,6 +7,6 @@ export class GetUsersInput extends PickType(User, ['id']) {}
 
 @ObjectType()
 export class GetUsersOutput extends CoreOutput {
-  @Field((type) => User, { nullable: true })
+  @Field((type) => [User], { nullable: true })
   users?: User[];
 }
