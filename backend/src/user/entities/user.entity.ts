@@ -5,7 +5,14 @@ import {
   ObjectType,
   registerEnumType,
 } from '@nestjs/graphql';
-import { IsBoolean, IsEmail, IsEnum, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsDate,
+  IsEmail,
+  IsEnum,
+  IsNumber,
+  IsString,
+} from 'class-validator';
 import { CoreEntity } from 'src/core/entities/core.entity';
 import {
   BeforeInsert,
@@ -51,10 +58,15 @@ export class User extends CoreEntity {
   @IsString()
   name: string;
 
-  @Column({ nullable: true }) // 나중에 required로 가야됨
+  @Column()
   @Field((type) => Date)
-  @IsString()
+  @IsDate()
   joinDate: Date;
+
+  @Column('decimal', { default: 15 })
+  @Field((type) => Number, { defaultValue: 15 })
+  @IsNumber()
+  availableVacation: number;
 
   @BeforeInsert()
   @BeforeUpdate()

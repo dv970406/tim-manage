@@ -1,5 +1,5 @@
 import { Field, InputType, ObjectType, PickType } from '@nestjs/graphql';
-import { IsString } from 'class-validator';
+import { IsNumber, IsString } from 'class-validator';
 import { CoreOutput } from 'src/core/dtos/core.dto';
 import { User } from '../entities/user.entity';
 
@@ -11,13 +11,13 @@ export class CreateUserInput extends PickType(User, [
   'name',
   'joinDate',
 ]) {
-  @Field((type) => String)
-  @IsString()
-  position: string;
+  @Field((type) => Number)
+  @IsNumber()
+  positionId: number;
 
-  @Field((type) => String)
-  @IsString()
-  team: string;
+  @Field((type) => Number)
+  @IsNumber()
+  teamId: number;
 }
 
 @ObjectType()

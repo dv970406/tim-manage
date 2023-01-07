@@ -41,25 +41,16 @@ export class UserService {
   }
   async getUser({ id: userId }: GetUserInput): Promise<GetUserOutput> {
     try {
-      const findUser = await this.userRepo.findOne({
-        where: { id: userId },
-        relations: { position: true, team: true },
-      });
-      if (!findUser) {
-        return {
-          ok: false,
-          error: '존재하지 않는 유저입니다.',
-        };
-      }
+      const targetUser = await this.userRepo.findUser({ userId });
 
       return {
         ok: true,
-        user: findUser,
+        user: targetUser,
       };
     } catch (error) {
       return {
         ok: false,
-        error: '유저 조회에 실패했습니다.',
+        error: error.message || '계정 조회에 실패했습니다.',
       };
     }
   }
@@ -71,48 +62,28 @@ export class UserService {
       password,
       isManager,
       name,
-      position,
-      team,
       joinDate,
+      positionId,
+      teamId,
     }: CreateUserInput,
   ): Promise<CreateUserOutput> {
     try {
       const isExistEmail = await this.userRepo.countBy({ email });
       if (isExistEmail) {
-        return {
-          ok: false,
-          error: '이미 존재하는 이메일입니다.',
-        };
+        throw new Error('이미 존재하는 이메일입니다.');
       }
 
-      if (position === '대표') {
-        return {
-          ok: false,
-          error: '설정 불가능한 직책입니다.',
-        };
-      }
       if (loggedInUser.position.position !== '대표' && isManager) {
-        return {
-          ok: false,
-          error: '관리자 권한을 부여할 수 없습니다.',
-        };
+        throw new Error('관리자 권한을 부여할 수 없습니다.');
       }
 
-      const findPosition = await this.positionRepo.findOneBy({ position });
-      if (!findPosition) {
-        return {
-          ok: false,
-          error: '존재하지 않는 직책입니다.',
-        };
+      const findPosition = await this.positionRepo.findPosition({ positionId });
+      if (findPosition.position === '대표') {
+        throw new Error('설정 불가능한 직책입니다.');
       }
 
-      const findTeam = await this.teamRepo.findOneBy({ team });
-      if (!findTeam) {
-        return {
-          ok: false,
-          error: '존재하지 않는 팀입니다.',
-        };
-      }
+      const findTeam = await this.teamRepo.findTeam({ teamId });
+
       const newUser = this.userRepo.create({
         email,
         password,
@@ -131,7 +102,7 @@ export class UserService {
     } catch (error) {
       return {
         ok: false,
-        error: '계정 생성에 실패했습니다.',
+        error: error.message || '계정 생성에 실패했습니다.',
       };
     }
   }
@@ -141,18 +112,12 @@ export class UserService {
       const findUser = await this.userRepo.findOneBy({ email });
 
       if (!findUser) {
-        return {
-          ok: false,
-          error: '존재하지 않는 이메일입니다.',
-        };
+        throw new Error('존재하지 않는 이메일입니다.');
       }
 
       const checkPassword = await findUser.checkPassword(password);
       if (!checkPassword) {
-        return {
-          ok: false,
-          error: '비밀번호가 일치하지 않습니다.',
-        };
+        throw new Error('비밀번호가 일치하지 않습니다.');
       }
 
       const token = this.jwtService.sign(findUser.id);
@@ -163,7 +128,7 @@ export class UserService {
     } catch (error) {
       return {
         ok: false,
-        error: '로그인에 실패했습니다.',
+        error: error.message || '로그인에 실패했습니다.',
       };
     }
   }
@@ -172,67 +137,42 @@ export class UserService {
     loggedInUser: User,
     {
       id: userId,
-      position,
-      team,
+      positionId,
+      teamId,
       isManager,
+      availableVacation,
       ...updateUserInfo
     }: UpdateUserInput,
   ): Promise<UpdateUserOutput> {
     try {
-      const findUser = await this.userRepo.findOne({
-        where: { id: userId },
-        relations: {
-          position: true,
-          team: true,
-        },
+      const targetUser = await this.userRepo.findUser({ userId });
+
+      this.userRepo.protectManagerAndCEO({
+        targetUser,
+        loggedInUser,
+        type: '수정',
       });
-      if (!findUser) {
-        return {
-          ok: false,
-          error: '존재하지 않는 유저입니다.',
-        };
+
+      if (loggedInUser.position.position !== '대표' && isManager) {
+        throw new Error('관리자 권한을 부여할 수 없습니다.');
       }
 
-      if (position === '대표') {
-        return {
-          ok: false,
-          error: '누구도 대표자릴 넘볼순 없음',
-        };
+      if (availableVacation) {
+        if (userId === loggedInUser.id) {
+          throw new Error('본인의 연차는 수정할 수 없습니다.');
+        }
       }
-      if (findUser.position.position === '대표') {
-        return {
-          ok: false,
-          error: '수정할 수 없는 유저입니다.',
-        };
-      }
-
-      if (loggedInUser.position.position !== '대표' && findUser.isManager) {
-        return {
-          ok: false,
-          error: '관리자인 유저의 계정을 수정할 수 없습니다.',
-        };
-      }
-
       let findPosition;
-      if (position) {
-        findPosition = await this.positionRepo.findOneBy({ position });
-        if (!findPosition) {
-          return {
-            ok: false,
-            error: '존재하지 않는 직책입니다.',
-          };
+      if (positionId) {
+        findPosition = await this.positionRepo.findPosition({ positionId });
+        if (findPosition.position === '대표') {
+          throw new Error('설정 불가능한 직책입니다.');
         }
       }
 
       let findTeam;
-      if (team) {
-        findTeam = await this.teamRepo.findOneBy({ team });
-        if (!findTeam) {
-          return {
-            ok: false,
-            error: '존재하지 않는 팀입니다.',
-          };
-        }
+      if (teamId) {
+        findTeam = await this.teamRepo.findTeam({ teamId });
       }
 
       await this.userRepo.save([
@@ -241,6 +181,7 @@ export class UserService {
           ...(findPosition && { position: findPosition }),
           ...(findTeam && { team: findTeam }),
           ...(isManager && { isManager }),
+          availableVacation,
           ...updateUserInfo,
         },
       ]);
@@ -251,7 +192,7 @@ export class UserService {
     } catch (error) {
       return {
         ok: false,
-        error: '계정 수정에 실패했습니다.',
+        error: error.message || '계정 수정에 실패했습니다.',
       };
     }
   }
@@ -261,38 +202,18 @@ export class UserService {
     { id: userId }: DeleteUserInput,
   ): Promise<DeleteUserOutput> {
     try {
-      const findUser = await this.userRepo.findOne({
-        where: { id: userId },
-        relations: {
-          position: true,
-        },
+      const targetUser = await this.userRepo.findUser({ userId });
+
+      this.userRepo.protectManagerAndCEO({
+        targetUser,
+        loggedInUser,
+        type: '삭제',
       });
-      if (!findUser) {
-        return {
-          ok: false,
-          error: '존재하지 않는 유저입니다.',
-        };
+
+      if (userId === loggedInUser.id) {
+        throw new Error('자기 자신을 삭제할 수 없습니다.');
       }
 
-      if (findUser.id === loggedInUser.id) {
-        return {
-          ok: false,
-          error: '자기 자신을 삭제할 수 없습니다.',
-        };
-      }
-
-      if (findUser.position.position === '대표') {
-        return {
-          ok: false,
-          error: '삭제할 수 없는 유저입니다.',
-        };
-      }
-      if (loggedInUser.position.position !== '대표' && findUser.isManager) {
-        return {
-          ok: false,
-          error: '관리자인 유저의 계정을 삭제할 수 없습니다.',
-        };
-      }
       await this.userRepo.delete({ id: userId });
 
       return {
@@ -301,7 +222,7 @@ export class UserService {
     } catch (error) {
       return {
         ok: false,
-        error: '계정 삭제에 실패했습니다.',
+        error: error.message || '계정 삭제에 실패했습니다.',
       };
     }
   }

@@ -5,7 +5,7 @@ import {
   PartialType,
   PickType,
 } from '@nestjs/graphql';
-import { IsOptional, IsString } from 'class-validator';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 import { CoreOutput } from 'src/core/dtos/core.dto';
 import { User } from '../entities/user.entity';
 
@@ -17,16 +17,17 @@ export class UpdateUserInput extends PickType(PartialType(User), [
   'isManager',
   'name',
   'joinDate',
+  'availableVacation',
 ]) {
-  @Field((type) => String, { nullable: true })
+  @Field((type) => Number, { nullable: true })
   @IsOptional()
-  @IsString()
-  position?: string;
+  @IsNumber()
+  positionId?: number;
 
-  @Field((type) => String, { nullable: true })
+  @Field((type) => Number, { nullable: true })
   @IsOptional()
-  @IsString()
-  team?: string;
+  @IsNumber()
+  teamId?: number;
 }
 
 @ObjectType()

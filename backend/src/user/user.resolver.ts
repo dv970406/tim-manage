@@ -1,5 +1,12 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { LoggedInUser } from 'src/auth/auth-user.decorator';
 import { ManagerGuard } from 'src/auth/auth.guard';
 import { CreateUserInput, CreateUserOutput } from './dtos/create-user.dto';
@@ -12,9 +19,10 @@ import { UpdateUserInput, UpdateUserOutput } from './dtos/update-user.dto';
 import { User } from './entities/user.entity';
 import { UserService } from './user.service';
 
-@Resolver()
+@Resolver((of) => User)
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
+
   @Query((returns) => GetUsersOutput)
   getUsers(): Promise<GetUsersOutput> {
     return this.userService.getUsers();
