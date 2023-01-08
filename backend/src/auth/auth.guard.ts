@@ -1,12 +1,18 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class LoginGuard implements CanActivate {
   canActivate(context: ExecutionContext) {
     const gqlContext = GqlExecutionContext.create(context).getContext();
     const user = gqlContext['user'];
-    return user ? true : false;
+    if (!user) throw new UnauthorizedException('로그인이 필요합니다.');
+    return true;
   }
 }
 
@@ -15,7 +21,8 @@ export class ManagerGuard implements CanActivate {
   canActivate(context: ExecutionContext) {
     const gqlContext = GqlExecutionContext.create(context).getContext();
     const user = gqlContext['user'];
-    if (!user) return false;
-    return user.isManager;
+    if (!user || !user.isManager)
+      throw new UnauthorizedException('관리자 권한이 없습니다');
+    return true;
   }
 }

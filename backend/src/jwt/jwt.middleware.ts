@@ -11,12 +11,14 @@ export class JwtMiddleware implements NestMiddleware {
   ) {}
   async use(req: Request, res: Response, next: NextFunction) {
     if ('token' in req.headers) {
-      const { token } = req.headers;
-      const userId = this.jwtService.verify(token.toString());
       try {
+        const { token } = req.headers;
+        const userId = this.jwtService.verify(token.toString());
         const { user } = await this.userService.getUser({ id: +userId });
         req['user'] = user;
-      } catch (error) {}
+      } catch (error) {
+        return '로그인이 필요합니다.';
+      }
     }
     next();
   }
