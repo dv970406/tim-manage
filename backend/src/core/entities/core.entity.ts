@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 import {
   CreateDateColumn,
   PrimaryGeneratedColumn,
@@ -8,8 +8,8 @@ import {
 @ObjectType()
 export class CoreEntity {
   @PrimaryGeneratedColumn()
-  @Field((type) => Number)
-  id: number;
+  @Field((type) => ID)
+  _id: number;
 
   @CreateDateColumn()
   @Field((type) => Date)
