@@ -7,9 +7,9 @@ import {
 
 @ObjectType()
 export class CoreEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('increment')
   @Field((type) => ID)
-  _id: number;
+  id: string;
 
   @CreateDateColumn()
   @Field((type) => Date)
