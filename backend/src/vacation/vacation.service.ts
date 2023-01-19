@@ -17,6 +17,10 @@ import {
 } from './dtos/delete-vacation.dto';
 import { GetVacationInput, GetVacationOutput } from './dtos/get-vacation.dto';
 import { GetVacationsOutput } from './dtos/get-vacations.dto';
+import {
+  UpdateVacationInput,
+  UpdateVacationOutput,
+} from './dtos/update-vacation.dto';
 import { VacationRepository } from './vacation.repository';
 
 // const TEST_START_DATE = 1641081600000;
@@ -33,6 +37,7 @@ export class VacationService {
     try {
       const vacations = await this.vacationRepo.find({
         order: { createdAt: 'DESC' },
+        relations: ['user'],
       });
       return {
         ok: true,
@@ -46,7 +51,7 @@ export class VacationService {
     }
   }
   async getVacation({
-    _id: vacationId,
+    id: vacationId,
   }: GetVacationInput): Promise<GetVacationOutput> {
     try {
       const vacation = await this.vacationRepo.findVacation({ vacationId });
@@ -65,32 +70,34 @@ export class VacationService {
 
   async createVacation(
     loggedInUser: User,
-    { startDate, finishDate, isHalf }: CreateVacationInput,
+    { startDate, endDate, isHalf }: CreateVacationInput,
   ): Promise<CreateVacationOutput> {
     try {
-      if (!startDate || !finishDate) {
+      if (!startDate || !endDate) {
         throw new Error('기간을 입력해주세요.');
       }
-
-      const start = +new Date(startDate).getDate();
-      const finish = +new Date(finishDate).getDate();
-
-      if (isHalf && start !== finish) {
-        throw new Error('반차는 1일 범위 내 지정 후 체크해주세요.');
+      if (startDate > endDate) {
+        throw new Error('기간을 형식을 확인해주세요.');
       }
 
-      const duration = isHalf ? 0.5 : finish - start + 1;
+      const duration = await this.vacationRepo.getDuration({
+        startDate,
+        endDate,
+        isHalf,
+      });
+
       const remainingVacation = +loggedInUser.availableVacation - +duration;
 
       if (remainingVacation < 0) {
         throw new Error('남은 연차가 없습니다.');
       }
 
-      await this.vacationRepo.save({
+      const newVacation = await this.vacationRepo.save({
         startDate,
-        finishDate,
+        endDate,
         duration,
         user: loggedInUser,
+        isHalf,
         confirmed: {
           byManager: false,
           byCeo: false,
@@ -99,13 +106,14 @@ export class VacationService {
       });
       await this.userRepo.save([
         {
-          _id: loggedInUser._id,
+          id: loggedInUser.id,
           availableVacation: remainingVacation,
         },
       ]);
 
       return {
         ok: true,
+        vacation: newVacation,
       };
     } catch (error) {
       return {
@@ -117,14 +125,14 @@ export class VacationService {
 
   async confirmVacation(
     loggedInUser: User,
-    { _id: vacationId }: ConfirmVacationInput,
+    { id: vacationId }: ConfirmVacationInput,
   ): Promise<ConfirmVacationOutput> {
     try {
       const findVacation = await this.vacationRepo.findVacation({ vacationId });
 
       if (
         !loggedInUser.isManager &&
-        findVacation.user.team.leaderId !== loggedInUser._id &&
+        findVacation.user.team.leaderId !== loggedInUser.id &&
         loggedInUser.position.position !== POSITION_CEO
       ) {
         throw new Error('휴가를 승인할 권한이 없습니다.');
@@ -132,7 +140,7 @@ export class VacationService {
 
       if (loggedInUser.position.position === POSITION_CEO) {
         findVacation.confirmed.byCeo = true;
-      } else if (findVacation.user.team.leaderId === loggedInUser._id) {
+      } else if (findVacation.user.team.leaderId === loggedInUser.id) {
         findVacation.confirmed.byLeader = true;
       } else if (loggedInUser.isManager) {
         findVacation.confirmed.byManager = true;
@@ -150,31 +158,86 @@ export class VacationService {
     }
   }
 
+  async updateVacation(
+    loggedInUser: User,
+    { id: vacationId, startDate, endDate, isHalf }: UpdateVacationInput,
+  ): Promise<UpdateVacationOutput> {
+    try {
+      const findVacation = await this.vacationRepo.findVacation({
+        vacationId,
+      });
+
+      if (loggedInUser.id !== findVacation.userId) {
+        throw new Error('휴가의 소유자가 아닙니다.');
+      }
+
+      const duration = await this.vacationRepo.getDuration({
+        startDate,
+        endDate,
+        isHalf,
+      });
+
+      const recoveryVacation = findVacation.duration;
+
+      await this.userRepo.save([
+        {
+          id: loggedInUser.id,
+          availableVacation: loggedInUser.availableVacation + recoveryVacation,
+        },
+      ]);
+      // 이 부분 문제
+
+      if (startDate) {
+        findVacation.startDate = startDate;
+      }
+      if (endDate) {
+        findVacation.endDate = endDate;
+      }
+      if (isHalf) {
+        findVacation.isHalf = isHalf;
+      }
+      if (startDate && endDate) {
+        findVacation.duration = duration;
+      }
+      const updatedVacation = await this.vacationRepo.save(findVacation);
+
+      return {
+        ok: true,
+        vacation: updatedVacation,
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        error: error.message || '휴가 수정에 실패했습니다.',
+      };
+    }
+  }
   async deleteVacation(
     loggedInUser: User,
-    { _id: vacationId }: DeleteVacationInput,
+    { id: vacationId }: DeleteVacationInput,
   ): Promise<DeleteVacationOutput> {
     try {
       const findVacation = await this.vacationRepo.findVacation({
         vacationId,
       });
 
-      if (loggedInUser._id !== findVacation.userId) {
+      if (loggedInUser.id !== findVacation.userId) {
         throw new Error('휴가의 소유자가 아닙니다.');
       }
 
       const remaniningVacation =
         +loggedInUser.availableVacation + +findVacation.duration;
 
-      await this.vacationRepo.delete({ _id: vacationId });
+      await this.vacationRepo.delete({ id: vacationId });
       await this.userRepo.save([
         {
-          _id: loggedInUser._id,
+          id: loggedInUser.id,
           availableVacation: remaniningVacation,
         },
       ]);
       return {
         ok: true,
+        deletedVacationId: vacationId,
       };
     } catch (error) {
       return {

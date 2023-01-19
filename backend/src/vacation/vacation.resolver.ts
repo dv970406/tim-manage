@@ -17,6 +17,10 @@ import {
 } from './dtos/delete-vacation.dto';
 import { GetVacationInput, GetVacationOutput } from './dtos/get-vacation.dto';
 import { GetVacationsOutput } from './dtos/get-vacations.dto';
+import {
+  UpdateVacationInput,
+  UpdateVacationOutput,
+} from './dtos/update-vacation.dto';
 import { Vacation } from './entities/vacation.entity';
 import { VacationService } from './vacation.service';
 
@@ -56,6 +60,18 @@ export class VacationResolver {
     return this.vacationService.confirmVacation(
       loggedInUser,
       confirmVacationInput,
+    );
+  }
+
+  @Mutation((type) => UpdateVacationOutput)
+  @UseGuards(LoginGuard)
+  updateVacation(
+    @LoggedInUser() loggedInUser: User,
+    @Args('input') updateVacationInput: UpdateVacationInput,
+  ): Promise<UpdateVacationOutput> {
+    return this.vacationService.updateVacation(
+      loggedInUser,
+      updateVacationInput,
     );
   }
 

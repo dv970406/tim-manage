@@ -3,7 +3,7 @@ import { CoreOutput } from 'src/core/dtos/core.dto';
 import { Vacation } from '../entities/vacation.entity';
 
 @InputType()
-export class ConfirmVacationInput extends PickType(Vacation, ['_id']) {}
+export class ConfirmVacationInput extends PickType(Vacation, ['id']) {}
 
 @ObjectType()
 export class ConfirmVacationOutput extends CoreOutput {}

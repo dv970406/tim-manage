@@ -33,7 +33,7 @@ export class Vacation extends CoreEntity {
   @Column()
   @Field((type) => Date)
   @IsDate({ message: '날짜 형식이 아닙니다.' })
-  finishDate: Date;
+  endDate: Date;
 
   @Column({ default: false })
   @Field((type) => Boolean, { defaultValue: false })
@@ -54,5 +54,5 @@ export class Vacation extends CoreEntity {
   user: User;
 
   @RelationId((vacation: Vacation) => vacation.user)
-  userId: number;
+  userId: string;
 }
