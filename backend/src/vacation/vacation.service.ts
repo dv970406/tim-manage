@@ -80,9 +80,11 @@ export class VacationService {
         throw new Error('기간을 형식을 확인해주세요.');
       }
 
+      const end = this.vacationRepo.getExactEndDate({ endDate });
+      console.log('CreateVacation end : ', end);
       const duration = await this.vacationRepo.getDuration({
         startDate,
-        endDate,
+        endDate: end,
         isHalf,
       });
 
@@ -94,7 +96,7 @@ export class VacationService {
 
       const newVacation = await this.vacationRepo.save({
         startDate,
-        endDate,
+        endDate: end,
         duration,
         user: loggedInUser,
         isHalf,
@@ -171,27 +173,35 @@ export class VacationService {
         throw new Error('휴가의 소유자가 아닙니다.');
       }
 
+      const end = this.vacationRepo.getExactEndDate({ endDate });
+      console.log('UpdateVAcation end : ', end);
+
       const duration = await this.vacationRepo.getDuration({
         startDate,
-        endDate,
+        endDate: end,
         isHalf,
       });
 
-      const recoveryVacation = findVacation.duration;
+      let recoveryVacation = 0;
+      if (duration < findVacation.duration) {
+        recoveryVacation += findVacation.duration - duration;
+      } else if (duration > findVacation.duration) {
+        recoveryVacation = findVacation.duration - duration;
+      }
 
+      // 현재 사용가능한 연차일수에 해당 휴가의 수정 전 기간만큼은 회복시키고 다시 사용한 일수만큼 뺀다.
       await this.userRepo.save([
         {
           id: loggedInUser.id,
-          availableVacation: loggedInUser.availableVacation + recoveryVacation,
+          availableVacation: +loggedInUser.availableVacation + recoveryVacation,
         },
       ]);
-      // 이 부분 문제
 
       if (startDate) {
         findVacation.startDate = startDate;
       }
       if (endDate) {
-        findVacation.endDate = endDate;
+        findVacation.endDate = end;
       }
       if (isHalf) {
         findVacation.isHalf = isHalf;
@@ -212,6 +222,7 @@ export class VacationService {
       };
     }
   }
+
   async deleteVacation(
     loggedInUser: User,
     { id: vacationId }: DeleteVacationInput,
