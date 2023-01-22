@@ -4,10 +4,9 @@ import { CoreOutput } from 'src/core/dtos/core.dto';
 import { Team } from '../entities/team.entity';
 
 @InputType()
-export class NominateLeaderInput extends PickType(Team, ['_id']) {
+export class NominateLeaderInput extends PickType(Team, ['id']) {
   @Field((type) => ID)
-  @IsNumber()
-  userId: number;
+  userId: string;
 }
 
 @ObjectType()

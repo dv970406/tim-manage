@@ -20,6 +20,8 @@ import {
   Column,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   OneToOne,
@@ -34,6 +36,7 @@ import { Like } from 'src/post/entities/like.entity';
 import { Comment } from 'src/post/entities/comment.entity';
 import { Answer } from 'src/survey/entities/answer.entity';
 import { Survey } from 'src/survey/entities/survey.entity';
+import { Meeting } from 'src/meeting/entities/meeting.entity';
 @InputType('UserInputType', { isAbstract: true })
 @Entity()
 @ObjectType()
@@ -45,10 +48,13 @@ export class User extends CoreEntity {
 
   @Column({ unique: true })
   @Field((type) => String)
-  @IsEmail()
+  @IsEmail({
+    message: '이메일의 형식이 잘못되었습니다.',
+  })
   email: string;
 
-  @Column()
+  // 비밀번호 칼럼은 못가져오게 설정
+  @Column({ select: false })
   @Field((type) => String)
   @IsString()
   password: string;
@@ -95,6 +101,14 @@ export class User extends CoreEntity {
   @OneToMany((type) => Vacation, (vacation) => vacation.user)
   @Field((type) => [Vacation])
   vacations: Vacation[];
+
+  @ManyToMany((type) => Meeting, (meeting) => meeting.attendees)
+  @Field((type) => [Meeting])
+  attendedMeetings: Meeting[];
+
+  @OneToMany((type) => Meeting, (meeting) => meeting.host)
+  @Field((type) => [Meeting])
+  hostedMeetingsByMe: Meeting[];
 
   @ManyToOne((type) => Position, (position) => position.users)
   @Field((type) => Position)

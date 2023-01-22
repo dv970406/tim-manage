@@ -21,7 +21,7 @@ export class Answer extends CoreEntity {
   user: User;
 
   @RelationId((answer: Answer) => answer.user)
-  userId: number;
+  userId: string;
 
   @Column({ type: 'json' })
   @Field((type) => [String])

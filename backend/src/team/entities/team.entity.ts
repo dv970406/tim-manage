@@ -44,6 +44,5 @@ export class Team extends CoreEntity {
   leader: User;
 
   @RelationId((team: Team) => team.leader)
-  // @Field((type) => Number)
-  leaderId: number;
+  leaderId: string;
 }

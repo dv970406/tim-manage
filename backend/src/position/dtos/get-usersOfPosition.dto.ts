@@ -4,7 +4,7 @@ import { User } from 'src/user/entities/user.entity';
 import { Position } from '../entities/position.entity';
 
 @InputType()
-export class GetUsersOfPositionInput extends PickType(Position, ['_id']) {}
+export class GetUsersOfPositionInput extends PickType(Position, ['id']) {}
 
 @ObjectType()
 export class GetUsersOfPositionOutput extends CoreOutput {

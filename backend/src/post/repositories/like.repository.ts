@@ -7,7 +7,7 @@ export class LikeRepository extends Repository<Like> {
   async findLike({ likeId }) {
     const findLike = await this.findOne({
       where: {
-        _id: likeId,
+        id: likeId,
       },
       loadRelationIds: {
         relations: ['user'],

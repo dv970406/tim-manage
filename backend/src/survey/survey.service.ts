@@ -42,7 +42,7 @@ export class SurveyService {
     }
   }
 
-  async getSurvey({ _id: surveyId }: GetSurveyInput): Promise<GetSurveyOutput> {
+  async getSurvey({ id: surveyId }: GetSurveyInput): Promise<GetSurveyOutput> {
     try {
       const findSurvey = await this.surveyRepo.findSurvey({ surveyId });
 
@@ -108,16 +108,16 @@ export class SurveyService {
 
   async deleteSurvey(
     loggedInUser: User,
-    { _id: surveyId }: DeleteSurveyInput,
+    { id: surveyId }: DeleteSurveyInput,
   ): Promise<DeleteSurveyOutput> {
     try {
       const findSurvey = await this.surveyRepo.findSurvey({ surveyId });
 
-      if (loggedInUser._id !== findSurvey.user._id) {
+      if (loggedInUser.id !== findSurvey.user.id) {
         throw new Error('설문의 소유자가 아닙니다.');
       }
 
-      await this.surveyRepo.delete({ _id: surveyId });
+      await this.surveyRepo.delete({ id: surveyId });
       return {
         ok: true,
       };

@@ -3,7 +3,7 @@ import { CoreOutput } from 'src/core/dtos/core.dto';
 import { Position } from '../entities/position.entity';
 
 @InputType()
-export class DeletePositionInput extends PickType(Position, ['_id']) {}
+export class DeletePositionInput extends PickType(Position, ['id']) {}
 
 @ObjectType()
 export class DeletePositionOutput extends CoreOutput {}

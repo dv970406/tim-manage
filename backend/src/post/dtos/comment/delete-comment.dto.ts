@@ -3,7 +3,7 @@ import { CoreOutput } from 'src/core/dtos/core.dto';
 import { Comment } from 'src/post/entities/comment.entity';
 
 @InputType()
-export class DeleteCommentInput extends PickType(Comment, ['_id']) {}
+export class DeleteCommentInput extends PickType(Comment, ['id']) {}
 
 @ObjectType()
 export class DeleteCommentOutput extends CoreOutput {}

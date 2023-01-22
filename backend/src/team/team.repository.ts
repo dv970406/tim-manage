@@ -6,7 +6,7 @@ import { Team } from './entities/team.entity';
 export class TeamRepository extends Repository<Team> {
   async findTeam({ teamId }) {
     const team = await this.findOne({
-      where: { _id: teamId },
+      where: { id: teamId },
       relations: {
         users: true,
       },

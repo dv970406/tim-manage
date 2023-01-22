@@ -25,7 +25,7 @@ export class Post extends CoreEntity {
   user: User;
 
   @RelationId((post: Post) => post.user)
-  userId: number;
+  userId: string;
 
   @OneToMany((type) => Like, (like) => like.post)
   @Field((type) => [Like])

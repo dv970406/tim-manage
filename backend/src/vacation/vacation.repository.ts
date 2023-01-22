@@ -20,11 +20,6 @@ export class VacationRepository extends Repository<Vacation> {
     return vacation;
   }
 
-  // fullCalendar에서 26일을 endday로 정했어도 라이브러리 내부적으로 2023-01-27T00:00:00.000Z로 보냄.
-  // 따라서 2023-01-26T23:59:59.000Z로 만들기 위해 -1000ms를 해준 것이다.
-  getExactEndDate({ endDate }) {
-    return new Date(new Date(endDate).getTime() /* - 1000 */);
-  }
   async getDuration({ startDate, endDate, isHalf }) {
     const start = new Date(startDate);
     const end = new Date(endDate);

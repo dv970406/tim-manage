@@ -7,7 +7,7 @@ export class CommentRepository extends Repository<Comment> {
   async findComment({ commentId }) {
     const findComment = await this.findOne({
       where: {
-        _id: commentId,
+        id: commentId,
       },
       loadRelationIds: {
         relations: ['user'],

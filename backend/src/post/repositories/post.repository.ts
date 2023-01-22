@@ -7,7 +7,7 @@ export class PostRepository extends Repository<Post> {
   async findPost({ postId }) {
     const post = await this.findOne({
       where: {
-        _id: postId,
+        id: postId,
       },
       loadRelationIds: {
         relations: ['user'],

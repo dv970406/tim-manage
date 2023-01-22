@@ -80,11 +80,9 @@ export class VacationService {
         throw new Error('기간을 형식을 확인해주세요.');
       }
 
-      const end = this.vacationRepo.getExactEndDate({ endDate });
-      console.log('CreateVacation end : ', end);
       const duration = await this.vacationRepo.getDuration({
         startDate,
-        endDate: end,
+        endDate,
         isHalf,
       });
 
@@ -96,7 +94,7 @@ export class VacationService {
 
       const newVacation = await this.vacationRepo.save({
         startDate,
-        endDate: end,
+        endDate,
         duration,
         user: loggedInUser,
         isHalf,
@@ -173,12 +171,9 @@ export class VacationService {
         throw new Error('휴가의 소유자가 아닙니다.');
       }
 
-      const end = this.vacationRepo.getExactEndDate({ endDate });
-      console.log('UpdateVAcation end : ', end);
-
       const duration = await this.vacationRepo.getDuration({
         startDate,
-        endDate: end,
+        endDate,
         isHalf,
       });
 
@@ -201,7 +196,7 @@ export class VacationService {
         findVacation.startDate = startDate;
       }
       if (endDate) {
-        findVacation.endDate = end;
+        findVacation.endDate = endDate;
       }
       if (isHalf) {
         findVacation.isHalf = isHalf;

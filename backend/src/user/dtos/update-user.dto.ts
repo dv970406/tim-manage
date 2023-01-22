@@ -1,5 +1,6 @@
 import {
   Field,
+  ID,
   InputType,
   ObjectType,
   PartialType,
@@ -19,15 +20,13 @@ export class UpdateUserInput extends PickType(PartialType(User), [
   'joinDate',
   'availableVacation',
 ]) {
-  @Field((type) => Number, { nullable: true })
+  @Field((type) => ID, { nullable: true })
   @IsOptional()
-  @IsNumber()
-  positionId?: number;
+  positionId?: string;
 
-  @Field((type) => Number, { nullable: true })
+  @Field((type) => ID, { nullable: true })
   @IsOptional()
-  @IsNumber()
-  teamId?: number;
+  teamId?: string;
 }
 
 @ObjectType()

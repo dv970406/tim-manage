@@ -6,7 +6,7 @@ import { Survey } from '../entities/survey.entity';
 export class SurveyRepository extends Repository<Survey> {
   async findSurvey({ surveyId }) {
     const findSurvey = await this.findOne({
-      where: { _id: surveyId },
+      where: { id: surveyId },
       relations: {
         user: {
           position: true,

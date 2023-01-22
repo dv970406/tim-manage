@@ -4,7 +4,7 @@ import { Position } from '../entities/position.entity';
 
 @InputType()
 export class UpdatePositionInput extends PickType(Position, [
-  '_id',
+  'id',
   'position',
 ]) {}
 

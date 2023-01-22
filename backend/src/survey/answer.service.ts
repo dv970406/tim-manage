@@ -30,7 +30,7 @@ export class AnswerService {
       const findMyAnswers = await this.answerRepo.find({
         where: {
           user: {
-            _id: loggedInUser._id,
+            id: loggedInUser.id,
           },
         },
         order: {
@@ -60,14 +60,14 @@ export class AnswerService {
     try {
       const findSurvey = await this.surveyRepo.findSurvey({ surveyId });
 
-      if (loggedInUser._id !== findSurvey.user._id) {
+      if (loggedInUser.id !== findSurvey.user.id) {
         throw new Error('설문의 소유자가 아닙니다.');
       }
 
       const answers = await this.answerRepo.find({
         where: {
           survey: {
-            _id: surveyId,
+            id: surveyId,
           },
         },
         order: {
@@ -124,22 +124,22 @@ export class AnswerService {
 
   async deleteAnswer(
     loggedInUser: User,
-    { _id: answerId }: DeleteAnswerInput,
+    { id: answerId }: DeleteAnswerInput,
   ): Promise<DeleteAnswerOutput> {
     try {
       const findAnswer = await this.answerRepo.findOneBy({
-        _id: answerId,
+        id: answerId,
       });
 
       if (!findAnswer) {
         throw new Error('존재하지 않는 답변입니다.');
       }
 
-      if (loggedInUser._id !== findAnswer.userId) {
+      if (loggedInUser.id !== findAnswer.userId) {
         throw new Error('답변의 소유자가 아닙니다.');
       }
 
-      await this.answerRepo.delete({ _id: answerId });
+      await this.answerRepo.delete({ id: answerId });
 
       return {
         ok: true,

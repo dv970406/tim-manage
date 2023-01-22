@@ -3,7 +3,7 @@ import { CoreOutput } from 'src/core/dtos/core.dto';
 import { Team } from '../entities/team.entity';
 
 @InputType()
-export class UpdateTeamInput extends PickType(Team, ['_id', 'team']) {}
+export class UpdateTeamInput extends PickType(Team, ['id', 'team']) {}
 
 @ObjectType()
 export class UpdateTeamOutput extends CoreOutput {}

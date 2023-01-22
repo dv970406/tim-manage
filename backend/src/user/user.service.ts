@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { POSITION_CEO } from 'src/core/variables/position';
 import { JwtService } from 'src/jwt/jwt.service';
 import { PositionRepository } from 'src/position/position.repository';
 import { TeamRepository } from 'src/team/team.repository';
@@ -41,11 +42,10 @@ export class UserService {
   }
   async getUser({ id: userId }: GetUserInput): Promise<GetUserOutput> {
     try {
-      const targetUser = await this.userRepo.findUser({ userId });
-
+      const findUser = await this.userRepo.findUser({ userId });
       return {
         ok: true,
-        user: targetUser,
+        user: findUser,
       };
     } catch (error) {
       return {
@@ -57,15 +57,7 @@ export class UserService {
 
   async createUser(
     loggedInUser: User,
-    {
-      email,
-      password,
-      isManager,
-      name,
-      joinDate,
-      positionId,
-      teamId,
-    }: CreateUserInput,
+    { email, isManager, name, joinDate, positionId, teamId }: CreateUserInput,
   ): Promise<CreateUserOutput> {
     try {
       const isExistEmail = await this.userRepo.countBy({ email });
@@ -73,12 +65,12 @@ export class UserService {
         throw new Error('이미 존재하는 이메일입니다.');
       }
 
-      if (loggedInUser.position.position !== '대표' && isManager) {
+      if (loggedInUser.position.position !== POSITION_CEO && isManager) {
         throw new Error('관리자 권한을 부여할 수 없습니다.');
       }
 
       const findPosition = await this.positionRepo.findPosition({ positionId });
-      if (findPosition.position === '대표') {
+      if (findPosition.position === POSITION_CEO) {
         throw new Error('설정 불가능한 직책입니다.');
       }
 
@@ -86,7 +78,7 @@ export class UserService {
 
       const newUser = this.userRepo.create({
         email,
-        password,
+        password: process.env.TEMPORARY_PASSWORD,
         isManager,
         name,
         joinDate,
@@ -109,7 +101,16 @@ export class UserService {
 
   async login({ email, password }: LoginInput): Promise<LoginOutput> {
     try {
-      const findUser = await this.userRepo.findOneBy({ email });
+      const findUser = await this.userRepo.findOne({
+        where: {
+          email,
+        },
+        select: {
+          id: true,
+          email: true,
+          password: true,
+        },
+      });
 
       if (!findUser) {
         throw new Error('존재하지 않는 이메일입니다.');
@@ -137,6 +138,7 @@ export class UserService {
     loggedInUser: User,
     {
       id: userId,
+      password,
       positionId,
       teamId,
       isManager,
@@ -145,15 +147,15 @@ export class UserService {
     }: UpdateUserInput,
   ): Promise<UpdateUserOutput> {
     try {
-      const targetUser = await this.userRepo.findUser({ userId });
+      const findUser = await this.userRepo.findUser({ userId });
 
       this.userRepo.protectManagerAndCEO({
-        targetUser,
+        findUser,
         loggedInUser,
         type: '수정',
       });
 
-      if (loggedInUser.position.position !== '대표' && isManager) {
+      if (loggedInUser.position.position !== POSITION_CEO && isManager) {
         throw new Error('관리자 권한을 부여할 수 없습니다.');
       }
 
@@ -165,7 +167,7 @@ export class UserService {
       let findPosition;
       if (positionId) {
         findPosition = await this.positionRepo.findPosition({ positionId });
-        if (findPosition.position === '대표') {
+        if (findPosition.position === POSITION_CEO) {
           throw new Error('설정 불가능한 직책입니다.');
         }
       }
@@ -178,6 +180,7 @@ export class UserService {
       await this.userRepo.save([
         {
           id: userId,
+          ...(password && { password }),
           ...(findPosition && { position: findPosition }),
           ...(findTeam && { team: findTeam }),
           ...(isManager && { isManager }),
@@ -202,16 +205,16 @@ export class UserService {
     { id: userId }: DeleteUserInput,
   ): Promise<DeleteUserOutput> {
     try {
-      const targetUser = await this.userRepo.findUser({ userId });
+      const findUser = await this.userRepo.findUser({ userId });
 
       this.userRepo.protectManagerAndCEO({
-        targetUser,
+        findUser,
         loggedInUser,
         type: '삭제',
       });
 
       if (userId === loggedInUser.id) {
-        throw new Error('자기 자신을 삭제할 수 없습니다.');
+        throw new Error('본인을 삭제할 수 없습니다.');
       }
 
       await this.userRepo.delete({ id: userId });

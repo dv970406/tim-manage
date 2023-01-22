@@ -37,7 +37,7 @@ export class TeamService {
       };
     }
   }
-  async getTeam({ _id: teamId }: GetTeamInput): Promise<GetTeamOutput> {
+  async getTeam({ id: teamId }: GetTeamInput): Promise<GetTeamOutput> {
     try {
       const team = await this.teamRepo.findTeam({ teamId });
 
@@ -69,18 +69,18 @@ export class TeamService {
   }
 
   async nominateLeader({
-    _id: teamId,
+    id: teamId,
     userId,
   }: NominateLeaderInput): Promise<NominateLeaderOutput> {
     try {
       const findTeam = await this.teamRepo.findTeam({ teamId });
       const findUser = await this.userRepo.findUser({ userId });
 
-      if (findUser.team._id !== findTeam._id) {
+      if (findUser.team.id !== findTeam.id) {
         throw new Error('팀에 속하지 않는 유저를 팀장으로 지명할 수 없습니다.');
       }
 
-      await this.teamRepo.save([{ _id: teamId, leader: findUser }]);
+      await this.teamRepo.save([{ id: teamId, leader: findUser }]);
 
       return {
         ok: true,
@@ -94,7 +94,7 @@ export class TeamService {
   }
 
   async updateTeam({
-    _id: teamId,
+    id: teamId,
     team,
   }: UpdateTeamInput): Promise<UpdateTeamOutput> {
     try {
@@ -104,7 +104,7 @@ export class TeamService {
         teamId,
       });
 
-      await this.teamRepo.save([{ _id: teamId, team }]);
+      await this.teamRepo.save([{ id: teamId, team }]);
       return {
         ok: true,
       };
@@ -115,15 +115,13 @@ export class TeamService {
       };
     }
   }
-  async deleteTeam({
-    _id: teamId,
-  }: DeleteTeamInput): Promise<DeleteTeamOutput> {
+  async deleteTeam({ id: teamId }: DeleteTeamInput): Promise<DeleteTeamOutput> {
     try {
       await this.teamRepo.findTeam({
         teamId,
       });
 
-      await this.teamRepo.delete({ _id: teamId });
+      await this.teamRepo.delete({ id: teamId });
       return {
         ok: true,
       };

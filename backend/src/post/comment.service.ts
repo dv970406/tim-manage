@@ -30,7 +30,7 @@ export class CommentService {
   async countComments(post: Post): Promise<Number> {
     return this.commentRepo.countBy({
       post: {
-        _id: post._id,
+        id: post.id,
       },
     });
   }
@@ -39,7 +39,7 @@ export class CommentService {
       const findComments = await this.commentRepo.find({
         where: {
           user: {
-            _id: loggedInUser._id,
+            id: loggedInUser.id,
           },
         },
         order: { createdAt: 'DESC' },
@@ -87,7 +87,7 @@ export class CommentService {
 
   // async updateComment(
   //   loggedInUser: User,
-  //   { _id: commentId, content }: UpdateCommentInput,
+  //   { id: commentId, content }: UpdateCommentInput,
   // ): Promise<UpdateCommentOutput> {
   //   try {
   //     if (!content) {
@@ -95,11 +95,11 @@ export class CommentService {
   //     }
 
   //     const findComment = await this.commentRepo.findComment({ commentId });
-  //     if (loggedInUser._id !== findComment.user._id) {
+  //     if (loggedInUser.id !== findComment.user.id) {
   //       throw new Error('댓글의 소유자가 아닙니다.');
   //     }
 
-  //     await this.commentRepo.save([{ _id: commentId, content }]);
+  //     await this.commentRepo.save([{ id: commentId, content }]);
   //     return {
   //       ok: true,
   //     };
@@ -112,18 +112,18 @@ export class CommentService {
   // }
   async deleteComment(
     loggedInUser: User,
-    { _id: commentId }: DeleteCommentInput,
+    { id: commentId }: DeleteCommentInput,
   ): Promise<DeleteCommentOutput> {
     try {
       const findComment = await this.commentRepo.findComment({
         commentId,
       });
 
-      if (loggedInUser._id !== findComment.userId) {
+      if (loggedInUser.id !== findComment.userId) {
         throw new Error('댓글의 소유자가 아닙니다.');
       }
 
-      await this.commentRepo.delete({ _id: commentId });
+      await this.commentRepo.delete({ id: commentId });
       return {
         ok: true,
       };

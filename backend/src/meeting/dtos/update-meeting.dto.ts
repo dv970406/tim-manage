@@ -10,7 +10,7 @@ import { CoreOutput } from 'src/core/dtos/core.dto';
 import { Meeting } from '../entities/meeting.entity';
 
 @InputType()
-export class UpdateMeetingInput extends PickType(Meeting, [
+export class UpdateMeetingInput extends PickType(PartialType(Meeting), [
   'id',
   'title',
   'startTime',

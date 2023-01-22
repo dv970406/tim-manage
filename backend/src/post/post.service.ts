@@ -33,7 +33,7 @@ export class PostService {
       };
     }
   }
-  async getPost({ _id: postId }: GetPostInput): Promise<GetPostOutput> {
+  async getPost({ id: postId }: GetPostInput): Promise<GetPostOutput> {
     try {
       const findPost = await this.postRepo.findPost({ postId });
 
@@ -72,7 +72,7 @@ export class PostService {
 
   async updatePost(
     loggedInUser: User,
-    { _id: postId, title, content }: UpdatePostInput,
+    { id: postId, title, content }: UpdatePostInput,
   ): Promise<UpdatePostOutput> {
     try {
       if (!title) {
@@ -81,11 +81,11 @@ export class PostService {
 
       const findPost = await this.postRepo.findPost({ postId });
 
-      if (loggedInUser._id !== findPost.userId) {
+      if (loggedInUser.id !== findPost.userId) {
         throw new Error('게시글의 소유자가 아닙니다.');
       }
 
-      await this.postRepo.save([{ _id: postId, title, content }]);
+      await this.postRepo.save([{ id: postId, title, content }]);
       return {
         ok: true,
       };
@@ -98,16 +98,16 @@ export class PostService {
   }
   async deletePost(
     loggedInUser: User,
-    { _id: postId }: DeletePostInput,
+    { id: postId }: DeletePostInput,
   ): Promise<DeletePostOutput> {
     try {
       const findPost = await this.postRepo.findPost({ postId });
 
-      if (loggedInUser._id !== findPost.userId) {
+      if (loggedInUser.id !== findPost.userId) {
         throw new Error('게시글의 소유자가 아닙니다.');
       }
 
-      await this.postRepo.delete({ _id: postId });
+      await this.postRepo.delete({ id: postId });
       return {
         ok: true,
       };

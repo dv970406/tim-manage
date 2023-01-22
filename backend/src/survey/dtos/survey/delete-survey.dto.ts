@@ -3,7 +3,7 @@ import { CoreOutput } from 'src/core/dtos/core.dto';
 import { Survey } from 'src/survey/entities/survey.entity';
 
 @InputType()
-export class DeleteSurveyInput extends PickType(Survey, ['_id']) {}
+export class DeleteSurveyInput extends PickType(Survey, ['id']) {}
 
 @ObjectType()
 export class DeleteSurveyOutput extends CoreOutput {}

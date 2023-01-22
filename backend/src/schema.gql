@@ -1,0 +1,627 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Confirm {
+  byCeo: Boolean!
+  byLeader: Boolean!
+  byManager: Boolean!
+}
+
+type Vacation {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  startDate: DateTime!
+  endDate: DateTime!
+  isHalf: Boolean!
+  duration: Float!
+  confirmed: Confirm!
+  user: User!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Team {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  team: String!
+  users: [User!]!
+  leader: User!
+}
+
+type Comment {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  content: String!
+  user: User!
+  post: Post!
+}
+
+type Like {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  user: User!
+  post: Post!
+}
+
+type Post {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  title: String!
+  content: String!
+  user: User!
+  likes: [Like!]!
+  comments: [Comment!]!
+  countLikes: Float!
+  isLiked: Boolean!
+  countComments: Float!
+}
+
+type Survey {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  surveyTitle: String!
+  isAnonymous: Boolean!
+  paragraphs: [SurveyForm!]!
+  answers: [Answer!]!
+  user: User!
+}
+
+type SurveyForm {
+  paragraphTitle: String!
+  description: String
+  multipleChoice: [String!]
+}
+
+type Answer {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  survey: Survey!
+  user: User!
+  results: [String!]!
+}
+
+type Meeting {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  title: String!
+  startTime: DateTime!
+  endTime: DateTime!
+  attendees: [User!]!
+  host: User!
+}
+
+type User {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  isManager: Boolean!
+  email: String!
+  password: String!
+  name: String!
+  joinDate: DateTime!
+  availableVacation: Float!
+  vacations: [Vacation!]!
+  attendedMeetings: [Meeting!]!
+  hostedMeetingsByMe: [Meeting!]!
+  position: Position!
+  team: Team!
+  posts: [Post!]!
+  likes: [Like!]!
+  comments: [Comment!]!
+  surveys: [Survey!]!
+  answers: [Answer!]!
+}
+
+type Position {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  position: String!
+  users: [User!]!
+}
+
+type CreateUserOutput {
+  ok: Boolean!
+  error: String
+}
+
+type DeleteUserOutput {
+  ok: Boolean!
+  error: String
+}
+
+type GetUserOutput {
+  ok: Boolean!
+  error: String
+  user: User
+}
+
+type GetUsersOutput {
+  ok: Boolean!
+  error: String
+  users: [User!]
+}
+
+type LoginOutput {
+  ok: Boolean!
+  error: String
+  token: String
+}
+
+type UpdateUserOutput {
+  ok: Boolean!
+  error: String
+}
+
+type CreatePositionOutput {
+  ok: Boolean!
+  error: String
+}
+
+type DeletePositionOutput {
+  ok: Boolean!
+  error: String
+}
+
+type GetUsersOfPositionOutput {
+  ok: Boolean!
+  error: String
+  users: [User!]
+}
+
+type GetPositionsOutput {
+  ok: Boolean!
+  error: String
+  positions: [Position!]
+}
+
+type UpdatePositionOutput {
+  ok: Boolean!
+  error: String
+}
+
+type CreateTeamOutput {
+  ok: Boolean!
+  error: String
+}
+
+type UpdateTeamOutput {
+  ok: Boolean!
+  error: String
+}
+
+type DeleteTeamOutput {
+  ok: Boolean!
+  error: String
+}
+
+type GetTeamOutput {
+  ok: Boolean!
+  error: String
+  team: Team
+}
+
+type GetTeamsOutput {
+  ok: Boolean!
+  error: String
+  teams: [Team!]
+}
+
+type NominateLeaderOutput {
+  ok: Boolean!
+  error: String
+}
+
+type ConfirmVacationOutput {
+  ok: Boolean!
+  error: String
+}
+
+type CreateVacationOutput {
+  ok: Boolean!
+  error: String
+  vacation: Vacation
+}
+
+type DeleteVacationOutput {
+  ok: Boolean!
+  error: String
+  deletedVacationId: ID
+}
+
+type GetVacationOutput {
+  ok: Boolean!
+  error: String
+  vacation: Vacation
+}
+
+type GetVacationsOutput {
+  ok: Boolean!
+  error: String
+  vacations: [Vacation!]
+}
+
+type UpdateVacationOutput {
+  ok: Boolean!
+  error: String
+  vacation: Vacation
+}
+
+type CreateAnswerOutput {
+  ok: Boolean!
+  error: String
+}
+
+type DeleteAnswerOutput {
+  ok: Boolean!
+  error: String
+}
+
+type GetAnswersOfsurveyOutput {
+  ok: Boolean!
+  error: String
+  answers: [Answer!]
+}
+
+type GetMyAnswersOutput {
+  ok: Boolean!
+  error: String
+  answers: [Answer!]
+}
+
+type CreateSurveyOutput {
+  ok: Boolean!
+  error: String
+}
+
+type DeleteSurveyOutput {
+  ok: Boolean!
+  error: String
+}
+
+type GetSurveyOutput {
+  ok: Boolean!
+  error: String
+  survey: Survey
+}
+
+type GetSurveysOutput {
+  ok: Boolean!
+  error: String
+  surveys: [Survey!]
+}
+
+type CreateCommentOutput {
+  ok: Boolean!
+  error: String
+}
+
+type DeleteCommentOutput {
+  ok: Boolean!
+  error: String
+}
+
+type GetMyCommentsOutput {
+  ok: Boolean!
+  error: String
+  comments: [Comment!]
+}
+
+type GetMyLikesOutput {
+  ok: Boolean!
+  error: String
+  likes: [Like!]
+}
+
+type ToggleLikeOutput {
+  ok: Boolean!
+  error: String
+}
+
+type CreatePostOutput {
+  ok: Boolean!
+  error: String
+}
+
+type DeletePostOutput {
+  ok: Boolean!
+  error: String
+}
+
+type GetPostOutput {
+  ok: Boolean!
+  error: String
+  post: Post
+}
+
+type GetPostsOutput {
+  ok: Boolean!
+  error: String
+  posts: [Post!]
+}
+
+type UpdatePostOutput {
+  ok: Boolean!
+  error: String
+}
+
+type CreateMeetingOutput {
+  ok: Boolean!
+  error: String
+  meeting: Meeting
+}
+
+type DeleteMeetingOutput {
+  ok: Boolean!
+  error: String
+  deletedMeetingId: ID
+}
+
+type GetMeetingOutput {
+  ok: Boolean!
+  error: String
+  meeting: Meeting
+}
+
+type GetMeetingsOutput {
+  ok: Boolean!
+  error: String
+  meetings: [Meeting!]
+}
+
+type UpdateMeetingOutput {
+  ok: Boolean!
+  error: String
+  meeting: Meeting
+}
+
+type Query {
+  getUsers: GetUsersOutput!
+  getUser(input: GetUserInput!): GetUserOutput!
+  getMyInfo: GetUserOutput!
+  getPositions: GetPositionsOutput!
+  getUsersOfPosition(input: GetUsersOfPositionInput!): GetUsersOfPositionOutput!
+  getTeams: GetTeamsOutput!
+  getTeam(input: GetTeamInput!): GetTeamOutput!
+  getVacations: GetVacationsOutput!
+  getVacation(input: GetVacationInput!): GetVacationOutput!
+  getSurveys: GetSurveysOutput!
+  getSurvey(input: GetSurveyInput!): GetSurveyOutput!
+  getMyAnswers: GetMyAnswersOutput!
+  getAnswersOfSurvey(input: GetAnswersOfsurveyInput!): GetAnswersOfsurveyOutput!
+  getPosts: GetPostsOutput!
+  getPost(input: GetPostInput!): GetPostOutput!
+  getMyLikes: GetMyLikesOutput!
+  getMyComments: GetMyCommentsOutput!
+  getMeetings: GetMeetingsOutput!
+  getMeeting(input: GetMeetingInput!): GetMeetingOutput!
+}
+
+input GetUserInput {
+  id: ID!
+}
+
+input GetUsersOfPositionInput {
+  id: ID!
+}
+
+input GetTeamInput {
+  id: ID!
+}
+
+input GetVacationInput {
+  id: ID!
+}
+
+input GetSurveyInput {
+  id: ID!
+}
+
+input GetAnswersOfsurveyInput {
+  surveyId: ID!
+}
+
+input GetPostInput {
+  id: ID!
+}
+
+input GetMeetingInput {
+  id: ID!
+}
+
+type Mutation {
+  login(input: LoginInput!): LoginOutput!
+  createUser(input: CreateUserInput!): CreateUserOutput!
+  updateUser(input: UpdateUserInput!): UpdateUserOutput!
+  deleteUser(input: DeleteUserInput!): DeleteUserOutput!
+  createPosition(input: CreatePositionInput!): CreatePositionOutput!
+  updatePosition(input: UpdatePositionInput!): UpdatePositionOutput!
+  deletePosition(input: DeletePositionInput!): DeletePositionOutput!
+  createTeam(input: CreateTeamInput!): CreateTeamOutput!
+  nominateLeader(input: NominateLeaderInput!): NominateLeaderOutput!
+  updateTeam(input: UpdateTeamInput!): UpdateTeamOutput!
+  deleteTeam(input: DeleteTeamInput!): DeleteTeamOutput!
+  createVacation(input: CreateVacationInput!): CreateVacationOutput!
+  confirmVacation(input: ConfirmVacationInput!): ConfirmVacationOutput!
+  updateVacation(input: UpdateVacationInput!): UpdateVacationOutput!
+  deleteVacation(input: DeleteVacationInput!): DeleteVacationOutput!
+  createSurvey(input: CreateSurveyInput!): CreateSurveyOutput!
+  deleteSurvey(input: DeleteSurveyInput!): DeleteSurveyOutput!
+  createAnswer(input: CreateAnswerInput!): CreateAnswerOutput!
+  deleteAnswer(input: DeleteAnswerInput!): DeleteAnswerOutput!
+  createPost(input: CreatePostInput!): CreatePostOutput!
+  updatePost(input: UpdatePostInput!): UpdatePostOutput!
+  deletePost(input: DeletePostInput!): DeletePostOutput!
+  toggleLike(input: ToggleLikeInput!): ToggleLikeOutput!
+  createComment(input: CreateCommentInput!): CreateCommentOutput!
+  deleteComment(input: DeleteCommentInput!): DeleteCommentOutput!
+  createMeeting(input: CreateMeetingInput!): CreateMeetingOutput!
+  updateMeeting(input: UpdateMeetingInput!): UpdateMeetingOutput!
+  deleteMeeting(input: DeleteMeetingInput!): DeleteMeetingOutput!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+input CreateUserInput {
+  isManager: Boolean! = false
+  email: String!
+  name: String!
+  joinDate: DateTime!
+  positionId: ID!
+  teamId: ID!
+}
+
+input UpdateUserInput {
+  id: ID
+  isManager: Boolean = false
+  email: String
+  password: String
+  name: String
+  joinDate: DateTime
+  availableVacation: Float = 15
+  positionId: ID
+  teamId: ID
+}
+
+input DeleteUserInput {
+  id: ID!
+}
+
+input CreatePositionInput {
+  position: String!
+}
+
+input UpdatePositionInput {
+  id: ID!
+  position: String!
+}
+
+input DeletePositionInput {
+  id: ID!
+}
+
+input CreateTeamInput {
+  team: String!
+}
+
+input NominateLeaderInput {
+  id: ID!
+  userId: ID!
+}
+
+input UpdateTeamInput {
+  id: ID!
+  team: String!
+}
+
+input DeleteTeamInput {
+  id: ID!
+}
+
+input CreateVacationInput {
+  startDate: DateTime!
+  endDate: DateTime!
+  isHalf: Boolean! = false
+}
+
+input ConfirmVacationInput {
+  id: ID!
+}
+
+input UpdateVacationInput {
+  id: ID!
+  startDate: DateTime!
+  endDate: DateTime!
+  isHalf: Boolean! = false
+}
+
+input DeleteVacationInput {
+  id: ID!
+}
+
+input CreateSurveyInput {
+  surveyTitle: String!
+  isAnonymous: Boolean! = false
+  paragraphs: [SurveyFormInputType!]!
+}
+
+input SurveyFormInputType {
+  paragraphTitle: String!
+  description: String
+  multipleChoice: [String!]
+}
+
+input DeleteSurveyInput {
+  id: ID!
+}
+
+input CreateAnswerInput {
+  results: [String!]!
+  surveyId: ID!
+}
+
+input DeleteAnswerInput {
+  id: ID!
+}
+
+input CreatePostInput {
+  title: String!
+  content: String!
+}
+
+input UpdatePostInput {
+  id: ID!
+  title: String!
+  content: String!
+}
+
+input DeletePostInput {
+  id: ID!
+}
+
+input ToggleLikeInput {
+  postId: ID!
+}
+
+input CreateCommentInput {
+  content: String!
+  postId: ID!
+}
+
+input DeleteCommentInput {
+  id: ID!
+}
+
+input CreateMeetingInput {
+  title: String!
+  startTime: DateTime!
+  endTime: DateTime!
+  attendeesIds: [ID!]
+}
+
+input UpdateMeetingInput {
+  id: ID
+  title: String
+  startTime: DateTime
+  endTime: DateTime
+  attendeesIds: [ID!]
+}
+
+input DeleteMeetingInput {
+  id: ID!
+}

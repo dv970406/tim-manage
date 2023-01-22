@@ -43,7 +43,7 @@ export class PositionService {
   }
 
   async getUsersOfPosition({
-    _id: positionId,
+    id: positionId,
   }: GetUsersOfPositionInput): Promise<GetUsersOfPositionOutput> {
     try {
       const findPosition = await this.positionRepo.findPosition({ positionId });
@@ -78,7 +78,7 @@ export class PositionService {
   }
 
   async updatePosition({
-    _id: positionId,
+    id: positionId,
     position,
   }: UpdatePositionInput): Promise<UpdatePositionOutput> {
     try {
@@ -86,7 +86,7 @@ export class PositionService {
 
       await this.positionRepo.findPosition({ positionId });
 
-      await this.positionRepo.save([{ _id: positionId, position }]);
+      await this.positionRepo.save([{ id: positionId, position }]);
       return {
         ok: true,
       };
@@ -98,12 +98,12 @@ export class PositionService {
     }
   }
   async deletePosition({
-    _id: positionId,
+    id: positionId,
   }: DeletePositionInput): Promise<DeletePositionOutput> {
     try {
       await this.positionRepo.findPosition({ positionId });
 
-      await this.positionRepo.delete({ _id: positionId });
+      await this.positionRepo.delete({ id: positionId });
       return {
         ok: true,
       };

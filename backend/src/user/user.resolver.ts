@@ -8,7 +8,7 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 import { LoggedInUser } from 'src/auth/auth-user.decorator';
-import { ManagerGuard } from 'src/auth/auth.guard';
+import { LoginGuard, ManagerGuard } from 'src/auth/auth.guard';
 import { CreateUserInput, CreateUserOutput } from './dtos/create-user.dto';
 import { DeleteUserInput, DeleteUserOutput } from './dtos/delete-user.dto';
 import { GetMyInfoOutput } from './dtos/get-myInfo.dto';
@@ -34,7 +34,14 @@ export class UserResolver {
   }
 
   @Query((returns) => GetUserOutput)
+  @UseGuards(LoginGuard)
   getMyInfo(@LoggedInUser() loggedInUser: User): GetMyInfoOutput {
+    if (!loggedInUser) {
+      return {
+        ok: false,
+        error: '존재하지 않는 유저입니다.',
+      };
+    }
     return {
       ok: true,
       user: loggedInUser,

@@ -4,7 +4,7 @@ import { Post } from 'src/post/entities/post.entity';
 
 @InputType()
 export class UpdatePostInput extends PickType(Post, [
-  '_id',
+  'id',
   'title',
   'content',
 ]) {}

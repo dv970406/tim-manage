@@ -15,6 +15,22 @@ import { AuthModule } from './auth/auth.module';
 import { JwtModule } from './jwt/jwt.module';
 import * as Joi from 'joi';
 import { JwtMiddleware } from './jwt/jwt.middleware';
+import { PositionModule } from './position/position.module';
+import { TeamModule } from './team/team.module';
+import { VacationModule } from './vacation/vacation.module';
+import { Vacation } from './vacation/entities/vacation.entity';
+import { Team } from './team/entities/team.entity';
+import { Position } from './position/entities/position.entity';
+import { SurveyModule } from './survey/survey.module';
+import { PostModule } from './post/post.module';
+import { Post } from './post/entities/post.entity';
+import { Like } from './post/entities/like.entity';
+import { Comment } from './post/entities/comment.entity';
+import { Survey } from './survey/entities/survey.entity';
+import { Answer } from './survey/entities/answer.entity';
+import { join } from 'path';
+import { MeetingModule } from './meeting/meeting.module';
+import { Meeting } from './meeting/entities/meeting.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -33,8 +49,16 @@ import { JwtMiddleware } from './jwt/jwt.middleware';
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: true,
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       context: ({ req }) => ({ user: req['user'] }),
+      cors: {
+        origin: process.env.AUTHORIZED_ORIGIN,
+        credentials: true,
+      },
+      // 소수점 써야하는 것도 있는데 전부 정수로 만들어버려서 일단 주석
+      // buildSchemaOptions: {
+      //   numberScalarMode: 'integer',
+      // },
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -45,7 +69,18 @@ import { JwtMiddleware } from './jwt/jwt.middleware';
       database: process.env.DB_DATABASE,
       synchronize: process.env.NODE_ENV !== 'prod', // 개발환경에서는 계속 DB 동기화되게 설정
       logging: process.env.NODE_ENV !== 'prod', // DB에서 돌아가는 모든 로그 확인
-      entities: [User],
+      entities: [
+        User,
+        Vacation,
+        Team,
+        Position,
+        Post,
+        Like,
+        Comment,
+        Survey,
+        Answer,
+        Meeting,
+      ],
     }),
     UserModule,
     CoreModule,
@@ -53,6 +88,12 @@ import { JwtMiddleware } from './jwt/jwt.middleware';
     JwtModule.forRoot({
       privateKey: process.env.PRIVATE_KEY,
     }),
+    PositionModule,
+    TeamModule,
+    VacationModule,
+    SurveyModule,
+    PostModule,
+    MeetingModule,
   ],
   controllers: [],
   providers: [],

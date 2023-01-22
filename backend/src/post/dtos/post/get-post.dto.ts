@@ -3,7 +3,7 @@ import { CoreOutput } from 'src/core/dtos/core.dto';
 import { Post } from 'src/post/entities/post.entity';
 
 @InputType()
-export class GetPostInput extends PickType(Post, ['_id']) {}
+export class GetPostInput extends PickType(Post, ['id']) {}
 
 @ObjectType()
 export class GetPostOutput extends CoreOutput {

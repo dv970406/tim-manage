@@ -174,6 +174,8 @@ export class MeetingService {
         throw new Error('회의의 소유자가 아닙니다.');
       }
 
+      await this.meetingRepo.delete({ id: meetingId });
+
       return {
         ok: true,
         deletedMeetingId: meetingId,

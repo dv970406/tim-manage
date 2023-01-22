@@ -19,7 +19,7 @@ export class LikeService {
   async countLikes(post: Post): Promise<Number> {
     return this.likeRepo.countBy({
       post: {
-        _id: post._id,
+        id: post.id,
       },
     });
   }
@@ -28,10 +28,10 @@ export class LikeService {
     return this.likeRepo.exist({
       where: {
         post: {
-          _id: post._id,
+          id: post.id,
         },
         user: {
-          _id: loggedInUser._id,
+          id: loggedInUser.id,
         },
       },
     });
@@ -42,7 +42,7 @@ export class LikeService {
       const findLikes = await this.likeRepo.find({
         where: {
           user: {
-            _id: loggedInUser._id,
+            id: loggedInUser.id,
           },
         },
         order: { createdAt: 'DESC' },
@@ -70,11 +70,11 @@ export class LikeService {
       const findPost = await this.postRepo.findPost({ postId });
 
       const findLike = await this.likeRepo.findOneBy({
-        post: { _id: postId },
-        user: { _id: loggedInUser._id },
+        post: { id: postId },
+        user: { id: loggedInUser.id },
       });
       if (findLike) {
-        await this.likeRepo.delete({ _id: findLike._id });
+        await this.likeRepo.delete({ id: findLike.id });
       } else {
         await this.likeRepo.save({ user: loggedInUser, post: findPost });
       }
@@ -92,15 +92,15 @@ export class LikeService {
 
   // async deleteLike(
   //   loggedInUser: User,
-  //   { _id: likeId }: DeleteLikeInput,
+  //   { id: likeId }: DeleteLikeInput,
   // ): Promise<DeleteLikeOutput> {
   //   try {
   //     const findLike = await this.likeRepo.findLike({ likeId });
-  //     if (loggedInUser._id !== findLike.user._id) {
+  //     if (loggedInUser.id !== findLike.user.id) {
   //       throw new Error('좋아요의 소유자가 아닙니다.');
   //     }
 
-  //     await this.likeRepo.delete({ _id: likeId });
+  //     await this.likeRepo.delete({ id: likeId });
   //     return {
   //       ok: true,
   //     };
