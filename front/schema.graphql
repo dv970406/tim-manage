@@ -5,7 +5,7 @@ directive @specifiedBy(
 ) on SCALAR
 
 type Answer {
-  _id: Float!
+  id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
   survey: Survey!
@@ -14,7 +14,7 @@ type Answer {
 }
 
 type Comment {
-  _id: Float!
+  id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
   content: String!
@@ -29,7 +29,7 @@ type Confirm {
 }
 
 input ConfirmVacationInput {
-  _id: Float!
+  id: ID!
 }
 
 type ConfirmVacationOutput {
@@ -39,7 +39,7 @@ type ConfirmVacationOutput {
 
 input CreateAnswerInput {
   results: [String!]!
-  surveyId: Float!
+  surveyId: ID!
 }
 
 type CreateAnswerOutput {
@@ -49,12 +49,25 @@ type CreateAnswerOutput {
 
 input CreateCommentInput {
   content: String!
-  postId: Float!
+  postId: ID!
 }
 
 type CreateCommentOutput {
   ok: Boolean!
   error: String
+}
+
+input CreateMeetingInput {
+  title: String!
+  startTime: DateTime!
+  endTime: DateTime!
+  attendeesIds: [ID!]
+}
+
+type CreateMeetingOutput {
+  ok: Boolean!
+  error: String
+  meeting: Meeting
 }
 
 input CreatePositionInput {
@@ -99,11 +112,10 @@ type CreateTeamOutput {
 input CreateUserInput {
   isManager: Boolean! = false
   email: String!
-  password: String!
   name: String!
   joinDate: DateTime!
-  positionId: Float!
-  teamId: Float!
+  positionId: ID!
+  teamId: ID!
 }
 
 type CreateUserOutput {
@@ -113,13 +125,14 @@ type CreateUserOutput {
 
 input CreateVacationInput {
   startDate: DateTime!
-  finishDate: DateTime!
+  endDate: DateTime!
   isHalf: Boolean! = false
 }
 
 type CreateVacationOutput {
   ok: Boolean!
   error: String
+  vacation: Vacation
 }
 
 """
@@ -128,7 +141,7 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 input DeleteAnswerInput {
-  _id: Float!
+  id: ID!
 }
 
 type DeleteAnswerOutput {
@@ -137,7 +150,7 @@ type DeleteAnswerOutput {
 }
 
 input DeleteCommentInput {
-  _id: Float!
+  id: ID!
 }
 
 type DeleteCommentOutput {
@@ -145,8 +158,18 @@ type DeleteCommentOutput {
   error: String
 }
 
+input DeleteMeetingInput {
+  id: ID!
+}
+
+type DeleteMeetingOutput {
+  ok: Boolean!
+  error: String
+  deletedMeetingId: ID
+}
+
 input DeletePositionInput {
-  _id: Float!
+  id: ID!
 }
 
 type DeletePositionOutput {
@@ -155,7 +178,7 @@ type DeletePositionOutput {
 }
 
 input DeletePostInput {
-  _id: Float!
+  id: ID!
 }
 
 type DeletePostOutput {
@@ -164,7 +187,7 @@ type DeletePostOutput {
 }
 
 input DeleteSurveyInput {
-  _id: Float!
+  id: ID!
 }
 
 type DeleteSurveyOutput {
@@ -173,7 +196,7 @@ type DeleteSurveyOutput {
 }
 
 input DeleteTeamInput {
-  _id: Float!
+  id: ID!
 }
 
 type DeleteTeamOutput {
@@ -182,7 +205,7 @@ type DeleteTeamOutput {
 }
 
 input DeleteUserInput {
-  _id: Float!
+  id: ID!
 }
 
 type DeleteUserOutput {
@@ -191,22 +214,39 @@ type DeleteUserOutput {
 }
 
 input DeleteVacationInput {
-  _id: Float!
+  id: ID!
 }
 
 type DeleteVacationOutput {
   ok: Boolean!
   error: String
+  deletedVacationId: ID
 }
 
 input GetAnswersOfsurveyInput {
-  surveyId: Float!
+  surveyId: ID!
 }
 
 type GetAnswersOfsurveyOutput {
   ok: Boolean!
   error: String
   answers: [Answer!]
+}
+
+input GetMeetingInput {
+  id: ID!
+}
+
+type GetMeetingOutput {
+  ok: Boolean!
+  error: String
+  meeting: Meeting
+}
+
+type GetMeetingsOutput {
+  ok: Boolean!
+  error: String
+  meetings: [Meeting!]
 }
 
 type GetMyAnswersOutput {
@@ -234,7 +274,7 @@ type GetPositionsOutput {
 }
 
 input GetPostInput {
-  _id: Float!
+  id: ID!
 }
 
 type GetPostOutput {
@@ -250,7 +290,7 @@ type GetPostsOutput {
 }
 
 input GetSurveyInput {
-  _id: Float!
+  id: ID!
 }
 
 type GetSurveyOutput {
@@ -266,7 +306,7 @@ type GetSurveysOutput {
 }
 
 input GetTeamInput {
-  _id: Float!
+  id: ID!
 }
 
 type GetTeamOutput {
@@ -282,7 +322,7 @@ type GetTeamsOutput {
 }
 
 input GetUserInput {
-  _id: Float!
+  id: ID!
 }
 
 type GetUserOutput {
@@ -292,7 +332,7 @@ type GetUserOutput {
 }
 
 input GetUsersOfPositionInput {
-  _id: Float!
+  id: ID!
 }
 
 type GetUsersOfPositionOutput {
@@ -308,7 +348,7 @@ type GetUsersOutput {
 }
 
 input GetVacationInput {
-  _id: Float!
+  id: ID!
 }
 
 type GetVacationOutput {
@@ -324,7 +364,7 @@ type GetVacationsOutput {
 }
 
 type Like {
-  _id: Float!
+  id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
   user: User!
@@ -342,6 +382,17 @@ type LoginOutput {
   token: String
 }
 
+type Meeting {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  title: String!
+  startTime: DateTime!
+  endTime: DateTime!
+  attendees: [User!]!
+  host: User!
+}
+
 type Mutation {
   login(input: LoginInput!): LoginOutput!
   createUser(input: CreateUserInput!): CreateUserOutput!
@@ -356,6 +407,7 @@ type Mutation {
   deleteTeam(input: DeleteTeamInput!): DeleteTeamOutput!
   createVacation(input: CreateVacationInput!): CreateVacationOutput!
   confirmVacation(input: ConfirmVacationInput!): ConfirmVacationOutput!
+  updateVacation(input: UpdateVacationInput!): UpdateVacationOutput!
   deleteVacation(input: DeleteVacationInput!): DeleteVacationOutput!
   createSurvey(input: CreateSurveyInput!): CreateSurveyOutput!
   deleteSurvey(input: DeleteSurveyInput!): DeleteSurveyOutput!
@@ -367,11 +419,14 @@ type Mutation {
   toggleLike(input: ToggleLikeInput!): ToggleLikeOutput!
   createComment(input: CreateCommentInput!): CreateCommentOutput!
   deleteComment(input: DeleteCommentInput!): DeleteCommentOutput!
+  createMeeting(input: CreateMeetingInput!): CreateMeetingOutput!
+  updateMeeting(input: UpdateMeetingInput!): UpdateMeetingOutput!
+  deleteMeeting(input: DeleteMeetingInput!): DeleteMeetingOutput!
 }
 
 input NominateLeaderInput {
-  _id: Float!
-  userId: Float!
+  id: ID!
+  userId: ID!
 }
 
 type NominateLeaderOutput {
@@ -380,7 +435,7 @@ type NominateLeaderOutput {
 }
 
 type Position {
-  _id: Float!
+  id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
   position: String!
@@ -388,7 +443,7 @@ type Position {
 }
 
 type Post {
-  _id: Float!
+  id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
   title: String!
@@ -419,10 +474,12 @@ type Query {
   getPost(input: GetPostInput!): GetPostOutput!
   getMyLikes: GetMyLikesOutput!
   getMyComments: GetMyCommentsOutput!
+  getMeetings: GetMeetingsOutput!
+  getMeeting(input: GetMeetingInput!): GetMeetingOutput!
 }
 
 type Survey {
-  _id: Float!
+  id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
   surveyTitle: String!
@@ -445,7 +502,7 @@ input SurveyFormInputType {
 }
 
 type Team {
-  _id: Float!
+  id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
   team: String!
@@ -454,7 +511,7 @@ type Team {
 }
 
 input ToggleLikeInput {
-  postId: Float!
+  postId: ID!
 }
 
 type ToggleLikeOutput {
@@ -462,8 +519,22 @@ type ToggleLikeOutput {
   error: String
 }
 
+input UpdateMeetingInput {
+  title: String
+  startTime: DateTime
+  endTime: DateTime
+  meetingId: ID!
+  attendeesIds: [ID!]
+}
+
+type UpdateMeetingOutput {
+  ok: Boolean!
+  error: String
+  meeting: Meeting
+}
+
 input UpdatePositionInput {
-  _id: Float!
+  id: ID!
   position: String!
 }
 
@@ -473,7 +544,7 @@ type UpdatePositionOutput {
 }
 
 input UpdatePostInput {
-  _id: Float!
+  id: ID!
   title: String!
   content: String!
 }
@@ -484,7 +555,7 @@ type UpdatePostOutput {
 }
 
 input UpdateTeamInput {
-  _id: Float!
+  id: ID!
   team: String!
 }
 
@@ -494,15 +565,15 @@ type UpdateTeamOutput {
 }
 
 input UpdateUserInput {
-  _id: Float
   isManager: Boolean = false
   email: String
   password: String
   name: String
   joinDate: DateTime
   availableVacation: Float = 15
-  positionId: Float
-  teamId: Float
+  userId: ID!
+  positionId: ID
+  teamId: ID
 }
 
 type UpdateUserOutput {
@@ -510,8 +581,21 @@ type UpdateUserOutput {
   error: String
 }
 
+input UpdateVacationInput {
+  startDate: DateTime
+  endDate: DateTime
+  isHalf: Boolean = false
+  vacationId: ID!
+}
+
+type UpdateVacationOutput {
+  ok: Boolean!
+  error: String
+  vacation: Vacation
+}
+
 type User {
-  _id: Float!
+  id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
   isManager: Boolean!
@@ -521,6 +605,8 @@ type User {
   joinDate: DateTime!
   availableVacation: Float!
   vacations: [Vacation!]!
+  attendedMeetings: [Meeting!]!
+  hostedMeetingsByMe: [Meeting!]!
   position: Position!
   team: Team!
   posts: [Post!]!
@@ -531,11 +617,11 @@ type User {
 }
 
 type Vacation {
-  _id: Float!
+  id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
   startDate: DateTime!
-  finishDate: DateTime!
+  endDate: DateTime!
   isHalf: Boolean!
   duration: Float!
   confirmed: Confirm!

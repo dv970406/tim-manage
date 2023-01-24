@@ -1,6 +1,11 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useEffect } from "react";
-import { useLazyLoadQuery } from "react-relay";
+import {
+  PreloadedQuery,
+  useLazyLoadQuery,
+  usePreloadedQuery,
+  useQueryLoader,
+} from "react-relay";
 import { GetUserQuery } from "./__generated__/GetUserQuery.graphql";
 
 export const getUserQuery = graphql`
@@ -18,16 +23,17 @@ export const getUserQuery = graphql`
   }
 `;
 
-export const useGetUser = (userId: string) => {
+export const useGetUser = (
+  getUserQueryReference: PreloadedQuery<GetUserQuery>
+) => {
   const {
-    getUser: { ok, error, user },
-  } = useLazyLoadQuery<GetUserQuery>(getUserQuery, {
-    id: userId,
-  });
-
-  useEffect(() => {
-    if (!ok) alert(error);
-  }, [ok]);
+    getUser: { user },
+  } = usePreloadedQuery<GetUserQuery>(getUserQuery, getUserQueryReference);
+  // const {
+  //   getUser: { ok, error, user },
+  // } = useLazyLoadQuery<GetUserQuery>(getUserQuery, {
+  //   id: userId,
+  // });
 
   return { user };
 };

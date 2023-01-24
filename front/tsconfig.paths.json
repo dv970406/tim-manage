@@ -1,0 +1,9 @@
+// 타입스크립트 절대경로 적용을 위해 해놨는데 잘안되므로 일단 보류
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@__generated__/*": ["src/__generated__/*"]
+    }
+  }
+}
