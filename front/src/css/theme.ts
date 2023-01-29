@@ -107,4 +107,7 @@ export const globalStyles = css`
   p {
     margin: 0;
   }
+  li {
+    list-style: none;
+  }
 `;

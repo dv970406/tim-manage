@@ -1,25 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { RelayEnvironmentProvider } from "react-relay";
-import { ThemeProvider, Global } from "@emotion/react";
-import { environment } from "./client/client";
-import { globalStyles, theme } from "./css/theme";
-import { RecoilRoot } from "recoil";
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
-    <RelayEnvironmentProvider environment={environment}>
-      <RecoilRoot>
-        <ThemeProvider theme={theme}>
-          <Global styles={globalStyles} />
-          <App />
-        </ThemeProvider>
-      </RecoilRoot>
-    </RelayEnvironmentProvider>
+    <App />
   </React.StrictMode>
 );
 

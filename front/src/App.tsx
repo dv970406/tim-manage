@@ -1,42 +1,68 @@
+import { Global, ThemeProvider } from "@emotion/react";
+import { useState } from "react";
+import { RelayEnvironmentProvider } from "react-relay";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { environment } from "./client/client";
+import { globalStyles, theme } from "./css/theme";
+import ErrorPage from "./pages/Error";
 import Error from "./pages/Error";
-import Home from "./pages/Home";
+import HomePage from "./pages/Home";
 import Layout from "./pages/Layout";
-import Login from "./pages/Login";
-import SurveyDetail from "./pages/survey/SurveyDetail";
-import Surveys from "./pages/survey/Surveys";
-import UserDetail from "./pages/user/UserDetail";
+import LoginPage from "./pages/Login";
+import SurveyDetailPage from "./pages/survey/SurveyDetail";
+import SurveysPage from "./pages/survey/Surveys";
+import JoinPage from "./pages/user/Join";
+import UserDetailPage from "./pages/user/UserDetail";
+import UsersPage from "./pages/user/Users";
+import { ModalContext } from "./utils/modal/modal.context";
 
+// 접근제한 라우터는 나중에 고민
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
-    errorElement: <Error />,
-    children: [{ index: true, element: <Home /> }],
+    errorElement: <ErrorPage />,
+    children: [{ index: true, element: <HomePage /> }],
   },
   {
     path: "/login",
     errorElement: <Error />,
-    element: <Login />,
+    element: <LoginPage />,
   },
   {
     path: "/user",
     element: <Layout />,
-    errorElement: <Error />,
-    children: [{ path: ":userId", element: <UserDetail /> }],
+    errorElement: <ErrorPage />,
+
+    children: [
+      { path: ":userId", element: <UserDetailPage /> },
+      { path: "join", element: <JoinPage /> },
+      { index: true, element: <UsersPage /> },
+    ],
   },
   {
     path: "/survey",
     element: <Layout />,
     errorElement: <Error />,
     children: [
-      { index: true, element: <Surveys /> },
-      { path: ":surveyId", element: <SurveyDetail /> },
+      { index: true, element: <SurveysPage /> },
+      { path: ":surveyId", element: <SurveyDetailPage /> },
     ],
   },
 ]);
 function App() {
-  return <RouterProvider router={router} />;
+  const [currentModal, setCurrentModal] = useState("");
+
+  return (
+    <RelayEnvironmentProvider environment={environment}>
+      <ThemeProvider theme={theme}>
+        <Global styles={globalStyles} />
+        <ModalContext.Provider value={{ currentModal, setCurrentModal }}>
+          <RouterProvider router={router} />
+        </ModalContext.Provider>
+      </ThemeProvider>
+    </RelayEnvironmentProvider>
+  );
 }
 
 export default App;
