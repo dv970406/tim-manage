@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<559e8763c07c1cb9b7fa9c4f716dd9ff>>
+ * @generated SignedSource<<932df58601b3305678e755540e6817b6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,10 +18,7 @@ export type GetUserQuery$data = {
     readonly error: string | null;
     readonly ok: boolean;
     readonly user: {
-      readonly email: string;
-      readonly id: string;
-      readonly name: string;
-      readonly " $fragmentSpreads": FragmentRefs<"UserList_user">;
+      readonly " $fragmentSpreads": FragmentRefs<"DefaultUserInfoFragment_user">;
     } | null;
   };
 };
@@ -64,27 +61,6 @@ v3 = {
   "kind": "ScalarField",
   "name": "error",
   "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "email",
-  "storageKey": null
 };
 return {
   "fragment": {
@@ -111,13 +87,10 @@ return {
             "name": "user",
             "plural": false,
             "selections": [
-              (v4/*: any*/),
-              (v5/*: any*/),
-              (v6/*: any*/),
               {
                 "args": null,
                 "kind": "FragmentSpread",
-                "name": "UserList_user"
+                "name": "DefaultUserInfoFragment_user"
               }
             ],
             "storageKey": null
@@ -153,14 +126,25 @@ return {
             "name": "user",
             "plural": false,
             "selections": [
-              (v4/*: any*/),
-              (v5/*: any*/),
-              (v6/*: any*/),
               {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "joinDate",
+                "name": "id",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "name",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "email",
                 "storageKey": null
               }
             ],
@@ -172,16 +156,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7bc9a67559b41c51b38ae5f59ba1b0f6",
+    "cacheID": "ba6892945404c6f75b4f8e89a947011d",
     "id": null,
     "metadata": {},
     "name": "GetUserQuery",
     "operationKind": "query",
-    "text": "query GetUserQuery(\n  $id: ID!\n) {\n  getUser(input: {id: $id}) {\n    ok\n    error\n    user {\n      id\n      name\n      email\n      ...UserList_user\n    }\n  }\n}\n\nfragment UserList_user on User {\n  joinDate\n}\n"
+    "text": "query GetUserQuery(\n  $id: ID!\n) {\n  getUser(input: {id: $id}) {\n    ok\n    error\n    user {\n      ...DefaultUserInfoFragment_user\n      id\n    }\n  }\n}\n\nfragment DefaultUserInfoFragment_user on User {\n  id\n  name\n  email\n}\n"
   }
 };
 })();
 
-(node as any).hash = "8e69af1c3713ea2c81886cdd7287b428";
+(node as any).hash = "3d63292deaa6b928dd3ebc77ffb3b3da";
 
 export default node;

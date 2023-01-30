@@ -26,9 +26,15 @@ const getMeetingQuery = graphql`
 `;
 
 export const useGetMeeting = (meetingId: string) => {
-  const { getMeeting } = useLazyLoadQuery<GetMeetingQuery>(getMeetingQuery, {
+  const {
+    getMeeting: { ok, error, meeting },
+  } = useLazyLoadQuery<GetMeetingQuery>(getMeetingQuery, {
     id: meetingId,
   });
 
-  return getMeeting;
+  if (!ok) {
+    alert(error);
+  }
+
+  return { meeting };
 };

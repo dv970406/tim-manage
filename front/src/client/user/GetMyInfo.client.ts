@@ -1,13 +1,7 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useEffect } from "react";
-import {
-  loadQuery,
-  PreloadedQuery,
-  useLazyLoadQuery,
-  usePreloadedQuery,
-} from "react-relay";
+import { useLazyLoadQuery } from "react-relay";
 import { useNavigate } from "react-router-dom";
-import { environment } from "../client";
 import { GetMyInfoQuery } from "./__generated__/GetMyInfoQuery.graphql";
 
 export const getMyInfoQuery = graphql`
@@ -33,16 +27,18 @@ export const getMyInfoQuery = graphql`
 //   {}
 // );
 export const useGetMyInfo = () => {
-  const { getMyInfo } = useLazyLoadQuery<GetMyInfoQuery>(getMyInfoQuery, {});
+  const {
+    getMyInfo: { ok, error, user: myInfo },
+  } = useLazyLoadQuery<GetMyInfoQuery>(getMyInfoQuery, {});
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!getMyInfo.ok) {
+    if (!ok) {
       localStorage.removeItem("TOKEN");
       navigate("/login");
       window.location.reload();
     }
-  }, [getMyInfo.ok]);
-  return { getMyInfo };
+  }, [ok]);
+  return { myInfo };
 };

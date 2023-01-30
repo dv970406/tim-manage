@@ -60,7 +60,12 @@ export const useUpdateVacation = () => {
     commitMutation<UpdateVacationMutation>(environment, {
       mutation: updateVacationQuery,
       variables,
-      onCompleted: () => setIsLoading(false),
+      onCompleted: ({ updateVacation: { ok, error } }) => {
+        if (!ok) {
+          alert(error);
+        }
+        setIsLoading(false);
+      },
     });
   };
 

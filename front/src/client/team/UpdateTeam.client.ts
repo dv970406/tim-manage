@@ -1,8 +1,13 @@
 import { graphql } from "babel-plugin-relay/macro";
-import { useMutation } from "react-relay";
-import { UpdateTeamMutation } from "./__generated__/UpdateTeamMutation.graphql";
+import { useState } from "react";
+import { commitMutation, useMutation } from "react-relay";
+import { environment } from "../client";
+import {
+  UpdateTeamMutation,
+  UpdateTeamMutation$variables,
+} from "./__generated__/UpdateTeamMutation.graphql";
 
-const updateTeam = graphql`
+const updateTeamQuery = graphql`
   mutation UpdateTeamMutation($id: ID!, $team: String!) {
     updateTeam(input: { id: $id, team: $team }) {
       ok
@@ -12,7 +17,21 @@ const updateTeam = graphql`
 `;
 
 export const useUpdateTeam = () => {
-  const data = useMutation<UpdateTeamMutation>(updateTeam);
+  const [updateTeamLoading, setIsLoading] = useState(false);
 
-  return data;
+  const updateTeamMutation = (variables: UpdateTeamMutation$variables) => {
+    setIsLoading(true);
+    commitMutation<UpdateTeamMutation>(environment, {
+      mutation: updateTeamQuery,
+      variables,
+      onCompleted: ({ updateTeam: { ok, error } }) => {
+        if (!ok) {
+          alert(error);
+        }
+        setIsLoading(false);
+      },
+    });
+  };
+
+  return { updateTeamMutation, updateTeamLoading };
 };

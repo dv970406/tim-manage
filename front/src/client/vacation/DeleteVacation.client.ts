@@ -27,7 +27,12 @@ export const useDeleteVacation = () => {
     commitMutation<DeleteVacationMutation>(environment, {
       mutation: deleteVacationQuery,
       variables,
-      onCompleted: () => setIsLoading(false),
+      onCompleted: ({ deleteVacation: { ok, error } }) => {
+        if (!ok) {
+          alert(error);
+        }
+        setIsLoading(false);
+      },
     });
   };
 

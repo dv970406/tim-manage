@@ -1,8 +1,13 @@
 import { graphql } from "babel-plugin-relay/macro";
-import { useMutation } from "react-relay";
-import { NominateLeaderMutation } from "./__generated__/NominateLeaderMutation.graphql";
+import { useState } from "react";
+import { commitMutation, useMutation } from "react-relay";
+import { environment } from "../client";
+import {
+  NominateLeaderMutation,
+  NominateLeaderMutation$variables,
+} from "./__generated__/NominateLeaderMutation.graphql";
 
-const nominateLeader = graphql`
+const nominateLeaderQuery = graphql`
   mutation NominateLeaderMutation($id: ID!, $userId: ID!) {
     nominateLeader(input: { id: $id, userId: $userId }) {
       ok
@@ -12,7 +17,23 @@ const nominateLeader = graphql`
 `;
 
 export const useNominateLeader = () => {
-  const data = useMutation<NominateLeaderMutation>(nominateLeader);
+  const [nominateLeaderLoading, setIsLoading] = useState(false);
 
-  return data;
+  const nominateLeaderMutation = (
+    variables: NominateLeaderMutation$variables
+  ) => {
+    setIsLoading(true);
+    commitMutation<NominateLeaderMutation>(environment, {
+      mutation: nominateLeaderQuery,
+      variables,
+      onCompleted: ({ nominateLeader: { ok, error } }) => {
+        if (!ok) {
+          alert(error);
+        }
+        setIsLoading(false);
+      },
+    });
+  };
+
+  return { nominateLeaderMutation, nominateLeaderLoading };
 };

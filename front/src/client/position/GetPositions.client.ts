@@ -2,7 +2,7 @@ import { graphql } from "babel-plugin-relay/macro";
 import { useLazyLoadQuery } from "react-relay";
 import { GetPositionsQuery } from "./__generated__/GetPositionsQuery.graphql";
 
-const positions = graphql`
+const getPositionsQuery = graphql`
   query GetPositionsQuery {
     getPositions {
       ok
@@ -16,7 +16,12 @@ const positions = graphql`
 `;
 
 export const useGetPositions = () => {
-  const { getPositions } = useLazyLoadQuery<GetPositionsQuery>(positions, {});
+  const {
+    getPositions: { ok, error, positions },
+  } = useLazyLoadQuery<GetPositionsQuery>(getPositionsQuery, {});
 
-  return getPositions;
+  if (!ok) {
+    alert(error);
+  }
+  return { positions };
 };

@@ -1,8 +1,13 @@
 import { graphql } from "babel-plugin-relay/macro";
-import { useMutation } from "react-relay";
-import { CreateTeamMutation } from "./__generated__/CreateTeamMutation.graphql";
+import { useState } from "react";
+import { commitMutation, useMutation } from "react-relay";
+import { environment } from "../client";
+import {
+  CreateTeamMutation,
+  CreateTeamMutation$variables,
+} from "./__generated__/CreateTeamMutation.graphql";
 
-const createTeam = graphql`
+const createTeamQuery = graphql`
   mutation CreateTeamMutation($team: String!) {
     createTeam(input: { team: $team }) {
       ok
@@ -12,7 +17,36 @@ const createTeam = graphql`
 `;
 
 export const useCreateTeam = () => {
-  const data = useMutation<CreateTeamMutation>(createTeam);
+  const [createTeamLoading, setIsLoading] = useState(false);
 
-  return data;
+  const createTeamMutation = (variables: CreateTeamMutation$variables) => {
+    setIsLoading(true);
+    commitMutation<CreateTeamMutation>(environment, {
+      mutation: createTeamQuery,
+      variables,
+      updater: (proxyStore, response) => {
+        const addTeamPayload = proxyStore
+          .getRootField("createTeam")
+          .getLinkedRecord("team");
+
+        if (!addTeamPayload) return;
+
+        const rootGetTeams = proxyStore.get("client:root:getTeams");
+
+        const oldTeams = rootGetTeams?.getLinkedRecords("teams");
+        if (!oldTeams) return;
+
+        rootGetTeams?.setLinkedRecords([addTeamPayload, ...oldTeams], "teams");
+      },
+
+      onCompleted: ({ createTeam: { ok, error } }) => {
+        if (!ok) {
+          alert(error);
+        }
+        setIsLoading(false);
+      },
+    });
+  };
+
+  return { createTeamMutation, createTeamLoading };
 };

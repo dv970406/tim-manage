@@ -1,10 +1,12 @@
 import { graphql } from "babel-plugin-relay/macro";
-import { useEffect } from "react";
-import { useMutation } from "react-relay";
+import { useEffect, useState } from "react";
+import { commitMutation, useMutation } from "react-relay";
 import { NavigateFunction, useNavigate } from "react-router-dom";
+import { environment } from "../client";
 import {
   LoginMutation,
   LoginMutation$data,
+  LoginMutation$variables,
 } from "./__generated__/LoginMutation.graphql";
 
 const loginQuery = graphql`
@@ -18,21 +20,28 @@ const loginQuery = graphql`
 `;
 
 export const useLogin = () => {
-  const [loginMutate, loginLoading] = useMutation<LoginMutation>(loginQuery);
-
+  const [loginLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const saveToken = ({ login: { ok, token, error } }: LoginMutation$data) => {
-    if (!ok || !token) {
-      alert(error);
-      return;
-    }
+  const loginMutation = (variables: LoginMutation$variables) => {
+    setIsLoading(true);
+    commitMutation<LoginMutation>(environment, {
+      mutation: loginQuery,
+      variables,
 
-    localStorage.setItem("TOKEN", token);
-    // 홈으로 푸시
-    navigate("/");
+      onCompleted: ({ login: { ok, error, token } }) => {
+        if (!ok || !token) {
+          alert(error);
+          return;
+        }
+        localStorage.setItem("TOKEN", token);
+        // 홈으로 푸시
+        navigate("/");
+        setIsLoading(false);
+      },
+    });
   };
 
-  return { loginMutate, loginLoading, saveToken };
+  return { loginMutation, loginLoading };
 };
 
 // export const saveToken = (

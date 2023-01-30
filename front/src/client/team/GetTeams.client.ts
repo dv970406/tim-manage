@@ -16,7 +16,11 @@ const getTeamsQuery = graphql`
 `;
 
 export const useGetTeams = () => {
-  const { getTeams } = useLazyLoadQuery<GetTeamsQuery>(getTeamsQuery, {});
-
-  return getTeams;
+  const {
+    getTeams: { ok, error, teams },
+  } = useLazyLoadQuery<GetTeamsQuery>(getTeamsQuery, {});
+  if (!ok) {
+    alert(error);
+  }
+  return { teams };
 };

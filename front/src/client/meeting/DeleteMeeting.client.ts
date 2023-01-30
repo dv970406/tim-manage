@@ -27,7 +27,12 @@ export const useDeleteMeeting = () => {
     commitMutation<DeleteMeetingMutation>(environment, {
       mutation: deleteMeetingQuery,
       variables,
-      onCompleted: () => setIsLoading(false),
+      onCompleted: ({ deleteMeeting: { ok, error } }) => {
+        if (!ok) {
+          alert(error);
+        }
+        setIsLoading(false);
+      },
     });
   };
 

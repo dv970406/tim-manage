@@ -1,8 +1,13 @@
 import { graphql } from "babel-plugin-relay/macro";
-import { useMutation } from "react-relay";
-import { DeleteUserMutation } from "./__generated__/DeleteUserMutation.graphql";
+import { useState } from "react";
+import { commitMutation, useMutation } from "react-relay";
+import { environment } from "../client";
+import {
+  DeleteUserMutation,
+  DeleteUserMutation$variables,
+} from "./__generated__/DeleteUserMutation.graphql";
 
-const deleteUser = graphql`
+const deleteUserQuery = graphql`
   mutation DeleteUserMutation($id: ID!) {
     deleteUser(input: { id: $id }) {
       ok
@@ -12,7 +17,21 @@ const deleteUser = graphql`
 `;
 
 export const useDeleteUser = () => {
-  const data = useMutation<DeleteUserMutation>(deleteUser);
+  const [deleteUserLoading, setIsLoading] = useState(false);
 
-  return data;
+  const deleteUserMutation = (variables: DeleteUserMutation$variables) => {
+    setIsLoading(true);
+    commitMutation<DeleteUserMutation>(environment, {
+      mutation: deleteUserQuery,
+      variables,
+      onCompleted: ({ deleteUser: { ok, error } }) => {
+        if (!ok) {
+          alert(error);
+        }
+        setIsLoading(false);
+      },
+    });
+  };
+
+  return { deleteUserMutation, deleteUserLoading };
 };

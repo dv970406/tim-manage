@@ -1,8 +1,6 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useEffect, useState } from "react";
 import { commitMutation } from "react-relay";
-import { useSetRecoilState } from "recoil";
-import { modalStateRecoil } from "../../utils/recoil/modal.recoil";
 import { environment } from "../client";
 import {
   CreateVacationMutation,
@@ -40,12 +38,6 @@ const createVacationQuery = graphql`
   }
 `;
 
-// export const useCreateVacation = () => {
-//   const mutate = useMutation<CreateVacationMutation>(createVacationQuery);
-
-//   return mutate;
-// };
-
 export const useCreateVacation = () => {
   const [createVacationLoading, setIsLoading] = useState(false);
 
@@ -74,7 +66,12 @@ export const useCreateVacation = () => {
         );
       },
 
-      onCompleted: () => setIsLoading(false),
+      onCompleted: ({ createVacation: { ok, error } }) => {
+        if (!ok) {
+          alert(error);
+        }
+        setIsLoading(false);
+      },
     });
   };
 

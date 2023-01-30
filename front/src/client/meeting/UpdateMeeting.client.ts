@@ -54,7 +54,12 @@ export const useUpdateMeeting = () => {
     commitMutation<UpdateMeetingMutation>(environment, {
       mutation: updateMeetingQuery,
       variables,
-      onCompleted: () => setIsLoading(false),
+      onCompleted: ({ updateMeeting: { ok, error } }) => {
+        if (!ok) {
+          alert(error);
+        }
+        setIsLoading(false);
+      },
     });
   };
 

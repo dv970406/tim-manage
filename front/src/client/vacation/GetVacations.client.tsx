@@ -9,9 +9,10 @@ import {
   useQueryLoader,
 } from "react-relay";
 import { theme } from "../../css/theme";
-import { environment } from "../client";
+import { homeVacationsQuery } from "../../pages/Home";
+import { HomeVacationsQuery } from "../../pages/__generated__/HomeVacationsQuery.graphql";
+import { SCHEDULES } from "../../utils/modal/modal.constants";
 import { useGetMyInfo } from "../user/GetMyInfo.client";
-import { GetVacationsQuery } from "./__generated__/GetVacationsQuery.graphql";
 
 const vacationsFragment = graphql`
   fragment GetVacations_vacation on Vacation {
@@ -57,32 +58,31 @@ export const getVacationsQuery = graphql`
   }
 `;
 
-const getVacationsQueryReference = loadQuery<GetVacationsQuery>(
-  environment,
-  getVacationsQuery,
-  {}
-);
-export const useGetVacations = () => {
-  const { getVacations } = usePreloadedQuery<GetVacationsQuery>(
-    getVacationsQuery,
-    getVacationsQueryReference
+export const useGetVacations = (
+  homeVacationsQueryReference: PreloadedQuery<HomeVacationsQuery>
+) => {
+  const {
+    getVacations: { ok, error, vacations },
+  } = usePreloadedQuery<HomeVacationsQuery>(
+    homeVacationsQuery,
+    homeVacationsQueryReference
   );
   // 페칭한 vacations 데이터를 달력 라이브러리 포맷에 맞게 변환하는 로직
   const [vacationsByCalendarFormat, setCalendarFormat] = useState<EventInput[]>(
     []
   );
 
-  const {
-    getMyInfo: { user: loggedInUser },
-  } = useGetMyInfo();
+  const { myInfo } = useGetMyInfo();
 
   useEffect(() => {
-    if (!getVacations) return;
-    const getCalendarFormat: EventInput[] = getVacations?.vacations
+    if (!ok) {
+      return alert(error);
+    }
+    const getCalendarFormat: EventInput[] = vacations
       ?.filter((vacation) => !!vacation)
       .map((vacation) => {
         const { byCeo, byLeader, byManager } = vacation?.confirmed;
-        const isMine = vacation.user.id === loggedInUser?.id;
+        const isMine = vacation.user.id === myInfo?.id;
         const approved = byCeo && byLeader && byManager;
 
         // 만약 미승인 + 내 휴가가 아니라면 리스트에 포함 안시킴
@@ -100,15 +100,15 @@ export const useGetVacations = () => {
             isMine && !approved ? theme.disabled.green : theme.colors.green,
           title: vacation.isHalf ? "반차" : "연차",
           user: vacation.user,
-          type: "vacation",
+          type: SCHEDULES.VACATION,
           // 반차, 연차 모두 allday로
           allDay: true,
           editable: isMine,
           visible: !isMine && !approved ? false : true,
-          borderColor: isMine ? "red" : "none",
+          borderColor: isMine ? theme.colors.yellow : "transparent",
         };
       })!;
     setCalendarFormat(getCalendarFormat);
-  }, [getVacations]);
+  }, [ok]);
   return { vacationsByCalendarFormat, setCalendarFormat };
 };

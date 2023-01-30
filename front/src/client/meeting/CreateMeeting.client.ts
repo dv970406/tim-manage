@@ -76,7 +76,12 @@ export const useCreateMeeting = () => {
         );
       },
 
-      onCompleted: () => setIsLoading(false),
+      onCompleted: ({ createMeeting: { ok, error } }) => {
+        if (!ok) {
+          alert(error);
+        }
+        setIsLoading(false);
+      },
     });
   };
 
