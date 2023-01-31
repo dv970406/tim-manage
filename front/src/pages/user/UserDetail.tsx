@@ -1,5 +1,6 @@
+import { graphql } from "babel-plugin-relay/macro";
 import { Suspense, useEffect } from "react";
-import { PreloadedQuery, useQueryLoader } from "react-relay";
+import { PreloadedQuery, usePreloadedQuery, useQueryLoader } from "react-relay";
 import { useParams } from "react-router-dom";
 import { getUserQuery, useGetUser } from "../../client/user/GetUser.client";
 import { GetUserQuery } from "../../client/user/__generated__/GetUserQuery.graphql";
@@ -7,12 +8,12 @@ import { GetUserQuery } from "../../client/user/__generated__/GetUserQuery.graph
 const UserDetailPage = () => {
   const { userId } = useParams();
 
-  const [getUserQueryReference, loadGetUserQuery] =
+  const [getUserQueryReference, loadUserQuery] =
     useQueryLoader<GetUserQuery>(getUserQuery);
 
   useEffect(() => {
     if (!userId) return;
-    loadGetUserQuery({ id: userId });
+    loadUserQuery({ id: userId });
   }, []);
   return (
     <Suspense fallback="Loading...">
@@ -28,6 +29,8 @@ interface IUserDetail {
 }
 const UserDetail = ({ getUserQueryReference }: IUserDetail) => {
   const { user } = useGetUser(getUserQueryReference);
+
+  console.log(user);
   return <div>{user?.email}</div>;
 };
 
