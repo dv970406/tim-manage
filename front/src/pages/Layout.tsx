@@ -5,22 +5,32 @@ import Main from "../components/templates/Main";
 import Content from "../components/templates/Content";
 import { Outlet } from "react-router-dom";
 import React, { Suspense, useEffect, lazy } from "react";
-
-const Header = React.lazy(() => import("../components/templates/Header"));
+import AdminTool from "../components/templates/AdminTool";
+import { useGetMyInfo } from "../client/user/GetMyInfo.client";
+import Header from "../components/templates/Header";
 
 export default function Layout() {
+  // TemplatesLayout에서 useGetMyInfo 비동기처리할 동안 Suspense 걸어줘야 에러 안남
+  return (
+    <Suspense>
+      <TemplatesLayout />
+    </Suspense>
+  );
+}
+
+function TemplatesLayout() {
+  const { myInfo } = useGetMyInfo();
+
   return (
     <Body>
-      <SideBar />
+      <SideBar isManager={myInfo?.isManager} />
       <Main>
-        <Suspense fallback={"유저 정보를 가져오는 중입니다."}>
-          <Header />
-        </Suspense>
-        <Suspense fallback={<h1>dsa!!!!!@@@@</h1>}>
-          <Content>
-            <Outlet /* context={user} */ />
-          </Content>
-        </Suspense>
+        <Header myId={myInfo?.id} />
+
+        <Content>
+          <Outlet /* context={user} */ />
+        </Content>
+        {myInfo?.isManager && <AdminTool />}
       </Main>
     </Body>
   );

@@ -6,7 +6,10 @@ export interface IBgColors {
   green: string;
   red: string;
   gray: string;
+  lightgray: string;
   purple: string;
+  yellow: string;
+  blue: string;
 }
 export interface IHoverColors {
   purple: string;
@@ -16,7 +19,10 @@ export interface IColors {
   green: string;
   red: string;
   gray: string;
+  lightgray: string;
   purple: string;
+  yellow: string;
+  blue: string;
 }
 
 export interface IDisabled extends IColors {
