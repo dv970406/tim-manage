@@ -74,12 +74,13 @@ type Survey {
   paragraphs: [SurveyForm!]!
   answers: [Answer!]!
   user: User!
+  isAnswered: Boolean!
 }
 
 type SurveyForm {
   paragraphTitle: String!
   description: String
-  multipleChoice: [String!]
+  multipleChoice: [String!]!
 }
 
 type Answer {
@@ -111,7 +112,7 @@ type User {
   password: String!
   name: String!
   joinDate: DateTime!
-  availableVacation: Float!
+  availableVacation: String!
   vacations: [Vacation!]!
   attendedMeetings: [Meeting!]!
   hostedMeetingsByMe: [Meeting!]!
@@ -135,11 +136,13 @@ type Position {
 type CreateUserOutput {
   ok: Boolean!
   error: String
+  user: User
 }
 
 type DeleteUserOutput {
   ok: Boolean!
   error: String
+  deletedUserId: ID
 }
 
 type GetUserOutput {
@@ -168,11 +171,13 @@ type UpdateUserOutput {
 type CreatePositionOutput {
   ok: Boolean!
   error: String
+  position: Position
 }
 
 type DeletePositionOutput {
   ok: Boolean!
   error: String
+  deletedPositionId: ID
 }
 
 type GetUsersOfPositionOutput {
@@ -195,6 +200,7 @@ type UpdatePositionOutput {
 type CreateTeamOutput {
   ok: Boolean!
   error: String
+  team: Team
 }
 
 type UpdateTeamOutput {
@@ -205,6 +211,7 @@ type UpdateTeamOutput {
 type DeleteTeamOutput {
   ok: Boolean!
   error: String
+  deletedTeamId: ID
 }
 
 type GetTeamOutput {
@@ -262,11 +269,13 @@ type UpdateVacationOutput {
 type CreateAnswerOutput {
   ok: Boolean!
   error: String
+  surveyId: ID
 }
 
 type DeleteAnswerOutput {
   ok: Boolean!
   error: String
+  deletedAnswerId: ID
 }
 
 type GetAnswersOfsurveyOutput {
@@ -284,11 +293,13 @@ type GetMyAnswersOutput {
 type CreateSurveyOutput {
   ok: Boolean!
   error: String
+  survey: Survey
 }
 
 type DeleteSurveyOutput {
   ok: Boolean!
   error: String
+  deletedSurveyId: ID
 }
 
 type GetSurveyOutput {
@@ -311,6 +322,7 @@ type CreateCommentOutput {
 type DeleteCommentOutput {
   ok: Boolean!
   error: String
+  deletedCommentId: ID
 }
 
 type GetMyCommentsOutput {
@@ -333,11 +345,13 @@ type ToggleLikeOutput {
 type CreatePostOutput {
   ok: Boolean!
   error: String
+  post: Post
 }
 
 type DeletePostOutput {
   ok: Boolean!
   error: String
+  deletedPostId: ID
 }
 
 type GetPostOutput {
@@ -367,6 +381,12 @@ type DeleteMeetingOutput {
   ok: Boolean!
   error: String
   deletedMeetingId: ID
+}
+
+type GetKingOfMeetingOutput {
+  ok: Boolean!
+  error: String
+  users: [User!]
 }
 
 type GetMeetingOutput {
@@ -407,6 +427,7 @@ type Query {
   getMyComments: GetMyCommentsOutput!
   getMeetings: GetMeetingsOutput!
   getMeeting(input: GetMeetingInput!): GetMeetingOutput!
+  getKingOfMeeting: GetKingOfMeetingOutput!
 }
 
 input GetUserInput {
@@ -478,7 +499,6 @@ input LoginInput {
 }
 
 input CreateUserInput {
-  isManager: Boolean! = false
   email: String!
   name: String!
   joinDate: DateTime!
@@ -487,15 +507,15 @@ input CreateUserInput {
 }
 
 input UpdateUserInput {
-  id: ID
   isManager: Boolean = false
   email: String
   password: String
   name: String
   joinDate: DateTime
-  availableVacation: Float = 15
+  userId: ID!
   positionId: ID
   teamId: ID
+  availableVacation: String
 }
 
 input DeleteUserInput {
@@ -544,10 +564,10 @@ input ConfirmVacationInput {
 }
 
 input UpdateVacationInput {
-  id: ID!
-  startDate: DateTime!
-  endDate: DateTime!
-  isHalf: Boolean! = false
+  startDate: DateTime
+  endDate: DateTime
+  isHalf: Boolean = false
+  vacationId: ID!
 }
 
 input DeleteVacationInput {
@@ -563,7 +583,7 @@ input CreateSurveyInput {
 input SurveyFormInputType {
   paragraphTitle: String!
   description: String
-  multipleChoice: [String!]
+  multipleChoice: [String!]!
 }
 
 input DeleteSurveyInput {
@@ -585,9 +605,9 @@ input CreatePostInput {
 }
 
 input UpdatePostInput {
-  id: ID!
-  title: String!
-  content: String!
+  title: String
+  content: String
+  postId: ID!
 }
 
 input DeletePostInput {
@@ -615,10 +635,10 @@ input CreateMeetingInput {
 }
 
 input UpdateMeetingInput {
-  id: ID
   title: String
   startTime: DateTime
   endTime: DateTime
+  meetingId: ID!
   attendeesIds: [ID!]
 }
 

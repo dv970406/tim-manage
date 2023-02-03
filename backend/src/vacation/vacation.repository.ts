@@ -36,7 +36,6 @@ export class VacationRepository extends Repository<Vacation> {
         break;
       } else {
         let tmp = tempDate.getDay();
-        console.log(tmp);
         if (tmp === 0 || tmp === 6) {
           // 주말
         } else {

@@ -72,7 +72,7 @@ export class PostService {
 
   async updatePost(
     loggedInUser: User,
-    { id: postId, title, content }: UpdatePostInput,
+    { postId, title, content }: UpdatePostInput,
   ): Promise<UpdatePostOutput> {
     try {
       if (!title) {
@@ -110,6 +110,7 @@ export class PostService {
       await this.postRepo.delete({ id: postId });
       return {
         ok: true,
+        deletedPostId: postId,
       };
     } catch (error) {
       return {

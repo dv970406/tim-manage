@@ -70,7 +70,9 @@ export class User extends CoreEntity {
   joinDate: Date;
 
   @Column('decimal', { default: 15 })
-  @Field((type) => Number, { defaultValue: 15 })
+  // 넘겨받는 값은 string으로 하고 백에서 number로 변환시킬 것이다.
+  // .5단위가 붙어야하다보니 이게 깔끔할듯
+  @Field((type) => String)
   @IsNumber()
   availableVacation: number;
 

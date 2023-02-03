@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CustomTypeOrmModule } from 'src/core/repository/custom-typeorm.module';
+import { UserService } from 'src/user/user.service';
 import { AnswerResolver } from './answer.resolver';
 import { AnswerService } from './answer.service';
 import { AnswerRepository } from './repositories/answer.repository';

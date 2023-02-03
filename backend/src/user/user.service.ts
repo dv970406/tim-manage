@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { isInt } from 'class-validator';
 import { POSITION_CEO } from 'src/core/variables/position';
 import { JwtService } from 'src/jwt/jwt.service';
 import { PositionRepository } from 'src/position/position.repository';
+import { Survey } from 'src/survey/entities/survey.entity';
 import { TeamRepository } from 'src/team/team.repository';
 import { CreateUserInput, CreateUserOutput } from './dtos/create-user.dto';
 import { DeleteUserInput, DeleteUserOutput } from './dtos/delete-user.dto';
@@ -27,6 +29,10 @@ export class UserService {
     try {
       const findUsers = await this.userRepo.find({
         order: { createdAt: 'DESC' },
+        relations: {
+          position: true,
+          team: true,
+        },
       });
 
       return {
@@ -42,7 +48,42 @@ export class UserService {
   }
   async getUser({ id: userId }: GetUserInput): Promise<GetUserOutput> {
     try {
-      const findUser = await this.userRepo.findUser({ userId });
+      const findUser = await this.userRepo.findOne({
+        where: { id: userId },
+        relations: {
+          position: true,
+          team: true,
+        },
+      });
+
+      if (!findUser) {
+        throw new Error('존재하지 않는 유저입니다.');
+      }
+      return {
+        ok: true,
+        user: findUser,
+      };
+    } catch (error) {
+      console.log(error);
+      return {
+        ok: false,
+        error: error.message || '계정 조회에 실패했습니다.',
+      };
+    }
+  }
+
+  async getMyInfo({ id: userId }: GetUserInput): Promise<GetUserOutput> {
+    try {
+      const findUser = await this.userRepo.findOne({
+        where: { id: userId },
+        relations: {
+          position: true,
+          team: true,
+        },
+      });
+      if (!findUser) {
+        throw new Error('존재하지 않는 유저입니다.');
+      }
       return {
         ok: true,
         user: findUser,
@@ -55,18 +96,17 @@ export class UserService {
     }
   }
 
-  async createUser(
-    loggedInUser: User,
-    { email, isManager, name, joinDate, positionId, teamId }: CreateUserInput,
-  ): Promise<CreateUserOutput> {
+  async createUser({
+    email,
+    name,
+    joinDate,
+    positionId,
+    teamId,
+  }: CreateUserInput): Promise<CreateUserOutput> {
     try {
       const isExistEmail = await this.userRepo.countBy({ email });
       if (isExistEmail) {
         throw new Error('이미 존재하는 이메일입니다.');
-      }
-
-      if (loggedInUser.position.position !== POSITION_CEO && isManager) {
-        throw new Error('관리자 권한을 부여할 수 없습니다.');
       }
 
       const findPosition = await this.positionRepo.findPosition({ positionId });
@@ -79,7 +119,7 @@ export class UserService {
       const newUser = this.userRepo.create({
         email,
         password: process.env.TEMPORARY_PASSWORD,
-        isManager,
+        isManager: false,
         name,
         joinDate,
         position: findPosition,
@@ -90,6 +130,7 @@ export class UserService {
 
       return {
         ok: true,
+        user: newUser,
       };
     } catch (error) {
       return {
@@ -137,7 +178,7 @@ export class UserService {
   async updateUser(
     loggedInUser: User,
     {
-      id: userId,
+      userId,
       password,
       positionId,
       teamId,
@@ -159,10 +200,19 @@ export class UserService {
         throw new Error('관리자 권한을 부여할 수 없습니다.');
       }
 
+      let floatAvailableVacation;
       if (availableVacation) {
         if (userId === loggedInUser.id) {
           throw new Error('본인의 연차는 수정할 수 없습니다.');
         }
+
+        const isPointFiveUnit =
+          isInt(+availableVacation) || availableVacation.includes('.5');
+        if (isPointFiveUnit) floatAvailableVacation = availableVacation;
+        else throw new Error('연차는 0.5단위로 설정해주세요.');
+
+        if (+availableVacation > 30 || +availableVacation < 0)
+          throw new Error('연차는 0일 이상 30일 이하 설정만 가능합니다.');
       }
       let findPosition;
       if (positionId) {
@@ -183,8 +233,8 @@ export class UserService {
           ...(password && { password }),
           ...(findPosition && { position: findPosition }),
           ...(findTeam && { team: findTeam }),
-          ...(isManager && { isManager }),
-          availableVacation,
+          ...(loggedInUser.position.position === POSITION_CEO && { isManager }),
+          availableVacation: floatAvailableVacation,
           ...updateUserInfo,
         },
       ]);
@@ -221,6 +271,7 @@ export class UserService {
 
       return {
         ok: true,
+        deletedUserId: userId,
       };
     } catch (error) {
       return {

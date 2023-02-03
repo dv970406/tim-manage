@@ -11,6 +11,7 @@ import {
   DeleteMeetingInput,
   DeleteMeetingOutput,
 } from './dtos/delete-meeting.dto';
+import { GetKingOfMeetingOutput } from './dtos/get-kingOfMeeting.dto';
 import { GetMeetingInput, GetMeetingOutput } from './dtos/get-meeting.dto';
 import { GetMeetingsOutput } from './dtos/get-meetings.dto';
 import {
@@ -37,13 +38,11 @@ export class MeetingService {
           attendees: true,
         },
       });
-      console.log('dsa :', meetings);
       return {
         ok: true,
         meetings,
       };
     } catch (error) {
-      console.log(error);
       return {
         ok: false,
         error: '회의 리스트 조회에 실패했습니다.',
@@ -64,6 +63,31 @@ export class MeetingService {
       return {
         ok: false,
         error: error.message || '회의 조회에 실패했습니다.',
+      };
+    }
+  }
+
+  async getKingOfMeeting(): Promise<GetKingOfMeetingOutput> {
+    try {
+      const kings = await this.userRepo.find({
+        // order: {
+        //   attendedMeetings: {
+        //     attendees: {
+        //       id: 'DESC',
+        //     },
+        //   },
+        // },
+        take: 3,
+      });
+
+      return {
+        ok: true,
+        users: kings,
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        error: error.message || '회의왕 조회에 실패했습니다.',
       };
     }
   }
@@ -109,13 +133,7 @@ export class MeetingService {
 
   async updateMeeting(
     loggedInUser: User,
-    {
-      id: meetingId,
-      title,
-      attendeesIds,
-      endTime,
-      startTime,
-    }: UpdateMeetingInput,
+    { meetingId, title, attendeesIds, endTime, startTime }: UpdateMeetingInput,
   ): Promise<UpdateMeetingOutput> {
     try {
       const findMeeting = await this.meetingRepo.findMeeting({
@@ -137,7 +155,7 @@ export class MeetingService {
       }
 
       let attendees = [];
-      if (attendeesIds.length > 0) {
+      if (attendeesIds?.length > 0) {
         attendeesIds.forEach(async (attendeeId) => {
           const findAttendee = await this.userRepo.findUser({
             userId: attendeeId,

@@ -56,10 +56,9 @@ export class UserResolver {
   @Mutation((returns) => CreateUserOutput)
   @UseGuards(ManagerGuard)
   async createUser(
-    @LoggedInUser() loggedInUser: User,
     @Args('input') createUserInput: CreateUserInput,
   ): Promise<CreateUserOutput> {
-    return this.userService.createUser(loggedInUser, createUserInput);
+    return this.userService.createUser(createUserInput);
   }
 
   @Mutation((returns) => UpdateUserOutput)

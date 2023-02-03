@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { POSITION_CEO } from 'src/core/variables/position';
 import { User } from 'src/user/entities/user.entity';
 import { UserRepository } from 'src/user/user.repository';
+import { LessThan, MoreThan } from 'typeorm';
 import {
   ConfirmVacationInput,
   ConfirmVacationOutput,
@@ -35,10 +36,24 @@ export class VacationService {
   ) {}
   async getVacations(): Promise<GetVacationsOutput> {
     try {
+      const todayMonth = new Date().getMonth();
+
+      const beforeTwoMonth = new Date(new Date().setMonth(todayMonth - 2));
+      const afterTwoMonth = new Date(new Date().setMonth(todayMonth + 2));
+
       const vacations = await this.vacationRepo.find({
-        order: { createdAt: 'DESC' },
-        relations: ['user'],
+        order: { startDate: 'ASC' },
+        relations: {
+          user: {
+            team: true,
+          },
+        },
+        where: {
+          startDate: MoreThan(beforeTwoMonth),
+          endDate: LessThan(afterTwoMonth),
+        },
       });
+
       return {
         ok: true,
         vacations,
@@ -77,7 +92,7 @@ export class VacationService {
         throw new Error('기간을 입력해주세요.');
       }
       if (startDate > endDate) {
-        throw new Error('기간을 형식을 확인해주세요.');
+        throw new Error('기간과 형식을 확인해주세요.');
       }
 
       const duration = await this.vacationRepo.getDuration({
@@ -92,18 +107,27 @@ export class VacationService {
         throw new Error('남은 연차가 없습니다.');
       }
 
+      let confirmed = {
+        byManager: false,
+        byCeo: false,
+        byLeader: false,
+      };
+      if (loggedInUser.position.position === POSITION_CEO) {
+        confirmed.byCeo = true;
+      } else if (loggedInUser.team.leaderId === loggedInUser.id) {
+        confirmed.byLeader = true;
+      } else if (loggedInUser.isManager) {
+        confirmed.byManager = true;
+      }
       const newVacation = await this.vacationRepo.save({
         startDate,
         endDate,
         duration,
         user: loggedInUser,
         isHalf,
-        confirmed: {
-          byManager: false,
-          byCeo: false,
-          byLeader: false,
-        },
+        confirmed,
       });
+
       await this.userRepo.save([
         {
           id: loggedInUser.id,
@@ -160,7 +184,7 @@ export class VacationService {
 
   async updateVacation(
     loggedInUser: User,
-    { id: vacationId, startDate, endDate, isHalf }: UpdateVacationInput,
+    { vacationId, startDate, endDate, isHalf }: UpdateVacationInput,
   ): Promise<UpdateVacationOutput> {
     try {
       const findVacation = await this.vacationRepo.findVacation({
@@ -198,7 +222,8 @@ export class VacationService {
       if (endDate) {
         findVacation.endDate = endDate;
       }
-      if (isHalf) {
+      // 받은 isHalf가 false일 때만 작동
+      if (isHalf === false) {
         findVacation.isHalf = isHalf;
       }
       if (startDate && endDate) {

@@ -1,5 +1,12 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { LoggedInUser } from 'src/auth/auth-user.decorator';
 import { LoginGuard } from 'src/auth/auth.guard';
 import { User } from 'src/user/entities/user.entity';
@@ -11,6 +18,7 @@ import {
   DeleteMeetingInput,
   DeleteMeetingOutput,
 } from './dtos/delete-meeting.dto';
+import { GetKingOfMeetingOutput } from './dtos/get-kingOfMeeting.dto';
 import { GetMeetingInput, GetMeetingOutput } from './dtos/get-meeting.dto';
 import { GetMeetingsOutput } from './dtos/get-meetings.dto';
 import {
@@ -34,6 +42,11 @@ export class MeetingResolver {
     @Args('input') getMeetingInput: GetMeetingInput,
   ): Promise<GetMeetingOutput> {
     return this.meetingService.getMeeting(getMeetingInput);
+  }
+
+  @Query((type) => GetKingOfMeetingOutput)
+  getKingOfMeeting(): Promise<GetKingOfMeetingOutput> {
+    return this.meetingService.getKingOfMeeting();
   }
 
   @Mutation((type) => CreateMeetingOutput)

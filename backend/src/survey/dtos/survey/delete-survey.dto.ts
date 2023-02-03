@@ -1,4 +1,4 @@
-import { InputType, ObjectType, PickType } from '@nestjs/graphql';
+import { Field, ID, InputType, ObjectType, PickType } from '@nestjs/graphql';
 import { CoreOutput } from 'src/core/dtos/core.dto';
 import { Survey } from 'src/survey/entities/survey.entity';
 
@@ -6,4 +6,7 @@ import { Survey } from 'src/survey/entities/survey.entity';
 export class DeleteSurveyInput extends PickType(Survey, ['id']) {}
 
 @ObjectType()
-export class DeleteSurveyOutput extends CoreOutput {}
+export class DeleteSurveyOutput extends CoreOutput {
+  @Field((type) => ID, { nullable: true })
+  deletedSurveyId?: string;
+}

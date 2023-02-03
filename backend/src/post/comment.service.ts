@@ -126,6 +126,7 @@ export class CommentService {
       await this.commentRepo.delete({ id: commentId });
       return {
         ok: true,
+        deletedCommentId: commentId,
       };
     } catch (error) {
       return {

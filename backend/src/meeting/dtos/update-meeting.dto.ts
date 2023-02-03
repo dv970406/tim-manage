@@ -11,11 +11,13 @@ import { Meeting } from '../entities/meeting.entity';
 
 @InputType()
 export class UpdateMeetingInput extends PickType(PartialType(Meeting), [
-  'id',
   'title',
   'startTime',
   'endTime',
 ]) {
+  @Field((type) => ID)
+  meetingId: string;
+
   @Field((type) => [ID], { nullable: true })
   attendeesIds?: string[];
 }

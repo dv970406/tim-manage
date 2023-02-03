@@ -9,4 +9,7 @@ export class CreateAnswerInput extends PickType(Answer, ['results']) {
 }
 
 @ObjectType()
-export class CreateAnswerOutput extends CoreOutput {}
+export class CreateAnswerOutput extends CoreOutput {
+  @Field((type) => ID, { nullable: true })
+  surveyId?: string;
+}

@@ -1,4 +1,4 @@
-import { InputType, ObjectType, PickType } from '@nestjs/graphql';
+import { Field, ID, InputType, ObjectType, PickType } from '@nestjs/graphql';
 import { CoreOutput } from 'src/core/dtos/core.dto';
 import { Team } from '../entities/team.entity';
 
@@ -6,4 +6,7 @@ import { Team } from '../entities/team.entity';
 export class DeleteTeamInput extends PickType(Team, ['id']) {}
 
 @ObjectType()
-export class DeleteTeamOutput extends CoreOutput {}
+export class DeleteTeamOutput extends CoreOutput {
+  @Field((type) => ID, { nullable: true })
+  deletedTeamId?: string;
+}

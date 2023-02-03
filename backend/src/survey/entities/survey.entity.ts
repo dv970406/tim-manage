@@ -40,6 +40,6 @@ export class SurveyForm {
   description?: string;
 
   // 객관식 / 값이 없으면 주관식으로
-  @Field((type) => [String], { nullable: true })
-  multipleChoice?: string[];
+  @Field((type) => [String])
+  multipleChoice: string[];
 }

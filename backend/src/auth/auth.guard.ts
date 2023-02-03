@@ -29,17 +29,19 @@ export class LoginGuard implements CanActivate {
 @Injectable()
 export class ManagerGuard implements CanActivate {
   canActivate(context: ExecutionContext): any {
-    try {
-      const gqlContext = GqlExecutionContext.create(context).getContext();
-      const user = gqlContext['user'];
-      if (!user || !user.isManager)
-        throw new UnauthorizedException('관리자 권한이 없습니다');
-      return true;
-    } catch (error) {
-      return {
-        ok: false,
-        error: error.message || '관리자 권한이 없습니다.',
-      };
+    const gqlContext = GqlExecutionContext.create(context).getContext();
+    const user = gqlContext['user'];
+    if (!user || !user.isManager) {
+      throw new UnauthorizedException('관리자 권한이 없습니다');
     }
+    return true;
+
+    // } catch (error) {
+    //   console.log('errr :', error);
+    //   return {
+    //     ok: false,
+    //     error: error.message || '관리자 권한이 없습니다.',
+    //   };
+    // }
   }
 }

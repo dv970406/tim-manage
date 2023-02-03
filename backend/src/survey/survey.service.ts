@@ -11,7 +11,7 @@ import {
 } from './dtos/survey/delete-survey.dto';
 import { GetSurveyInput, GetSurveyOutput } from './dtos/survey/get-survey.dto';
 import { GetSurveysOutput } from './dtos/survey/get-surveys.dto';
-import { SurveyForm } from './entities/survey.entity';
+import { Survey, SurveyForm } from './entities/survey.entity';
 import { SurveyRepository } from './repositories/survey.repository';
 
 @Injectable()
@@ -20,14 +20,24 @@ export class SurveyService {
     @InjectRepository(SurveyRepository)
     private readonly surveyRepo: SurveyRepository,
   ) {}
+  async isAnswered(loggedInUser: User, survey: Survey): Promise<boolean> {
+    const isAlreadyAnswered = await this.surveyRepo.countBy({
+      id: survey.id,
+      answers: {
+        user: {
+          id: loggedInUser.id,
+        },
+      },
+    });
+    return !!isAlreadyAnswered;
+  }
+
   async getSurveys(): Promise<GetSurveysOutput> {
     try {
       const findSurveys = await this.surveyRepo.find({
         order: { createdAt: 'DESC' },
         relations: {
-          user: {
-            position: true,
-          },
+          user: true,
         },
       });
       return {
@@ -66,7 +76,7 @@ export class SurveyService {
         throw new Error('설문의 제목을 입력해주세요.');
       }
       // paragraphs가 어떤 방식으로 들어오는지 체크해야됨
-      if (!paragraphs) {
+      if (paragraphs.length <= 0) {
         throw new Error('질문을 1개 이상 추가해주세요.');
       }
 
@@ -88,7 +98,7 @@ export class SurveyService {
         throw new Error('1개의 선택지는 불가합니다.');
       }
 
-      await this.surveyRepo.save({
+      const newSurvey = await this.surveyRepo.save({
         surveyTitle,
         isAnonymous,
         paragraphs,
@@ -97,6 +107,7 @@ export class SurveyService {
 
       return {
         ok: true,
+        survey: newSurvey,
       };
     } catch (error) {
       return {
@@ -120,6 +131,7 @@ export class SurveyService {
       await this.surveyRepo.delete({ id: surveyId });
       return {
         ok: true,
+        deletedSurveyId: surveyId,
       };
     } catch (error) {
       return {

@@ -1,5 +1,6 @@
 import {
   Field,
+  ID,
   InputType,
   ObjectType,
   PartialType,
@@ -9,12 +10,14 @@ import { CoreOutput } from 'src/core/dtos/core.dto';
 import { Vacation } from '../entities/vacation.entity';
 
 @InputType()
-export class UpdateVacationInput extends PickType(Vacation, [
-  'id',
+export class UpdateVacationInput extends PickType(PartialType(Vacation), [
   'startDate',
   'endDate',
   'isHalf',
-]) {}
+]) {
+  @Field((type) => ID)
+  vacationId: string;
+}
 
 @ObjectType()
 export class UpdateVacationOutput extends CoreOutput {

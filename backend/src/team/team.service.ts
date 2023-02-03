@@ -56,9 +56,10 @@ export class TeamService {
     try {
       await this.teamRepo.checkExistTeamName({ team });
 
-      await this.teamRepo.save({ team });
+      const newTeam = await this.teamRepo.save({ team });
       return {
         ok: true,
+        team: newTeam,
       };
     } catch (error) {
       return {
@@ -124,6 +125,7 @@ export class TeamService {
       await this.teamRepo.delete({ id: teamId });
       return {
         ok: true,
+        deletedTeamId: teamId,
       };
     } catch (error) {
       return {

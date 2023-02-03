@@ -7,7 +7,7 @@ import {
 
 @ObjectType()
 export class CoreEntity {
-  @PrimaryGeneratedColumn('increment')
+  @PrimaryGeneratedColumn('uuid')
   @Field((type) => ID)
   id: string;
 

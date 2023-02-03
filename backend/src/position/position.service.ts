@@ -65,9 +65,10 @@ export class PositionService {
     try {
       await this.positionRepo.checkExistPositionName({ position });
 
-      await this.positionRepo.save({ position });
+      const newPosition = await this.positionRepo.save({ position });
       return {
         ok: true,
+        position: newPosition,
       };
     } catch (error) {
       return {
@@ -106,6 +107,7 @@ export class PositionService {
       await this.positionRepo.delete({ id: positionId });
       return {
         ok: true,
+        deletedPositionId: positionId,
       };
     } catch (error) {
       return {

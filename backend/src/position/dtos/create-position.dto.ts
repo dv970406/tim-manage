@@ -1,4 +1,4 @@
-import { InputType, ObjectType, PickType } from '@nestjs/graphql';
+import { Field, InputType, ObjectType, PickType } from '@nestjs/graphql';
 import { CoreOutput } from 'src/core/dtos/core.dto';
 import { Position } from '../entities/position.entity';
 
@@ -6,4 +6,7 @@ import { Position } from '../entities/position.entity';
 export class CreatePositionInput extends PickType(Position, ['position']) {}
 
 @ObjectType()
-export class CreatePositionOutput extends CoreOutput {}
+export class CreatePositionOutput extends CoreOutput {
+  @Field((type) => Position, { nullable: true })
+  position?: Position;
+}

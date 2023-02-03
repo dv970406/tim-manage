@@ -1,4 +1,4 @@
-import { InputType, ObjectType, PickType } from '@nestjs/graphql';
+import { Field, ID, InputType, ObjectType, PickType } from '@nestjs/graphql';
 import { CoreOutput } from 'src/core/dtos/core.dto';
 import { Comment } from 'src/post/entities/comment.entity';
 
@@ -6,4 +6,7 @@ import { Comment } from 'src/post/entities/comment.entity';
 export class DeleteCommentInput extends PickType(Comment, ['id']) {}
 
 @ObjectType()
-export class DeleteCommentOutput extends CoreOutput {}
+export class DeleteCommentOutput extends CoreOutput {
+  @Field((type) => ID, { nullable: true })
+  deletedCommentId?: string;
+}

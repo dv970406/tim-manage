@@ -8,8 +8,9 @@ export class SurveyRepository extends Repository<Survey> {
     const findSurvey = await this.findOne({
       where: { id: surveyId },
       relations: {
-        user: {
-          position: true,
+        user: true,
+        answers: {
+          user: true,
         },
       },
     });

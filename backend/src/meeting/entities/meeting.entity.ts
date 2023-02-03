@@ -32,7 +32,7 @@ export class Meeting extends CoreEntity {
   endTime: Date;
 
   // 참석자
-  @ManyToMany((type) => User, (user) => user.attendedMeetings)
+  @ManyToMany((type) => User)
   @JoinTable()
   @Field((type) => [User])
   attendees: User[];

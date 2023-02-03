@@ -105,6 +105,13 @@ export class AnswerService {
         throw new Error('작성한 답변이 단락의 개수보다 많습니다.');
       }
 
+      const alreadyAnswered = await findSurvey.answers.find(
+        (answer) => answer.user.id === loggedInUser.id,
+      );
+      if (alreadyAnswered) {
+        throw new Error('이미 답변한 설문입니다.');
+      }
+
       await this.answerRepo.save({
         results,
         user: loggedInUser,
@@ -113,6 +120,7 @@ export class AnswerService {
 
       return {
         ok: true,
+        surveyId,
       };
     } catch (error) {
       return {
@@ -143,6 +151,7 @@ export class AnswerService {
 
       return {
         ok: true,
+        deletedAnswerId: answerId,
       };
     } catch (error) {
       return {

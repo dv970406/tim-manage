@@ -1,8 +1,16 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { LoggedInUser } from 'src/auth/auth-user.decorator';
 import { ManagerGuard } from 'src/auth/auth.guard';
 import { User } from 'src/user/entities/user.entity';
+import { UserService } from 'src/user/user.service';
 import {
   CreateSurveyInput,
   CreateSurveyOutput,
@@ -19,6 +27,15 @@ import { SurveyService } from './survey.service';
 @Resolver((of) => Survey)
 export class SurveyResolver {
   constructor(private readonly surveyService: SurveyService) {}
+
+  @ResolveField((type) => Boolean)
+  isAnswered(
+    @Parent() survey: Survey,
+    @LoggedInUser() loggedInUser: User,
+  ): Promise<boolean> {
+    return this.surveyService.isAnswered(loggedInUser, survey);
+  }
+
   // Survey는 복수형이 없는데 그냥 's'를 붙여 의미상 복수형으로 생각하자
   @Query((type) => GetSurveysOutput)
   getSurveys(): Promise<GetSurveysOutput> {

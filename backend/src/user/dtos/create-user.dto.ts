@@ -6,7 +6,6 @@ import { User } from '../entities/user.entity';
 @InputType()
 export class CreateUserInput extends PickType(User, [
   'email',
-  'isManager',
   'name',
   'joinDate',
 ]) {
@@ -18,4 +17,7 @@ export class CreateUserInput extends PickType(User, [
 }
 
 @ObjectType()
-export class CreateUserOutput extends CoreOutput {}
+export class CreateUserOutput extends CoreOutput {
+  @Field((type) => User, { nullable: true })
+  user?: User;
+}

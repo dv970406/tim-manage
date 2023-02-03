@@ -12,14 +12,15 @@ import { User } from '../entities/user.entity';
 
 @InputType()
 export class UpdateUserInput extends PickType(PartialType(User), [
-  'id',
   'email',
   'password',
   'isManager',
   'name',
   'joinDate',
-  'availableVacation',
 ]) {
+  @Field((type) => ID)
+  userId: string;
+
   @Field((type) => ID, { nullable: true })
   @IsOptional()
   positionId?: string;
@@ -27,6 +28,10 @@ export class UpdateUserInput extends PickType(PartialType(User), [
   @Field((type) => ID, { nullable: true })
   @IsOptional()
   teamId?: string;
+
+  // DB에 저장되는 값은 Number여야해서 Entity에는 Number로 적고 스키마값은 String으로 함
+  @Field((type) => String, { nullable: true })
+  availableVacation?: string;
 }
 
 @ObjectType()
