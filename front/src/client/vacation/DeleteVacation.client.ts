@@ -28,10 +28,11 @@ export const useDeleteVacation = () => {
       mutation: deleteVacationQuery,
       variables,
       onCompleted: ({ deleteVacation: { ok, error } }) => {
+        setIsLoading(false);
         if (!ok) {
           alert(error);
+          return;
         }
-        setIsLoading(false);
       },
     });
   };

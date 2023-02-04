@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6c63cca9bec51d0637238b8b37e85e73>>
+ * @generated SignedSource<<f9be7928fa25f1c06cc66b5a60822252>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type GetUsersQuery$data = {
     readonly error: string | null;
     readonly ok: boolean;
     readonly users: ReadonlyArray<{
-      readonly " $fragmentSpreads": FragmentRefs<"TableContent_user">;
+      readonly " $fragmentSpreads": FragmentRefs<"UserTableContent_user">;
     }> | null;
   };
 };
@@ -75,7 +75,7 @@ return {
               {
                 "args": null,
                 "kind": "FragmentSpread",
-                "name": "TableContent_user"
+                "name": "UserTableContent_user"
               }
             ],
             "storageKey": null
@@ -180,16 +180,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e0c15f53816bf92ffcd5c680afd2bd05",
+    "cacheID": "36f22020255a188d2473cff32157f8e8",
     "id": null,
     "metadata": {},
     "name": "GetUsersQuery",
     "operationKind": "query",
-    "text": "query GetUsersQuery {\n  getUsers {\n    ok\n    error\n    users {\n      ...TableContent_user\n      id\n    }\n  }\n}\n\nfragment TableContent_user on User {\n  id\n  name\n  email\n  position {\n    id\n    position\n  }\n  team {\n    id\n    team\n  }\n  joinDate\n}\n"
+    "text": "query GetUsersQuery {\n  getUsers {\n    ok\n    error\n    users {\n      ...UserTableContent_user\n      id\n    }\n  }\n}\n\nfragment UserTableContent_user on User {\n  id\n  name\n  email\n  position {\n    id\n    position\n  }\n  team {\n    id\n    team\n  }\n  joinDate\n}\n"
   }
 };
 })();
 
-(node as any).hash = "36ccc74a0607dfda8bc15e817ed8d6e0";
+(node as any).hash = "7a74bda6a36ef344a8623915d6b4fd10";
 
 export default node;

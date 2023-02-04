@@ -12,24 +12,12 @@ export const getSurveyQuery = graphql`
       ok
       error
       survey {
-        surveyTitle
-        isAnonymous
-        paragraphs {
-          paragraphTitle
-          description
-          multipleChoice
-        }
-        answers {
-          user {
-            id
-            name
-          }
-          results
-        }
-        user {
-          id
-          name
-        }
+        ...AnswerSheet_survey
+        # user {
+        #   id
+        #   name
+        # }
+        # isAnonymous
       }
     }
   }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<deb45a67f9986e458bde714de1759593>>
+ * @generated SignedSource<<d812932896c7fa3bb78f7e717854d1e1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,7 @@ export type DeleteTeamMutation$variables = {
 };
 export type DeleteTeamMutation$data = {
   readonly deleteTeam: {
+    readonly deletedTeamId: string | null;
     readonly error: string | null;
     readonly ok: boolean;
   };
@@ -33,50 +34,60 @@ var v0 = [
 ],
 v1 = [
   {
-    "alias": null,
-    "args": [
+    "fields": [
       {
-        "fields": [
-          {
-            "kind": "Variable",
-            "name": "id",
-            "variableName": "id"
-          }
-        ],
-        "kind": "ObjectValue",
-        "name": "input"
+        "kind": "Variable",
+        "name": "id",
+        "variableName": "id"
       }
     ],
-    "concreteType": "DeleteTeamOutput",
-    "kind": "LinkedField",
-    "name": "deleteTeam",
-    "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "ok",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "error",
-        "storageKey": null
-      }
-    ],
-    "storageKey": null
+    "kind": "ObjectValue",
+    "name": "input"
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "ok",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "error",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "deletedTeamId",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "DeleteTeamMutation",
-    "selections": (v1/*: any*/),
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "DeleteTeamOutput",
+        "kind": "LinkedField",
+        "name": "deleteTeam",
+        "plural": false,
+        "selections": [
+          (v2/*: any*/),
+          (v3/*: any*/),
+          (v4/*: any*/)
+        ],
+        "storageKey": null
+      }
+    ],
     "type": "Mutation",
     "abstractKey": null
   },
@@ -85,19 +96,43 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "DeleteTeamMutation",
-    "selections": (v1/*: any*/)
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "DeleteTeamOutput",
+        "kind": "LinkedField",
+        "name": "deleteTeam",
+        "plural": false,
+        "selections": [
+          (v2/*: any*/),
+          (v3/*: any*/),
+          (v4/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "filters": null,
+            "handle": "deleteRecord",
+            "key": "",
+            "kind": "ScalarHandle",
+            "name": "deletedTeamId"
+          }
+        ],
+        "storageKey": null
+      }
+    ]
   },
   "params": {
-    "cacheID": "a0a8f7b67db7512ef4eb05181589c014",
+    "cacheID": "6e3bc12cc222a52807ade9304d191418",
     "id": null,
     "metadata": {},
     "name": "DeleteTeamMutation",
     "operationKind": "mutation",
-    "text": "mutation DeleteTeamMutation(\n  $id: ID!\n) {\n  deleteTeam(input: {id: $id}) {\n    ok\n    error\n  }\n}\n"
+    "text": "mutation DeleteTeamMutation(\n  $id: ID!\n) {\n  deleteTeam(input: {id: $id}) {\n    ok\n    error\n    deletedTeamId\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "3fd44e5c1a03ac077e731204ba6599a5";
+(node as any).hash = "557dc2f3b625b43393d1bd5aad9a984f";
 
 export default node;

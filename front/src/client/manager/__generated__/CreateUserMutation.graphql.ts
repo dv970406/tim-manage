@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bbbc0b3330799ff9051f128a7ea488de>>
+ * @generated SignedSource<<64b2f3995483899091458bb7440d80a6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,69 +9,56 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
-export type UpdateUserMutation$variables = {
-  availableVacation?: number | null;
-  email?: string | null;
-  isManager?: boolean | null;
-  joinDate?: any | null;
-  name?: string | null;
-  positionId?: string | null;
-  teamId?: string | null;
-  userId: string;
+export type CreateUserMutation$variables = {
+  email: string;
+  joinDate: any;
+  name: string;
+  positionId: string;
+  teamId: string;
 };
-export type UpdateUserMutation$data = {
-  readonly updateUser: {
+export type CreateUserMutation$data = {
+  readonly createUser: {
     readonly error: string | null;
     readonly ok: boolean;
+    readonly user: {
+      readonly email: string;
+      readonly id: string;
+      readonly name: string;
+    } | null;
   };
 };
-export type UpdateUserMutation = {
-  response: UpdateUserMutation$data;
-  variables: UpdateUserMutation$variables;
+export type CreateUserMutation = {
+  response: CreateUserMutation$data;
+  variables: CreateUserMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
 var v0 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "availableVacation"
+  "name": "email"
 },
 v1 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "email"
+  "name": "joinDate"
 },
 v2 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "isManager"
+  "name": "name"
 },
 v3 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "joinDate"
+  "name": "positionId"
 },
 v4 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "name"
-},
-v5 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "positionId"
-},
-v6 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
   "name": "teamId"
 },
-v7 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "userId"
-},
-v8 = [
+v5 = [
   {
     "alias": null,
     "args": [
@@ -79,18 +66,8 @@ v8 = [
         "fields": [
           {
             "kind": "Variable",
-            "name": "availableVacation",
-            "variableName": "availableVacation"
-          },
-          {
-            "kind": "Variable",
             "name": "email",
             "variableName": "email"
-          },
-          {
-            "kind": "Variable",
-            "name": "isManager",
-            "variableName": "isManager"
           },
           {
             "kind": "Variable",
@@ -111,20 +88,15 @@ v8 = [
             "kind": "Variable",
             "name": "teamId",
             "variableName": "teamId"
-          },
-          {
-            "kind": "Variable",
-            "name": "userId",
-            "variableName": "userId"
           }
         ],
         "kind": "ObjectValue",
         "name": "input"
       }
     ],
-    "concreteType": "UpdateUserOutput",
+    "concreteType": "CreateUserOutput",
     "kind": "LinkedField",
-    "name": "updateUser",
+    "name": "createUser",
     "plural": false,
     "selections": [
       {
@@ -140,6 +112,38 @@ v8 = [
         "kind": "ScalarField",
         "name": "error",
         "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "User",
+        "kind": "LinkedField",
+        "name": "user",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "id",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "email",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
       }
     ],
     "storageKey": null
@@ -152,45 +156,39 @@ return {
       (v1/*: any*/),
       (v2/*: any*/),
       (v3/*: any*/),
-      (v4/*: any*/),
-      (v5/*: any*/),
-      (v6/*: any*/),
-      (v7/*: any*/)
+      (v4/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "UpdateUserMutation",
-    "selections": (v8/*: any*/),
+    "name": "CreateUserMutation",
+    "selections": (v5/*: any*/),
     "type": "Mutation",
     "abstractKey": null
   },
   "kind": "Request",
   "operation": {
     "argumentDefinitions": [
-      (v7/*: any*/),
-      (v1/*: any*/),
-      (v2/*: any*/),
-      (v4/*: any*/),
-      (v3/*: any*/),
       (v0/*: any*/),
-      (v5/*: any*/),
-      (v6/*: any*/)
+      (v2/*: any*/),
+      (v1/*: any*/),
+      (v3/*: any*/),
+      (v4/*: any*/)
     ],
     "kind": "Operation",
-    "name": "UpdateUserMutation",
-    "selections": (v8/*: any*/)
+    "name": "CreateUserMutation",
+    "selections": (v5/*: any*/)
   },
   "params": {
-    "cacheID": "e6c69eb557df6d501cba7432ad9fe5a6",
+    "cacheID": "30f2ef7d399644c47b3258ce797f8a46",
     "id": null,
     "metadata": {},
-    "name": "UpdateUserMutation",
+    "name": "CreateUserMutation",
     "operationKind": "mutation",
-    "text": "mutation UpdateUserMutation(\n  $userId: ID!\n  $email: String\n  $isManager: Boolean\n  $name: String\n  $joinDate: DateTime\n  $availableVacation: Float\n  $positionId: ID\n  $teamId: ID\n) {\n  updateUser(input: {userId: $userId, email: $email, isManager: $isManager, name: $name, joinDate: $joinDate, availableVacation: $availableVacation, positionId: $positionId, teamId: $teamId}) {\n    ok\n    error\n  }\n}\n"
+    "text": "mutation CreateUserMutation(\n  $email: String!\n  $name: String!\n  $joinDate: DateTime!\n  $positionId: ID!\n  $teamId: ID!\n) {\n  createUser(input: {email: $email, name: $name, joinDate: $joinDate, positionId: $positionId, teamId: $teamId}) {\n    ok\n    error\n    user {\n      id\n      email\n      name\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f85250cccff2671861459184ac273c2a";
+(node as any).hash = "5fdba5348da8facf97a33fa78889d5b2";
 
 export default node;

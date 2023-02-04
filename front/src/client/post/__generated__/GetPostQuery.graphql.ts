@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ef59f62a6d64d9f9dafd816d0b56d77a>>
+ * @generated SignedSource<<b19e505cfa9b1c7f891a4e9440c43d86>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type GetPostQuery$variables = {
   id: string;
 };
@@ -18,7 +19,7 @@ export type GetPostQuery$data = {
     readonly ok: boolean;
     readonly post: {
       readonly id: string;
-      readonly title: string;
+      readonly " $fragmentSpreads": FragmentRefs<"CommentsZone_post" | "ContentZone_post">;
     } | null;
   };
 };
@@ -37,75 +38,114 @@ var v0 = [
 ],
 v1 = [
   {
-    "alias": null,
-    "args": [
+    "fields": [
       {
-        "fields": [
-          {
-            "kind": "Variable",
-            "name": "id",
-            "variableName": "id"
-          }
-        ],
-        "kind": "ObjectValue",
-        "name": "input"
+        "kind": "Variable",
+        "name": "id",
+        "variableName": "id"
       }
     ],
-    "concreteType": "GetPostOutput",
-    "kind": "LinkedField",
-    "name": "getPost",
-    "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "ok",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "error",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "concreteType": "Post",
-        "kind": "LinkedField",
-        "name": "post",
-        "plural": false,
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "title",
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
-      }
-    ],
-    "storageKey": null
+    "kind": "ObjectValue",
+    "name": "input"
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "ok",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "error",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "content",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "User",
+  "kind": "LinkedField",
+  "name": "user",
+  "plural": false,
+  "selections": [
+    (v4/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
+    }
+  ],
+  "storageKey": null
+},
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "createdAt",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "GetPostQuery",
-    "selections": (v1/*: any*/),
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "GetPostOutput",
+        "kind": "LinkedField",
+        "name": "getPost",
+        "plural": false,
+        "selections": [
+          (v2/*: any*/),
+          (v3/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Post",
+            "kind": "LinkedField",
+            "name": "post",
+            "plural": false,
+            "selections": [
+              (v4/*: any*/),
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "ContentZone_post"
+              },
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "CommentsZone_post"
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ],
     "type": "Query",
     "abstractKey": null
   },
@@ -114,19 +154,98 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "GetPostQuery",
-    "selections": (v1/*: any*/)
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "GetPostOutput",
+        "kind": "LinkedField",
+        "name": "getPost",
+        "plural": false,
+        "selections": [
+          (v2/*: any*/),
+          (v3/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Post",
+            "kind": "LinkedField",
+            "name": "post",
+            "plural": false,
+            "selections": [
+              (v4/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "title",
+                "storageKey": null
+              },
+              (v5/*: any*/),
+              (v6/*: any*/),
+              (v7/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isMyPost",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Comment",
+                "kind": "LinkedField",
+                "name": "comments",
+                "plural": true,
+                "selections": [
+                  (v4/*: any*/),
+                  (v5/*: any*/),
+                  (v6/*: any*/),
+                  (v7/*: any*/)
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "countLikes",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isLiked",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "countComments",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ]
   },
   "params": {
-    "cacheID": "0f41dafe67953c7ef5166341edaa50a8",
+    "cacheID": "ee1c6eb9a2aca95a50a0e5beca30c54e",
     "id": null,
     "metadata": {},
     "name": "GetPostQuery",
     "operationKind": "query",
-    "text": "query GetPostQuery(\n  $id: ID!\n) {\n  getPost(input: {id: $id}) {\n    ok\n    error\n    post {\n      id\n      title\n    }\n  }\n}\n"
+    "text": "query GetPostQuery(\n  $id: ID!\n) {\n  getPost(input: {id: $id}) {\n    ok\n    error\n    post {\n      id\n      ...ContentZone_post\n      ...CommentsZone_post\n    }\n  }\n}\n\nfragment CommentsZone_post on Post {\n  comments {\n    id\n    content\n    user {\n      id\n      name\n    }\n    createdAt\n  }\n  countLikes\n  isLiked\n  countComments\n}\n\nfragment ContentZone_post on Post {\n  title\n  content\n  user {\n    id\n    name\n  }\n  createdAt\n  isMyPost\n}\n"
   }
 };
 })();
 
-(node as any).hash = "7d6c6934dd0807baf4d22c9904fe2aef";
+(node as any).hash = "6db87d3b01b75773a9dabb9a49fa8826";
 
 export default node;

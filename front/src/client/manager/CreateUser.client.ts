@@ -6,7 +6,7 @@ import { environment } from "../client";
 import {
   CreateUserMutation,
   CreateUserMutation$variables,
-} from "./__generated__/CreateUserMutation.graphql";
+} from "../user/__generated__/CreateUserMutation.graphql";
 
 const createUserQuery = graphql`
   mutation CreateUserMutation(
@@ -60,11 +60,12 @@ export const useCreateUser = () => {
       },
 
       onCompleted: ({ createUser: { ok, error } }) => {
+        setIsLoading(false);
         if (!ok) {
           alert(error);
+          return;
         }
-        navigate("/user");
-        setIsLoading(false);
+        navigate("/manager/user");
       },
     });
   };

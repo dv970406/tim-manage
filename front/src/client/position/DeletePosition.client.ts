@@ -12,6 +12,7 @@ const deletePositionQuery = graphql`
     deletePosition(input: { id: $id }) {
       ok
       error
+      deletedPositionId @deleteRecord
     }
   }
 `;
@@ -27,10 +28,11 @@ export const useDeletePosition = () => {
       mutation: deletePositionQuery,
       variables,
       onCompleted: ({ deletePosition: { ok, error } }) => {
+        setIsLoading(false);
         if (!ok) {
           alert(error);
+          return;
         }
-        setIsLoading(false);
       },
     });
   };

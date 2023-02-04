@@ -1,11 +1,5 @@
 import { graphql } from "babel-plugin-relay/macro";
-import { useEffect } from "react";
-import {
-  PreloadedQuery,
-  useLazyLoadQuery,
-  usePreloadedQuery,
-  useQueryLoader,
-} from "react-relay";
+import { PreloadedQuery, usePreloadedQuery } from "react-relay";
 import { GetUserQuery } from "./__generated__/GetUserQuery.graphql";
 
 export const getUserQuery = graphql`
@@ -14,7 +8,48 @@ export const getUserQuery = graphql`
       ok
       error
       user {
-        ...DefaultUserInfoFragment_user
+        id
+        email
+        isManager
+        joinDate
+        position {
+          id
+          position
+        }
+        team {
+          id
+          team
+        }
+        isManager
+        name
+        availableVacation
+        vacations {
+          id
+        }
+        attendedMeetings {
+          id
+        }
+        hostedMeetingsByMe {
+          id
+        }
+        posts {
+          id
+          title
+          content
+        }
+        likes {
+          id
+        }
+        comments {
+          id
+        }
+        surveys {
+          id
+          surveyTitle
+        }
+        answers {
+          id
+        }
       }
     }
   }

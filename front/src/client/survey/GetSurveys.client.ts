@@ -12,13 +12,7 @@ export const getSurveysQuery = graphql`
       ok
       error
       surveys {
-        id
-        surveyTitle
-        isAnonymous
-        user {
-          id
-          name
-        }
+        ...SurveyTableContent_survey
       }
     }
   }

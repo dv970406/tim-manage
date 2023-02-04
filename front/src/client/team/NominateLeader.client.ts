@@ -27,10 +27,11 @@ export const useNominateLeader = () => {
       mutation: nominateLeaderQuery,
       variables,
       onCompleted: ({ nominateLeader: { ok, error } }) => {
+        setIsLoading(false);
         if (!ok) {
           alert(error);
+          return;
         }
-        setIsLoading(false);
       },
     });
   };

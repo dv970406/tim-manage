@@ -67,10 +67,11 @@ export const useCreateVacation = () => {
       },
 
       onCompleted: ({ createVacation: { ok, error } }) => {
+        setIsLoading(false);
         if (!ok) {
           alert(error);
+          return;
         }
-        setIsLoading(false);
       },
     });
   };

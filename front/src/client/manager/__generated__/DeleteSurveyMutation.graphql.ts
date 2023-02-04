@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c2dab6cdc6e49b12c1bb7044005b58f7>>
+ * @generated SignedSource<<1f684afcdb3c3481501028dfd20c2153>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,19 +9,19 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
-export type DeletePostMutation$variables = {
+export type DeleteSurveyMutation$variables = {
   id: string;
 };
-export type DeletePostMutation$data = {
-  readonly deletePost: {
-    readonly deletedPostId: string | null;
+export type DeleteSurveyMutation$data = {
+  readonly deleteSurvey: {
+    readonly deletedSurveyId: string | null;
     readonly error: string | null;
     readonly ok: boolean;
   };
 };
-export type DeletePostMutation = {
-  response: DeletePostMutation$data;
-  variables: DeletePostMutation$variables;
+export type DeleteSurveyMutation = {
+  response: DeleteSurveyMutation$data;
+  variables: DeleteSurveyMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -63,7 +63,7 @@ v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "deletedPostId",
+  "name": "deletedSurveyId",
   "storageKey": null
 };
 return {
@@ -71,14 +71,14 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "DeletePostMutation",
+    "name": "DeleteSurveyMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "DeletePostOutput",
+        "concreteType": "DeleteSurveyOutput",
         "kind": "LinkedField",
-        "name": "deletePost",
+        "name": "deleteSurvey",
         "plural": false,
         "selections": [
           (v2/*: any*/),
@@ -95,14 +95,14 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "DeletePostMutation",
+    "name": "DeleteSurveyMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "DeletePostOutput",
+        "concreteType": "DeleteSurveyOutput",
         "kind": "LinkedField",
-        "name": "deletePost",
+        "name": "deleteSurvey",
         "plural": false,
         "selections": [
           (v2/*: any*/),
@@ -115,7 +115,7 @@ return {
             "handle": "deleteRecord",
             "key": "",
             "kind": "ScalarHandle",
-            "name": "deletedPostId"
+            "name": "deletedSurveyId"
           }
         ],
         "storageKey": null
@@ -123,16 +123,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "68665ed12bf8cfbe3a34fb7112a7cf8d",
+    "cacheID": "796963c3bcbc8ce91110b51388ba755b",
     "id": null,
     "metadata": {},
-    "name": "DeletePostMutation",
+    "name": "DeleteSurveyMutation",
     "operationKind": "mutation",
-    "text": "mutation DeletePostMutation(\n  $id: ID!\n) {\n  deletePost(input: {id: $id}) {\n    ok\n    error\n    deletedPostId\n  }\n}\n"
+    "text": "mutation DeleteSurveyMutation(\n  $id: ID!\n) {\n  deleteSurvey(input: {id: $id}) {\n    ok\n    error\n    deletedSurveyId\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "37c6dbf6cb51d451cbc23f00352de5cf";
+(node as any).hash = "69e5d60f90519ee2c01fced80a737f45";
 
 export default node;

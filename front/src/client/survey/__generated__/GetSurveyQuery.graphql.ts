@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7a76a92ff02eb30c7f0d3731d46a247f>>
+ * @generated SignedSource<<c57a62475d723ccb0c132cf1f584319a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type GetSurveyQuery$variables = {
   id: string;
 };
@@ -17,24 +18,7 @@ export type GetSurveyQuery$data = {
     readonly error: string | null;
     readonly ok: boolean;
     readonly survey: {
-      readonly answers: ReadonlyArray<{
-        readonly results: ReadonlyArray<string>;
-        readonly user: {
-          readonly id: string;
-          readonly name: string;
-        };
-      }>;
-      readonly isAnonymous: boolean;
-      readonly paragraphs: ReadonlyArray<{
-        readonly description: string | null;
-        readonly multipleChoice: ReadonlyArray<string> | null;
-        readonly paragraphTitle: string;
-      }>;
-      readonly surveyTitle: string;
-      readonly user: {
-        readonly id: string;
-        readonly name: string;
-      };
+      readonly " $fragmentSpreads": FragmentRefs<"AnswerSheet_survey">;
     } | null;
   };
 };
@@ -77,85 +61,6 @@ v3 = {
   "kind": "ScalarField",
   "name": "error",
   "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "surveyTitle",
-  "storageKey": null
-},
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "isAnonymous",
-  "storageKey": null
-},
-v6 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "SurveyForm",
-  "kind": "LinkedField",
-  "name": "paragraphs",
-  "plural": true,
-  "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "paragraphTitle",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "description",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "multipleChoice",
-      "storageKey": null
-    }
-  ],
-  "storageKey": null
-},
-v7 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v8 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "User",
-  "kind": "LinkedField",
-  "name": "user",
-  "plural": false,
-  "selections": [
-    (v7/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    }
-  ],
-  "storageKey": null
-},
-v9 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "results",
-  "storageKey": null
 };
 return {
   "fragment": {
@@ -182,23 +87,11 @@ return {
             "name": "survey",
             "plural": false,
             "selections": [
-              (v4/*: any*/),
-              (v5/*: any*/),
-              (v6/*: any*/),
               {
-                "alias": null,
                 "args": null,
-                "concreteType": "Answer",
-                "kind": "LinkedField",
-                "name": "answers",
-                "plural": true,
-                "selections": [
-                  (v8/*: any*/),
-                  (v9/*: any*/)
-                ],
-                "storageKey": null
-              },
-              (v8/*: any*/)
+                "kind": "FragmentSpread",
+                "name": "AnswerSheet_survey"
+              }
             ],
             "storageKey": null
           }
@@ -233,25 +126,52 @@ return {
             "name": "survey",
             "plural": false,
             "selections": [
-              (v4/*: any*/),
-              (v5/*: any*/),
-              (v6/*: any*/),
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "Answer",
-                "kind": "LinkedField",
-                "name": "answers",
-                "plural": true,
-                "selections": [
-                  (v8/*: any*/),
-                  (v9/*: any*/),
-                  (v7/*: any*/)
-                ],
+                "kind": "ScalarField",
+                "name": "id",
                 "storageKey": null
               },
-              (v8/*: any*/),
-              (v7/*: any*/)
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "surveyTitle",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "SurveyForm",
+                "kind": "LinkedField",
+                "name": "paragraphs",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "paragraphTitle",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "description",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "multipleChoice",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
             ],
             "storageKey": null
           }
@@ -261,16 +181,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0ca9978027a8109a0ada1cbcf848b965",
+    "cacheID": "23c0281dd76677e10eeb1b6ba2d70fa1",
     "id": null,
     "metadata": {},
     "name": "GetSurveyQuery",
     "operationKind": "query",
-    "text": "query GetSurveyQuery(\n  $id: ID!\n) {\n  getSurvey(input: {id: $id}) {\n    ok\n    error\n    survey {\n      surveyTitle\n      isAnonymous\n      paragraphs {\n        paragraphTitle\n        description\n        multipleChoice\n      }\n      answers {\n        user {\n          id\n          name\n        }\n        results\n        id\n      }\n      user {\n        id\n        name\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query GetSurveyQuery(\n  $id: ID!\n) {\n  getSurvey(input: {id: $id}) {\n    ok\n    error\n    survey {\n      ...AnswerSheet_survey\n      id\n    }\n  }\n}\n\nfragment AnswerSheet_survey on Survey {\n  id\n  surveyTitle\n  paragraphs {\n    paragraphTitle\n    description\n    multipleChoice\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "20a64fbfc71ec8cf846e5b82894678be";
+(node as any).hash = "d861e47822fa5f61b1206ca621a020de";
 
 export default node;

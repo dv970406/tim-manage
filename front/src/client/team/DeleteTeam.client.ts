@@ -12,6 +12,7 @@ const deleteTeamQuery = graphql`
     deleteTeam(input: { id: $id }) {
       ok
       error
+      deletedTeamId @deleteRecord
     }
   }
 `;
@@ -25,10 +26,11 @@ export const useDeleteTeam = () => {
       mutation: deleteTeamQuery,
       variables,
       onCompleted: ({ deleteTeam: { ok, error } }) => {
+        setIsLoading(false);
         if (!ok) {
           alert(error);
+          return;
         }
-        setIsLoading(false);
       },
     });
   };

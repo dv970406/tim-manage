@@ -25,10 +25,11 @@ export const useUpdatePost = () => {
       mutation: updatePostQuery,
       variables,
       onCompleted: ({ updatePost: { ok, error } }) => {
+        setIsLoading(false);
         if (!ok) {
           alert(error);
+          return;
         }
-        setIsLoading(false);
       },
     });
   };

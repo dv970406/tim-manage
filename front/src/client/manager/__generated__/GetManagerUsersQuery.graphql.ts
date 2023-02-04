@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fcb5692064948659097b8b33086bde64>>
+ * @generated SignedSource<<caa7176c4a9bfdc2ab4199ce265eb5c8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,19 +10,19 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type GetPostsQuery$variables = {};
-export type GetPostsQuery$data = {
-  readonly getPosts: {
+export type GetManagerUsersQuery$variables = {};
+export type GetManagerUsersQuery$data = {
+  readonly getUsers: {
     readonly error: string | null;
     readonly ok: boolean;
-    readonly posts: ReadonlyArray<{
-      readonly " $fragmentSpreads": FragmentRefs<"PostTableContent_post">;
+    readonly users: ReadonlyArray<{
+      readonly " $fragmentSpreads": FragmentRefs<"ManagerUserTableContent_user">;
     }> | null;
   };
 };
-export type GetPostsQuery = {
-  response: GetPostsQuery$data;
-  variables: GetPostsQuery$variables;
+export type GetManagerUsersQuery = {
+  response: GetManagerUsersQuery$data;
+  variables: GetManagerUsersQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -52,14 +52,14 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "GetPostsQuery",
+    "name": "GetManagerUsersQuery",
     "selections": [
       {
         "alias": null,
         "args": null,
-        "concreteType": "GetPostsOutput",
+        "concreteType": "GetUsersOutput",
         "kind": "LinkedField",
-        "name": "getPosts",
+        "name": "getUsers",
         "plural": false,
         "selections": [
           (v0/*: any*/),
@@ -67,15 +67,15 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "Post",
+            "concreteType": "User",
             "kind": "LinkedField",
-            "name": "posts",
+            "name": "users",
             "plural": true,
             "selections": [
               {
                 "args": null,
                 "kind": "FragmentSpread",
-                "name": "PostTableContent_post"
+                "name": "ManagerUserTableContent_user"
               }
             ],
             "storageKey": null
@@ -91,14 +91,14 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "GetPostsQuery",
+    "name": "GetManagerUsersQuery",
     "selections": [
       {
         "alias": null,
         "args": null,
-        "concreteType": "GetPostsOutput",
+        "concreteType": "GetUsersOutput",
         "kind": "LinkedField",
-        "name": "getPosts",
+        "name": "getUsers",
         "plural": false,
         "selections": [
           (v0/*: any*/),
@@ -106,9 +106,9 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "Post",
+            "concreteType": "User",
             "kind": "LinkedField",
-            "name": "posts",
+            "name": "users",
             "plural": true,
             "selections": [
               (v2/*: any*/),
@@ -116,15 +116,22 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "title",
+                "name": "name",
                 "storageKey": null
               },
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "User",
+                "kind": "ScalarField",
+                "name": "isManager",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Position",
                 "kind": "LinkedField",
-                "name": "user",
+                "name": "position",
                 "plural": false,
                 "selections": [
                   (v2/*: any*/),
@@ -132,7 +139,7 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "name",
+                    "name": "position",
                     "storageKey": null
                   }
                 ],
@@ -141,22 +148,20 @@ return {
               {
                 "alias": null,
                 "args": null,
-                "kind": "ScalarField",
-                "name": "countLikes",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "countComments",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "createdAt",
+                "concreteType": "Team",
+                "kind": "LinkedField",
+                "name": "team",
+                "plural": false,
+                "selections": [
+                  (v2/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "team",
+                    "storageKey": null
+                  }
+                ],
                 "storageKey": null
               }
             ],
@@ -168,16 +173,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "07cff7697a05de60ecc57ba37770966c",
+    "cacheID": "53ee56f03d7414133c8327590728f17e",
     "id": null,
     "metadata": {},
-    "name": "GetPostsQuery",
+    "name": "GetManagerUsersQuery",
     "operationKind": "query",
-    "text": "query GetPostsQuery {\n  getPosts {\n    ok\n    error\n    posts {\n      ...PostTableContent_post\n      id\n    }\n  }\n}\n\nfragment PostTableContent_post on Post {\n  id\n  title\n  user {\n    id\n    name\n  }\n  countLikes\n  countComments\n  createdAt\n}\n"
+    "text": "query GetManagerUsersQuery {\n  getUsers {\n    ok\n    error\n    users {\n      ...ManagerUserTableContent_user\n      id\n    }\n  }\n}\n\nfragment ManagerUserTableContent_user on User {\n  id\n  name\n  isManager\n  position {\n    id\n    position\n  }\n  team {\n    id\n    team\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "180758ab58b9a31487aa5c169bc0690b";
+(node as any).hash = "4021520f04e7ad8d6c4dd8abe251233d";
 
 export default node;

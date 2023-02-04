@@ -40,10 +40,11 @@ export const useCreateTeam = () => {
       },
 
       onCompleted: ({ createTeam: { ok, error } }) => {
+        setIsLoading(false);
         if (!ok) {
           alert(error);
+          return;
         }
-        setIsLoading(false);
       },
     });
   };

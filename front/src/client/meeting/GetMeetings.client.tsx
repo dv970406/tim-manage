@@ -3,8 +3,6 @@ import { graphql } from "babel-plugin-relay/macro";
 import { useEffect, useState, Suspense } from "react";
 import { loadQuery, PreloadedQuery, usePreloadedQuery } from "react-relay";
 import { theme } from "../../css/theme";
-import { homeMeetingsQuery } from "../../pages/Home";
-import { HomeMeetingsQuery } from "../../pages/__generated__/HomeMeetingsQuery.graphql";
 import { environment } from "../client";
 import { useGetMyInfo } from "../user/GetMyInfo.client";
 import { GetMeetingsQuery } from "./__generated__/GetMeetingsQuery.graphql";
@@ -33,12 +31,12 @@ export const getMeetingsQuery = graphql`
 `;
 
 export const useGetMeetings = (
-  getMeetingsQueryReference: PreloadedQuery<HomeMeetingsQuery>
+  getMeetingsQueryReference: PreloadedQuery<GetMeetingsQuery>
 ) => {
   const {
     getMeetings: { ok, error, meetings },
-  } = usePreloadedQuery<HomeMeetingsQuery>(
-    homeMeetingsQuery,
+  } = usePreloadedQuery<GetMeetingsQuery>(
+    getMeetingsQuery,
     getMeetingsQueryReference
   );
   // 페칭한 Meetings 데이터를 달력 라이브러리 포맷에 맞게 변환하는 로직
@@ -61,14 +59,16 @@ export const useGetMeetings = (
         const start = new Date(meeting.startTime);
         const end = new Date(meeting.endTime);
 
-        const amIAttend = meeting.attendees.find(
-          (attendee) => attendee.id === myInfo?.id
-        );
+        const amIAttend = meeting.attendees
+          .filter((attendee) => !!attendee)
+          .find((attendee) => attendee.id === myInfo?.id);
+
         return {
           id: meeting.id,
           start,
           end,
-          backgroundColor: theme.colors.blue,
+          backgroundColor:
+            amIAttend || isMine ? theme.colors.green : theme.colors.purple,
           title: meeting.title,
           host: meeting.host,
           attendees: meeting.attendees,
@@ -77,11 +77,12 @@ export const useGetMeetings = (
           allDay: false,
           editable: isMine,
           visible: true,
-          borderColor:
-            amIAttend || isMine ? theme.colors.yellow : "transparent",
+          borderColor: "transparent",
+          isMine,
         };
       })!;
     setCalendarFormat(getCalendarFormat);
-  }, [ok]);
+  }, [meetings]);
+
   return { meetingsByCalendarFormat, setCalendarFormat };
 };

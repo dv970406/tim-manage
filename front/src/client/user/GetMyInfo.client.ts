@@ -2,17 +2,27 @@ import { graphql } from "babel-plugin-relay/macro";
 import { useEffect } from "react";
 import { useLazyLoadQuery } from "react-relay";
 import { useNavigate } from "react-router-dom";
+import { TOKEN } from "../client";
 import { GetMyInfoQuery } from "./__generated__/GetMyInfoQuery.graphql";
 
 export const getMyInfoQuery = graphql`
-  query GetMyInfoQuery {
-    getMyInfo {
+  query GetMyInfoQuery($skip: Boolean!) {
+    getMyInfo @skip(if: $skip) {
       ok
       error
       user {
         id
         name
         email
+        isManager
+        team {
+          id
+          team
+        }
+        position {
+          id
+          position
+        }
       }
     }
   }
@@ -27,18 +37,19 @@ export const getMyInfoQuery = graphql`
 //   {}
 // );
 export const useGetMyInfo = () => {
-  const {
-    getMyInfo: { ok, error, user: myInfo },
-  } = useLazyLoadQuery<GetMyInfoQuery>(getMyInfoQuery, {});
+  const token = localStorage.getItem(TOKEN);
+
+  const { getMyInfo } = useLazyLoadQuery<GetMyInfoQuery>(getMyInfoQuery, {
+    skip: !token,
+  });
 
   const navigate = useNavigate();
-
   useEffect(() => {
-    if (!ok) {
-      localStorage.removeItem("TOKEN");
+    if (!getMyInfo?.ok) {
+      localStorage.removeItem(TOKEN);
       navigate("/login");
-      window.location.reload();
     }
-  }, [ok]);
-  return { myInfo };
+  }, []);
+
+  return { myInfo: getMyInfo?.user };
 };

@@ -4,7 +4,7 @@ import { useLazyLoadQuery } from "react-relay";
 import {
   IAttendee,
   ISelectFormat,
-} from "../../components/organisms/content/calendar/SelectUsers";
+} from "../../components/organisms/content/home/SelectUsers";
 import { SelectUsersQuery } from "./__generated__/SelectUsersQuery.graphql";
 
 export const selectUsersQuery = graphql`

@@ -45,10 +45,11 @@ export const useCreatePosition = () => {
       },
 
       onCompleted: ({ createPosition: { ok, error } }) => {
+        setIsLoading(false);
         if (!ok) {
           alert(error);
+          return;
         }
-        setIsLoading(false);
       },
     });
   };

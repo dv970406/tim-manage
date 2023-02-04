@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c2dab6cdc6e49b12c1bb7044005b58f7>>
+ * @generated SignedSource<<6a469a697e67b5485378dcebf6bf60a0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,19 +9,19 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
-export type DeletePostMutation$variables = {
+export type DeleteUserMutation$variables = {
   id: string;
 };
-export type DeletePostMutation$data = {
-  readonly deletePost: {
-    readonly deletedPostId: string | null;
+export type DeleteUserMutation$data = {
+  readonly deleteUser: {
+    readonly deletedUserId: string | null;
     readonly error: string | null;
     readonly ok: boolean;
   };
 };
-export type DeletePostMutation = {
-  response: DeletePostMutation$data;
-  variables: DeletePostMutation$variables;
+export type DeleteUserMutation = {
+  response: DeleteUserMutation$data;
+  variables: DeleteUserMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -63,7 +63,7 @@ v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "deletedPostId",
+  "name": "deletedUserId",
   "storageKey": null
 };
 return {
@@ -71,14 +71,14 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "DeletePostMutation",
+    "name": "DeleteUserMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "DeletePostOutput",
+        "concreteType": "DeleteUserOutput",
         "kind": "LinkedField",
-        "name": "deletePost",
+        "name": "deleteUser",
         "plural": false,
         "selections": [
           (v2/*: any*/),
@@ -95,14 +95,14 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "DeletePostMutation",
+    "name": "DeleteUserMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "DeletePostOutput",
+        "concreteType": "DeleteUserOutput",
         "kind": "LinkedField",
-        "name": "deletePost",
+        "name": "deleteUser",
         "plural": false,
         "selections": [
           (v2/*: any*/),
@@ -115,7 +115,7 @@ return {
             "handle": "deleteRecord",
             "key": "",
             "kind": "ScalarHandle",
-            "name": "deletedPostId"
+            "name": "deletedUserId"
           }
         ],
         "storageKey": null
@@ -123,16 +123,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "68665ed12bf8cfbe3a34fb7112a7cf8d",
+    "cacheID": "a81392d7c60cd28d6a295201c218f56f",
     "id": null,
     "metadata": {},
-    "name": "DeletePostMutation",
+    "name": "DeleteUserMutation",
     "operationKind": "mutation",
-    "text": "mutation DeletePostMutation(\n  $id: ID!\n) {\n  deletePost(input: {id: $id}) {\n    ok\n    error\n    deletedPostId\n  }\n}\n"
+    "text": "mutation DeleteUserMutation(\n  $id: ID!\n) {\n  deleteUser(input: {id: $id}) {\n    ok\n    error\n    deletedUserId\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "37c6dbf6cb51d451cbc23f00352de5cf";
+(node as any).hash = "65b911174af629ea099d0c0f8d9deb37";
 
 export default node;

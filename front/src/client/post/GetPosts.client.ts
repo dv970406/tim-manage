@@ -12,8 +12,7 @@ export const getPostsQuery = graphql`
       ok
       error
       posts {
-        id
-        title
+        ...PostTableContent_post
       }
     }
   }

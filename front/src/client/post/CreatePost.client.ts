@@ -1,6 +1,7 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useState } from "react";
 import { commitMutation, useMutation } from "react-relay";
+import { useNavigate } from "react-router-dom";
 import { environment } from "../client";
 import {
   CreatePostMutation,
@@ -22,6 +23,7 @@ const createPostQuery = graphql`
 
 export const useCreatePost = () => {
   const [createPostLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const createPostMutation = (variables: CreatePostMutation$variables) => {
     setIsLoading(true);
@@ -44,10 +46,12 @@ export const useCreatePost = () => {
       },
 
       onCompleted: ({ createPost: { ok, error } }) => {
+        setIsLoading(false);
         if (!ok) {
           alert(error);
+          return;
         }
-        setIsLoading(false);
+        navigate("/post");
       },
     });
   };

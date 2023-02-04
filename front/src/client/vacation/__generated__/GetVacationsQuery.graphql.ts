@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a8403c815dfff1da27086f37f7b62af8>>
+ * @generated SignedSource<<5c1f6a523e8c9ae44b206aaf09d8273e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,6 +28,10 @@ export type GetVacationsQuery$data = {
       readonly user: {
         readonly id: string;
         readonly name: string;
+        readonly team: {
+          readonly id: string;
+          readonly team: string;
+        };
       };
     }> | null;
   };
@@ -152,6 +156,25 @@ v1 = [
                 "kind": "ScalarField",
                 "name": "name",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Team",
+                "kind": "LinkedField",
+                "name": "team",
+                "plural": false,
+                "selections": [
+                  (v0/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "team",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -181,16 +204,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "12a405120335eb61492c23690643665a",
+    "cacheID": "1f0c69bcae5e0d6543c95ef4889ce621",
     "id": null,
     "metadata": {},
     "name": "GetVacationsQuery",
     "operationKind": "query",
-    "text": "query GetVacationsQuery {\n  getVacations {\n    ok\n    error\n    vacations {\n      id\n      startDate\n      endDate\n      confirmed {\n        byCeo\n        byLeader\n        byManager\n      }\n      isHalf\n      duration\n      user {\n        id\n        name\n      }\n    }\n  }\n}\n"
+    "text": "query GetVacationsQuery {\n  getVacations {\n    ok\n    error\n    vacations {\n      id\n      startDate\n      endDate\n      confirmed {\n        byCeo\n        byLeader\n        byManager\n      }\n      isHalf\n      duration\n      user {\n        id\n        name\n        team {\n          id\n          team\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "d848db024f72b0913f56a51e3395f617";
+(node as any).hash = "e410d676ca9025eac861ffc30fb277a0";
 
 export default node;

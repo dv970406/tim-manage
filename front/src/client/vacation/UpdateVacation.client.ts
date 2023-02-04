@@ -61,10 +61,10 @@ export const useUpdateVacation = () => {
       mutation: updateVacationQuery,
       variables,
       onCompleted: ({ updateVacation: { ok, error } }) => {
-        if (!ok) {
-          alert(error);
-        }
         setIsLoading(false);
+        if (!ok) {
+          return alert(error);
+        }
       },
     });
   };

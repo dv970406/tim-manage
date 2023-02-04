@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ec79eb70c4c8451cce27b6d53c4cf542>>
+ * @generated SignedSource<<9757783345a3431011edcf072a18b9c2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,17 +9,20 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type GetMyInfoQuery$variables = {
+export type GetManagerUserQuery$variables = {
+  id: string;
   skip: boolean;
 };
-export type GetMyInfoQuery$data = {
-  readonly getMyInfo?: {
+export type GetManagerUserQuery$data = {
+  readonly getUser?: {
     readonly error: string | null;
     readonly ok: boolean;
     readonly user: {
+      readonly availableVacation: string;
       readonly email: string;
       readonly id: string;
       readonly isManager: boolean;
+      readonly joinDate: any;
       readonly name: string;
       readonly position: {
         readonly id: string;
@@ -32,13 +35,18 @@ export type GetMyInfoQuery$data = {
     } | null;
   };
 };
-export type GetMyInfoQuery = {
-  response: GetMyInfoQuery$data;
-  variables: GetMyInfoQuery$variables;
+export type GetManagerUserQuery = {
+  response: GetManagerUserQuery$data;
+  variables: GetManagerUserQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
 var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "id"
+  },
   {
     "defaultValue": null,
     "kind": "LocalArgument",
@@ -60,10 +68,22 @@ v2 = [
     "selections": [
       {
         "alias": null,
-        "args": null,
+        "args": [
+          {
+            "fields": [
+              {
+                "kind": "Variable",
+                "name": "id",
+                "variableName": "id"
+              }
+            ],
+            "kind": "ObjectValue",
+            "name": "input"
+          }
+        ],
         "concreteType": "GetUserOutput",
         "kind": "LinkedField",
-        "name": "getMyInfo",
+        "name": "getUser",
         "plural": false,
         "selections": [
           {
@@ -113,20 +133,8 @@ v2 = [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "Team",
-                "kind": "LinkedField",
-                "name": "team",
-                "plural": false,
-                "selections": [
-                  (v1/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "team",
-                    "storageKey": null
-                  }
-                ],
+                "kind": "ScalarField",
+                "name": "joinDate",
                 "storageKey": null
               },
               {
@@ -147,6 +155,32 @@ v2 = [
                   }
                 ],
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Team",
+                "kind": "LinkedField",
+                "name": "team",
+                "plural": false,
+                "selections": [
+                  (v1/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "team",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "availableVacation",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -162,7 +196,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "GetMyInfoQuery",
+    "name": "GetManagerUserQuery",
     "selections": (v2/*: any*/),
     "type": "Query",
     "abstractKey": null
@@ -171,20 +205,20 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "GetMyInfoQuery",
+    "name": "GetManagerUserQuery",
     "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "2fdb86d0dbc6941e78623bed2f9578bb",
+    "cacheID": "558d5b6ad575edd756cad020550566b7",
     "id": null,
     "metadata": {},
-    "name": "GetMyInfoQuery",
+    "name": "GetManagerUserQuery",
     "operationKind": "query",
-    "text": "query GetMyInfoQuery(\n  $skip: Boolean!\n) {\n  getMyInfo @skip(if: $skip) {\n    ok\n    error\n    user {\n      id\n      name\n      email\n      isManager\n      team {\n        id\n        team\n      }\n      position {\n        id\n        position\n      }\n    }\n  }\n}\n"
+    "text": "query GetManagerUserQuery(\n  $id: ID!\n  $skip: Boolean!\n) {\n  getUser(input: {id: $id}) @skip(if: $skip) {\n    ok\n    error\n    user {\n      id\n      name\n      email\n      isManager\n      joinDate\n      position {\n        id\n        position\n      }\n      team {\n        id\n        team\n      }\n      availableVacation\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "4e2d6550ef96edc3f62539c64c3d4925";
+(node as any).hash = "1ed8be3ca81559dda190f43e6cf54d61";
 
 export default node;

@@ -1,37 +1,12 @@
 import { EventInput } from "@fullcalendar/core";
 import { graphql } from "babel-plugin-relay/macro";
 import { useEffect, useState, Suspense } from "react";
-import {
-  loadQuery,
-  PreloadedQuery,
-  useFragment,
-  usePreloadedQuery,
-  useQueryLoader,
-} from "react-relay";
+import { PreloadedQuery, usePreloadedQuery } from "react-relay";
 import { theme } from "../../css/theme";
-import { homeVacationsQuery } from "../../pages/Home";
-import { HomeVacationsQuery } from "../../pages/__generated__/HomeVacationsQuery.graphql";
-import { SCHEDULES } from "../../utils/modal/modal.constants";
+import { SCHEDULES } from "../../utils/constants/schedule.constant";
+import { NINE_HOURS_TO_MILLISEC } from "../../utils/constants/time.constant";
 import { useGetMyInfo } from "../user/GetMyInfo.client";
-
-const vacationsFragment = graphql`
-  fragment GetVacations_vacation on Vacation {
-    id
-    startDate
-    endDate
-    confirmed {
-      byCeo
-      byLeader
-      byManager
-    }
-    isHalf
-    duration
-    user {
-      id
-      name
-    }
-  }
-`;
+import { GetVacationsQuery } from "./__generated__/GetVacationsQuery.graphql";
 
 export const getVacationsQuery = graphql`
   query GetVacationsQuery {
@@ -52,6 +27,10 @@ export const getVacationsQuery = graphql`
         user {
           id
           name
+          team {
+            id
+            team
+          }
         }
       }
     }
@@ -59,14 +38,15 @@ export const getVacationsQuery = graphql`
 `;
 
 export const useGetVacations = (
-  homeVacationsQueryReference: PreloadedQuery<HomeVacationsQuery>
+  getVacationsQueryReference: PreloadedQuery<GetVacationsQuery>
 ) => {
   const {
     getVacations: { ok, error, vacations },
-  } = usePreloadedQuery<HomeVacationsQuery>(
-    homeVacationsQuery,
-    homeVacationsQueryReference
+  } = usePreloadedQuery<GetVacationsQuery>(
+    getVacationsQuery,
+    getVacationsQueryReference
   );
+
   // 페칭한 vacations 데이터를 달력 라이브러리 포맷에 맞게 변환하는 로직
   const [vacationsByCalendarFormat, setCalendarFormat] = useState<EventInput[]>(
     []
@@ -78,6 +58,7 @@ export const useGetVacations = (
     if (!ok) {
       return alert(error);
     }
+
     const getCalendarFormat: EventInput[] = vacations
       ?.filter((vacation) => !!vacation)
       .map((vacation) => {
@@ -88,27 +69,39 @@ export const useGetVacations = (
         // 만약 미승인 + 내 휴가가 아니라면 리스트에 포함 안시킴
         if (!isMine && !approved) return {};
 
-        // fullCalendar 라이브러리의 형식을 맞춰주기 위해 toJSON 작업
+        // fullCalendar 라이브러리의 형식을 맞춰주기 위해 9시간을 더해줌
         const start = new Date(vacation.startDate);
-        const end = new Date(vacation.endDate);
+        const end = +new Date(vacation.endDate) + NINE_HOURS_TO_MILLISEC;
 
+        let backgroundColor;
+        if (isMine && !approved) {
+          backgroundColor = theme.disabled.green;
+        } else if (isMine) {
+          backgroundColor = theme.bgColors.green;
+        } else {
+          backgroundColor = theme.bgColors.yellow;
+        }
         return {
           id: vacation.id,
           start,
           end,
-          backgroundColor:
-            isMine && !approved ? theme.disabled.green : theme.colors.green,
+          backgroundColor,
           title: vacation.isHalf ? "반차" : "연차",
           user: vacation.user,
           type: SCHEDULES.VACATION,
           // 반차, 연차 모두 allday로
           allDay: true,
           editable: isMine,
+          durationEditable: !vacation.isHalf,
           visible: !isMine && !approved ? false : true,
-          borderColor: isMine ? theme.colors.yellow : "transparent",
+          borderColor: "transparent",
+          isMine,
+          isHalf: vacation.isHalf,
+          duration: vacation.duration,
         };
       })!;
+
     setCalendarFormat(getCalendarFormat);
-  }, [ok]);
+  }, [vacations]);
   return { vacationsByCalendarFormat, setCalendarFormat };
 };

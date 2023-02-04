@@ -4,10 +4,11 @@ import { Environment, Network, Store, RecordSource } from "relay-runtime";
 import { getMyInfoQuery } from "./user/GetMyInfo.client";
 import { getVacationsQuery } from "./vacation/GetVacations.client";
 
+export const TOKEN = "TOKEN";
 const store = new Store(new RecordSource());
 
 const network = Network.create(async (operation, variables) => {
-  const token = localStorage.getItem("TOKEN");
+  const token = localStorage.getItem(TOKEN);
 
   const GRAPHQL_SERVER_URL = process.env.REACT_APP_GRAPHQL_SERVER_URL || "";
   const response = await fetch(GRAPHQL_SERVER_URL, {

@@ -2,7 +2,7 @@ import { graphql } from "babel-plugin-relay/macro";
 import { useEffect, useState } from "react";
 import { commitMutation, useMutation } from "react-relay";
 import { NavigateFunction, useNavigate } from "react-router-dom";
-import { environment } from "../client";
+import { environment, TOKEN } from "../client";
 import {
   LoginMutation,
   LoginMutation$data,
@@ -29,14 +29,14 @@ export const useLogin = () => {
       variables,
 
       onCompleted: ({ login: { ok, error, token } }) => {
+        setIsLoading(false);
         if (!ok || !token) {
           alert(error);
           return;
         }
-        localStorage.setItem("TOKEN", token);
+        localStorage.setItem(TOKEN, token);
         // 홈으로 푸시
         navigate("/");
-        setIsLoading(false);
       },
     });
   };
@@ -52,7 +52,7 @@ export const useLogin = () => {
 //     alert(error);
 //     return;
 //   }
-//   localStorage.setItem("TOKEN", token);
+//   localStorage.setItem(TOKEN, token);
 //   // 홈으로 푸시
 //   navigate("/");
 // };

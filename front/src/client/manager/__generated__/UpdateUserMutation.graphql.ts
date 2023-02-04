@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bbbc0b3330799ff9051f128a7ea488de>>
+ * @generated SignedSource<<676c028ef56d119e2c9e44628dc1ae71>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type UpdateUserMutation$variables = {
-  availableVacation?: number | null;
+  availableVacation?: string | null;
   email?: string | null;
   isManager?: boolean | null;
   joinDate?: any | null;
@@ -181,16 +181,16 @@ return {
     "selections": (v8/*: any*/)
   },
   "params": {
-    "cacheID": "e6c69eb557df6d501cba7432ad9fe5a6",
+    "cacheID": "a2c3171f9bfd45383602a8b7dc36c837",
     "id": null,
     "metadata": {},
     "name": "UpdateUserMutation",
     "operationKind": "mutation",
-    "text": "mutation UpdateUserMutation(\n  $userId: ID!\n  $email: String\n  $isManager: Boolean\n  $name: String\n  $joinDate: DateTime\n  $availableVacation: Float\n  $positionId: ID\n  $teamId: ID\n) {\n  updateUser(input: {userId: $userId, email: $email, isManager: $isManager, name: $name, joinDate: $joinDate, availableVacation: $availableVacation, positionId: $positionId, teamId: $teamId}) {\n    ok\n    error\n  }\n}\n"
+    "text": "mutation UpdateUserMutation(\n  $userId: ID!\n  $email: String\n  $isManager: Boolean\n  $name: String\n  $joinDate: DateTime\n  $availableVacation: String\n  $positionId: ID\n  $teamId: ID\n) {\n  updateUser(input: {userId: $userId, email: $email, isManager: $isManager, name: $name, joinDate: $joinDate, availableVacation: $availableVacation, positionId: $positionId, teamId: $teamId}) {\n    ok\n    error\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f85250cccff2671861459184ac273c2a";
+(node as any).hash = "b22321dea0a86bf7b5013a5bdca3f4d6";
 
 export default node;

@@ -25,10 +25,11 @@ export const useUpdateTeam = () => {
       mutation: updateTeamQuery,
       variables,
       onCompleted: ({ updateTeam: { ok, error } }) => {
+        setIsLoading(false);
         if (!ok) {
           alert(error);
+          return;
         }
-        setIsLoading(false);
       },
     });
   };

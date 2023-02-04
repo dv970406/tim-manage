@@ -27,10 +27,11 @@ export const useUpdatePosition = () => {
       mutation: updatePositionQuery,
       variables,
       onCompleted: ({ updatePosition: { ok, error } }) => {
+        setIsLoading(false);
         if (!ok) {
           alert(error);
+          return;
         }
-        setIsLoading(false);
       },
     });
   };

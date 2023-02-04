@@ -13,7 +13,8 @@ export const getPostQuery = graphql`
       error
       post {
         id
-        title
+        ...ContentZone_post
+        ...CommentsZone_post
       }
     }
   }

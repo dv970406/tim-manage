@@ -28,10 +28,11 @@ export const useDeleteMeeting = () => {
       mutation: deleteMeetingQuery,
       variables,
       onCompleted: ({ deleteMeeting: { ok, error } }) => {
+        setIsLoading(false);
         if (!ok) {
           alert(error);
+          return;
         }
-        setIsLoading(false);
       },
     });
   };

@@ -55,10 +55,11 @@ export const useUpdateMeeting = () => {
       mutation: updateMeetingQuery,
       variables,
       onCompleted: ({ updateMeeting: { ok, error } }) => {
+        setIsLoading(false);
         if (!ok) {
           alert(error);
+          return;
         }
-        setIsLoading(false);
       },
     });
   };
