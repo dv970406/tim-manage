@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
-import { Repository } from 'typeorm';
 import { CreatePostInput, CreatePostOutput } from './dtos/post/create-post.dto';
 import { DeletePostInput, DeletePostOutput } from './dtos/post/delete-post.dto';
 import { GetPostInput, GetPostOutput } from './dtos/post/get-post.dto';
@@ -17,10 +16,16 @@ export class PostService {
     private readonly postRepo: PostRepository,
   ) {}
 
+  async isMyPost(loggedInUser: User, post: Post): Promise<boolean> {
+    return loggedInUser.id === post.user.id;
+  }
   async getPosts(): Promise<GetPostsOutput> {
     try {
       const findPosts = await this.postRepo.find({
         order: { createdAt: 'DESC' },
+        relations: {
+          user: true,
+        },
       });
       return {
         ok: true,
@@ -58,9 +63,14 @@ export class PostService {
         throw new Error('제목을 입력해주세요.');
       }
 
-      await this.postRepo.save({ title, content, user: loggedInUser });
+      const newPost = await this.postRepo.save({
+        title,
+        content,
+        user: loggedInUser,
+      });
       return {
         ok: true,
+        post: newPost,
       };
     } catch (error) {
       return {

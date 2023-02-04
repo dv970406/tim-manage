@@ -69,13 +69,15 @@ export class CommentService {
       }
       const findPost = await this.postRepo.findPost({ postId });
 
-      await this.commentRepo.save({
+      const newComment = await this.commentRepo.save({
         content,
         user: loggedInUser,
         post: findPost,
       });
       return {
         ok: true,
+        comment: newComment,
+        postId,
       };
     } catch (error) {
       return {

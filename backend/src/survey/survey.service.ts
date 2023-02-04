@@ -20,16 +20,21 @@ export class SurveyService {
     @InjectRepository(SurveyRepository)
     private readonly surveyRepo: SurveyRepository,
   ) {}
+
+  async isMySurvey(loggedInUser: User, survey: Survey): Promise<boolean> {
+    return loggedInUser.id === survey.user.id;
+  }
   async isAnswered(loggedInUser: User, survey: Survey): Promise<boolean> {
-    const isAlreadyAnswered = await this.surveyRepo.countBy({
-      id: survey.id,
-      answers: {
-        user: {
-          id: loggedInUser.id,
+    return this.surveyRepo.exist({
+      where: {
+        id: survey.id,
+        answers: {
+          user: {
+            id: loggedInUser.id,
+          },
         },
       },
     });
-    return !!isAlreadyAnswered;
   }
 
   async getSurveys(): Promise<GetSurveysOutput> {

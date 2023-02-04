@@ -13,15 +13,12 @@ import {
   DeleteCommentOutput,
 } from './dtos/comment/delete-comment.dto';
 import { GetMyCommentsOutput } from './dtos/comment/get-myComments.dto';
-import {
-  UpdateCommentInput,
-  UpdateCommentOutput,
-} from './dtos/comment/update-comment.dto';
 import { Comment } from './entities/comment.entity';
 
 @Resolver((of) => Comment)
 export class CommentResolver {
   constructor(private readonly commentService: CommentService) {}
+
   @Query((type) => GetMyCommentsOutput)
   @UseGuards(LoginGuard)
   getMyComments(
@@ -38,15 +35,6 @@ export class CommentResolver {
   ): Promise<CreateCommentOutput> {
     return this.commentService.createComment(loggedInUser, createCommentInput);
   }
-
-  // @Mutation((type) => UpdateCommentOutput)
-  // @UseGuards(LoginGuard)
-  // updateComment(
-  //   @LoggedInUser() loggedInUser: User,
-  //   @Args('input') updateCommentInput: UpdateCommentInput,
-  // ): Promise<UpdateCommentOutput> {
-  //   return this.commentService.updateComment(loggedInUser, updateCommentInput);
-  // }
 
   @Mutation((type) => DeleteCommentOutput)
   @UseGuards(LoginGuard)

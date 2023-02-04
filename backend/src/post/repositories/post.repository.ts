@@ -9,8 +9,16 @@ export class PostRepository extends Repository<Post> {
       where: {
         id: postId,
       },
-      loadRelationIds: {
-        relations: ['user'],
+      relations: {
+        user: true,
+        comments: {
+          user: true,
+        },
+      },
+      order: {
+        comments: {
+          createdAt: 'DESC',
+        },
       },
     });
     if (!post) {

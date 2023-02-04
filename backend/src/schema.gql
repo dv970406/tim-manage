@@ -60,6 +60,7 @@ type Post {
   user: User!
   likes: [Like!]!
   comments: [Comment!]!
+  isMyPost: Boolean!
   countLikes: Float!
   isLiked: Boolean!
   countComments: Float!
@@ -74,6 +75,7 @@ type Survey {
   paragraphs: [SurveyForm!]!
   answers: [Answer!]!
   user: User!
+  isMySurvey: Boolean!
   isAnswered: Boolean!
 }
 
@@ -317,6 +319,8 @@ type GetSurveysOutput {
 type CreateCommentOutput {
   ok: Boolean!
   error: String
+  comment: Comment
+  postId: ID
 }
 
 type DeleteCommentOutput {

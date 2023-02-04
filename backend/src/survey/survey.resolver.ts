@@ -27,7 +27,13 @@ import { SurveyService } from './survey.service';
 @Resolver((of) => Survey)
 export class SurveyResolver {
   constructor(private readonly surveyService: SurveyService) {}
-
+  @ResolveField((type) => Boolean)
+  isMySurvey(
+    @LoggedInUser() loggedInUser: User,
+    @Parent() survey: Survey,
+  ): Promise<boolean> {
+    return this.surveyService.isMySurvey(loggedInUser, survey);
+  }
   @ResolveField((type) => Boolean)
   isAnswered(
     @Parent() survey: Survey,

@@ -28,6 +28,14 @@ export class PostResolver {
     private readonly commentService: CommentService,
   ) {}
 
+  @ResolveField((type) => Boolean)
+  isMyPost(
+    @LoggedInUser() loggedInUser: User,
+    @Parent() post: Post,
+  ): Promise<boolean> {
+    return this.postService.isMyPost(loggedInUser, post);
+  }
+
   @ResolveField((type) => Number)
   countLikes(@Parent() post: Post): Promise<Number> {
     return this.likeService.countLikes(post);
