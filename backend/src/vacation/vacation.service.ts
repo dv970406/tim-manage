@@ -16,6 +16,7 @@ import {
   DeleteVacationInput,
   DeleteVacationOutput,
 } from './dtos/delete-vacation.dto';
+import { GetUnConfirmedByMeVacationsOutput } from './dtos/get-unConfirmedByMeVacations.dto';
 import { GetVacationInput, GetVacationOutput } from './dtos/get-vacation.dto';
 import { GetVacationsOutput } from './dtos/get-vacations.dto';
 import {
@@ -24,8 +25,6 @@ import {
 } from './dtos/update-vacation.dto';
 import { VacationRepository } from './vacation.repository';
 
-// const TEST_START_DATE = 1641081600000;
-// const TEST_FINISH_DATE = 1641254400000;
 @Injectable()
 export class VacationService {
   constructor(
@@ -62,6 +61,86 @@ export class VacationService {
       return {
         ok: false,
         error: '휴가 리스트 조회에 실패했습니다.',
+      };
+    }
+  }
+  async getUnConfirmedByMeVacations(
+    loggedInUser: User,
+  ): Promise<GetUnConfirmedByMeVacationsOutput> {
+    try {
+      let unConfirmedByMeVacations = await this.vacationRepo.find({
+        where: {
+          startDate: MoreThan(new Date()),
+        },
+        order: {
+          createdAt: 'ASC',
+        },
+        relations: {
+          user: {
+            team: true,
+          },
+        },
+      });
+
+      //confirmed가 column이 아니라서 DB에서 이렇게 가져올 수는 없더라
+      // if (loggedInUser.position.position === POSITION_CEO) {
+      //   unConfirmedByMeVacations = await this.vacationRepo.find({
+      //     where: {
+      //       startDate: MoreThan(new Date()),
+      //       // confirmed: {
+      //       //   byCeo: false,
+      //       // },
+      //     },
+      //     order: {
+      //       createdAt: 'ASC',
+      //     },
+      //   });
+      // }
+
+      const amICeo = loggedInUser.position.position === POSITION_CEO;
+      if (amICeo) {
+        unConfirmedByMeVacations = unConfirmedByMeVacations.filter(
+          (vacation) => !vacation.confirmed.byCeo,
+        );
+      }
+      // 아래 조건 순서대로 해야 manager이면서 leader인 경우 leader로 우선 인식되게 할 수 있음
+      else if (loggedInUser.team.leaderId === loggedInUser.id && !amICeo) {
+        unConfirmedByMeVacations = unConfirmedByMeVacations.filter(
+          (vacation) =>
+            vacation.user.team.leaderId === loggedInUser.id &&
+            !vacation.confirmed.byLeader,
+        );
+      } else if (loggedInUser.isManager && !amICeo) {
+        unConfirmedByMeVacations = unConfirmedByMeVacations.filter(
+          (vacation) => !vacation.confirmed.byManager,
+        );
+      }
+      // unConfirmedByMeVacations=await this.vacationRepo.find({
+      // 위처럼 안하고 여기 안에서 조건 작성하면 일반 유저들도 데이터 받게 되잖아. 물론 프론트에서 접근 못하게 막아는 놓겠지만
+      //   where: {
+      //     startDate: MoreThan(new Date()),
+      //     user: {
+      //       team: {
+      //         leaderId: loggedInUser.id,
+      //       },
+      //     },
+      //     confirmed: {
+      //       byLeader: false,
+      //     },
+      //   },
+      //   order: {
+      //     createdAt: 'ASC',
+      //   },
+      // });
+
+      return {
+        ok: true,
+        vacations: unConfirmedByMeVacations,
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        error: error.message || '미승인 휴가를 조회할 수 없습니다.',
       };
     }
   }

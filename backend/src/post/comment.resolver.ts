@@ -1,5 +1,12 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { LoggedInUser } from 'src/auth/auth-user.decorator';
 import { LoginGuard, ManagerGuard } from 'src/auth/auth.guard';
 import { User } from 'src/user/entities/user.entity';
@@ -18,6 +25,14 @@ import { Comment } from './entities/comment.entity';
 @Resolver((of) => Comment)
 export class CommentResolver {
   constructor(private readonly commentService: CommentService) {}
+
+  @ResolveField((type) => Boolean)
+  isMyComment(
+    @LoggedInUser() loggedInUser: User,
+    @Parent() comment: Comment,
+  ): Promise<boolean> {
+    return this.commentService.isMyComment(loggedInUser, comment);
+  }
 
   @Query((type) => GetMyCommentsOutput)
   @UseGuards(LoginGuard)

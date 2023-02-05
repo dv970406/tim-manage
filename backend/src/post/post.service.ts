@@ -96,8 +96,11 @@ export class PostService {
       }
 
       await this.postRepo.save([{ id: postId, title, content }]);
+
+      const updatedPost = await this.postRepo.findPost({ postId });
       return {
         ok: true,
+        post: updatedPost,
       };
     } catch (error) {
       return {

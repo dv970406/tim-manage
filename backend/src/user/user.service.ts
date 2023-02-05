@@ -53,6 +53,8 @@ export class UserService {
         relations: {
           position: true,
           team: true,
+          vacations: true,
+          attendedMeetings: true,
         },
       });
 
@@ -238,9 +240,10 @@ export class UserService {
           ...updateUserInfo,
         },
       ]);
-
+      const updatedUser = await this.userRepo.findUser({ userId });
       return {
         ok: true,
+        user: updatedUser,
       };
     } catch (error) {
       return {

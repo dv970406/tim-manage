@@ -10,10 +10,7 @@ import {
   DeleteCommentOutput,
 } from './dtos/Comment/delete-comment.dto';
 import { GetMyCommentsOutput } from './dtos/comment/get-myComments.dto';
-import {
-  UpdateCommentInput,
-  UpdateCommentOutput,
-} from './dtos/comment/update-comment.dto';
+import { Comment } from './entities/comment.entity';
 import { Post } from './entities/post.entity';
 import { CommentRepository } from './repositories/comment.repository';
 import { PostRepository } from './repositories/post.repository';
@@ -27,7 +24,10 @@ export class CommentService {
     private readonly postRepo: PostRepository,
   ) {}
 
-  async countComments(post: Post): Promise<Number> {
+  async isMyComment(loggedInUser: User, comment: Comment): Promise<boolean> {
+    return comment.user.id === loggedInUser.id;
+  }
+  async countComments(post: Post): Promise<number> {
     return this.commentRepo.countBy({
       post: {
         id: post.id,
@@ -74,6 +74,7 @@ export class CommentService {
         user: loggedInUser,
         post: findPost,
       });
+
       return {
         ok: true,
         comment: newComment,
@@ -129,6 +130,7 @@ export class CommentService {
       return {
         ok: true,
         deletedCommentId: commentId,
+        postId: findComment.postId,
       };
     } catch (error) {
       return {

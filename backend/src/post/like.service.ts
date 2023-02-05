@@ -16,7 +16,7 @@ export class LikeService {
     private readonly postRepo: PostRepository,
   ) {}
 
-  async countLikes(post: Post): Promise<Number> {
+  async countLikes(post: Post): Promise<number> {
     return this.likeRepo.countBy({
       post: {
         id: post.id,
@@ -24,7 +24,7 @@ export class LikeService {
     });
   }
 
-  async isLiked(loggedInUser: User, post: Post): Promise<Boolean> {
+  async isLiked(loggedInUser: User, post: Post): Promise<boolean> {
     return this.likeRepo.exist({
       where: {
         post: {

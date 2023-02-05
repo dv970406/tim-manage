@@ -15,6 +15,7 @@ import {
   DeleteVacationInput,
   DeleteVacationOutput,
 } from './dtos/delete-vacation.dto';
+import { GetUnConfirmedByMeVacationsOutput } from './dtos/get-unConfirmedByMeVacations.dto';
 import { GetVacationInput, GetVacationOutput } from './dtos/get-vacation.dto';
 import { GetVacationsOutput } from './dtos/get-vacations.dto';
 import {
@@ -30,6 +31,14 @@ export class VacationResolver {
   @Query((type) => GetVacationsOutput)
   getVacations(): Promise<GetVacationsOutput> {
     return this.vacationService.getVacations();
+  }
+
+  @Query((type) => GetUnConfirmedByMeVacationsOutput)
+  @UseGuards(LoginGuard)
+  getUnConfirmedByMeVacations(
+    @LoggedInUser() loggedInUser: User,
+  ): Promise<GetUnConfirmedByMeVacationsOutput> {
+    return this.vacationService.getUnConfirmedByMeVacations(loggedInUser);
   }
 
   @Query((type) => GetVacationOutput)

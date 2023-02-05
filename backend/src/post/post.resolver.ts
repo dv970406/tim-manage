@@ -37,7 +37,7 @@ export class PostResolver {
   }
 
   @ResolveField((type) => Number)
-  countLikes(@Parent() post: Post): Promise<Number> {
+  countLikes(@Parent() post: Post): Promise<number> {
     return this.likeService.countLikes(post);
   }
 
@@ -45,12 +45,12 @@ export class PostResolver {
   isLiked(
     @LoggedInUser() loggedInUser: User,
     @Parent() post: Post,
-  ): Promise<Boolean> {
+  ): Promise<boolean> {
     return this.likeService.isLiked(loggedInUser, post);
   }
 
   @ResolveField((type) => Number)
-  countComments(@Parent() post: Post): Promise<Number> {
+  countComments(@Parent() post: Post): Promise<number> {
     return this.commentService.countComments(post);
   }
 

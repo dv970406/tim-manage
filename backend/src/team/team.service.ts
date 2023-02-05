@@ -25,6 +25,9 @@ export class TeamService {
     try {
       const findTeams = await this.teamRepo.find({
         order: { createdAt: 'DESC' },
+        relations: {
+          leader: true,
+        },
       });
       return {
         ok: true,

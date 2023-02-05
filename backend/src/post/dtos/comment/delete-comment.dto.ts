@@ -9,4 +9,6 @@ export class DeleteCommentInput extends PickType(Comment, ['id']) {}
 export class DeleteCommentOutput extends CoreOutput {
   @Field((type) => ID, { nullable: true })
   deletedCommentId?: string;
+  @Field((type) => ID, { nullable: true })
+  postId?: string;
 }

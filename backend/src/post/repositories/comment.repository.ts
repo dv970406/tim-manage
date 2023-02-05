@@ -10,7 +10,7 @@ export class CommentRepository extends Repository<Comment> {
         id: commentId,
       },
       loadRelationIds: {
-        relations: ['user'],
+        relations: ['user', 'post'],
       },
     });
     if (!findComment) {

@@ -9,10 +9,7 @@ import {
   DeletePositionInput,
   DeletePositionOutput,
 } from './dtos/delete-position.dto';
-import {
-  GetUsersOfPositionInput,
-  GetUsersOfPositionOutput,
-} from './dtos/get-usersOfPosition.dto';
+import { GetPositionInput, GetPositionOutput } from './dtos/get-position.dto';
 import { GetPositionsOutput } from './dtos/get-positions.dto';
 import {
   UpdatePositionInput,
@@ -29,11 +26,11 @@ export class PositionResolver {
     return this.positionService.getPositions();
   }
 
-  @Query((type) => GetUsersOfPositionOutput)
-  getUsersOfPosition(
-    @Args('input') getUsersOfPositionInput: GetUsersOfPositionInput,
-  ): Promise<GetUsersOfPositionOutput> {
-    return this.positionService.getUsersOfPosition(getUsersOfPositionInput);
+  @Query((type) => GetPositionOutput)
+  getPosition(
+    @Args('input') getPositionInput: GetPositionInput,
+  ): Promise<GetPositionOutput> {
+    return this.positionService.getPosition(getPositionInput);
   }
 
   @Mutation((type) => CreatePositionOutput)

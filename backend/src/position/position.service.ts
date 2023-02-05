@@ -8,10 +8,7 @@ import {
   DeletePositionInput,
   DeletePositionOutput,
 } from './dtos/delete-position.dto';
-import {
-  GetUsersOfPositionInput,
-  GetUsersOfPositionOutput,
-} from './dtos/get-usersOfPosition.dto';
+import { GetPositionInput, GetPositionOutput } from './dtos/get-position.dto';
 import { GetPositionsOutput } from './dtos/get-positions.dto';
 import {
   UpdatePositionInput,
@@ -42,14 +39,14 @@ export class PositionService {
     }
   }
 
-  async getUsersOfPosition({
+  async getPosition({
     id: positionId,
-  }: GetUsersOfPositionInput): Promise<GetUsersOfPositionOutput> {
+  }: GetPositionInput): Promise<GetPositionOutput> {
     try {
       const findPosition = await this.positionRepo.findPosition({ positionId });
       return {
         ok: true,
-        users: findPosition.users,
+        position: findPosition,
       };
     } catch (error) {
       return {

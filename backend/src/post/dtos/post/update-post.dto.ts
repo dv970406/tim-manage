@@ -19,4 +19,7 @@ export class UpdatePostInput extends PickType(PartialType(Post), [
 }
 
 @ObjectType()
-export class UpdatePostOutput extends CoreOutput {}
+export class UpdatePostOutput extends CoreOutput {
+  @Field((type) => Post, { nullable: true })
+  post?: Post;
+}

@@ -9,6 +9,7 @@ export class TeamRepository extends Repository<Team> {
       where: { id: teamId },
       relations: {
         users: true,
+        leader: true,
       },
     });
     if (!team) {

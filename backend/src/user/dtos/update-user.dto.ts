@@ -35,4 +35,7 @@ export class UpdateUserInput extends PickType(PartialType(User), [
 }
 
 @ObjectType()
-export class UpdateUserOutput extends CoreOutput {}
+export class UpdateUserOutput extends CoreOutput {
+  @Field((type) => User, { nullable: true })
+  user?: User;
+}

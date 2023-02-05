@@ -4,10 +4,10 @@ import { User } from 'src/user/entities/user.entity';
 import { Position } from '../entities/position.entity';
 
 @InputType()
-export class GetUsersOfPositionInput extends PickType(Position, ['id']) {}
+export class GetPositionInput extends PickType(Position, ['id']) {}
 
 @ObjectType()
-export class GetUsersOfPositionOutput extends CoreOutput {
-  @Field((type) => [User], { nullable: true })
-  users?: User[];
+export class GetPositionOutput extends CoreOutput {
+  @Field((type) => Position, { nullable: true })
+  position?: Position;
 }
