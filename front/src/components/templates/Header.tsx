@@ -1,13 +1,24 @@
-import { faBell, faGear, faUser } from "@fortawesome/pro-solid-svg-icons";
-import React from "react";
-import { useGetMyInfo } from "../../client/user/GetMyInfo.client";
+import {
+  faBell,
+  faGear,
+  faOutdent,
+  faUser,
+} from "@fortawesome/pro-solid-svg-icons";
+import { TOKEN } from "../../client/client";
 import { theme } from "../../css/theme";
+import { GapList } from "../atomics/boxes/Boxes";
 import { HeaderSection } from "../atomics/sections/sections";
+import { ButtonIcon } from "../molecules/buttons/Buttons";
 import NavIconButton from "../organisms/header/NavIconButton";
 
-const Header = () => {
-  const { myInfo } = useGetMyInfo();
-
+interface IHeader {
+  myId?: string;
+}
+const Header = ({ myId }: IHeader) => {
+  const handleLogout = () => {
+    localStorage.removeItem(TOKEN);
+    window.location.reload();
+  };
   return (
     <HeaderSection>
       <nav
@@ -18,16 +29,16 @@ const Header = () => {
         }}
       >
         <div></div>
-        <ul
+        <GapList
           style={{
-            display: "flex",
-            gap: theme.spacing.md,
+            flexDirection: "row",
           }}
         >
-          <NavIconButton icon={faUser} path={`/user/${myInfo?.id}`} />
+          <NavIconButton icon={faUser} path={`/user/${myId}`} />
           <NavIconButton icon={faGear} path={`/asd`} />
           <NavIconButton icon={faBell} path={`/dsa`} />
-        </ul>
+          <ButtonIcon icon={faOutdent} onClick={handleLogout} />
+        </GapList>
       </nav>
     </HeaderSection>
   );

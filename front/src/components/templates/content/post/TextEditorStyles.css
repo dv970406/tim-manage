@@ -1,0 +1,15 @@
+:root {
+  --border-radius-sm: 12px;
+  --border-radius-md: 15px;
+  --border-radius-lg: 20px;
+}
+
+.ql-toolbar.ql-snow {
+  border-top-left-radius: var(--border-radius-md);
+  border-top-right-radius: var(--border-radius-md);
+}
+.ql-container.ql-snow {
+  height: 60vh;
+  border-bottom-left-radius: var(--border-radius-md);
+  border-bottom-right-radius: var(--border-radius-md);
+}

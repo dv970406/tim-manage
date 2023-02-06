@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { ModalBackground, ModalSection } from "../atomics/sections/sections";
 import PortalModal from "../../utils/modal/PortalModal";
-import { ModalContext } from "../../utils/modal/modal.context";
+import { ModalContext } from "../../utils/contexts/modal.context";
 
 interface IModal {
   children: React.ReactNode;
