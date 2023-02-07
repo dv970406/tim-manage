@@ -25,12 +25,16 @@ export const getManagerUserQuery = graphql`
           id
           team
         }
+        # attendedMeetings {
+        #   id
+        # }
         availableVacation
       }
     }
   }
 `;
 
+// 페이지 로드 시 필요한 데이터가 아니라 해당 유저 클릭시 작동이 필요하므로 lazyLoadQuery
 export const useGetManagerUser = (userId: string) => {
   const { getUser } = useLazyLoadQuery<GetManagerUserQuery>(
     getManagerUserQuery,

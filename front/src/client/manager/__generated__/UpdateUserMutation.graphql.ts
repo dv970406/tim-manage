@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<676c028ef56d119e2c9e44628dc1ae71>>
+ * @generated SignedSource<<dbc20e19913d8f266f625c4d9e1da262>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,22 @@ export type UpdateUserMutation$data = {
   readonly updateUser: {
     readonly error: string | null;
     readonly ok: boolean;
+    readonly user: {
+      readonly availableVacation: string;
+      readonly email: string;
+      readonly id: string;
+      readonly isManager: boolean;
+      readonly joinDate: any;
+      readonly name: string;
+      readonly position: {
+        readonly id: string;
+        readonly position: string;
+      };
+      readonly team: {
+        readonly id: string;
+        readonly team: string;
+      };
+    } | null;
   };
 };
 export type UpdateUserMutation = {
@@ -71,7 +87,14 @@ v7 = {
   "kind": "LocalArgument",
   "name": "userId"
 },
-v8 = [
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v9 = [
   {
     "alias": null,
     "args": [
@@ -140,6 +163,91 @@ v8 = [
         "kind": "ScalarField",
         "name": "error",
         "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "User",
+        "kind": "LinkedField",
+        "name": "user",
+        "plural": false,
+        "selections": [
+          (v8/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "email",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isManager",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "joinDate",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "availableVacation",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Position",
+            "kind": "LinkedField",
+            "name": "position",
+            "plural": false,
+            "selections": [
+              (v8/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "position",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Team",
+            "kind": "LinkedField",
+            "name": "team",
+            "plural": false,
+            "selections": [
+              (v8/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "team",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
       }
     ],
     "storageKey": null
@@ -160,7 +268,7 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "UpdateUserMutation",
-    "selections": (v8/*: any*/),
+    "selections": (v9/*: any*/),
     "type": "Mutation",
     "abstractKey": null
   },
@@ -178,19 +286,19 @@ return {
     ],
     "kind": "Operation",
     "name": "UpdateUserMutation",
-    "selections": (v8/*: any*/)
+    "selections": (v9/*: any*/)
   },
   "params": {
-    "cacheID": "a2c3171f9bfd45383602a8b7dc36c837",
+    "cacheID": "f111868efde48be260a97f51d54bb8e3",
     "id": null,
     "metadata": {},
     "name": "UpdateUserMutation",
     "operationKind": "mutation",
-    "text": "mutation UpdateUserMutation(\n  $userId: ID!\n  $email: String\n  $isManager: Boolean\n  $name: String\n  $joinDate: DateTime\n  $availableVacation: String\n  $positionId: ID\n  $teamId: ID\n) {\n  updateUser(input: {userId: $userId, email: $email, isManager: $isManager, name: $name, joinDate: $joinDate, availableVacation: $availableVacation, positionId: $positionId, teamId: $teamId}) {\n    ok\n    error\n  }\n}\n"
+    "text": "mutation UpdateUserMutation(\n  $userId: ID!\n  $email: String\n  $isManager: Boolean\n  $name: String\n  $joinDate: DateTime\n  $availableVacation: String\n  $positionId: ID\n  $teamId: ID\n) {\n  updateUser(input: {userId: $userId, email: $email, isManager: $isManager, name: $name, joinDate: $joinDate, availableVacation: $availableVacation, positionId: $positionId, teamId: $teamId}) {\n    ok\n    error\n    user {\n      id\n      email\n      isManager\n      name\n      joinDate\n      availableVacation\n      position {\n        id\n        position\n      }\n      team {\n        id\n        team\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "b22321dea0a86bf7b5013a5bdca3f4d6";
+(node as any).hash = "824c8aec4d1ceb3fc88d0854b98e589e";
 
 export default node;

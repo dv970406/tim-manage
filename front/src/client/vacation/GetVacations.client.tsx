@@ -72,6 +72,7 @@ export const useGetVacations = (
         // fullCalendar 라이브러리의 형식을 맞춰주기 위해 9시간을 더해줌
         const start = new Date(vacation.startDate);
         const end = +new Date(vacation.endDate) + NINE_HOURS_TO_MILLISEC;
+        const now = new Date();
 
         let backgroundColor;
         if (isMine && !approved) {
@@ -92,12 +93,13 @@ export const useGetVacations = (
           // 반차, 연차 모두 allday로
           allDay: true,
           editable: isMine,
-          durationEditable: !vacation.isHalf,
+          durationEditable: !vacation.isHalf && isMine,
           visible: !isMine && !approved ? false : true,
           borderColor: "transparent",
           isMine,
           isHalf: vacation.isHalf,
           duration: vacation.duration,
+          isOver: start < now,
         };
       })!;
 

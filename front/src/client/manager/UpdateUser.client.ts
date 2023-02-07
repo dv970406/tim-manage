@@ -33,6 +33,22 @@ const updateUserQuery = graphql`
     ) {
       ok
       error
+      user {
+        id
+        email
+        isManager
+        name
+        joinDate
+        availableVacation
+        position {
+          id
+          position
+        }
+        team {
+          id
+          team
+        }
+      }
     }
   }
 `;
@@ -53,6 +69,19 @@ export const useUpdateUser = () => {
         }
 
         alert("저장되었습니다.");
+      },
+      updater: (proxyStore, { updateUser: { user } }) => {
+        const updateUserPayload = proxyStore
+          .getRootField("updateUser")
+          .getLinkedRecord("user");
+
+        if (!updateUserPayload) return;
+
+        const rootGetUser = proxyStore.get(
+          `client:root:getUser(input:{"id":"${user?.id}"})`
+        );
+
+        rootGetUser?.setLinkedRecord(updateUserPayload, "user");
       },
     });
   };

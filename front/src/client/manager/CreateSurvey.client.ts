@@ -55,9 +55,10 @@ export const useCreateSurvey = () => {
 
         if (!addSurveyPayload) return;
 
-        const rootGetSurveys = proxyStore.get("client:root:getSurveys");
+        const rootGetSurveys = proxyStore.get(`client:root:getSurveys`);
 
         const oldSurveys = rootGetSurveys?.getLinkedRecords("surveys");
+
         if (!oldSurveys) return;
 
         rootGetSurveys?.setLinkedRecords(

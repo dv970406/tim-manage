@@ -5,7 +5,7 @@ import { environment } from "../client";
 import {
   DeleteTeamMutation,
   DeleteTeamMutation$variables,
-} from "./__generated__/DeleteTeamMutation.graphql";
+} from "../team/__generated__/DeleteTeamMutation.graphql";
 
 const deleteTeamQuery = graphql`
   mutation DeleteTeamMutation($id: ID!) {

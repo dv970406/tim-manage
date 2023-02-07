@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2e74e13b4f283ac2a2df9a2f89779398>>
+ * @generated SignedSource<<a52571332756f8e2bfa1343997fee4b4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,21 +10,21 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type GetSurveysQuery$variables = {
+export type GetManagerSurveysQuery$variables = {
   onlyMine?: boolean | null;
 };
-export type GetSurveysQuery$data = {
+export type GetManagerSurveysQuery$data = {
   readonly getSurveys: {
     readonly error: string | null;
     readonly ok: boolean;
     readonly surveys: ReadonlyArray<{
-      readonly " $fragmentSpreads": FragmentRefs<"ManagerSurveyTableContent_survey" | "SurveyTableContent_survey">;
+      readonly " $fragmentSpreads": FragmentRefs<"ManagerSurveyTableContent_survey">;
     }> | null;
   };
 };
-export type GetSurveysQuery = {
-  response: GetSurveysQuery$data;
-  variables: GetSurveysQuery$variables;
+export type GetManagerSurveysQuery = {
+  response: GetManagerSurveysQuery$data;
+  variables: GetManagerSurveysQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -61,20 +61,13 @@ v3 = {
   "kind": "ScalarField",
   "name": "error",
   "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
 };
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "GetSurveysQuery",
+    "name": "GetManagerSurveysQuery",
     "selections": [
       {
         "alias": null,
@@ -94,11 +87,6 @@ return {
             "name": "surveys",
             "plural": true,
             "selections": [
-              {
-                "args": null,
-                "kind": "FragmentSpread",
-                "name": "SurveyTableContent_survey"
-              },
               {
                 "args": null,
                 "kind": "FragmentSpread",
@@ -118,7 +106,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "GetSurveysQuery",
+    "name": "GetManagerSurveysQuery",
     "selections": [
       {
         "alias": null,
@@ -138,7 +126,13 @@ return {
             "name": "surveys",
             "plural": true,
             "selections": [
-              (v4/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "id",
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -152,39 +146,6 @@ return {
                 "kind": "ScalarField",
                 "name": "isAnonymous",
                 "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "User",
-                "kind": "LinkedField",
-                "name": "user",
-                "plural": false,
-                "selections": [
-                  (v4/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "name",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "isAnswered",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "createdAt",
-                "storageKey": null
               }
             ],
             "storageKey": null
@@ -195,16 +156,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "acb4e0f612a5298f37314c40a748f36b",
+    "cacheID": "903bda9d5ed16a9fd38e7d6dde46bc69",
     "id": null,
     "metadata": {},
-    "name": "GetSurveysQuery",
+    "name": "GetManagerSurveysQuery",
     "operationKind": "query",
-    "text": "query GetSurveysQuery(\n  $onlyMine: Boolean\n) {\n  getSurveys(input: {onlyMine: $onlyMine}) {\n    ok\n    error\n    surveys {\n      ...SurveyTableContent_survey\n      ...ManagerSurveyTableContent_survey\n      id\n    }\n  }\n}\n\nfragment ManagerSurveyTableContent_survey on Survey {\n  id\n  surveyTitle\n  isAnonymous\n}\n\nfragment SurveyTableContent_survey on Survey {\n  id\n  surveyTitle\n  isAnonymous\n  user {\n    id\n    name\n  }\n  isAnswered\n  createdAt\n}\n"
+    "text": "query GetManagerSurveysQuery(\n  $onlyMine: Boolean\n) {\n  getSurveys(input: {onlyMine: $onlyMine}) {\n    ok\n    error\n    surveys {\n      ...ManagerSurveyTableContent_survey\n      id\n    }\n  }\n}\n\nfragment ManagerSurveyTableContent_survey on Survey {\n  id\n  surveyTitle\n  isAnonymous\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c56b177f54578d15db9a707216141045";
+(node as any).hash = "e26a546c234cf2c475574ed3cac2d2f5";
 
 export default node;

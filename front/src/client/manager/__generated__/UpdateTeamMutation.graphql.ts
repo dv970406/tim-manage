@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ebfdb956a0088df68e981ea9bf022085>>
+ * @generated SignedSource<<b6c96c59014e1a1b826291409db0b78a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,51 +9,54 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
-export type CreateCommentMutation$variables = {
-  content: string;
-  postId: string;
+export type UpdateTeamMutation$variables = {
+  leaderId?: string | null;
+  team?: string | null;
+  teamId: string;
 };
-export type CreateCommentMutation$data = {
-  readonly createComment: {
-    readonly comment: {
-      readonly content: string;
-      readonly createdAt: any;
-      readonly id: string;
-      readonly isMyComment: boolean;
-      readonly user: {
-        readonly id: string;
-        readonly name: string;
-      };
-    } | null;
+export type UpdateTeamMutation$data = {
+  readonly updateTeam: {
     readonly error: string | null;
     readonly ok: boolean;
-    readonly postId: string | null;
+    readonly team: {
+      readonly id: string;
+      readonly leader: {
+        readonly id: string;
+        readonly name: string;
+      } | null;
+      readonly team: string;
+    } | null;
   };
 };
-export type CreateCommentMutation = {
-  response: CreateCommentMutation$data;
-  variables: CreateCommentMutation$variables;
+export type UpdateTeamMutation = {
+  response: UpdateTeamMutation$data;
+  variables: UpdateTeamMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
 var v0 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "content"
+  "name": "leaderId"
 },
 v1 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "postId"
+  "name": "team"
 },
 v2 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "teamId"
+},
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v3 = [
+v4 = [
   {
     "alias": null,
     "args": [
@@ -61,22 +64,27 @@ v3 = [
         "fields": [
           {
             "kind": "Variable",
-            "name": "content",
-            "variableName": "content"
+            "name": "leaderId",
+            "variableName": "leaderId"
           },
           {
             "kind": "Variable",
-            "name": "postId",
-            "variableName": "postId"
+            "name": "team",
+            "variableName": "team"
+          },
+          {
+            "kind": "Variable",
+            "name": "teamId",
+            "variableName": "teamId"
           }
         ],
         "kind": "ObjectValue",
         "name": "input"
       }
     ],
-    "concreteType": "CreateCommentOutput",
+    "concreteType": "UpdateTeamOutput",
     "kind": "LinkedField",
-    "name": "createComment",
+    "name": "updateTeam",
     "plural": false,
     "selections": [
       {
@@ -96,17 +104,17 @@ v3 = [
       {
         "alias": null,
         "args": null,
-        "concreteType": "Comment",
+        "concreteType": "Team",
         "kind": "LinkedField",
-        "name": "comment",
+        "name": "team",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
+          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "content",
+            "name": "team",
             "storageKey": null
           },
           {
@@ -114,10 +122,10 @@ v3 = [
             "args": null,
             "concreteType": "User",
             "kind": "LinkedField",
-            "name": "user",
+            "name": "leader",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
+              (v3/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -127,29 +135,8 @@ v3 = [
               }
             ],
             "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "createdAt",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "isMyComment",
-            "storageKey": null
           }
         ],
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "postId",
         "storageKey": null
       }
     ],
@@ -160,36 +147,38 @@ return {
   "fragment": {
     "argumentDefinitions": [
       (v0/*: any*/),
-      (v1/*: any*/)
+      (v1/*: any*/),
+      (v2/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "CreateCommentMutation",
-    "selections": (v3/*: any*/),
+    "name": "UpdateTeamMutation",
+    "selections": (v4/*: any*/),
     "type": "Mutation",
     "abstractKey": null
   },
   "kind": "Request",
   "operation": {
     "argumentDefinitions": [
+      (v2/*: any*/),
       (v1/*: any*/),
       (v0/*: any*/)
     ],
     "kind": "Operation",
-    "name": "CreateCommentMutation",
-    "selections": (v3/*: any*/)
+    "name": "UpdateTeamMutation",
+    "selections": (v4/*: any*/)
   },
   "params": {
-    "cacheID": "5f0756315ab37826c5be6a0b6b426b83",
+    "cacheID": "05128b3a5ce60c7a2324309a5804dd6e",
     "id": null,
     "metadata": {},
-    "name": "CreateCommentMutation",
+    "name": "UpdateTeamMutation",
     "operationKind": "mutation",
-    "text": "mutation CreateCommentMutation(\n  $postId: ID!\n  $content: String!\n) {\n  createComment(input: {postId: $postId, content: $content}) {\n    ok\n    error\n    comment {\n      id\n      content\n      user {\n        id\n        name\n      }\n      createdAt\n      isMyComment\n    }\n    postId\n  }\n}\n"
+    "text": "mutation UpdateTeamMutation(\n  $teamId: ID!\n  $team: String\n  $leaderId: ID\n) {\n  updateTeam(input: {teamId: $teamId, team: $team, leaderId: $leaderId}) {\n    ok\n    error\n    team {\n      id\n      team\n      leader {\n        id\n        name\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "32fae7ee1a9dc26e19eda8859a0104d8";
+(node as any).hash = "5f3f549319aff6b57228c7502e044bbc";
 
 export default node;

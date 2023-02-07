@@ -12,15 +12,21 @@ const createTeamQuery = graphql`
     createTeam(input: { team: $team }) {
       ok
       error
+      team {
+        id
+        team
+      }
     }
   }
 `;
 
 export const useCreateTeam = () => {
   const [createTeamLoading, setIsLoading] = useState(false);
+  const [createTeamSuccess, setIsSuccess] = useState<boolean>();
 
   const createTeamMutation = (variables: CreateTeamMutation$variables) => {
     setIsLoading(true);
+    setIsSuccess(false);
     commitMutation<CreateTeamMutation>(environment, {
       mutation: createTeamQuery,
       variables,
@@ -45,9 +51,10 @@ export const useCreateTeam = () => {
           alert(error);
           return;
         }
+        setIsSuccess(true);
       },
     });
   };
 
-  return { createTeamMutation, createTeamLoading };
+  return { createTeamMutation, createTeamLoading, createTeamSuccess };
 };

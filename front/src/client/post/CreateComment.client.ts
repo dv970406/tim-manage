@@ -20,6 +20,8 @@ const createCommentQuery = graphql`
           id
           name
         }
+        createdAt
+        isMyComment
       }
       postId
     }
@@ -34,21 +36,26 @@ export const useCreateComment = () => {
     variables: CreateCommentMutation$variables
   ) => {
     setIsLoading(true);
+    setCreateCommentSuccess(false);
     commitMutation<CreateCommentMutation>(environment, {
       mutation: createCommentQuery,
       variables,
-      updater: (proxyStore, response) => {
+      updater: (proxyStore, { createComment }) => {
         const addCommentPayload = proxyStore
           .getRootField("createComment")
           .getLinkedRecord("comment");
 
         if (!addCommentPayload) return;
 
-        const rootGetComments = proxyStore.get(
-          `client:root:getPost(input:{"id":"${response.createComment.postId}"})`
+        const rootGetPosts = proxyStore.get(
+          `client:root:getPost(input:{"id":"${createComment.postId}"})`
         );
 
-        const targetPost = rootGetComments?.getLinkedRecord("post");
+        // 댓글 추가하면 해당 Post의 countComments +1 해줘야함
+        const targetPost = rootGetPosts?.getLinkedRecord("post");
+        const prevCount = targetPost?.getValue("countComments") || 0;
+        targetPost?.setValue(+prevCount + 1, "countComments");
+
         const oldComments = targetPost?.getLinkedRecords("comments");
 
         if (!targetPost || !oldComments) return;

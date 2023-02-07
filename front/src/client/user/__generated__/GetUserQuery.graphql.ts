@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8af1a7a7cf905d38d001794f6c4fcc12>>
+ * @generated SignedSource<<0d1b26f18cb656e35668da6052747a56>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,17 +20,11 @@ export type GetUserQuery$data = {
       readonly answers: ReadonlyArray<{
         readonly id: string;
       }>;
-      readonly attendedMeetings: ReadonlyArray<{
-        readonly id: string;
-      }>;
       readonly availableVacation: string;
       readonly comments: ReadonlyArray<{
         readonly id: string;
       }>;
       readonly email: string;
-      readonly hostedMeetingsByMe: ReadonlyArray<{
-        readonly id: string;
-      }>;
       readonly id: string;
       readonly isManager: boolean;
       readonly joinDate: any;
@@ -214,26 +208,6 @@ v3 = [
           {
             "alias": null,
             "args": null,
-            "concreteType": "Meeting",
-            "kind": "LinkedField",
-            "name": "attendedMeetings",
-            "plural": true,
-            "selections": (v2/*: any*/),
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Meeting",
-            "kind": "LinkedField",
-            "name": "hostedMeetingsByMe",
-            "plural": true,
-            "selections": (v2/*: any*/),
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
             "concreteType": "Post",
             "kind": "LinkedField",
             "name": "posts",
@@ -331,16 +305,16 @@ return {
     "selections": (v3/*: any*/)
   },
   "params": {
-    "cacheID": "b69ff0934a2ebcfe732e2e56546089b3",
+    "cacheID": "aefa215f44f365985929843e2412db7d",
     "id": null,
     "metadata": {},
     "name": "GetUserQuery",
     "operationKind": "query",
-    "text": "query GetUserQuery(\n  $id: ID!\n) {\n  getUser(input: {id: $id}) {\n    ok\n    error\n    user {\n      id\n      email\n      isManager\n      joinDate\n      position {\n        id\n        position\n      }\n      team {\n        id\n        team\n      }\n      name\n      availableVacation\n      vacations {\n        id\n      }\n      attendedMeetings {\n        id\n      }\n      hostedMeetingsByMe {\n        id\n      }\n      posts {\n        id\n        title\n        content\n      }\n      likes {\n        id\n      }\n      comments {\n        id\n      }\n      surveys {\n        id\n        surveyTitle\n      }\n      answers {\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query GetUserQuery(\n  $id: ID!\n) {\n  getUser(input: {id: $id}) {\n    ok\n    error\n    user {\n      id\n      email\n      isManager\n      joinDate\n      position {\n        id\n        position\n      }\n      team {\n        id\n        team\n      }\n      name\n      availableVacation\n      vacations {\n        id\n      }\n      posts {\n        id\n        title\n        content\n      }\n      likes {\n        id\n      }\n      comments {\n        id\n      }\n      surveys {\n        id\n        surveyTitle\n      }\n      answers {\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "3ce820095fedbbfdcd880b16da20db60";
+(node as any).hash = "a271f618983507bf7fff300cf74b272b";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9c9432cb075ba833a7b69989ff5e057a>>
+ * @generated SignedSource<<59c477a6e0bf37810892c450d2ff6cec>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,11 @@ export type UpdatePostMutation$data = {
   readonly updatePost: {
     readonly error: string | null;
     readonly ok: boolean;
+    readonly post: {
+      readonly content: string;
+      readonly id: string;
+      readonly title: string;
+    } | null;
   };
 };
 export type UpdatePostMutation = {
@@ -85,6 +90,38 @@ v3 = [
         "kind": "ScalarField",
         "name": "error",
         "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Post",
+        "kind": "LinkedField",
+        "name": "post",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "id",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "title",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "content",
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
       }
     ],
     "storageKey": null
@@ -116,16 +153,16 @@ return {
     "selections": (v3/*: any*/)
   },
   "params": {
-    "cacheID": "9a91658d86ba009cf5d26cd0ca29c681",
+    "cacheID": "b7c6fbb3fdc7c2875e43e861c39ea419",
     "id": null,
     "metadata": {},
     "name": "UpdatePostMutation",
     "operationKind": "mutation",
-    "text": "mutation UpdatePostMutation(\n  $postId: ID!\n  $title: String\n  $content: String\n) {\n  updatePost(input: {postId: $postId, title: $title, content: $content}) {\n    ok\n    error\n  }\n}\n"
+    "text": "mutation UpdatePostMutation(\n  $postId: ID!\n  $title: String\n  $content: String\n) {\n  updatePost(input: {postId: $postId, title: $title, content: $content}) {\n    ok\n    error\n    post {\n      id\n      title\n      content\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "e7604ef71ab84114226f27d00409bc8e";
+(node as any).hash = "6b0fdb7652211e08618ac144ab57a046";
 
 export default node;

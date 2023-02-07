@@ -8,10 +8,18 @@ import {
 } from "./__generated__/UpdateTeamMutation.graphql";
 
 const updateTeamQuery = graphql`
-  mutation UpdateTeamMutation($id: ID!, $team: String!) {
-    updateTeam(input: { id: $id, team: $team }) {
+  mutation UpdateTeamMutation($teamId: ID!, $team: String, $leaderId: ID) {
+    updateTeam(input: { teamId: $teamId, team: $team, leaderId: $leaderId }) {
       ok
       error
+      team {
+        id
+        team
+        leader {
+          id
+          name
+        }
+      }
     }
   }
 `;
@@ -30,6 +38,19 @@ export const useUpdateTeam = () => {
           alert(error);
           return;
         }
+      },
+      updater: (proxyStore, { updateTeam: { team } }) => {
+        const updateTeamPayload = proxyStore
+          .getRootField("updateTeam")
+          .getLinkedRecord("team");
+
+        if (!updateTeamPayload) return;
+
+        const rootGetPost = proxyStore.get(
+          `client:root:getTeam(input:{"id":"${team?.id}"})`
+        );
+
+        rootGetPost?.setLinkedRecord(updateTeamPayload, "team");
       },
     });
   };

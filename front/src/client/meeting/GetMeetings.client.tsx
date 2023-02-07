@@ -3,6 +3,7 @@ import { graphql } from "babel-plugin-relay/macro";
 import { useEffect, useState, Suspense } from "react";
 import { loadQuery, PreloadedQuery, usePreloadedQuery } from "react-relay";
 import { theme } from "../../css/theme";
+import { SCHEDULES } from "../../utils/constants/schedule.constant";
 import { environment } from "../client";
 import { useGetMyInfo } from "../user/GetMyInfo.client";
 import { GetMeetingsQuery } from "./__generated__/GetMeetingsQuery.graphql";
@@ -58,6 +59,7 @@ export const useGetMeetings = (
         // fullCalendar 라이브러리의 형식을 맞춰주기 위해 toJSON 작업
         const start = new Date(meeting.startTime);
         const end = new Date(meeting.endTime);
+        const now = new Date();
 
         const amIAttend = meeting.attendees
           .filter((attendee) => !!attendee)
@@ -72,13 +74,14 @@ export const useGetMeetings = (
           title: meeting.title,
           host: meeting.host,
           attendees: meeting.attendees,
-          type: "meeting",
+          type: SCHEDULES.MEETING,
           // allday를 false로 줘서 Month에서 수정 못하게 했음
           allDay: false,
           editable: isMine,
           visible: true,
           borderColor: "transparent",
           isMine,
+          isOver: start < now,
         };
       })!;
     setCalendarFormat(getCalendarFormat);

@@ -1,9 +1,5 @@
 import { graphql } from "babel-plugin-relay/macro";
-import {
-  PreloadedQuery,
-  useLazyLoadQuery,
-  usePreloadedQuery,
-} from "react-relay";
+import { PreloadedQuery, usePreloadedQuery } from "react-relay";
 import { GetPostQuery } from "./__generated__/GetPostQuery.graphql";
 
 export const getPostQuery = graphql`
@@ -13,8 +9,10 @@ export const getPostQuery = graphql`
       error
       post {
         id
-        ...ContentZone_post
         ...CommentsZone_post
+        # ContentZone과 MutatePostForm이 Fragment로 갖는 필드는 같음!(중복 기재 가능해서 다행)
+        ...ContentZone_post
+        ...MutatePostForm_post
       }
     }
   }

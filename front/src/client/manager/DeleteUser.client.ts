@@ -19,7 +19,7 @@ const deleteUserQuery = graphql`
 
 export const useDeleteUser = () => {
   const [deleteUserLoading, setIsLoading] = useState(false);
-  const [deleteIsSuccess, setIsSuccess] = useState<boolean>();
+  // const [deleteIsSuccess, setIsSuccess] = useState<boolean>();
 
   const deleteUserMutation = (variables: DeleteUserMutation$variables) => {
     setIsLoading(true);
@@ -28,7 +28,7 @@ export const useDeleteUser = () => {
       variables,
       onCompleted: ({ deleteUser: { ok, error } }) => {
         setIsLoading(false);
-        setIsSuccess(ok);
+        // setIsSuccess(ok);
         if (!ok) {
           alert(error);
           return;
@@ -38,5 +38,5 @@ export const useDeleteUser = () => {
     });
   };
 
-  return { deleteUserMutation, deleteUserLoading, deleteIsSuccess };
+  return { deleteUserMutation, deleteUserLoading };
 };

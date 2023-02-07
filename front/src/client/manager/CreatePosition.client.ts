@@ -5,24 +5,30 @@ import { environment } from "../client";
 import {
   CreatePositionMutation,
   CreatePositionMutation$variables,
-} from "./__generated__/CreatePositionMutation.graphql";
+} from "../position/__generated__/CreatePositionMutation.graphql";
 
 const createPositionQuery = graphql`
   mutation CreatePositionMutation($position: String!) {
     createPosition(input: { position: $position }) {
       ok
       error
+      position {
+        id
+        position
+      }
     }
   }
 `;
 
 export const useCreatePosition = () => {
   const [createPositionLoading, setIsLoading] = useState(false);
+  const [createPositionSuccess, setIsSuccess] = useState<boolean>();
 
   const createPositionMutation = (
     variables: CreatePositionMutation$variables
   ) => {
     setIsLoading(true);
+    setIsSuccess(false);
     commitMutation<CreatePositionMutation>(environment, {
       mutation: createPositionQuery,
       variables,
@@ -50,9 +56,14 @@ export const useCreatePosition = () => {
           alert(error);
           return;
         }
+        setIsSuccess(true);
       },
     });
   };
 
-  return { createPositionMutation, createPositionLoading };
+  return {
+    createPositionMutation,
+    createPositionLoading,
+    createPositionSuccess,
+  };
 };

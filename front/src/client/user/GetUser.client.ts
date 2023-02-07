@@ -26,12 +26,7 @@ export const getUserQuery = graphql`
         vacations {
           id
         }
-        attendedMeetings {
-          id
-        }
-        hostedMeetingsByMe {
-          id
-        }
+
         posts {
           id
           title

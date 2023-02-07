@@ -7,12 +7,13 @@ import {
 import { GetSurveysQuery } from "./__generated__/GetSurveysQuery.graphql";
 
 export const getSurveysQuery = graphql`
-  query GetSurveysQuery {
-    getSurveys {
+  query GetSurveysQuery($onlyMine: Boolean) {
+    getSurveys(input: { onlyMine: $onlyMine }) {
       ok
       error
       surveys {
         ...SurveyTableContent_survey
+        ...ManagerSurveyTableContent_survey
       }
     }
   }

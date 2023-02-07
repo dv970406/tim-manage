@@ -12,6 +12,10 @@ const updatePositionQuery = graphql`
     updatePosition(input: { id: $id, position: $position }) {
       ok
       error
+      position {
+        id
+        position
+      }
     }
   }
 `;
@@ -32,6 +36,19 @@ export const useUpdatePosition = () => {
           alert(error);
           return;
         }
+      },
+      updater: (proxyStore, { updatePosition: { position } }) => {
+        const updatePositionPayload = proxyStore
+          .getRootField("updatePosition")
+          .getLinkedRecord("position");
+
+        if (!updatePositionPayload) return;
+
+        const rootGetPost = proxyStore.get(
+          `client:root:getPosition(input:{"id":"${position?.id}"})`
+        );
+
+        rootGetPost?.setLinkedRecord(updatePositionPayload, "position");
       },
     });
   };
