@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<18bed3c9b337dc21b1f4d25361f0593f>>
+ * @generated SignedSource<<3dc062dfbb87d02d7940a630ab5f5b48>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -248,12 +248,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cfbe17ec3b9744b63e902b1f4f109d29",
+    "cacheID": "e0d2a7a2b484c5971978a9b6e04a4cde",
     "id": null,
     "metadata": {},
     "name": "GetPostQuery",
     "operationKind": "query",
-    "text": "query GetPostQuery(\n  $id: ID!\n) {\n  getPost(input: {id: $id}) {\n    ok\n    error\n    post {\n      id\n      ...CommentsZone_post\n      ...ContentZone_post\n      ...MutatePostForm_post\n    }\n  }\n}\n\nfragment CommentsZone_post on Post {\n  comments {\n    id\n    content\n    user {\n      id\n      name\n    }\n    isMyComment\n    createdAt\n  }\n}\n\nfragment ContentZone_post on Post {\n  title\n  content\n  user {\n    id\n    name\n  }\n  createdAt\n  isMyPost\n  isLiked\n  countLikes\n  countComments\n}\n\nfragment MutatePostForm_post on Post {\n  title\n  content\n  user {\n    id\n    name\n  }\n  createdAt\n  isMyPost\n}\n"
+    "text": "query GetPostQuery(\n  $id: ID!\n) {\n  getPost(input: {id: $id}) {\n    ok\n    error\n    post {\n      id\n      ...CommentsZone_post\n      ...ContentZone_post\n      ...MutatePostForm_post\n    }\n  }\n}\n\nfragment Comment_comment on Comment {\n  id\n  content\n  user {\n    id\n    name\n  }\n  isMyComment\n  createdAt\n}\n\nfragment CommentsZone_post on Post {\n  comments {\n    ...Comment_comment\n    id\n  }\n}\n\nfragment ContentZone_post on Post {\n  title\n  content\n  user {\n    id\n    name\n  }\n  createdAt\n  isMyPost\n  isLiked\n  countLikes\n  countComments\n}\n\nfragment MutatePostForm_post on Post {\n  title\n  content\n  user {\n    id\n    name\n  }\n  createdAt\n  isMyPost\n}\n"
   }
 };
 })();

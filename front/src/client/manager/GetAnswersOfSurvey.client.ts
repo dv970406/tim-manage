@@ -11,12 +11,22 @@ export const getAnswersOfSurveyQuery = graphql`
     getAnswersOfSurvey(input: { surveyId: $surveyId }) @skip(if: $skip) {
       ok
       error
-      answers {
-        results
-        user {
-          id
-          name
+      shortAnswerFormat {
+        paragraphTitle
+        description
+        shortAnswers
+      }
+      multipleChoiceFormat {
+        paragraphTitle
+        description
+        chartFormatResults {
+          labels
+          series
         }
+      }
+      responseRate {
+        notAnsweredEmployeeCount
+        answeredEmployeeCount
       }
     }
   }
@@ -34,5 +44,9 @@ export const useGetAnswersOfSurvey = (surveyId: string) => {
   if (surveyId && !getAnswersOfSurvey?.ok) {
     alert(getAnswersOfSurvey?.error);
   }
-  return { answers: getAnswersOfSurvey?.answers };
+  return {
+    multipleChoiceFormat: getAnswersOfSurvey?.multipleChoiceFormat,
+    shortAnswerFormat: getAnswersOfSurvey?.shortAnswerFormat,
+    responseRate: getAnswersOfSurvey?.responseRate,
+  };
 };

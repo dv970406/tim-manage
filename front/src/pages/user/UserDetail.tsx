@@ -34,7 +34,11 @@ const UserDetail = ({ getUserQueryReference }: IUserDetail) => {
   console.log(user);
   return (
     <>
-      <Section>{user?.name}</Section>
+      <Section>
+        {user?.name} & {user?.email}
+        마이페이지면 중첩라우팅으로 표현하고 useLazyLoadQuery랑
+        fragment활용해보자
+      </Section>
     </>
   );
 };

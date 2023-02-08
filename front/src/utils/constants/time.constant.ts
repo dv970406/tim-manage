@@ -1,0 +1,2 @@
+export const NINE_HOURS_TO_MILLISEC = 32400000;
+export const ONE_DAY_MILLISEC = 1000 * 60 * 60 * 24;

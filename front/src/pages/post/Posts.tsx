@@ -2,6 +2,8 @@ import React, { Suspense, useEffect } from "react";
 import { PreloadedQuery, useQueryLoader } from "react-relay";
 import { getPostsQuery, useGetPosts } from "../../client/post/GetPosts.client";
 import { GetPostsQuery } from "../../client/post/__generated__/GetPostsQuery.graphql";
+import { Section } from "../../components/atomics/sections/sections";
+import PostsTable from "../../components/templates/content/post/PostsTable";
 
 const PostsPage = () => {
   const [getPostsQueryReference, loadGetPostsQuery] =
@@ -23,13 +25,7 @@ interface IPosts {
 }
 const Posts = ({ getPostsQueryReference }: IPosts) => {
   const { posts } = useGetPosts(getPostsQueryReference);
-  console.log(posts);
-  return (
-    <div>
-      {posts?.map((post) => (
-        <span key={post.id}>{post.title}</span>
-      ))}
-    </div>
-  );
+
+  return <Section>{posts && <PostsTable posts={posts} />}</Section>;
 };
 export default PostsPage;

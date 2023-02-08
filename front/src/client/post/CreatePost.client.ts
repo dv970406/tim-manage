@@ -42,7 +42,7 @@ export const useCreatePost = () => {
         const oldPosts = rootGetPosts?.getLinkedRecords("posts");
         if (!oldPosts) return;
 
-        rootGetPosts?.setLinkedRecords([addPostPayload, ...oldPosts], "posts");
+        rootGetPosts?.setLinkedRecords([...oldPosts, addPostPayload], "posts");
       },
 
       onCompleted: ({ createPost: { ok, error } }) => {

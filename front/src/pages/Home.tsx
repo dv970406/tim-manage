@@ -1,6 +1,6 @@
 import { EventInput } from "@fullcalendar/core";
 import React, { Suspense, useEffect, useState } from "react";
-import { PreloadedQuery, usePreloadedQuery, useQueryLoader } from "react-relay";
+import { PreloadedQuery, useQueryLoader } from "react-relay";
 import {
   getMeetingsQuery,
   useGetMeetings,
@@ -13,14 +13,12 @@ import {
 } from "../client/vacation/GetVacations.client";
 import { GetVacationsQuery } from "../client/vacation/__generated__/GetVacationsQuery.graphql";
 import { Section } from "../components/atomics/sections/sections";
-import { SectionTitle } from "../components/atomics/typographys/titles";
-import { GapBox } from "../components/molecules/boxes/Boxes";
-import KingOfMeeting from "../components/organisms/content/home/TeamMateVacation";
-import LatestMeeting from "../components/organisms/content/home/LatestMeeting";
-import VacationCalendar from "../components/organisms/content/home/VacationCalendar";
+
 import { theme } from "../css/theme";
-import { SCHEDULES } from "../utils/modal/modal.constants";
-import TeamMateVacation from "../components/organisms/content/home/TeamMateVacation";
+import { SCHEDULES } from "../utils/constants/schedule.constant";
+import MyTeamVacations from "../components/templates/content/home/MyTeamVacations";
+import TodayMeetings from "../components/templates/content/home/TodayMeetings";
+import VacationCalendar from "../components/templates/content/home/VacationCalendar";
 
 const HomePage = () => {
   const [getVacationsQueryReference, loadGetVacationsQuery] =
@@ -71,11 +69,13 @@ const Home = ({
   });
 
   const { myInfo } = useGetMyInfo();
-  const myTeamVacations = vacationsByCalendarFormat?.filter(
-    (vacation) =>
-      vacation?.user?.team?.id === myInfo?.team.id &&
+  const myTeamVacations = vacationsByCalendarFormat.filter((vacation) => {
+    if (!vacation) return;
+    return (
+      vacation?.user?.team?.id === myInfo?.team?.id &&
       new Date() < new Date(vacation.start as Date)
-  );
+    );
+  });
 
   // 일정 필터링
   const [filteringSchedules, setFilteringSchedules] = useState("");
@@ -92,10 +92,12 @@ const Home = ({
   return (
     <>
       <Section style={{ width: "70%" }}>
-        <VacationCalendar
-          schedules={schedules}
-          setFilteringSchedules={setFilteringSchedules}
-        />
+        <Suspense fallback="dsadasdsadsaeqwqeqweqw">
+          <VacationCalendar
+            schedules={schedules}
+            setFilteringSchedules={setFilteringSchedules}
+          />
+        </Suspense>
       </Section>
       <div
         style={{
@@ -109,44 +111,20 @@ const Home = ({
           style={{
             height: "50%",
             overflow: "auto",
-            // 스크롤이 부모로 번지는 것을 막는 css
-            overscrollBehavior: "contain",
           }}
         >
-          <SectionTitle>오늘의 회의</SectionTitle>
-          <GapBox>
-            {todayMeetings.map((meeting) => (
-              <LatestMeeting
-                key={meeting.id}
-                subTitle={meeting.title!}
-                host={meeting.host.name}
-                attendees={meeting.attendees}
-                start={meeting?.start}
-                end={meeting?.end}
-              />
-            ))}
-          </GapBox>
+          <TodayMeetings todayMeetings={todayMeetings} />
         </Section>
         <Section
           style={{
             height: "50%",
             overflow: "auto",
-            overscrollBehavior: "contain",
           }}
         >
-          <SectionTitle>{myInfo?.team.team} 휴가 계획</SectionTitle>
-          <GapBox>
-            {myTeamVacations.map((vacation) => (
-              <TeamMateVacation
-                key={vacation.id}
-                name={vacation.user.name}
-                start={vacation.start}
-                end={vacation.end}
-                duration={vacation.duration}
-                isHalf={vacation.isHalf}
-              />
-            ))}
-          </GapBox>
+          <MyTeamVacations
+            myTeam={myInfo?.team?.team}
+            myTeamVacations={myTeamVacations}
+          />
         </Section>
       </div>
     </>

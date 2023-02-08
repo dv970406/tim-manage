@@ -1,11 +1,4 @@
-import {
-  Fragment,
-  MouseEventHandler,
-  Suspense,
-  useEffect,
-  useState,
-} from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Suspense, useEffect } from "react";
 import { PreloadedQuery, useQueryLoader } from "react-relay";
 import { useParams } from "react-router-dom";
 import {
@@ -14,7 +7,7 @@ import {
 } from "../../client/survey/GetSurvey.client";
 import { GetSurveyQuery } from "../../client/survey/__generated__/GetSurveyQuery.graphql";
 import { Section } from "../../components/atomics/sections/sections";
-import AnswerSheet from "../../components/organisms/content/survey/AnswerSheet";
+import AnswerSheet from "../../components/templates/content/survey/AnswerSheet";
 import { theme } from "../../css/theme";
 
 const SurveyDetailPage = () => {

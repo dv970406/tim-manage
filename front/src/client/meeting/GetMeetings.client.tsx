@@ -61,9 +61,10 @@ export const useGetMeetings = (
         const end = new Date(meeting.endTime);
         const now = new Date();
 
-        const amIAttend = meeting.attendees
-          .filter((attendee) => !!attendee)
-          .find((attendee) => attendee.id === myInfo?.id);
+        const amIAttend = meeting.attendees.find((attendee) => {
+          if (!attendee) return;
+          return attendee.id === myInfo?.id;
+        });
 
         return {
           id: meeting.id,

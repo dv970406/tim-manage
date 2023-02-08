@@ -60,8 +60,11 @@ export const useCreateComment = () => {
 
         if (!targetPost || !oldComments) return;
 
+        // 메모이징하려면 배열 맨 끝에 새로운 데이터를 달아야함.
+        // 맨 앞에다가 달면 모든 아이템이 index 1씩 밀려서 모든 아이템이 새로운 데이터라고 판단해서 메모이징을 해도 리렌더링되어버림
+        // 어쩔 수 없이 reverse함수를 쓰던가하자
         targetPost?.setLinkedRecords(
-          [addCommentPayload, ...oldComments],
+          [...oldComments, addCommentPayload],
           "comments"
         );
       },
