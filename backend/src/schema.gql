@@ -31,7 +31,7 @@ type Team {
   updatedAt: DateTime!
   team: String!
   users: [User!]!
-  leader: User!
+  leader: User
 }
 
 type Comment {
@@ -199,6 +199,7 @@ type GetPositionsOutput {
 type UpdatePositionOutput {
   ok: Boolean!
   error: String
+  position: Position
 }
 
 type CreateTeamOutput {
@@ -210,6 +211,7 @@ type CreateTeamOutput {
 type UpdateTeamOutput {
   ok: Boolean!
   error: String
+  team: Team
 }
 
 type DeleteTeamOutput {
@@ -230,14 +232,10 @@ type GetTeamsOutput {
   teams: [Team!]
 }
 
-type NominateLeaderOutput {
-  ok: Boolean!
-  error: String
-}
-
 type ConfirmVacationOutput {
   ok: Boolean!
   error: String
+  vacation: Vacation
 }
 
 type CreateVacationOutput {
@@ -288,10 +286,34 @@ type DeleteAnswerOutput {
   deletedAnswerId: ID
 }
 
+type ChartFormatResult {
+  labels: [String!]!
+  series: [Float!]!
+}
+
+type ShortAnswerFormat {
+  paragraphTitle: String!
+  description: String!
+  shortAnswers: [String!]!
+}
+
+type MultipleChoiceFormat {
+  paragraphTitle: String!
+  description: String!
+  chartFormatResults: ChartFormatResult!
+}
+
+type ResponseRate {
+  notAnsweredEmployeeCount: Float!
+  answeredEmployeeCount: Float!
+}
+
 type GetAnswersOfsurveyOutput {
   ok: Boolean!
   error: String
-  answers: [Answer!]
+  shortAnswerFormat: [ShortAnswerFormat!]
+  multipleChoiceFormat: [MultipleChoiceFormat!]
+  responseRate: ResponseRate
 }
 
 type GetMyAnswersOutput {
@@ -432,7 +454,7 @@ type Query {
   getVacations: GetVacationsOutput!
   getUnConfirmedByMeVacations: GetUnConfirmedByMeVacationsOutput!
   getVacation(input: GetVacationInput!): GetVacationOutput!
-  getSurveys: GetSurveysOutput!
+  getSurveys(input: GetSurveysInput!): GetSurveysOutput!
   getSurvey(input: GetSurveyInput!): GetSurveyOutput!
   getMyAnswers: GetMyAnswersOutput!
   getAnswersOfSurvey(input: GetAnswersOfsurveyInput!): GetAnswersOfsurveyOutput!
@@ -461,6 +483,10 @@ input GetVacationInput {
   id: ID!
 }
 
+input GetSurveysInput {
+  onlyMine: Boolean
+}
+
 input GetSurveyInput {
   id: ID!
 }
@@ -486,7 +512,6 @@ type Mutation {
   updatePosition(input: UpdatePositionInput!): UpdatePositionOutput!
   deletePosition(input: DeletePositionInput!): DeletePositionOutput!
   createTeam(input: CreateTeamInput!): CreateTeamOutput!
-  nominateLeader(input: NominateLeaderInput!): NominateLeaderOutput!
   updateTeam(input: UpdateTeamInput!): UpdateTeamOutput!
   deleteTeam(input: DeleteTeamInput!): DeleteTeamOutput!
   createVacation(input: CreateVacationInput!): CreateVacationOutput!
@@ -554,14 +579,10 @@ input CreateTeamInput {
   team: String!
 }
 
-input NominateLeaderInput {
-  id: ID!
-  userId: ID!
-}
-
 input UpdateTeamInput {
-  id: ID!
-  team: String!
+  team: String
+  teamId: ID!
+  leaderId: ID
 }
 
 input DeleteTeamInput {

@@ -105,6 +105,7 @@ export class User extends CoreEntity {
   vacations: Vacation[];
 
   @ManyToMany((type) => Meeting, (meeting) => meeting.attendees)
+  @JoinTable()
   @Field((type) => [Meeting])
   attendedMeetings: Meeting[];
 
@@ -112,11 +113,13 @@ export class User extends CoreEntity {
   @Field((type) => [Meeting])
   hostedMeetingsByMe: Meeting[];
 
-  @ManyToOne((type) => Position, (position) => position.users)
+  @ManyToOne((type) => Position, (position) => position.users, {
+    onDelete: 'SET NULL',
+  })
   @Field((type) => Position)
   position: Position;
 
-  @ManyToOne((type) => Team, (team) => team.users)
+  @ManyToOne((type) => Team, (team) => team.users, { onDelete: 'SET NULL' })
   @Field((type) => Team)
   team: Team;
 

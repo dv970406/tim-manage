@@ -249,9 +249,11 @@ export class VacationService {
         findVacation.confirmed.byManager = true;
       }
 
-      await this.vacationRepo.save(findVacation);
+      const confirmedVacation = await this.vacationRepo.save(findVacation);
+
       return {
         ok: true,
+        vacation: confirmedVacation,
       };
     } catch (error) {
       return {

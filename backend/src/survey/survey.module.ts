@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CustomTypeOrmModule } from 'src/core/repository/custom-typeorm.module';
+import { UserRepository } from 'src/user/user.repository';
 import { UserService } from 'src/user/user.service';
 import { AnswerResolver } from './answer.resolver';
 import { AnswerService } from './answer.service';
@@ -14,6 +15,7 @@ import { SurveyService } from './survey.service';
     CustomTypeOrmModule.forCustomRepository([
       SurveyRepository,
       AnswerRepository,
+      UserRepository,
     ]),
   ],
   providers: [SurveyService, SurveyResolver, AnswerResolver, AnswerService],

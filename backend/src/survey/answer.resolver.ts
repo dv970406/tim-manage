@@ -22,6 +22,7 @@ import { Answer } from './entities/answer.entity';
 @Resolver((of) => Answer)
 export class AnswerResolver {
   constructor(private readonly answerService: AnswerService) {}
+
   @Query((type) => GetMyAnswersOutput)
   @UseGuards(LoginGuard)
   getMyAnswers(

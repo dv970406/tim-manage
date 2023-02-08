@@ -72,45 +72,69 @@ export class TeamService {
     }
   }
 
-  async nominateLeader({
-    id: teamId,
-    userId,
-  }: NominateLeaderInput): Promise<NominateLeaderOutput> {
+  // async nominateLeader({
+  //   id: teamId,
+  //   userId,
+  // }: NominateLeaderInput): Promise<NominateLeaderOutput> {
+  //   try {
+  //     const findTeam = await this.teamRepo.findTeam({ teamId });
+  //     const findUser = await this.userRepo.findUser({ userId });
+
+  //     if (findUser.team.id !== findTeam.id) {
+  //       throw new Error('팀에 속하지 않는 유저를 팀장으로 지명할 수 없습니다.');
+  //     }
+
+  //     await this.teamRepo.save([{ id: teamId, leader: findUser }]);
+
+  //     return {
+  //       ok: true,
+  //     };
+  //   } catch (error) {
+  //     return {
+  //       ok: false,
+  //       error: error.message || '팀장 지명에 실패했습니다.',
+  //     };
+  //   }
+  // }
+
+  async updateTeam({
+    teamId,
+    team,
+    leaderId,
+  }: UpdateTeamInput): Promise<UpdateTeamOutput> {
     try {
-      const findTeam = await this.teamRepo.findTeam({ teamId });
-      const findUser = await this.userRepo.findUser({ userId });
+      const findTeam = await this.teamRepo.findTeam({
+        teamId,
+      });
+
+      // 현재 팀명과 같을 경우는 유니크값인지 체크 안함
+      if (findTeam.team !== team) {
+        await this.teamRepo.checkExistTeamName({ team });
+      }
+
+      const findUser = await this.userRepo.findUser({ userId: leaderId });
 
       if (findUser.team.id !== findTeam.id) {
         throw new Error('팀에 속하지 않는 유저를 팀장으로 지명할 수 없습니다.');
       }
 
-      await this.teamRepo.save([{ id: teamId, leader: findUser }]);
+      if (findUser.team.leaderId !== findUser.id) {
+        const isAnotherTeamLeader = await this.teamRepo.exist({
+          where: {
+            leader: {
+              id: leaderId,
+            },
+          },
+        });
+        if (isAnotherTeamLeader) throw new Error('이미 다른 팀의 리더입니다.');
+      }
 
+      await this.teamRepo.save([{ id: teamId, team, leader: findUser }]);
+
+      const updatedTeam = await this.teamRepo.findTeam({ teamId });
       return {
         ok: true,
-      };
-    } catch (error) {
-      return {
-        ok: false,
-        error: error.message || '팀장 지명에 실패했습니다.',
-      };
-    }
-  }
-
-  async updateTeam({
-    id: teamId,
-    team,
-  }: UpdateTeamInput): Promise<UpdateTeamOutput> {
-    try {
-      await this.teamRepo.checkExistTeamName({ team });
-
-      await this.teamRepo.findTeam({
-        teamId,
-      });
-
-      await this.teamRepo.save([{ id: teamId, team }]);
-      return {
-        ok: true,
+        team: updatedTeam,
       };
     } catch (error) {
       return {
@@ -121,9 +145,15 @@ export class TeamService {
   }
   async deleteTeam({ id: teamId }: DeleteTeamInput): Promise<DeleteTeamOutput> {
     try {
-      await this.teamRepo.findTeam({
+      const findTeam = await this.teamRepo.findTeam({
         teamId,
       });
+
+      if (findTeam.users.length > 0) {
+        throw new Error(
+          '팀원이 없어야 삭제가 가능합니다. 다른 팀으로 옮겨주세요.',
+        );
+      }
 
       await this.teamRepo.delete({ id: teamId });
       return {

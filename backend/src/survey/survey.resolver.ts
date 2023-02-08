@@ -8,7 +8,7 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 import { LoggedInUser } from 'src/auth/auth-user.decorator';
-import { ManagerGuard } from 'src/auth/auth.guard';
+import { LoginGuard, ManagerGuard } from 'src/auth/auth.guard';
 import { User } from 'src/user/entities/user.entity';
 import { UserService } from 'src/user/user.service';
 import {
@@ -20,7 +20,10 @@ import {
   DeleteSurveyOutput,
 } from './dtos/survey/delete-survey.dto';
 import { GetSurveyInput, GetSurveyOutput } from './dtos/survey/get-survey.dto';
-import { GetSurveysOutput } from './dtos/survey/get-surveys.dto';
+import {
+  GetSurveysInput,
+  GetSurveysOutput,
+} from './dtos/survey/get-surveys.dto';
 import { Survey } from './entities/survey.entity';
 import { SurveyService } from './survey.service';
 
@@ -44,11 +47,22 @@ export class SurveyResolver {
 
   // Survey는 복수형이 없는데 그냥 's'를 붙여 의미상 복수형으로 생각하자
   @Query((type) => GetSurveysOutput)
-  getSurveys(): Promise<GetSurveysOutput> {
-    return this.surveyService.getSurveys();
+  @UseGuards(LoginGuard)
+  getSurveys(
+    @LoggedInUser() loggedInUser: User,
+    @Args('input') getSurveysInput: GetSurveysInput,
+  ): Promise<GetSurveysOutput> {
+    return this.surveyService.getSurveys(loggedInUser, getSurveysInput);
   }
 
+  // @Query((type) => GetMySurveysOutput)
+  // @UseGuards(LoginGuard)
+  // getMySurveys(@LoggedInUser() loggedInUser: User): Promise<GetSurveysOutput> {
+  //   return this.surveyService.getMySurveys(loggedInUser);
+  // }
+
   @Query((type) => GetSurveyOutput)
+  @UseGuards(LoginGuard)
   getSurvey(
     @Args('input') getSurveyInput: GetSurveyInput,
   ): Promise<GetSurveyOutput> {

@@ -6,13 +6,19 @@ import { User } from './entities/user.entity';
 @CustomRepository(User)
 export class UserRepository extends Repository<User> {
   async findUser({ userId }) {
+    if (!userId) {
+      throw new Error('팀에 존재하지 않는 유저입니다.');
+    }
     const findUser = await this.findOne({
       where: { id: userId },
       relations: {
         position: true,
-        team: true,
+        team: {
+          users: true,
+        },
       },
     });
+
     if (!findUser) {
       throw new Error('존재하지 않는 유저입니다.');
     }

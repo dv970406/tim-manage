@@ -85,8 +85,13 @@ export class PositionService {
       await this.positionRepo.findPosition({ positionId });
 
       await this.positionRepo.save([{ id: positionId, position }]);
+
+      const updatedPosition = await this.positionRepo.findPosition({
+        positionId,
+      });
       return {
         ok: true,
+        position: updatedPosition,
       };
     } catch (error) {
       return {
@@ -99,7 +104,13 @@ export class PositionService {
     id: positionId,
   }: DeletePositionInput): Promise<DeletePositionOutput> {
     try {
-      await this.positionRepo.findPosition({ positionId });
+      const findPosition = await this.positionRepo.findPosition({ positionId });
+
+      if (findPosition.users.length > 0) {
+        throw new Error(
+          '직책에 속한 자가 없어야 삭제가 가능합니다. 속한 유저의 직책을 변경해주세요.',
+        );
+      }
 
       await this.positionRepo.delete({ id: positionId });
       return {

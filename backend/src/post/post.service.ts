@@ -22,7 +22,7 @@ export class PostService {
   async getPosts(): Promise<GetPostsOutput> {
     try {
       const findPosts = await this.postRepo.find({
-        order: { createdAt: 'DESC' },
+        order: { createdAt: 'ASC' },
         relations: {
           user: true,
         },

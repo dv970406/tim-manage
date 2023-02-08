@@ -54,7 +54,15 @@ export class UserService {
           position: true,
           team: true,
           vacations: true,
-          attendedMeetings: true,
+          attendedMeetings: {
+            attendees: true,
+          },
+          hostedMeetingsByMe: true,
+          posts: true,
+          likes: true,
+          answers: true,
+          surveys: true,
+          comments: true,
         },
       });
 

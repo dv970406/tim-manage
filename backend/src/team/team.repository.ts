@@ -12,6 +12,7 @@ export class TeamRepository extends Repository<Team> {
         leader: true,
       },
     });
+
     if (!team) {
       throw new Error('존재하지 않는 팀입니다.');
     }

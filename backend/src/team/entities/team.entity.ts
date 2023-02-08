@@ -38,10 +38,10 @@ export class Team extends CoreEntity {
   @Field((type) => [User])
   users: User[];
 
-  @OneToOne((type) => User)
+  @OneToOne((type) => User, { nullable: true })
   @JoinColumn()
-  @Field((type) => User)
-  leader: User;
+  @Field((type) => User, { nullable: true })
+  leader?: User;
 
   @RelationId((team: Team) => team.leader)
   leaderId: string;

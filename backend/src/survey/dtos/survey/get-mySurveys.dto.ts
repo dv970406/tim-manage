@@ -3,13 +3,10 @@ import { CoreOutput } from 'src/core/dtos/core.dto';
 import { Survey } from 'src/survey/entities/survey.entity';
 
 @InputType()
-export class GetSurveysInput {
-  @Field((type) => Boolean, { nullable: true })
-  onlyMine?: boolean;
-}
+export class GetMySurveysInput {}
 
 @ObjectType()
-export class GetSurveysOutput extends CoreOutput {
+export class GetMySurveysOutput extends CoreOutput {
   @Field((type) => [Survey], { nullable: true })
   surveys?: Survey[];
 }

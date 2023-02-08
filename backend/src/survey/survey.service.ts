@@ -10,7 +10,10 @@ import {
   DeleteSurveyOutput,
 } from './dtos/survey/delete-survey.dto';
 import { GetSurveyInput, GetSurveyOutput } from './dtos/survey/get-survey.dto';
-import { GetSurveysOutput } from './dtos/survey/get-surveys.dto';
+import {
+  GetSurveysInput,
+  GetSurveysOutput,
+} from './dtos/survey/get-surveys.dto';
 import { Survey, SurveyForm } from './entities/survey.entity';
 import { SurveyRepository } from './repositories/survey.repository';
 
@@ -37,13 +40,23 @@ export class SurveyService {
     });
   }
 
-  async getSurveys(): Promise<GetSurveysOutput> {
+  async getSurveys(
+    loggedInUser: User,
+    { onlyMine = false }: GetSurveysInput,
+  ): Promise<GetSurveysOutput> {
     try {
       const findSurveys = await this.surveyRepo.find({
         order: { createdAt: 'DESC' },
         relations: {
           user: true,
         },
+        ...(onlyMine && {
+          where: {
+            user: {
+              id: loggedInUser.id,
+            },
+          },
+        }),
       });
       return {
         ok: true,
@@ -56,11 +69,35 @@ export class SurveyService {
       };
     }
   }
-
+  // async getMySurveys(loggedInUser: User): Promise<GetMySurveysOutput> {
+  //   try {
+  //     const findMySurveys = await this.surveyRepo.find({
+  //       order: { createdAt: 'DESC' },
+  //       relations: {
+  //         user: true,
+  //       },
+  //       where: {
+  //         user: {
+  //           id: loggedInUser.id,
+  //         },
+  //       },
+  //     });
+  //     return {
+  //       ok: true,
+  //       surveys: findMySurveys,
+  //     };
+  //   } catch (error) {
+  //     return {
+  //       ok: false,
+  //       error: '설문 리스트 조회에 실패했습니다.',
+  //     };
+  //   }
+  // }
   async getSurvey({ id: surveyId }: GetSurveyInput): Promise<GetSurveyOutput> {
     try {
       const findSurvey = await this.surveyRepo.findSurvey({ surveyId });
 
+      console.log('here :', findSurvey);
       return {
         ok: true,
         survey: findSurvey,

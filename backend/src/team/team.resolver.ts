@@ -35,13 +35,13 @@ export class TeamResolver {
   ): Promise<CreateTeamOutput> {
     return this.teamService.createTeam(createTeamInput);
   }
-  @Mutation((type) => NominateLeaderOutput)
-  @UseGuards(ManagerGuard)
-  nominateLeader(
-    @Args('input') nominateLeaderInput: NominateLeaderInput,
-  ): Promise<NominateLeaderOutput> {
-    return this.teamService.nominateLeader(nominateLeaderInput);
-  }
+  // @Mutation((type) => NominateLeaderOutput)
+  // @UseGuards(ManagerGuard)
+  // nominateLeader(
+  //   @Args('input') nominateLeaderInput: NominateLeaderInput,
+  // ): Promise<NominateLeaderOutput> {
+  //   return this.teamService.nominateLeader(nominateLeaderInput);
+  // }
 
   @Mutation((type) => UpdateTeamOutput)
   @UseGuards(ManagerGuard)

@@ -52,7 +52,11 @@ import { Meeting } from './meeting/entities/meeting.entity';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       context: ({ req }) => ({ user: req['user'] }),
       cors: {
-        origin: process.env.AUTHORIZED_ORIGIN,
+        origin: [
+          process.env.AUTHORIZED_ORIGIN1,
+          process.env.AUTHORIZED_ORIGIN2,
+          process.env.AUTHORIZED_ORIGIN3,
+        ],
         credentials: true,
       },
       // 소수점 써야하는 것도 있는데 전부 정수로 만들어버려서 일단 주석

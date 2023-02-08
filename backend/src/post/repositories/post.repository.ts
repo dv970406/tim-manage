@@ -17,7 +17,7 @@ export class PostRepository extends Repository<Post> {
       },
       order: {
         comments: {
-          createdAt: 'DESC',
+          createdAt: 'ASC',
         },
       },
     });
