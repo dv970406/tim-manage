@@ -1,12 +1,13 @@
-import { keyframes } from "@emotion/react";
-import styled, { CreateStyledComponent } from "@emotion/styled";
+import { keyframes, Theme } from "@emotion/react";
+import styled from "@emotion/styled";
 
 export const BodySection = styled.div(({ theme }) => ({
-  backgroundImage: `url("background.png")`,
+  backgroundImage: `url("/background.png")`,
   width: "100vw",
   minHeight: "100vh",
   display: "flex",
   padding: theme.spacing.lg,
+  gap: theme.spacing.lg,
 }));
 
 export const SideBarSection = styled.aside(({ theme }) => ({
@@ -14,7 +15,6 @@ export const SideBarSection = styled.aside(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  minHeight: "100%",
   width: 275,
   padding: theme.spacing.md,
   borderRadius: theme.borderRadius.lg,
@@ -22,7 +22,9 @@ export const SideBarSection = styled.aside(({ theme }) => ({
 
 export const MainSection = styled.main(({ theme }) => ({
   width: "100%",
-  height: "100%",
+  display: "flex",
+  flexDirection: "column",
+  gap: theme.spacing.lg,
 }));
 
 export const HeaderSection = styled.header(({ theme }) => ({
@@ -30,18 +32,32 @@ export const HeaderSection = styled.header(({ theme }) => ({
   justifyContent: "space-between",
   alignItems: "center",
   width: "100%",
-  padding: theme.spacing.lg,
 }));
 
-export const ContentSection = styled.section(({ theme }) => ({
+export const ContentSection = styled.article(({ theme }) => ({
   display: "flex",
-  padding: theme.spacing.md,
+  width: "100%",
   height: "100%",
+  gap: theme.spacing.xl,
 }));
 
-export const Section = styled.article(({ theme }) => ({
+interface ISection {
+  theme?: Theme;
+  noneBg?: boolean;
+}
+export const Section = styled.section(
+  ({ theme, noneBg = false }: ISection) => ({
+    background: noneBg ? undefined : theme?.bgColors.gradient,
+    backdropFilter: theme?.bgColors["backdrop-filter"],
+    padding: theme?.spacing.xl,
+    width: "100%",
+    borderRadius: theme?.borderRadius.lg,
+  })
+);
+
+export const Article = styled.article(({ theme }) => ({
   background: theme.bgColors.gradient,
-  padding: theme.spacing.md,
+  padding: theme.spacing.xl,
   width: "100%",
   borderRadius: theme.borderRadius.lg,
 }));

@@ -9,6 +9,7 @@ export interface IIcon {
   size?: SizeProp;
   animation?: CSSProperties;
 }
+
 export const Icon = ({ color, icon, size, animation }: IIcon) => {
   return (
     <FontAwesomeIcon
