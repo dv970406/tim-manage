@@ -31,6 +31,8 @@ import { Answer } from './survey/entities/answer.entity';
 import { join } from 'path';
 import { MeetingModule } from './meeting/meeting.module';
 import { Meeting } from './meeting/entities/meeting.entity';
+import { MealModule } from './meal/meal.module';
+import { Meal } from './meal/entities/meal.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -84,6 +86,7 @@ import { Meeting } from './meeting/entities/meeting.entity';
         Survey,
         Answer,
         Meeting,
+        Meal,
       ],
     }),
     UserModule,
@@ -98,6 +101,7 @@ import { Meeting } from './meeting/entities/meeting.entity';
     SurveyModule,
     PostModule,
     MeetingModule,
+    MealModule,
   ],
   controllers: [],
   providers: [],

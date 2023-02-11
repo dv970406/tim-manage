@@ -443,6 +443,29 @@ type UpdateMeetingOutput {
   meeting: Meeting
 }
 
+type Meal {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  mon: [String!]!
+  tue: [String!]!
+  wed: [String!]!
+  thu: [String!]!
+  fri: [String!]!
+}
+
+type CreateWeeklyMealOutput {
+  ok: Boolean!
+  error: String
+  weeklyMeal: Meal
+}
+
+type GetWeeklyMealOutput {
+  ok: Boolean!
+  error: String
+  weeklyMeal: Meal
+}
+
 type Query {
   getUsers: GetUsersOutput!
   getUser(input: GetUserInput!): GetUserOutput!
@@ -465,6 +488,7 @@ type Query {
   getMeetings: GetMeetingsOutput!
   getMeeting(input: GetMeetingInput!): GetMeetingOutput!
   getKingOfMeeting: GetKingOfMeetingOutput!
+  getWeeklyMeal: GetWeeklyMealOutput!
 }
 
 input GetUserInput {
@@ -531,6 +555,7 @@ type Mutation {
   createMeeting(input: CreateMeetingInput!): CreateMeetingOutput!
   updateMeeting(input: UpdateMeetingInput!): UpdateMeetingOutput!
   deleteMeeting(input: DeleteMeetingInput!): DeleteMeetingOutput!
+  createWeeklyMeal(input: CreateWeeklyMealInput!): CreateWeeklyMealOutput!
 }
 
 input LoginInput {
@@ -680,4 +705,8 @@ input UpdateMeetingInput {
 
 input DeleteMeetingInput {
   id: ID!
+}
+
+input CreateWeeklyMealInput {
+  excelToJson: String!
 }

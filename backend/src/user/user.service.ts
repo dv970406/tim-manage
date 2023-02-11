@@ -58,11 +58,21 @@ export class UserService {
             attendees: true,
           },
           hostedMeetingsByMe: true,
-          posts: true,
-          likes: true,
+          posts: {
+            user: true,
+          },
+          likes: {
+            post: {
+              user: true,
+            },
+          },
+          comments: {
+            post: {
+              user: true,
+            },
+          },
           answers: true,
           surveys: true,
-          comments: true,
         },
       });
 
