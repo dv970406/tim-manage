@@ -97,7 +97,6 @@ export class SurveyService {
     try {
       const findSurvey = await this.surveyRepo.findSurvey({ surveyId });
 
-      console.log('here :', findSurvey);
       return {
         ok: true,
         survey: findSurvey,

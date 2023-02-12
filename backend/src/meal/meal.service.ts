@@ -44,7 +44,7 @@ export class MealService {
     try {
       const parsedJson = [...JSON.parse(excelToJson)];
 
-      // 엑셀의 행과 열을 뒤집어서 보관
+      // 엑셀의 행과 열을 뒤집어서 보관 // 현파일 맨 아래 주석 참고
       const transposing2DArray = parsedJson.reduce(
         (result, row) =>
           row.map((_, i: number) => [...(result[i] || []), row[i]]),
@@ -55,9 +55,9 @@ export class MealService {
         .map((array) => array.filter((value) => typeof value === 'string'))
         .filter((findEmptyArray) => findEmptyArray.length > 0);
 
+      // ex) '♥행복한 밥상 도시락 2023년 2월2주 식단표♥' <-- 타이틀 제거
       let filteringTitle = [];
       if (
-        filteringNull[0][0].includes('년') &&
         filteringNull[0][0].includes('주') &&
         filteringNull[0][0].includes('식단표')
       ) {
@@ -77,7 +77,6 @@ export class MealService {
         weeklyMeal,
       };
     } catch (error) {
-      console.log(error);
       return {
         ok: false,
         error: '식단을 생성할 수 없습니다.',
@@ -101,7 +100,6 @@ export class MealService {
 // 위와 같은 형태를 아래 형태로 변환하기 위한 코드
 // [
 //   [
-//     '♥행복한 밥상 도시락 2023년 2월2주 식단표♥',
 //     '2월6일',
 //     '김칫국',
 //     '오리야채볶음',

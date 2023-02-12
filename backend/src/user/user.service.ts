@@ -84,7 +84,6 @@ export class UserService {
         user: findUser,
       };
     } catch (error) {
-      console.log(error);
       return {
         ok: false,
         error: error.message || '계정 조회에 실패했습니다.',

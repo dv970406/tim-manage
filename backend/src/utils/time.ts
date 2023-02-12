@@ -7,11 +7,18 @@ export const getThisWeekRange = () => {
   const nowDay = now.getDate();
 
   const nowMonth = now.getMonth();
-  let nowYear = now.getFullYear();
+  const nowYear = now.getFullYear();
 
-  const weekStartDate = new Date(nowYear, nowMonth, nowDay - nowDayOfWeek + 2);
-  const weekEndDate = new Date(nowYear, nowMonth, nowDay + (8 - nowDayOfWeek));
-  console.log(weekStartDate, weekEndDate);
+  const weekStartDate = new Date(
+    nowYear,
+    nowMonth,
+    nowDay - (nowDayOfWeek ? nowDayOfWeek - 1 : 6),
+  );
+  const weekEndDate = new Date(
+    nowYear,
+    nowMonth,
+    nowDay + (nowDayOfWeek ? 8 - nowDayOfWeek : 1),
+  );
 
   return {
     weekStartDate,
