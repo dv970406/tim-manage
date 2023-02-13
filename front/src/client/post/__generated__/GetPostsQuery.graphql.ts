@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fcb5692064948659097b8b33086bde64>>
+ * @generated SignedSource<<831cbcb9a6e516be8c67e8954dfdd62d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -142,6 +142,13 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "isLiked",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "countLikes",
                 "storageKey": null
               },
@@ -168,12 +175,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "07cff7697a05de60ecc57ba37770966c",
+    "cacheID": "9aa1fd780f90d0bd5e87c95c22f50fd8",
     "id": null,
     "metadata": {},
     "name": "GetPostsQuery",
     "operationKind": "query",
-    "text": "query GetPostsQuery {\n  getPosts {\n    ok\n    error\n    posts {\n      ...PostTableContent_post\n      id\n    }\n  }\n}\n\nfragment PostTableContent_post on Post {\n  id\n  title\n  user {\n    id\n    name\n  }\n  countLikes\n  countComments\n  createdAt\n}\n"
+    "text": "query GetPostsQuery {\n  getPosts {\n    ok\n    error\n    posts {\n      ...PostTableContent_post\n      id\n    }\n  }\n}\n\nfragment PostTableContent_post on Post {\n  id\n  title\n  user {\n    id\n    name\n  }\n  isLiked\n  countLikes\n  countComments\n  createdAt\n}\n"
   }
 };
 })();

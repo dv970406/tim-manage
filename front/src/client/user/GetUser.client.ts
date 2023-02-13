@@ -27,24 +27,8 @@ export const getUserQuery = graphql`
           id
         }
 
-        posts {
-          id
-          title
-          content
-        }
-        likes {
-          id
-        }
-        comments {
-          id
-        }
-        surveys {
-          id
-          surveyTitle
-        }
-        answers {
-          id
-        }
+        ...ShowUserPosts_post
+        ...ShowUserSurveys_survey
       }
     }
   }

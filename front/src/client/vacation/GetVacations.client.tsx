@@ -82,6 +82,8 @@ export const useGetVacations = (
         } else {
           backgroundColor = theme.bgColors.yellow;
         }
+
+        const isExpired = start < now;
         return {
           id: vacation.id,
           start,
@@ -92,18 +94,26 @@ export const useGetVacations = (
           type: SCHEDULES.VACATION,
           // 반차, 연차 모두 allday로
           allDay: true,
-          editable: isMine,
-          durationEditable: !vacation.isHalf && isMine,
+          editable: isMine && !isExpired,
+          durationEditable: !vacation.isHalf && isMine && !isExpired,
           visible: !isMine && !approved ? false : true,
           borderColor: "transparent",
           isMine,
           isHalf: vacation.isHalf,
           duration: vacation.duration,
-          isOver: start < now,
+          isExpired,
         };
       })!;
 
     setCalendarFormat(getCalendarFormat);
   }, [vacations]);
-  return { vacationsByCalendarFormat, setCalendarFormat };
+
+  const myTeamVacations = vacationsByCalendarFormat.filter((vacation) => {
+    if (!vacation) return;
+    return (
+      vacation?.user?.team?.id === myInfo?.team?.id &&
+      new Date() < new Date(vacation.start as Date)
+    );
+  });
+  return { vacationsByCalendarFormat, myTeamVacations };
 };

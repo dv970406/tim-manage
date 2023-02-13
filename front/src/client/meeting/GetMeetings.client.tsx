@@ -66,6 +66,8 @@ export const useGetMeetings = (
           return attendee.id === myInfo?.id;
         });
 
+        const isExpired = start < now;
+
         return {
           id: meeting.id,
           start,
@@ -78,15 +80,24 @@ export const useGetMeetings = (
           type: SCHEDULES.MEETING,
           // allday를 false로 줘서 Month에서 수정 못하게 했음
           allDay: false,
-          editable: isMine,
+          editable: isMine && !isExpired,
           visible: true,
           borderColor: "transparent",
           isMine,
-          isOver: start < now,
+          isExpired,
         };
       })!;
     setCalendarFormat(getCalendarFormat);
   }, [meetings]);
 
-  return { meetingsByCalendarFormat, setCalendarFormat };
+  const todayMeetings = meetingsByCalendarFormat.filter((meeting) => {
+    const meetingStartDate = new Date(meeting.start as Date)
+      .toISOString()
+      .substring(0, 10);
+    const today = new Date().toISOString().substring(0, 10);
+
+    return meetingStartDate === today;
+  });
+
+  return { meetingsByCalendarFormat, todayMeetings };
 };
