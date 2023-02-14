@@ -37,7 +37,7 @@ function TemplatesLayout() {
     <Body>
       <SideBar isManager={myInfo?.isManager} />
       <Main>
-        <Header myId={myInfo?.id} />
+        <Header />
 
         <Content>
           <Outlet /* context={user} */ />

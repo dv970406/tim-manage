@@ -52,30 +52,13 @@ const Home = ({
   getMeetingsQueryReference,
 }: IHome) => {
   // vacations와 meetings는 Calendar 라이브러리에 맞는 포맷으로 변환이 필요해서 hook에서 처리하게 했음
-  const { vacationsByCalendarFormat } = useGetVacations(
+  const { vacationsByCalendarFormat, myTeamVacations } = useGetVacations(
     getVacationsQueryReference
   );
-  const { meetingsByCalendarFormat } = useGetMeetings(
+  const { meetingsByCalendarFormat, todayMeetings } = useGetMeetings(
     getMeetingsQueryReference
   );
-
-  const todayMeetings = meetingsByCalendarFormat.filter((meeting) => {
-    const meetingStartDate = new Date(meeting.start as Date)
-      .toISOString()
-      .substring(0, 10);
-    const today = new Date().toISOString().substring(0, 10);
-
-    return meetingStartDate === today;
-  });
-
   const { myInfo } = useGetMyInfo();
-  const myTeamVacations = vacationsByCalendarFormat.filter((vacation) => {
-    if (!vacation) return;
-    return (
-      vacation?.user?.team?.id === myInfo?.team?.id &&
-      new Date() < new Date(vacation.start as Date)
-    );
-  });
 
   // 일정 필터링
   const [filteringSchedules, setFilteringSchedules] = useState("");

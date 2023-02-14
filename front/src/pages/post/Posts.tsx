@@ -26,6 +26,6 @@ interface IPosts {
 const Posts = ({ getPostsQueryReference }: IPosts) => {
   const { posts } = useGetPosts(getPostsQueryReference);
 
-  return <Section>{posts && <PostsTable posts={posts} />}</Section>;
+  return <Section noneBg>{posts && <PostsTable posts={posts} />}</Section>;
 };
 export default PostsPage;

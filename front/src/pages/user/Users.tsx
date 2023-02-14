@@ -28,7 +28,7 @@ const Users = ({ usersQueryReference }: IUsers) => {
   const { users } = useGetUsers(usersQueryReference);
 
   if (!users) return <></>;
-  return <Section>{users && <UsersTable users={users} />}</Section>;
+  return <Section noneBg>{users && <UsersTable users={users} />}</Section>;
 };
 
 export default UsersPage;

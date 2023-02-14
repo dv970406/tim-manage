@@ -1,11 +1,22 @@
+import {
+  faPooStorm,
+  faS,
+  faUserSecret,
+  faV,
+} from "@fortawesome/pro-solid-svg-icons";
 import { graphql } from "babel-plugin-relay/macro";
 import { Suspense, useEffect } from "react";
 import { PreloadedQuery, usePreloadedQuery, useQueryLoader } from "react-relay";
-import { useParams } from "react-router-dom";
+import { Outlet, Route, Routes, useParams } from "react-router-dom";
 import { useGetMyInfo } from "../../client/user/GetMyInfo.client";
 import { getUserQuery, useGetUser } from "../../client/user/GetUser.client";
 import { GetUserQuery } from "../../client/user/__generated__/GetUserQuery.graphql";
+import { RowBox, GapBox } from "../../components/atomics/boxes/Boxes";
 import { Section } from "../../components/atomics/sections/sections";
+import { MainText } from "../../components/atomics/typographys/texts";
+import { ButtonIcon } from "../../components/molecules/buttons/Buttons";
+import NavIconButton from "../../components/organisms/header/NavIconButton";
+import { theme } from "../../css/theme";
 
 const UserDetailPage = () => {
   const { userId } = useParams();
@@ -31,15 +42,26 @@ interface IUserDetail {
 }
 const UserDetail = ({ getUserQueryReference }: IUserDetail) => {
   const { user } = useGetUser(getUserQueryReference);
-  console.log(user);
+
   return (
-    <>
+    <GapBox>
       <Section>
-        {user?.name} & {user?.email}
-        마이페이지면 중첩라우팅으로 표현하고 useLazyLoadQuery랑
-        fragment활용해보자
+        <RowBox
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          {" "}
+          <NavIconButton path="" icon={faS} />
+          <NavIconButton path="vacation" icon={faV} />
+        </RowBox>
       </Section>
-    </>
+      <Section style={{ height: "100%" }}>
+        <Outlet context={user} />
+        {/* ShowUserVacations */}
+      </Section>
+    </GapBox>
   );
 };
 

@@ -3,9 +3,19 @@ import CreatePostForm from "../../components/templates/content/post/CreatePostFo
 
 const PostCreatePage = () => {
   return (
-    <Section>
-      <CreatePostForm />
-    </Section>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        height: "100%",
+      }}
+    >
+      <Section style={{ width: "40%" }}>
+        <CreatePostForm />
+      </Section>
+    </div>
   );
 };
 

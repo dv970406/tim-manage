@@ -4,9 +4,19 @@ import CreateUserForm from "../../components/templates/content/manager/CreateUse
 
 const UserCreatePage = () => {
   return (
-    <Section style={{ width: "40%" }}>
-      <CreateUserForm />
-    </Section>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        height: "100%",
+      }}
+    >
+      <Section style={{ width: "40%" }}>
+        <CreateUserForm />
+      </Section>
+    </div>
   );
 };
 

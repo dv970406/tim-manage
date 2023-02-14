@@ -49,33 +49,49 @@ const SurveyManagement = ({
 
   if (!surveys) return <></>;
   return (
-    <>
-      <Section style={{ width: "35%" }}>
-        <Suspense fallback="wait">
-          <ShowMultipleChoiceAnswers
-            multipleChoiceFormat={multipleChoiceFormat}
-          />
-        </Suspense>
-      </Section>
-      <Section style={{ width: "35%" }}>
-        <Suspense fallback="wait">
-          <ShowShortAnswers shortAnswerFormat={shortAnswerFormat} />
-        </Suspense>
-      </Section>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        height: "100%",
+      }}
+    >
+      <GapBox
+        style={{
+          flexDirection: "row",
+          width: "70%",
+          height: "80%",
+        }}
+      >
+        <Section style={{ width: "35%" }}>
+          <Suspense fallback="wait">
+            <ShowMultipleChoiceAnswers
+              multipleChoiceFormat={multipleChoiceFormat}
+            />
+          </Suspense>
+        </Section>
+        <Section style={{ width: "35%" }}>
+          <Suspense fallback="wait">
+            <ShowShortAnswers shortAnswerFormat={shortAnswerFormat} />
+          </Suspense>
+        </Section>
 
-      <GapBox style={{ width: "30%", gap: theme.spacing.xl }}>
-        <Section style={{ height: "50%", overflow: "auto" }}>
-          <ManagerSurveysTable
-            surveys={surveys}
-            clickedSurveyId={clickedSurveyId}
-            setClickedSurveyId={setClickedSurveyId}
-          />
-        </Section>
-        <Section style={{ height: "50%" }}>
-          <SurveyResponseRate responseRate={responseRate} />
-        </Section>
+        <GapBox style={{ width: "30%", gap: theme.spacing.xl }}>
+          <Section style={{ height: "50%", overflow: "auto" }}>
+            <ManagerSurveysTable
+              surveys={surveys}
+              clickedSurveyId={clickedSurveyId}
+              setClickedSurveyId={setClickedSurveyId}
+            />
+          </Section>
+          <Section style={{ height: "50%" }}>
+            <SurveyResponseRate responseRate={responseRate} />
+          </Section>
+        </GapBox>
       </GapBox>
-    </>
+    </div>
   );
 };
 export default SurveyManagementPage;

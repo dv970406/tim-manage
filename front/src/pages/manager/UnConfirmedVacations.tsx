@@ -48,8 +48,16 @@ const UnConfirmedVacations = ({
   if (!unConfirmedByMeVacations) return <></>;
 
   return (
-    <>
-      <Section style={{ width: "70%" }}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        height: "100%",
+      }}
+    >
+      <Section style={{ width: "60%", height: "60%" }}>
         {unConfirmedByMeVacations && (
           <UnConfirmedVacationsTable
             unConfirmedVacations={unConfirmedByMeVacations}
@@ -58,7 +66,7 @@ const UnConfirmedVacations = ({
           />
         )}
       </Section>
-    </>
+    </div>
   );
 };
 

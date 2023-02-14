@@ -4,9 +4,19 @@ import CreateSurveyForm from "../../components/templates/content/manager/CreateS
 
 const SurveyCreatePage = () => {
   return (
-    <Section style={{ width: "40%" }}>
-      <CreateSurveyForm />
-    </Section>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        height: "100%",
+      }}
+    >
+      <Section style={{ width: "40%" }}>
+        <CreateSurveyForm />
+      </Section>
+    </div>
   );
 };
 

@@ -6,6 +6,7 @@ import {
 } from "../../client/manager/GetManagerUsers.client";
 import { GetManagerUsersQuery } from "../../client/manager/__generated__/GetManagerUsersQuery.graphql";
 import { useGetMyInfo } from "../../client/user/GetMyInfo.client";
+import { GapBox } from "../../components/atomics/boxes/Boxes";
 import { Section } from "../../components/atomics/sections/sections";
 import Table from "../../components/molecules/tables/Table";
 import ManagerUserTableContent from "../../components/organisms/content/manager/ManagerUserTableContent";
@@ -42,27 +43,42 @@ const UserManagement = ({ managerUsersQueryReference }: IUserManagement) => {
   if (!users) return <></>;
 
   return (
-    <>
-      <Section style={{ width: "60%" }}>
-        <ManagerUsersTable
-          users={users}
-          clickedUserId={clickedUserId}
-          setClickedUserId={setClickedUserId}
-          myPosition={myInfo?.position.position}
-        />
-      </Section>
-
-      <Section style={{ width: "40%" }}>
-        <Suspense fallback="hihihihi">
-          <MutateUserForm
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        height: "100%",
+      }}
+    >
+      <GapBox
+        style={{
+          flexDirection: "row",
+          width: "70%",
+        }}
+      >
+        <Section style={{ width: "60%" }}>
+          <ManagerUsersTable
+            users={users}
             clickedUserId={clickedUserId}
             setClickedUserId={setClickedUserId}
             myPosition={myInfo?.position.position}
-            myId={myInfo?.id}
           />
-        </Suspense>
-      </Section>
-    </>
+        </Section>
+
+        <Section style={{ width: "40%" }}>
+          <Suspense fallback="hihihihi">
+            <MutateUserForm
+              clickedUserId={clickedUserId}
+              setClickedUserId={setClickedUserId}
+              myPosition={myInfo?.position.position}
+              myId={myInfo?.id}
+            />
+          </Suspense>
+        </Section>
+      </GapBox>
+    </div>
   );
 };
 export default UserManagementPage;

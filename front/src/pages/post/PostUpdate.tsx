@@ -32,7 +32,21 @@ interface IPostUpdate {
 
 const PostUpdate = ({ getPostQueryReference }: IPostUpdate) => {
   const { post } = useGetPost(getPostQueryReference);
-  return <Section>{post && <MutatePostForm post={post} />}</Section>;
+  return (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        height: "100%",
+      }}
+    >
+      <Section style={{ width: "40%" }}>
+        {post && <MutatePostForm post={post} />}
+      </Section>
+    </div>
+  );
 };
 
 export default PostUpdatePage;

@@ -8,6 +8,7 @@ import "react-quill/dist/quill.bubble.css";
 import CommentsZone from "../../components/templates/content/post/CommentsZone";
 import ContentZone from "../../components/templates/content/post/ContentZone";
 import { theme } from "../../css/theme";
+import { GapBox } from "../../components/atomics/boxes/Boxes";
 
 const PostDetailPage = () => {
   const { postId } = useParams();
@@ -33,25 +34,31 @@ const PostDetail = ({ getPostQueryReference }: IPostDetail) => {
   const { post } = useGetPost(getPostQueryReference);
 
   return (
-    <>
-      <Section style={{ width: "50%" }}>
-        {post && <ContentZone post={post} />}
-      </Section>
-
-      <div
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        height: "100%",
+      }}
+    >
+      <GapBox
         style={{
-          width: "50%",
-          display: "flex",
-          flexDirection: "column",
-          gap: theme.spacing.xl,
+          flexDirection: "row",
+          width: "70%",
+          height: "80%",
         }}
       >
-        <Section style={{ height: "50%" }}>
+        <Section style={{ width: "60%" }}>
+          {post && <ContentZone post={post} />}
+        </Section>
+
+        <Section style={{ width: "40%" }}>
           {post && <CommentsZone post={post} />}{" "}
         </Section>
-        <Section style={{ height: "50%" }}></Section>
-      </div>
-    </>
+      </GapBox>
+    </div>
   );
 };
 export default PostDetailPage;

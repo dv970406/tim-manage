@@ -43,32 +43,48 @@ const PositionManagement = ({
   if (!positions) return <></>;
 
   return (
-    <>
-      <Section style={{ width: "60%" }}>
-        {positions && (
-          <ManagerPositionsTable
-            positions={positions}
-            clickedPositionId={clickedPositionId}
-            setClickedPositionId={setClickedPositionId}
-          />
-        )}
-      </Section>
-      <GapBox style={{ width: "40%", gap: theme.spacing.xl }}>
-        <Section>
-          <Suspense fallback="hihihihi">
-            <CreatePositionForm />
-          </Suspense>
-        </Section>
-        <Section>
-          <Suspense fallback="hihihihi">
-            <MutatePositionForm
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        height: "100%",
+      }}
+    >
+      <GapBox
+        style={{
+          flexDirection: "row",
+          width: "70%",
+          height: "80%",
+        }}
+      >
+        <Section style={{ width: "60%" }}>
+          {positions && (
+            <ManagerPositionsTable
+              positions={positions}
               clickedPositionId={clickedPositionId}
               setClickedPositionId={setClickedPositionId}
             />
-          </Suspense>
+          )}
         </Section>
+        <GapBox style={{ width: "40%", gap: theme.spacing.xl }}>
+          <Section>
+            <Suspense fallback="hihihihi">
+              <CreatePositionForm />
+            </Suspense>
+          </Section>
+          <Section>
+            <Suspense fallback="hihihihi">
+              <MutatePositionForm
+                clickedPositionId={clickedPositionId}
+                setClickedPositionId={setClickedPositionId}
+              />
+            </Suspense>
+          </Section>
+        </GapBox>
       </GapBox>
-    </>
+    </div>
   );
 };
 export default PositionManagementPage;

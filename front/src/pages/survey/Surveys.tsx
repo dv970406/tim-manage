@@ -30,6 +30,8 @@ interface ISurveys {
 const Surveys = ({ getSurveysQueryReference }: ISurveys) => {
   const { surveys } = useGetSurveys(getSurveysQueryReference);
 
-  return <Section>{surveys && <SurveysTable surveys={surveys} />}</Section>;
+  return (
+    <Section noneBg>{surveys && <SurveysTable surveys={surveys} />}</Section>
+  );
 };
 export default SurveysPage;
