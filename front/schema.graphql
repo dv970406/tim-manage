@@ -13,6 +13,11 @@ type Answer {
   results: [String!]!
 }
 
+type ChartFormatResult {
+  labels: [String!]!
+  series: [Float!]!
+}
+
 type Comment {
   id: ID!
   createdAt: DateTime!
@@ -20,6 +25,7 @@ type Comment {
   content: String!
   user: User!
   post: Post!
+  isMyComment: Boolean!
 }
 
 type Confirm {
@@ -35,6 +41,7 @@ input ConfirmVacationInput {
 type ConfirmVacationOutput {
   ok: Boolean!
   error: String
+  vacation: Vacation
 }
 
 input CreateAnswerInput {
@@ -45,6 +52,7 @@ input CreateAnswerInput {
 type CreateAnswerOutput {
   ok: Boolean!
   error: String
+  surveyId: ID
 }
 
 input CreateCommentInput {
@@ -55,6 +63,8 @@ input CreateCommentInput {
 type CreateCommentOutput {
   ok: Boolean!
   error: String
+  comment: Comment
+  postId: ID
 }
 
 input CreateMeetingInput {
@@ -77,6 +87,7 @@ input CreatePositionInput {
 type CreatePositionOutput {
   ok: Boolean!
   error: String
+  position: Position
 }
 
 input CreatePostInput {
@@ -87,6 +98,7 @@ input CreatePostInput {
 type CreatePostOutput {
   ok: Boolean!
   error: String
+  post: Post
 }
 
 input CreateSurveyInput {
@@ -98,6 +110,7 @@ input CreateSurveyInput {
 type CreateSurveyOutput {
   ok: Boolean!
   error: String
+  survey: Survey
 }
 
 input CreateTeamInput {
@@ -107,10 +120,10 @@ input CreateTeamInput {
 type CreateTeamOutput {
   ok: Boolean!
   error: String
+  team: Team
 }
 
 input CreateUserInput {
-  isManager: Boolean! = false
   email: String!
   name: String!
   joinDate: DateTime!
@@ -121,6 +134,7 @@ input CreateUserInput {
 type CreateUserOutput {
   ok: Boolean!
   error: String
+  user: User
 }
 
 input CreateVacationInput {
@@ -135,6 +149,16 @@ type CreateVacationOutput {
   vacation: Vacation
 }
 
+input CreateWeeklyMealInput {
+  excelToJson: String!
+}
+
+type CreateWeeklyMealOutput {
+  ok: Boolean!
+  error: String
+  weeklyMeal: Meal
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -147,6 +171,7 @@ input DeleteAnswerInput {
 type DeleteAnswerOutput {
   ok: Boolean!
   error: String
+  deletedAnswerId: ID
 }
 
 input DeleteCommentInput {
@@ -156,6 +181,8 @@ input DeleteCommentInput {
 type DeleteCommentOutput {
   ok: Boolean!
   error: String
+  deletedCommentId: ID
+  postId: ID
 }
 
 input DeleteMeetingInput {
@@ -175,6 +202,7 @@ input DeletePositionInput {
 type DeletePositionOutput {
   ok: Boolean!
   error: String
+  deletedPositionId: ID
 }
 
 input DeletePostInput {
@@ -184,6 +212,7 @@ input DeletePostInput {
 type DeletePostOutput {
   ok: Boolean!
   error: String
+  deletedPostId: ID
 }
 
 input DeleteSurveyInput {
@@ -193,6 +222,7 @@ input DeleteSurveyInput {
 type DeleteSurveyOutput {
   ok: Boolean!
   error: String
+  deletedSurveyId: ID
 }
 
 input DeleteTeamInput {
@@ -202,6 +232,7 @@ input DeleteTeamInput {
 type DeleteTeamOutput {
   ok: Boolean!
   error: String
+  deletedTeamId: ID
 }
 
 input DeleteUserInput {
@@ -211,6 +242,7 @@ input DeleteUserInput {
 type DeleteUserOutput {
   ok: Boolean!
   error: String
+  deletedUserId: ID
 }
 
 input DeleteVacationInput {
@@ -230,7 +262,15 @@ input GetAnswersOfsurveyInput {
 type GetAnswersOfsurveyOutput {
   ok: Boolean!
   error: String
-  answers: [Answer!]
+  shortAnswerFormat: [ShortAnswerFormat!]
+  multipleChoiceFormat: [MultipleChoiceFormat!]
+  responseRate: ResponseRate
+}
+
+type GetKingOfMeetingOutput {
+  ok: Boolean!
+  error: String
+  users: [User!]
 }
 
 input GetMeetingInput {
@@ -267,6 +307,16 @@ type GetMyLikesOutput {
   likes: [Like!]
 }
 
+input GetPositionInput {
+  id: ID!
+}
+
+type GetPositionOutput {
+  ok: Boolean!
+  error: String
+  position: Position
+}
+
 type GetPositionsOutput {
   ok: Boolean!
   error: String
@@ -299,6 +349,10 @@ type GetSurveyOutput {
   survey: Survey
 }
 
+input GetSurveysInput {
+  onlyMine: Boolean
+}
+
 type GetSurveysOutput {
   ok: Boolean!
   error: String
@@ -321,6 +375,12 @@ type GetTeamsOutput {
   teams: [Team!]
 }
 
+type GetUnConfirmedByMeVacationsOutput {
+  ok: Boolean!
+  error: String
+  vacations: [Vacation!]
+}
+
 input GetUserInput {
   id: ID!
 }
@@ -329,16 +389,6 @@ type GetUserOutput {
   ok: Boolean!
   error: String
   user: User
-}
-
-input GetUsersOfPositionInput {
-  id: ID!
-}
-
-type GetUsersOfPositionOutput {
-  ok: Boolean!
-  error: String
-  users: [User!]
 }
 
 type GetUsersOutput {
@@ -363,6 +413,12 @@ type GetVacationsOutput {
   vacations: [Vacation!]
 }
 
+type GetWeeklyMealOutput {
+  ok: Boolean!
+  error: String
+  weeklyMeal: Meal
+}
+
 type Like {
   id: ID!
   createdAt: DateTime!
@@ -382,6 +438,17 @@ type LoginOutput {
   token: String
 }
 
+type Meal {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  mon: [String!]!
+  tue: [String!]!
+  wed: [String!]!
+  thu: [String!]!
+  fri: [String!]!
+}
+
 type Meeting {
   id: ID!
   createdAt: DateTime!
@@ -393,16 +460,22 @@ type Meeting {
   host: User!
 }
 
+type MultipleChoiceFormat {
+  paragraphTitle: String!
+  description: String!
+  chartFormatResults: ChartFormatResult!
+}
+
 type Mutation {
   login(input: LoginInput!): LoginOutput!
   createUser(input: CreateUserInput!): CreateUserOutput!
   updateUser(input: UpdateUserInput!): UpdateUserOutput!
+  updateUserPassword(input: UpdateUserPasswordInput!): UpdateUserPasswordOutput!
   deleteUser(input: DeleteUserInput!): DeleteUserOutput!
   createPosition(input: CreatePositionInput!): CreatePositionOutput!
   updatePosition(input: UpdatePositionInput!): UpdatePositionOutput!
   deletePosition(input: DeletePositionInput!): DeletePositionOutput!
   createTeam(input: CreateTeamInput!): CreateTeamOutput!
-  nominateLeader(input: NominateLeaderInput!): NominateLeaderOutput!
   updateTeam(input: UpdateTeamInput!): UpdateTeamOutput!
   deleteTeam(input: DeleteTeamInput!): DeleteTeamOutput!
   createVacation(input: CreateVacationInput!): CreateVacationOutput!
@@ -422,16 +495,7 @@ type Mutation {
   createMeeting(input: CreateMeetingInput!): CreateMeetingOutput!
   updateMeeting(input: UpdateMeetingInput!): UpdateMeetingOutput!
   deleteMeeting(input: DeleteMeetingInput!): DeleteMeetingOutput!
-}
-
-input NominateLeaderInput {
-  id: ID!
-  userId: ID!
-}
-
-type NominateLeaderOutput {
-  ok: Boolean!
-  error: String
+  createWeeklyMeal(input: CreateWeeklyMealInput!): CreateWeeklyMealOutput!
 }
 
 type Position {
@@ -451,6 +515,7 @@ type Post {
   user: User!
   likes: [Like!]!
   comments: [Comment!]!
+  isMyPost: Boolean!
   countLikes: Float!
   isLiked: Boolean!
   countComments: Float!
@@ -461,12 +526,13 @@ type Query {
   getUser(input: GetUserInput!): GetUserOutput!
   getMyInfo: GetUserOutput!
   getPositions: GetPositionsOutput!
-  getUsersOfPosition(input: GetUsersOfPositionInput!): GetUsersOfPositionOutput!
+  getPosition(input: GetPositionInput!): GetPositionOutput!
   getTeams: GetTeamsOutput!
   getTeam(input: GetTeamInput!): GetTeamOutput!
   getVacations: GetVacationsOutput!
+  getUnConfirmedByMeVacations: GetUnConfirmedByMeVacationsOutput!
   getVacation(input: GetVacationInput!): GetVacationOutput!
-  getSurveys: GetSurveysOutput!
+  getSurveys(input: GetSurveysInput!): GetSurveysOutput!
   getSurvey(input: GetSurveyInput!): GetSurveyOutput!
   getMyAnswers: GetMyAnswersOutput!
   getAnswersOfSurvey(input: GetAnswersOfsurveyInput!): GetAnswersOfsurveyOutput!
@@ -476,6 +542,19 @@ type Query {
   getMyComments: GetMyCommentsOutput!
   getMeetings: GetMeetingsOutput!
   getMeeting(input: GetMeetingInput!): GetMeetingOutput!
+  getKingOfMeeting: GetKingOfMeetingOutput!
+  getWeeklyMeal: GetWeeklyMealOutput!
+}
+
+type ResponseRate {
+  notAnsweredEmployeeCount: Float!
+  answeredEmployeeCount: Float!
+}
+
+type ShortAnswerFormat {
+  paragraphTitle: String!
+  description: String!
+  shortAnswers: [String!]!
 }
 
 type Survey {
@@ -487,18 +566,20 @@ type Survey {
   paragraphs: [SurveyForm!]!
   answers: [Answer!]!
   user: User!
+  isMySurvey: Boolean!
+  isAnswered: Boolean!
 }
 
 type SurveyForm {
   paragraphTitle: String!
   description: String
-  multipleChoice: [String!]
+  multipleChoice: [String!]!
 }
 
 input SurveyFormInputType {
   paragraphTitle: String!
   description: String
-  multipleChoice: [String!]
+  multipleChoice: [String!]!
 }
 
 type Team {
@@ -507,7 +588,7 @@ type Team {
   updatedAt: DateTime!
   team: String!
   users: [User!]!
-  leader: User!
+  leader: User
 }
 
 input ToggleLikeInput {
@@ -541,27 +622,31 @@ input UpdatePositionInput {
 type UpdatePositionOutput {
   ok: Boolean!
   error: String
+  position: Position
 }
 
 input UpdatePostInput {
-  id: ID!
-  title: String!
-  content: String!
+  title: String
+  content: String
+  postId: ID!
 }
 
 type UpdatePostOutput {
   ok: Boolean!
   error: String
+  post: Post
 }
 
 input UpdateTeamInput {
-  id: ID!
-  team: String!
+  team: String
+  teamId: ID!
+  leaderId: ID
 }
 
 type UpdateTeamOutput {
   ok: Boolean!
   error: String
+  team: Team
 }
 
 input UpdateUserInput {
@@ -570,13 +655,23 @@ input UpdateUserInput {
   password: String
   name: String
   joinDate: DateTime
-  availableVacation: Float = 15
   userId: ID!
   positionId: ID
   teamId: ID
+  availableVacation: String
 }
 
 type UpdateUserOutput {
+  ok: Boolean!
+  error: String
+  user: User
+}
+
+input UpdateUserPasswordInput {
+  password: String!
+}
+
+type UpdateUserPasswordOutput {
   ok: Boolean!
   error: String
 }
@@ -603,7 +698,7 @@ type User {
   password: String!
   name: String!
   joinDate: DateTime!
-  availableVacation: Float!
+  availableVacation: String!
   vacations: [Vacation!]!
   attendedMeetings: [Meeting!]!
   hostedMeetingsByMe: [Meeting!]!
