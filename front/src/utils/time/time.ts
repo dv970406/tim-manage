@@ -61,3 +61,45 @@ export const getElaspedDay = (time: Date | number) => {
 
 export const showDateFormat = (time: Date | number) =>
   new Date(time).toJSON().substring(0, 10);
+
+interface ITimeFormatForDb {
+  start: Date;
+  end: Date;
+}
+export const meetingTimeFormatForDb = ({ start, end }: ITimeFormatForDb) => {
+  const startTime = +new Date(start) - NINE_HOURS_TO_MILLISEC;
+  const endTime = +new Date(end) - NINE_HOURS_TO_MILLISEC;
+  return {
+    startTime,
+    endTime,
+  };
+};
+
+export const getDayOfNow = () => {
+  const now = new Date().getDay();
+
+  switch (now) {
+    case 1:
+      return "mon";
+    case 2:
+      return "tue";
+    case 3:
+      return "wed";
+    case 4:
+      return "thu";
+    case 5:
+      return "fri";
+    default:
+      return "fri";
+  }
+};
+
+export const getKoreanDateFormat = (time: Date | number) => {
+  const date = new Date(time);
+
+  return date.toLocaleDateString("ko", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+};
