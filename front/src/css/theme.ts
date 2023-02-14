@@ -23,8 +23,13 @@ export interface ITheme {
 export const theme: ITheme = {
   bgColors: {
     section: "rgb(7, 10, 39)",
-    gradient:
-      "linear-gradient(127.09deg, rgba(6, 11, 40, 0.94) 19.41%, rgba(10, 14, 35, 0.49) 76.65%)",
+    sectionGradient:
+      "linear-gradient(127.09deg,rgba(6,11,40,.94) 19.41%,rgba(10,14,35,.49) 76.65%)",
+    listGradient:
+      "linear-gradient(127.09deg,rgba(6, 11, 40, 0.94) 19.41%, rgba(10, 14, 35, 0.49) 76.65%) border-box",
+    backdropFilter: "blur(120px)",
+    silver:
+      "linear-gradient(90deg, rgba(224, 225, 226, 0) 0%, rgb(224, 225, 226) 49.52%, rgba(224, 225, 226, 0) 100%)",
     translucent: "rgba(0, 0, 0, 0.8)",
     white: "rgb(255, 255, 255)",
     green: "rgb(104,211,145)",
@@ -102,6 +107,8 @@ export const globalStyles = css`
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    /*스크롤이 부모로 번지는 것을 막는 css*/
+    overscroll-behavior: "contain";
   }
   a {
     text-decoration: none;
@@ -125,16 +132,16 @@ export const globalStyles = css`
   }
   *::-webkit-scrollbar {
     display: none;
-    /*  background-color: var(--gray);
-    width: 5px;
-    border-radius: 20px; */
   }
-  /* *::-webkit-scrollbar-thumb {
-    display: none;
-    background-color: var(--purple);
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
-  *::-webkit-scrollbar-track {
-    background-color: var(--gray);
-    border-radius: 20px;
-  } */
+
+  /* 자동완성 선택시 배경 흰색으로 바뀌는 것 방지 */
+  input:-webkit-autofill {
+    -webkit-transition-delay: 9999s;
+    transition-delay: 9999s;
+  }
 `;

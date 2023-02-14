@@ -1,6 +1,9 @@
 export interface IBgColors {
   section: string;
-  gradient: string;
+  sectionGradient: string;
+  listGradient: string;
+  backdropFilter: string;
+  silver: string;
   translucent: string;
   white: string;
   green: string;
