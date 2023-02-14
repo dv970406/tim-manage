@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<56db3743309150eac6c2bce7a5ebd4db>>
+ * @generated SignedSource<<e838004be1e36fada9daef352a0b4fe0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,19 +10,20 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type TableContent_survey$data = {
+export type Comment_comment$data = {
+  readonly content: string;
+  readonly createdAt: any;
   readonly id: string;
-  readonly isAnonymous: boolean;
-  readonly surveyTitle: string;
+  readonly isMyComment: boolean;
   readonly user: {
     readonly id: string;
     readonly name: string;
   };
-  readonly " $fragmentType": "TableContent_survey";
+  readonly " $fragmentType": "Comment_comment";
 };
-export type TableContent_survey$key = {
-  readonly " $data"?: TableContent_survey$data;
-  readonly " $fragmentSpreads": FragmentRefs<"TableContent_survey">;
+export type Comment_comment$key = {
+  readonly " $data"?: Comment_comment$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Comment_comment">;
 };
 
 const node: ReaderFragment = (function(){
@@ -37,21 +38,14 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "TableContent_survey",
+  "name": "Comment_comment",
   "selections": [
     (v0/*: any*/),
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "surveyTitle",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isAnonymous",
+      "name": "content",
       "storageKey": null
     },
     {
@@ -72,13 +66,27 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isMyComment",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "createdAt",
+      "storageKey": null
     }
   ],
-  "type": "Survey",
+  "type": "Comment",
   "abstractKey": null
 };
 })();
 
-(node as any).hash = "2648b4a34f2d395cb55021a892a683a4";
+(node as any).hash = "b4e9fe824f687afbcb43d42086fba258";
 
 export default node;

@@ -1,5 +1,6 @@
 import { keyframes, Theme } from "@emotion/react";
 import styled from "@emotion/styled";
+import { motion } from "framer-motion";
 
 export const BodySection = styled.div(({ theme }) => ({
   backgroundImage: `url("/background.png")`,
@@ -11,7 +12,7 @@ export const BodySection = styled.div(({ theme }) => ({
 }));
 
 export const SideBarSection = styled.aside(({ theme }) => ({
-  background: theme.bgColors.gradient,
+  background: theme.bgColors.sectionGradient,
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
@@ -38,6 +39,7 @@ export const ContentSection = styled.article(({ theme }) => ({
   display: "flex",
   width: "100%",
   height: "100%",
+
   gap: theme.spacing.xl,
 }));
 
@@ -47,8 +49,18 @@ interface ISection {
 }
 export const Section = styled.section(
   ({ theme, noneBg = false }: ISection) => ({
-    background: noneBg ? undefined : theme?.bgColors.gradient,
-    backdropFilter: theme?.bgColors["backdrop-filter"],
+    background: noneBg ? undefined : theme?.bgColors.sectionGradient,
+    backdropFilter: theme?.bgColors.backdropFilter,
+    padding: theme?.spacing.xl,
+    width: "100%",
+    borderRadius: theme?.borderRadius.lg,
+  })
+);
+// framer-motion -> 위 Section에 motion을 씌운 것
+export const AnimateSection = styled(motion.section)(
+  ({ theme, noneBg = false }: ISection) => ({
+    background: noneBg ? undefined : theme?.bgColors.sectionGradient,
+    backdropFilter: theme?.bgColors.backdropFilter,
     padding: theme?.spacing.xl,
     width: "100%",
     borderRadius: theme?.borderRadius.lg,
@@ -56,7 +68,7 @@ export const Section = styled.section(
 );
 
 export const Article = styled.article(({ theme }) => ({
-  background: theme.bgColors.gradient,
+  background: theme.bgColors.sectionGradient,
   padding: theme.spacing.xl,
   width: "100%",
   borderRadius: theme.borderRadius.lg,
@@ -80,7 +92,7 @@ export const ModalSection = styled.section(({ theme }) => ({
   animation: `${modalShow} 0.3s`,
   width: 600,
   height: 400,
-  background: theme.bgColors.gradient,
+  background: theme.bgColors.sectionGradient,
   borderRadius: theme.borderRadius.lg,
   padding: theme.spacing.xl,
 }));

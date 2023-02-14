@@ -1,13 +1,5 @@
 import { faPlus, faTag, faWaffle } from "@fortawesome/pro-solid-svg-icons";
-import React, {
-  ChangeEventHandler,
-  Dispatch,
-  EventHandler,
-  MouseEventHandler,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import React, { Dispatch, SetStateAction, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useGetManagerTeam } from "../../../../client/manager/GetManagerTeam.client";
 import { useDeleteTeam } from "../../../../client/manager/DeleteTeam.client";
@@ -44,6 +36,7 @@ const MutateTeamForm = ({
     handleSubmit,
     watch,
     setValue,
+    reset,
   } = useForm<IMutateTeamFormValue>({
     mode: "onChange",
   });
@@ -51,11 +44,11 @@ const MutateTeamForm = ({
   useEffect(() => {
     if (team) {
       setValue("team", team?.team);
-      setValue("leader", team?.leader.name);
+      if (!team?.leader?.name) return setValue("leader", "");
+      setValue("leader", team?.leader?.name);
     } else {
       setClickedTeamId("");
-      setValue("team", "");
-      setValue("leader", "");
+      reset();
     }
   }, [team]);
 
@@ -125,7 +118,7 @@ const MutateTeamForm = ({
           placeholder="리더"
           listName="leader"
           list={team?.users?.map((user) => (
-            <option key={user.id} value={user.name} />
+            <option key={user?.id} value={user?.name} />
           ))}
           register={register("leader", {
             required: {

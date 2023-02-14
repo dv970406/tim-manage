@@ -11,10 +11,7 @@ import { HeaderSection } from "../atomics/sections/sections";
 import { ButtonIcon } from "../molecules/buttons/Buttons";
 import NavIconButton from "../organisms/header/NavIconButton";
 
-interface IHeader {
-  myId?: string;
-}
-const Header = ({ myId }: IHeader) => {
+const Header = () => {
   const handleLogout = () => {
     localStorage.removeItem(TOKEN);
     window.location.reload();
@@ -34,7 +31,7 @@ const Header = ({ myId }: IHeader) => {
             flexDirection: "row",
           }}
         >
-          <NavIconButton icon={faUser} path={`/user/${myId}`} />
+          <NavIconButton icon={faUser} path={`/user/my`} />
           <NavIconButton icon={faGear} path={`/asd`} />
           <NavIconButton icon={faBell} path={`/dsa`} />
           <ButtonIcon icon={faOutdent} onClick={handleLogout} />

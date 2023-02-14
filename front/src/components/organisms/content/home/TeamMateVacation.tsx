@@ -10,10 +10,10 @@ import { Article } from "../../../atomics/sections/sections";
 import {
   AccentText,
   DateText,
-  SummaryText,
+  SectionText,
 } from "../../../atomics/typographys/texts";
 import { SubTitle } from "../../../atomics/typographys/titles";
-import { GapBox } from "../../../molecules/boxes/Boxes";
+import { GapBox } from "../../../atomics/boxes/Boxes";
 import { BoxIcon } from "../../../molecules/icons/Icons";
 
 interface ITeamMateVacation {
@@ -51,7 +51,7 @@ const TeamMateVacation = ({
             )
           </DateText>
           <div style={{ placeSelf: "flex-end" }}>
-            <SummaryText>{isHalf ? "반차" : "연차"}</SummaryText>
+            <SectionText>{isHalf ? "반차" : "연차"}</SectionText>
           </div>
         </GapBox>
       </div>

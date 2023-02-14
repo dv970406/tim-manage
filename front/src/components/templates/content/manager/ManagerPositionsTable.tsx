@@ -15,16 +15,17 @@ const ManagerPositionsTable = ({
 }: IManagerPositionsTable) => {
   return (
     <Table headers={["직책"]}>
-      {positions
-        ?.filter((position) => !!position)
-        .map((position: any) => (
-          <ManagerPositionTableContent
-            key={position.__id}
-            position={position}
-            clickedPositionId={clickedPositionId}
-            setClickedPositionId={setClickedPositionId}
-          />
-        ))}
+      {positions.map(
+        (position: any) =>
+          position && (
+            <ManagerPositionTableContent
+              key={position.__id}
+              position={position}
+              clickedPositionId={clickedPositionId}
+              setClickedPositionId={setClickedPositionId}
+            />
+          )
+      )}
     </Table>
   );
 };

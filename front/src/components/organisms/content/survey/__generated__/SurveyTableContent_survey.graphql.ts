@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7a7d271c880612e86ba1f0c7e15437ae>>
+ * @generated SignedSource<<3badb00c5e5606969e788960fe7e7ced>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,7 @@ export type SurveyTableContent_survey$data = {
   readonly createdAt: any;
   readonly id: string;
   readonly isAnonymous: boolean;
+  readonly isAnswered: boolean;
   readonly surveyTitle: string;
   readonly user: {
     readonly id: string;
@@ -78,6 +79,13 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "isAnswered",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "createdAt",
       "storageKey": null
     }
@@ -87,6 +95,6 @@ return {
 };
 })();
 
-(node as any).hash = "dfb5712be1955185ee7ba33e864ad9ac";
+(node as any).hash = "2d7d7ca83e61c7ddedab361eb4d5e58f";
 
 export default node;

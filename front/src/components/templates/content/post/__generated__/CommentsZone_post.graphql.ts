@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<56c74c8175d5bdc411ecf295ad28b585>>
+ * @generated SignedSource<<0da87dfd4b8777fa25574d5b4529b2b0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,14 +12,7 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommentsZone_post$data = {
   readonly comments: ReadonlyArray<{
-    readonly content: string;
-    readonly createdAt: any;
-    readonly id: string;
-    readonly isMyComment: boolean;
-    readonly user: {
-      readonly id: string;
-      readonly name: string;
-    };
+    readonly " $fragmentSpreads": FragmentRefs<"Comment_comment">;
   }>;
   readonly " $fragmentType": "CommentsZone_post";
 };
@@ -28,15 +21,7 @@ export type CommentsZone_post$key = {
   readonly " $fragmentSpreads": FragmentRefs<"CommentsZone_post">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -50,46 +35,10 @@ return {
       "name": "comments",
       "plural": true,
       "selections": [
-        (v0/*: any*/),
         {
-          "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "content",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "User",
-          "kind": "LinkedField",
-          "name": "user",
-          "plural": false,
-          "selections": [
-            (v0/*: any*/),
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "name",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "isMyComment",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "createdAt",
-          "storageKey": null
+          "kind": "FragmentSpread",
+          "name": "Comment_comment"
         }
       ],
       "storageKey": null
@@ -98,8 +47,7 @@ return {
   "type": "Post",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "bd150e38644551a4956a884b08d7c752";
+(node as any).hash = "3fbf20a55e66e4ac2a273ef3d39f8563";
 
 export default node;

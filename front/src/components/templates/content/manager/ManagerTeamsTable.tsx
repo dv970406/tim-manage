@@ -16,16 +16,17 @@ const ManagerTeamsTable = ({
 }: IManagerTeamsTable) => {
   return (
     <Table headers={["팀"]}>
-      {teams
-        ?.filter((teams) => !!teams)
-        .map((team: any) => (
-          <ManagerTeamTableContent
-            key={team.__id}
-            team={team}
-            clickedTeamId={clickedTeamId}
-            setClickedTeamId={setClickedTeamId}
-          />
-        ))}
+      {teams.map(
+        (team: any) =>
+          team && (
+            <ManagerTeamTableContent
+              key={team.__id}
+              team={team}
+              clickedTeamId={clickedTeamId}
+              setClickedTeamId={setClickedTeamId}
+            />
+          )
+      )}
     </Table>
   );
 };

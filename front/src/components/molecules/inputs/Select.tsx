@@ -4,7 +4,7 @@ import { UseFormRegisterReturn } from "react-hook-form";
 import { theme } from "../../../css/theme";
 import { GapBox } from "../../atomics/boxes/Boxes";
 import { ErrorText } from "../../atomics/typographys/texts";
-import { LabelTitle } from "../../atomics/typographys/titles";
+import { SubTitle } from "../../atomics/typographys/titles";
 import { BoxIcon } from "../icons/Icons";
 
 interface ISelect {
@@ -30,7 +30,7 @@ const Select = ({
   return (
     <GapBox>
       <label>
-        <LabelTitle>{label}</LabelTitle>
+        <SubTitle>{label}</SubTitle>
       </label>
       <div
         style={{

@@ -2,8 +2,8 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import React, { ChangeEventHandler, useState } from "react";
 import { UseFormRegister, UseFormRegisterReturn } from "react-hook-form";
 import { theme } from "../../../css/theme";
-import { ErrorText, Text } from "../../atomics/typographys/texts";
-import { LabelTitle } from "../../atomics/typographys/titles";
+import { ErrorText, MainText } from "../../atomics/typographys/texts";
+import { SubTitle } from "../../atomics/typographys/titles";
 import { GapBox } from "../../atomics/boxes/Boxes";
 import { BoxIcon } from "../icons/Icons";
 
@@ -11,27 +11,31 @@ interface ITextArea {
   label?: string;
   placeholder?: string;
   register?: UseFormRegisterReturn<string>;
-  defaultValue?: string;
   errorMessage?: string;
   onChange?: ChangeEventHandler<HTMLTextAreaElement>;
+  defaultValue?: string;
+  disabled?: boolean;
 }
 export const TextArea = ({
   label,
   placeholder = "Placeholder",
   register,
-  defaultValue,
   errorMessage,
   onChange,
+  defaultValue,
+  disabled = false,
 }: ITextArea) => {
   const [isFocusing, setIsFocusing] = useState(false);
   return (
     <GapBox>
       {label && (
         <label htmlFor={label} style={{ cursor: "pointer" }}>
-          <LabelTitle>{label}</LabelTitle>
+          <SubTitle>{label}</SubTitle>
         </label>
       )}
       <textarea
+        disabled={disabled}
+        defaultValue={defaultValue}
         id={label}
         placeholder={placeholder}
         style={{

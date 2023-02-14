@@ -7,7 +7,7 @@ import { useCreateVacation } from "../../../../client/vacation/CreateVacation.cl
 import { theme } from "../../../../css/theme";
 import { SCHEDULES } from "../../../../utils/constants/schedule.constant";
 import { ModalContext } from "../../../../utils/contexts/modal.context";
-import { endDateFormat } from "../../../../utils/time/time";
+import { endDateFormatForDb } from "../../../../utils/time/time";
 import { SubmitButton } from "../../../atomics/buttons/buttons";
 import { Form } from "../../../atomics/form/Form";
 import { GapBox } from "../../../atomics/boxes/Boxes";

@@ -17,17 +17,18 @@ const ManagerUsersTable = ({
 }: IManagerUsersTable) => {
   return (
     <Table headers={["이름", "직책", "팀"]}>
-      {users
-        ?.filter((user) => !!user)
-        .map((user: any) => (
-          <ManagerUserTableContent
-            key={user.__id}
-            user={user}
-            clickedUserId={clickedUserId}
-            setClickedUserId={setClickedUserId}
-            myPosition={myPosition}
-          />
-        ))}
+      {users.map(
+        (user: any) =>
+          user && (
+            <ManagerUserTableContent
+              key={user.__id}
+              user={user}
+              clickedUserId={clickedUserId}
+              setClickedUserId={setClickedUserId}
+              myPosition={myPosition}
+            />
+          )
+      )}
     </Table>
   );
 };

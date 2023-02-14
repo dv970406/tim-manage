@@ -7,28 +7,28 @@ import { Article, Section } from "../../../atomics/sections/sections";
 import {
   AccentText,
   DateText,
-  SummaryText,
-  Text,
+  SectionText,
+  MainText,
 } from "../../../atomics/typographys/texts";
 import { SubTitle } from "../../../atomics/typographys/titles";
-import { GapBox } from "../../../molecules/boxes/Boxes";
+import { GapBox } from "../../../atomics/boxes/Boxes";
 import { BoxIcon } from "../../../molecules/icons/Icons";
 import { IAttendee } from "./SelectUsers";
 
-interface ILatestMeeting {
+interface ITodayMeeting {
   subTitle: string;
   host: string;
   attendees: IAttendee[];
   start?: DateInput;
   end?: DateInput;
 }
-const LatestMeeting = ({
+const TodayMeeting = ({
   subTitle,
   attendees,
   host,
   start,
   end,
-}: ILatestMeeting) => {
+}: ITodayMeeting) => {
   return (
     <Article>
       <div
@@ -52,10 +52,10 @@ const LatestMeeting = ({
 
           <div style={{ placeSelf: "flex-end" }}>
             {attendees.map((attendee, index) => (
-              <SummaryText key={attendee.id} style={{ textAlign: "right" }}>
+              <SectionText key={attendee.id} style={{ textAlign: "right" }}>
                 {attendee.name}
                 {index + 1 !== attendees.length && ", "}
-              </SummaryText>
+              </SectionText>
             ))}
           </div>
         </GapBox>
@@ -64,4 +64,4 @@ const LatestMeeting = ({
   );
 };
 
-export default LatestMeeting;
+export default TodayMeeting;

@@ -4,8 +4,8 @@ import ReactSelect, { GroupBase, MultiValue, StylesConfig } from "react-select";
 import { useSelectUsers } from "../../../../client/user/SelectUsers.client";
 import { GetUsersQuery$data } from "../../../../client/user/__generated__/GetUsersQuery.graphql";
 import { theme } from "../../../../css/theme";
-import { LabelTitle } from "../../../atomics/typographys/titles";
-import { GapBox } from "../../../molecules/boxes/Boxes";
+import { SubTitle } from "../../../atomics/typographys/titles";
+import { GapBox } from "../../../atomics/boxes/Boxes";
 
 export interface IAttendee {
   readonly id: string;
@@ -46,7 +46,7 @@ const SelectUsers = ({ prevAttendees, setAttendeesId }: ISelect) => {
         style={{ cursor: "pointer" }}
         onClick={() => setMenuIsOpen((prev) => !prev)}
       >
-        <LabelTitle>참석자</LabelTitle>
+        <SubTitle>참석자</SubTitle>
       </label>
       <ReactSelect
         id="attendees"

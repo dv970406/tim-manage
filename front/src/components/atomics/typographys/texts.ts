@@ -1,12 +1,18 @@
 import styled from "@emotion/styled";
 
-export const Text = styled.p(({ theme }) => ({
+export const MainText = styled.p(({ theme }) => ({
   color: theme.colors.white,
-  fontSize: theme.fonts.sm,
+  fontSize: theme.fonts.md,
   fontWeight: theme.bold.sm,
 }));
 
-export const SummaryText = styled.span(({ theme }) => ({
+export const SubText = styled.span(({ theme }) => ({
+  color: theme.colors.white,
+  fontSize: theme.fonts.md,
+  fontWeight: theme.bold.sm,
+}));
+
+export const SectionText = styled.span(({ theme }) => ({
   color: theme.colors.white,
   fontSize: theme.fonts.sm,
   fontWeight: theme.bold.md,

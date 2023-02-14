@@ -1,4 +1,6 @@
 import React from "react";
+import { useGetMyInfo } from "../../../../client/user/GetMyInfo.client";
+import { ListBox } from "../../../atomics/boxes/Boxes";
 import Table from "../../../molecules/tables/Table";
 import SurveyTableContent from "../../../organisms/content/survey/SurveyTableContent";
 import { SurveyTableContent_survey$key } from "../../../organisms/content/survey/__generated__/SurveyTableContent_survey.graphql";
@@ -9,14 +11,21 @@ interface IUsersTable {
   users: readonly UserTableContent_user$key[];
 }
 const UsersTable = ({ users }: IUsersTable) => {
+  const { myInfo } = useGetMyInfo();
+
   return (
-    <Table headers={["이름", "이메일", "직책", "팀", "입사일"]}>
-      {users
-        ?.filter((user) => !!user)
-        .map((user: any) => (
-          <UserTableContent key={user.__id} user={user} />
-        ))}
-    </Table>
+    <ListBox>
+      {users.map(
+        (user: any) =>
+          user && (
+            <UserTableContent
+              key={user.__id}
+              user={user}
+              isManager={myInfo?.isManager}
+            />
+          )
+      )}
+    </ListBox>
   );
 };
 

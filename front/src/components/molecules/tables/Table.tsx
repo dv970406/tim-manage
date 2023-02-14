@@ -1,6 +1,6 @@
 import React from "react";
 import { theme } from "../../../css/theme";
-import { LabelTitle, SubTitle } from "../../atomics/typographys/titles";
+import { SubTitle } from "../../atomics/typographys/titles";
 
 interface ITable {
   headers: string[];

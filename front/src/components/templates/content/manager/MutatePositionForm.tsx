@@ -31,6 +31,7 @@ const MutatePositionForm = ({
     handleSubmit,
     watch,
     setValue,
+    reset,
   } = useForm<IMutatePositionFormValue>({
     mode: "onChange",
   });
@@ -40,7 +41,7 @@ const MutatePositionForm = ({
       setValue("position", position?.position);
     } else {
       setClickedPositionId("");
-      setValue("position", "");
+      reset();
     }
   }, [position]);
 

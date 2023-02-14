@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1b0696b0ad3a690d3c2669207fb8ac2f>>
+ * @generated SignedSource<<d46fdac156b7b5ad09ab493f90802622>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,10 +10,9 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type TableContent_user$data = {
-  readonly email: string;
+export type ManagerUserTableContent_user$data = {
   readonly id: string;
-  readonly joinDate: any;
+  readonly isManager: boolean;
   readonly name: string;
   readonly position: {
     readonly id: string;
@@ -23,11 +22,11 @@ export type TableContent_user$data = {
     readonly id: string;
     readonly team: string;
   };
-  readonly " $fragmentType": "TableContent_user";
+  readonly " $fragmentType": "ManagerUserTableContent_user";
 };
-export type TableContent_user$key = {
-  readonly " $data"?: TableContent_user$data;
-  readonly " $fragmentSpreads": FragmentRefs<"TableContent_user">;
+export type ManagerUserTableContent_user$key = {
+  readonly " $data"?: ManagerUserTableContent_user$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ManagerUserTableContent_user">;
 };
 
 const node: ReaderFragment = (function(){
@@ -42,7 +41,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "TableContent_user",
+  "name": "ManagerUserTableContent_user",
   "selections": [
     (v0/*: any*/),
     {
@@ -56,7 +55,7 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "email",
+      "name": "isManager",
       "storageKey": null
     },
     {
@@ -96,13 +95,6 @@ return {
         }
       ],
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "joinDate",
-      "storageKey": null
     }
   ],
   "type": "User",
@@ -110,6 +102,6 @@ return {
 };
 })();
 
-(node as any).hash = "c6ebe5e6b0e811d1178b4ffb38d792be";
+(node as any).hash = "097071b057e79dcb97276f24cd3388d5";
 
 export default node;

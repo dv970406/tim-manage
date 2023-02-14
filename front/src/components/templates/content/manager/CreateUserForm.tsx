@@ -1,10 +1,4 @@
-import React from "react";
-import { Section } from "../../../atomics/sections/sections";
-import {
-  LabelTitle,
-  SectionTitle,
-  SubTitle,
-} from "../../../atomics/typographys/titles";
+import { SubTitle } from "../../../atomics/typographys/titles";
 import { theme } from "../../../../css/theme";
 import { GapBox } from "../../../atomics/boxes/Boxes";
 import { TextInput } from "../../../molecules/inputs/TextInput";
@@ -133,7 +127,7 @@ const CreateUserForm = ({}: ICreateUserForm) => {
           placeholder="직책"
           listName="positions"
           list={positions?.map((position) => (
-            <option key={position.id} value={position.position} />
+            <option key={position?.id} value={position?.position} />
           ))}
           register={register("position", {
             required: {
@@ -150,7 +144,7 @@ const CreateUserForm = ({}: ICreateUserForm) => {
           placeholder="팀"
           listName="teams"
           list={teams?.map((team) => (
-            <option key={team.id} value={team.team} />
+            <option key={team?.id} value={team?.team} />
           ))}
           register={register("team", {
             required: {

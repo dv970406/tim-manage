@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { UseFormRegister, UseFormRegisterReturn } from "react-hook-form";
 import { theme } from "../../../css/theme";
 import { SCHEDULES } from "../../../utils/constants/schedule.constant";
-import { LabelTitle } from "../../atomics/typographys/titles";
+import { SubTitle } from "../../atomics/typographys/titles";
 
 interface ICheckbox {
   id: string;
@@ -56,7 +56,7 @@ export const Checkbox = ({
         }}
         htmlFor={id}
       >
-        <LabelTitle>{text}</LabelTitle>
+        <SubTitle>{text}</SubTitle>
       </label>
     </div>
   );

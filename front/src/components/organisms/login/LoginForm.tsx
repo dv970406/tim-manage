@@ -7,8 +7,9 @@ import { theme } from "../../../css/theme";
 import { SubmitButton } from "../../atomics/buttons/buttons";
 import { Form } from "../../atomics/form/Form";
 import { Section } from "../../atomics/sections/sections";
-import { ErrorText, Text } from "../../atomics/typographys/texts";
-import { TextInput } from "../../molecules/inputs/Inputs";
+import { ErrorText, MainText } from "../../atomics/typographys/texts";
+import { EndSubmitButton } from "../../molecules/buttons/Buttons";
+import { TextInput } from "../../molecules/inputs/TextInput";
 import MenuButton from "../sidebar/NavTabButton";
 
 interface ILoginForm {
@@ -36,18 +37,17 @@ const LoginForm = () => {
     });
   };
 
-  const isSubmitAvailable =
+  const isSubmitDisabled =
     !!errors.email || !!errors.password || !watchEmail || !watchPassword;
+
   return (
     <Section
       style={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        background: theme.bgColors.gradient,
+        gap: theme.spacing.md,
         width: 500,
-        height: 500,
-        borderRadius: theme.borderRadius.md,
       }}
     >
       <Form onSubmit={handleSubmit(onSubmit)}>
@@ -77,22 +77,23 @@ const LoginForm = () => {
               value: true,
               message: "비밀번호를 입력해주세요.",
             },
+            minLength: {
+              value: 4,
+              message: "비밀번호는 4글자 이상입니다.",
+            },
+            maxLength: {
+              value: 16,
+              message: "비밀번호는 16글자 이하입니다.",
+            },
           })}
           errorMessage={errors?.password && errors?.password.message}
         />
 
-        <div
-          style={{
-            marginBlock: theme.spacing.lg,
-          }}
-        >
-          <SubmitButton
-            onClick={handleSubmit(onSubmit)}
-            disabled={loginLoading || isSubmitAvailable}
-          >
-            LOGIN
-          </SubmitButton>
-        </div>
+        <EndSubmitButton
+          onClick={handleSubmit(onSubmit)}
+          disabled={loginLoading || isSubmitDisabled}
+          text="LOGIN"
+        />
       </Form>
     </Section>
   );

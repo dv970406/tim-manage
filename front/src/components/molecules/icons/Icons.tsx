@@ -1,6 +1,5 @@
 import { theme } from "../../../css/theme";
 import { Icon, IIcon } from "../../atomics/icons/icons";
-import { Text } from "../../atomics/typographys/texts";
 
 interface IBoxIcon extends IIcon {
   bgColor?: string;

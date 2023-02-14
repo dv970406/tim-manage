@@ -1,5 +1,5 @@
 import { faTag } from "@fortawesome/pro-solid-svg-icons";
-import React from "react";
+import React, { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useCreatePosition } from "../../../../client/manager/CreatePosition.client";
 import { SubmitButton } from "../../../atomics/buttons/buttons";
@@ -20,6 +20,7 @@ const CreatePositionForm = ({}: ICreatePositionForm) => {
     formState: { errors },
     handleSubmit,
     watch,
+    reset,
   } = useForm<ICreatePositionFormValue>({
     mode: "onChange",
   });
@@ -27,7 +28,11 @@ const CreatePositionForm = ({}: ICreatePositionForm) => {
   const { position: watchPosition } = watch();
   const isSubmitDisabled = !!errors.position || !watchPosition;
 
-  const { createPositionMutation, createPositionLoading } = useCreatePosition();
+  const {
+    createPositionMutation,
+    createPositionLoading,
+    createPositionSuccess,
+  } = useCreatePosition();
   const onSubmit: SubmitHandler<ICreatePositionFormValue> = ({ position }) => {
     if (createPositionLoading) return;
 
@@ -36,6 +41,9 @@ const CreatePositionForm = ({}: ICreatePositionForm) => {
     });
   };
 
+  useEffect(() => {
+    if (createPositionSuccess) reset();
+  }, [createPositionSuccess]);
   return (
     <>
       <Form onSubmit={handleSubmit(onSubmit)}>

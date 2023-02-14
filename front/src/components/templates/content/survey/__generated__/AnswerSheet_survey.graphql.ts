@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4efff6ee50684f546c7750a09696d84c>>
+ * @generated SignedSource<<9cd28153a7bbfa2d1e7fa5aafe5dda08>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,12 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AnswerSheet_survey$data = {
+  readonly answers: ReadonlyArray<{
+    readonly id: string;
+    readonly results: ReadonlyArray<string>;
+  }>;
   readonly id: string;
+  readonly isAnswered: boolean;
   readonly paragraphs: ReadonlyArray<{
     readonly description: string | null;
     readonly multipleChoice: ReadonlyArray<string>;
@@ -25,24 +30,33 @@ export type AnswerSheet_survey$key = {
   readonly " $fragmentSpreads": FragmentRefs<"AnswerSheet_survey">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "AnswerSheet_survey",
   "selections": [
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "id",
+      "name": "surveyTitle",
       "storageKey": null
     },
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "surveyTitle",
+      "name": "isAnswered",
       "storageKey": null
     },
     {
@@ -76,12 +90,32 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Answer",
+      "kind": "LinkedField",
+      "name": "answers",
+      "plural": true,
+      "selections": [
+        (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "results",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Survey",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "66e4f13a6b5702f335584edc4682c515";
+(node as any).hash = "3ef18cad48f79c841768cc491e08cdba";
 
 export default node;

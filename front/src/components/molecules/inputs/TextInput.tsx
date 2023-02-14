@@ -2,8 +2,8 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import React, { ChangeEventHandler, useState } from "react";
 import { UseFormRegister, UseFormRegisterReturn } from "react-hook-form";
 import { theme } from "../../../css/theme";
-import { ErrorText, Text } from "../../atomics/typographys/texts";
-import { LabelTitle } from "../../atomics/typographys/titles";
+import { ErrorText, MainText } from "../../atomics/typographys/texts";
+import { SubTitle } from "../../atomics/typographys/titles";
 import { GapBox } from "../../atomics/boxes/Boxes";
 import { BoxIcon } from "../icons/Icons";
 
@@ -34,7 +34,7 @@ export const TextInput = ({
     <GapBox>
       {label && (
         <label htmlFor={label} style={{ cursor: "pointer" }}>
-          <LabelTitle>{label}</LabelTitle>
+          <SubTitle>{label}</SubTitle>
         </label>
       )}
       <div

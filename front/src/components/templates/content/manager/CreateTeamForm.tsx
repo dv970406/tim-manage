@@ -1,5 +1,5 @@
 import { faTag } from "@fortawesome/pro-solid-svg-icons";
-import React from "react";
+import React, { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useCreateTeam } from "../../../../client/manager/CreateTeam.client";
 import { SubmitButton } from "../../../atomics/buttons/buttons";
@@ -20,6 +20,7 @@ const CreateTeamForm = ({}: ICreateTeamForm) => {
     formState: { errors },
     handleSubmit,
     watch,
+    reset,
   } = useForm<ICreateTeamFormValue>({
     mode: "onChange",
   });
@@ -27,7 +28,8 @@ const CreateTeamForm = ({}: ICreateTeamForm) => {
   const { team: watchTeam } = watch();
   const isSubmitDisabled = !!errors.team || !watchTeam;
 
-  const { createTeamMutation, createTeamLoading } = useCreateTeam();
+  const { createTeamMutation, createTeamLoading, createTeamSuccess } =
+    useCreateTeam();
   const onSubmit: SubmitHandler<ICreateTeamFormValue> = ({ team }) => {
     if (createTeamLoading) return;
 
@@ -35,6 +37,10 @@ const CreateTeamForm = ({}: ICreateTeamForm) => {
       team,
     });
   };
+
+  useEffect(() => {
+    if (createTeamSuccess) reset();
+  }, [createTeamSuccess]);
 
   return (
     <>

@@ -5,15 +5,15 @@ import { MouseEventHandler, useState } from "react";
 import { theme } from "../../../css/theme";
 import { SubmitButton } from "../../atomics/buttons/buttons";
 import { Icon, IIcon } from "../../atomics/icons/icons";
-import { Text } from "../../atomics/typographys/texts";
+import { MainText } from "../../atomics/typographys/texts";
 
 interface IButtonIcon extends IIcon {
   onClick: MouseEventHandler<HTMLButtonElement>;
 }
-export const ButtonIcon = ({ color, icon, onClick }: IButtonIcon) => {
+export const ButtonIcon = ({ color, icon, size, onClick }: IButtonIcon) => {
   return (
     <button onClick={onClick} type="button">
-      <Icon icon={icon} color={color} />
+      <Icon icon={icon} color={color} size={size} />
     </button>
   );
 };
@@ -35,7 +35,7 @@ export const TextIcon = ({ icon, text, onClick }: ITextIcon) => {
       }}
     >
       <Icon icon={icon} />
-      <Text>{text}</Text>
+      <MainText>{text}</MainText>
     </button>
   );
 };
@@ -65,7 +65,7 @@ export const ManagerButton = ({ onClick }: IManagerButton) => {
 };
 
 interface ISubmitButton {
-  onClick: () => void;
+  onClick: MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
   text: string;
 }

@@ -61,6 +61,9 @@ const paragraphsReducer = (
 
   const isParagraphIndexExist =
     Number.isInteger(paragraphIndex) && paragraphIndex !== undefined;
+  const isChoiceIndexExist =
+    Number.isInteger(choiceIndex) && choiceIndex !== undefined;
+
   switch (type) {
     case ACTION_TYPES.ADD_PARAGRAPH:
       copiedParagraphs.push({
@@ -90,7 +93,7 @@ const paragraphsReducer = (
       return copiedParagraphs;
 
     case ACTION_TYPES.ADD_CHOICE_VALUE:
-      if (!isParagraphIndexExist || !choiceIndex || !value)
+      if (!isParagraphIndexExist || !isChoiceIndexExist || !value)
         return copiedParagraphs;
       const findMultipleChoiceOfMatchingParagraph =
         copiedParagraphs[paragraphIndex].multipleChoice;
@@ -124,17 +127,15 @@ const CreateSurveyForm = ({}: ICreateSurveyForm) => {
     paragraphsReducer,
     initialParagraph
   );
-  console.log("prargrphs : ", paragraphs);
 
   const onSubmit: SubmitHandler<ICreateSurveyFormValue> = ({ surveyTitle }) => {
     if (createSurveyLoading) return;
 
-    console.log(surveyTitle, isAnonymous, paragraphs);
-    // createSurveyMutation({
-    //   surveyTitle,
-    //   isAnonymous,
-    //   paragraphs,
-    // });
+    createSurveyMutation({
+      surveyTitle,
+      isAnonymous,
+      paragraphs,
+    });
   };
 
   const isSubmitDisabled = !!errors.surveyTitle || !watchSurveyTitle;

@@ -13,10 +13,10 @@ import {
 } from "@fortawesome/pro-solid-svg-icons";
 import { theme } from "../../../../css/theme";
 import { useNavigate } from "react-router-dom";
-import { SummaryText } from "../../../atomics/typographys/texts";
-import { faHeart as faEmptyHeart } from "@fortawesome/pro-light-svg-icons";
+import { SectionText } from "../../../atomics/typographys/texts";
 import { Icon } from "../../../atomics/icons/icons";
 import { useToggleLike } from "../../../../client/post/ToggleLike.client";
+import MetaData from "../../../organisms/content/post/MetaData";
 
 interface IContentZoneFragment extends ContentZone_post$key {
   id: string;
@@ -45,16 +45,8 @@ const ContentZone = ({ post }: IContentZone) => {
   const contentZoneData = useFragment(contentZoneFragment, post);
   const navigate = useNavigate();
 
-  const { toggleLikeMutation, toggleLikeLoading } = useToggleLike();
-
-  const handleToggleLike = () => {
-    if (toggleLikeLoading) return;
-    toggleLikeMutation({
-      postId: post.id,
-    });
-  };
   return (
-    <GapBox>
+    <GapBox style={{ height: "100%" }}>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <SectionTitle>{contentZoneData?.title}</SectionTitle>
         {contentZoneData.isMyPost && (
@@ -70,16 +62,16 @@ const ContentZone = ({ post }: IContentZone) => {
         value={contentZoneData?.content}
         readOnly={true}
         theme={"bubble"}
+        style={{
+          height: "100%",
+        }}
       />
-      <div>
-        <ButtonIcon
-          onClick={handleToggleLike}
-          icon={contentZoneData.isLiked ? faFullHeart : faEmptyHeart}
-        />
-        <SummaryText>{contentZoneData?.countLikes}</SummaryText>
-        <Icon icon={faComment} />
-        <SummaryText>{contentZoneData?.countComments}</SummaryText>
-      </div>
+      <MetaData
+        postId={post.id}
+        isLiked={contentZoneData?.isLiked}
+        countLikes={contentZoneData?.countLikes}
+        countComments={contentZoneData?.countComments}
+      />
     </GapBox>
   );
 };

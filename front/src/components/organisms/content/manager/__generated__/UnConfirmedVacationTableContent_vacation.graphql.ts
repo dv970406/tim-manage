@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e033d82f9863e51c89f0ff5d009da33a>>
+ * @generated SignedSource<<d53608e5758d291035349534d4049fc7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,20 +10,21 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type TableContent_survey$data = {
-  readonly createdAt: any;
+export type UnConfirmedVacationTableContent_vacation$data = {
+  readonly duration: number;
+  readonly endDate: any;
   readonly id: string;
-  readonly isAnonymous: boolean;
-  readonly surveyTitle: string;
+  readonly isHalf: boolean;
+  readonly startDate: any;
   readonly user: {
     readonly id: string;
     readonly name: string;
   };
-  readonly " $fragmentType": "TableContent_survey";
+  readonly " $fragmentType": "UnConfirmedVacationTableContent_vacation";
 };
-export type TableContent_survey$key = {
-  readonly " $data"?: TableContent_survey$data;
-  readonly " $fragmentSpreads": FragmentRefs<"TableContent_survey">;
+export type UnConfirmedVacationTableContent_vacation$key = {
+  readonly " $data"?: UnConfirmedVacationTableContent_vacation$data;
+  readonly " $fragmentSpreads": FragmentRefs<"UnConfirmedVacationTableContent_vacation">;
 };
 
 const node: ReaderFragment = (function(){
@@ -38,21 +39,35 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "TableContent_survey",
+  "name": "UnConfirmedVacationTableContent_vacation",
   "selections": [
     (v0/*: any*/),
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "surveyTitle",
+      "name": "startDate",
       "storageKey": null
     },
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "isAnonymous",
+      "name": "endDate",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "duration",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isHalf",
       "storageKey": null
     },
     {
@@ -73,20 +88,13 @@ return {
         }
       ],
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "createdAt",
-      "storageKey": null
     }
   ],
-  "type": "Survey",
+  "type": "Vacation",
   "abstractKey": null
 };
 })();
 
-(node as any).hash = "4d6f3897c5a684cc5456b1efe446866b";
+(node as any).hash = "043843b2c755c4424fb98973d677ca23";
 
 export default node;

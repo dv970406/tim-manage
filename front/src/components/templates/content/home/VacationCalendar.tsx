@@ -15,6 +15,7 @@ import {
 import React, {
   Dispatch,
   SetStateAction,
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -32,7 +33,11 @@ import {
 } from "../../../../utils/constants/schedule.constant";
 import { ModalContext } from "../../../../utils/contexts/modal.context";
 import "./FullCalendarStyles.css";
-import { ampmFormat, endDateFormat } from "../../../../utils/time/time";
+import {
+  ampmFormat,
+  endDateFormatForDb,
+  meetingTimeFormatForDb,
+} from "../../../../utils/time/time";
 import { NINE_HOURS_TO_MILLISEC } from "../../../../utils/constants/time.constant";
 
 // 모달 안켜지면 관련 파일 다운로드 안하도록 Lazy로딩
@@ -90,20 +95,18 @@ export default function VacationCalendar({
     if (!isMine || start < now) return;
     const scheduleId = eventResizeInfo.event.id;
 
-    const startTime = +new Date(start) - NINE_HOURS_TO_MILLISEC;
-    const endTime = +new Date(end) - NINE_HOURS_TO_MILLISEC;
-
     if (type === SCHEDULES.VACATION) {
       if (updateVacationLoading || !start || !end) return;
 
       updateVacationMutation({
         vacationId: scheduleId,
         startDate: start,
-        endDate: endDateFormat(end),
+        endDate: endDateFormatForDb(end),
         isHalf: false,
       });
     } else if (type === SCHEDULES.MEETING) {
       if (updateMeetingLoading || !isMine) return;
+      const { startTime, endTime } = meetingTimeFormatForDb({ start, end });
 
       updateMeetingMutation({
         meetingId: scheduleId,
@@ -119,20 +122,25 @@ export default function VacationCalendar({
     const { start, end } = eventDropInfo.event._instance?.range!;
     if (!isMine) return;
 
-    const startTime = +new Date(start) - NINE_HOURS_TO_MILLISEC;
-    const endTime = +new Date(end) - NINE_HOURS_TO_MILLISEC;
+    if (start < new Date()) {
+      const isOk = window.confirm(
+        "과거시점으로 이동하게 되면 더이상 수정할 수 없습니다. 진행하시겠습니까?"
+      );
 
+      if (!isOk) return;
+    }
     if (type === SCHEDULES.VACATION) {
       if (updateVacationLoading || !start || !end) return;
 
       updateVacationMutation({
         vacationId: scheduleId,
         startDate: start,
-        endDate: endDateFormat(end),
+        endDate: endDateFormatForDb(end),
         isHalf,
       });
     } else if (type === SCHEDULES.MEETING) {
       if (updateMeetingLoading) return;
+      const { startTime, endTime } = meetingTimeFormatForDb({ start, end });
 
       updateMeetingMutation({
         meetingId: scheduleId,
@@ -145,7 +153,7 @@ export default function VacationCalendar({
   return (
     <>
       <FullCalendar
-        height="85vh"
+        height="100%"
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         headerToolbar={{
           left: "prev,next today allSchedules onlyVacation onlyMeeting",
@@ -173,7 +181,6 @@ export default function VacationCalendar({
         slotDuration={"00:20"}
         // select, dateClick 역할은 비슷한데 select는 start,end를 제공해주고 dateClick은 클릭한 그 date만 제공해줌
         select={handleDateSelect}
-        // fetch해온 데이터쓸거면 initialEvents말고 events prop쓰란 말인듯?
         events={schedules}
         eventContent={renderEventContent} // custom render function
         eventClick={handleEventClick}
@@ -181,12 +188,6 @@ export default function VacationCalendar({
         eventDrop={handleEventUpdate}
         eventDisplay="block"
         dayCellContent={({ date }) => date.getDate()}
-        // eventsSet={handleEvents} // called after events are initialized/added/changed/removed
-        /* you can update a remote database when these fire:
-            eventAdd={function(){}}
-            eventChange={function(){}}
-            eventRemove={function(){}}
-            */
       />
       {currentModal === MODAL.CREATE_SCHEDULE && (
         <CreateScheduleModal selectedDate={selectedDate} />

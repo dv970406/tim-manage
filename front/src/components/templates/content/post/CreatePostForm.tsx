@@ -8,7 +8,7 @@ import { formats, modules } from "../../../../utils/quill/props";
 import { GapBox } from "../../../atomics/boxes/Boxes";
 import { SubmitButton } from "../../../atomics/buttons/buttons";
 import { Form } from "../../../atomics/form/Form";
-import { LabelTitle } from "../../../atomics/typographys/titles";
+import { SubTitle } from "../../../atomics/typographys/titles";
 import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 import "./TextEditorStyles.css";
@@ -64,7 +64,7 @@ const CreatePostForm = () => {
         />
 
         <GapBox>
-          <LabelTitle>게시글 내용</LabelTitle>
+          <SubTitle>게시글 내용</SubTitle>
           <ReactQuill
             theme="snow"
             value={content}

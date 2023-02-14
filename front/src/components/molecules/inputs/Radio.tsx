@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { UseFormRegister, UseFormRegisterReturn } from "react-hook-form";
 import { theme } from "../../../css/theme";
 import { SCHEDULES } from "../../../utils/constants/schedule.constant";
-import { LabelTitle } from "../../atomics/typographys/titles";
+import { SubTitle } from "../../atomics/typographys/titles";
 
 interface IRadio {
   value: string;
@@ -11,6 +11,7 @@ interface IRadio {
   register?: UseFormRegisterReturn<string>;
   text: string;
   defaultChecked?: boolean;
+  disabled?: boolean;
 }
 
 const SRadio = styled.input(({ theme }) => ({
@@ -34,7 +35,8 @@ export const Radio = ({
   onClick,
   register,
   text,
-  defaultChecked,
+  defaultChecked = false,
+  disabled = false,
 }: IRadio) => {
   return (
     <div
@@ -51,8 +53,9 @@ export const Radio = ({
         name={name}
         {...(value && { value })}
         id={value}
-        defaultChecked={defaultChecked}
         onClick={onClick}
+        disabled={disabled}
+        defaultChecked={defaultChecked}
       />
       <label
         style={{
@@ -60,7 +63,7 @@ export const Radio = ({
         }}
         htmlFor={value}
       >
-        <LabelTitle>{text}</LabelTitle>
+        <SubTitle>{text}</SubTitle>
       </label>
     </div>
   );
