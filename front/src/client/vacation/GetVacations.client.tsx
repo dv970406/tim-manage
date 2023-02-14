@@ -64,10 +64,10 @@ export const useGetVacations = (
       .map((vacation) => {
         const { byCeo, byLeader, byManager } = vacation?.confirmed;
         const isMine = vacation.user.id === myInfo?.id;
-        const approved = byCeo && byLeader && byManager;
+        const isApproved = byCeo && byLeader && byManager;
 
         // 만약 미승인 + 내 휴가가 아니라면 리스트에 포함 안시킴
-        if (!isMine && !approved) return {};
+        if (!isMine && !isApproved) return {};
 
         // fullCalendar 라이브러리의 형식을 맞춰주기 위해 9시간을 더해줌
         const start = new Date(vacation.startDate);
@@ -75,7 +75,7 @@ export const useGetVacations = (
         const now = new Date();
 
         let backgroundColor;
-        if (isMine && !approved) {
+        if (isMine && !isApproved) {
           backgroundColor = theme.disabled.green;
         } else if (isMine) {
           backgroundColor = theme.bgColors.green;
@@ -96,7 +96,7 @@ export const useGetVacations = (
           allDay: true,
           editable: isMine && !isExpired,
           durationEditable: !vacation.isHalf && isMine && !isExpired,
-          visible: !isMine && !approved ? false : true,
+          visible: !isMine && !isApproved ? false : true,
           borderColor: "transparent",
           isMine,
           isHalf: vacation.isHalf,

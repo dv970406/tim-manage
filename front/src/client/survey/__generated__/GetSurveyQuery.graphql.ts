@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c57a62475d723ccb0c132cf1f584319a>>
+ * @generated SignedSource<<3ffd57d46474fe8e33398f9ea2b4cbbe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -60,6 +60,13 @@ v3 = {
   "args": null,
   "kind": "ScalarField",
   "name": "error",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 };
 return {
@@ -126,18 +133,19 @@ return {
             "name": "survey",
             "plural": false,
             "selections": [
+              (v4/*: any*/),
               {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "id",
+                "name": "surveyTitle",
                 "storageKey": null
               },
               {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "surveyTitle",
+                "name": "isAnswered",
                 "storageKey": null
               },
               {
@@ -171,6 +179,25 @@ return {
                   }
                 ],
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Answer",
+                "kind": "LinkedField",
+                "name": "answers",
+                "plural": true,
+                "selections": [
+                  (v4/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "results",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -181,12 +208,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "23c0281dd76677e10eeb1b6ba2d70fa1",
+    "cacheID": "a524f0928ae07485d796bc1e0dda9968",
     "id": null,
     "metadata": {},
     "name": "GetSurveyQuery",
     "operationKind": "query",
-    "text": "query GetSurveyQuery(\n  $id: ID!\n) {\n  getSurvey(input: {id: $id}) {\n    ok\n    error\n    survey {\n      ...AnswerSheet_survey\n      id\n    }\n  }\n}\n\nfragment AnswerSheet_survey on Survey {\n  id\n  surveyTitle\n  paragraphs {\n    paragraphTitle\n    description\n    multipleChoice\n  }\n}\n"
+    "text": "query GetSurveyQuery(\n  $id: ID!\n) {\n  getSurvey(input: {id: $id}) {\n    ok\n    error\n    survey {\n      ...AnswerSheet_survey\n      id\n    }\n  }\n}\n\nfragment AnswerSheet_survey on Survey {\n  id\n  surveyTitle\n  isAnswered\n  paragraphs {\n    paragraphTitle\n    description\n    multipleChoice\n  }\n  answers {\n    id\n    results\n  }\n}\n"
   }
 };
 })();

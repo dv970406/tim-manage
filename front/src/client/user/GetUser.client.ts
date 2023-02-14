@@ -8,27 +8,8 @@ export const getUserQuery = graphql`
       ok
       error
       user {
-        id
-        email
-        isManager
-        joinDate
-        position {
-          id
-          position
-        }
-        team {
-          id
-          team
-        }
-        isManager
-        name
-        availableVacation
-        vacations {
-          id
-        }
-
-        ...ShowUserPosts_post
-        ...ShowUserSurveys_survey
+        ...ShowUserInfo_user
+        ...ShowUserVacations_vacation
       }
     }
   }
@@ -40,11 +21,6 @@ export const useGetUser = (
   const {
     getUser: { ok, error, user },
   } = usePreloadedQuery<GetUserQuery>(getUserQuery, getUserQueryReference);
-  // const {
-  //   getUser: { ok, error, user },
-  // } = useLazyLoadQuery<GetUserQuery>(getUserQuery, {
-  //   id: userId,
-  // });
 
   if (!ok) {
     alert(error);

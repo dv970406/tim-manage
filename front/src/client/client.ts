@@ -1,8 +1,4 @@
-import { useEffect } from "react";
-import { useQueryLoader } from "react-relay";
 import { Environment, Network, Store, RecordSource } from "relay-runtime";
-import { getMyInfoQuery } from "./user/GetMyInfo.client";
-import { getVacationsQuery } from "./vacation/GetVacations.client";
 
 export const TOKEN = "TOKEN";
 const store = new Store(new RecordSource());
