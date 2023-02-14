@@ -93,10 +93,17 @@ export class SurveyService {
   //     };
   //   }
   // }
-  async getSurvey({ id: surveyId }: GetSurveyInput): Promise<GetSurveyOutput> {
+  async getSurvey(
+    loggedInUser: User,
+    { id: surveyId }: GetSurveyInput,
+  ): Promise<GetSurveyOutput> {
     try {
       const findSurvey = await this.surveyRepo.findSurvey({ surveyId });
 
+      // findSurvey에서 로그인한 유저의 대답을 필터링하려니까 다른 resolver에서도 다 userId를 넣어주어야 하므로 아래같이 처리
+      findSurvey.answers = findSurvey.answers.filter(
+        (answer) => answer.user.id === loggedInUser.id,
+      );
       return {
         ok: true,
         survey: findSurvey,

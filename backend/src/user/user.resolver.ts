@@ -16,6 +16,10 @@ import { GetUserInput, GetUserOutput } from './dtos/get-user.dto';
 import { GetUsersOutput } from './dtos/get-users.dto';
 import { LoginInput, LoginOutput } from './dtos/login.dto';
 import { UpdateUserInput, UpdateUserOutput } from './dtos/update-user.dto';
+import {
+  UpdateUserPasswordInput,
+  UpdateUserPasswordOutput,
+} from './dtos/update-userPassword.dto';
 import { User } from './entities/user.entity';
 import { UserService } from './user.service';
 
@@ -29,6 +33,7 @@ export class UserResolver {
   }
 
   @Query((returns) => GetUserOutput)
+  @UseGuards(ManagerGuard)
   getUser(@Args('input') getUserInput: GetUserInput): Promise<GetUserOutput> {
     return this.userService.getUser(getUserInput);
   }
@@ -68,6 +73,18 @@ export class UserResolver {
     @Args('input') updateUserInput: UpdateUserInput,
   ): Promise<UpdateUserOutput> {
     return this.userService.updateUser(loggedInUser, updateUserInput);
+  }
+
+  @Mutation((returns) => UpdateUserPasswordOutput)
+  @UseGuards(LoginGuard)
+  async updateUserPassword(
+    @LoggedInUser() loggedInUser: User,
+    @Args('input') updateUserPasswordInput: UpdateUserPasswordInput,
+  ): Promise<UpdateUserPasswordOutput> {
+    return this.userService.updateUserPassword(
+      loggedInUser,
+      updateUserPasswordInput,
+    );
   }
 
   @Mutation((returns) => DeleteUserOutput)

@@ -172,6 +172,11 @@ type UpdateUserOutput {
   user: User
 }
 
+type UpdateUserPasswordOutput {
+  ok: Boolean!
+  error: String
+}
+
 type CreatePositionOutput {
   ok: Boolean!
   error: String
@@ -531,6 +536,7 @@ type Mutation {
   login(input: LoginInput!): LoginOutput!
   createUser(input: CreateUserInput!): CreateUserOutput!
   updateUser(input: UpdateUserInput!): UpdateUserOutput!
+  updateUserPassword(input: UpdateUserPasswordInput!): UpdateUserPasswordOutput!
   deleteUser(input: DeleteUserInput!): DeleteUserOutput!
   createPosition(input: CreatePositionInput!): CreatePositionOutput!
   updatePosition(input: UpdatePositionInput!): UpdatePositionOutput!
@@ -581,6 +587,10 @@ input UpdateUserInput {
   positionId: ID
   teamId: ID
   availableVacation: String
+}
+
+input UpdateUserPasswordInput {
+  password: String!
 }
 
 input DeleteUserInput {

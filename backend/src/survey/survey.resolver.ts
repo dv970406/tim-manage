@@ -64,9 +64,10 @@ export class SurveyResolver {
   @Query((type) => GetSurveyOutput)
   @UseGuards(LoginGuard)
   getSurvey(
+    @LoggedInUser() loggedInUser: User,
     @Args('input') getSurveyInput: GetSurveyInput,
   ): Promise<GetSurveyOutput> {
-    return this.surveyService.getSurvey(getSurveyInput);
+    return this.surveyService.getSurvey(loggedInUser, getSurveyInput);
   }
 
   @Mutation((type) => CreateSurveyOutput)

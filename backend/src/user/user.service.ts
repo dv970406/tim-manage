@@ -12,6 +12,10 @@ import { GetUserInput, GetUserOutput } from './dtos/get-user.dto';
 import { GetUsersOutput } from './dtos/get-users.dto';
 import { LoginInput, LoginOutput } from './dtos/login.dto';
 import { UpdateUserInput, UpdateUserOutput } from './dtos/update-user.dto';
+import {
+  UpdateUserPasswordInput,
+  UpdateUserPasswordOutput,
+} from './dtos/update-userPassword.dto';
 import { User } from './entities/user.entity';
 import { UserRepository } from './user.repository';
 
@@ -54,25 +58,6 @@ export class UserService {
           position: true,
           team: true,
           vacations: true,
-          attendedMeetings: {
-            attendees: true,
-          },
-          hostedMeetingsByMe: true,
-          posts: {
-            user: true,
-          },
-          likes: {
-            post: {
-              user: true,
-            },
-          },
-          comments: {
-            post: {
-              user: true,
-            },
-          },
-          answers: true,
-          surveys: true,
         },
       });
 
@@ -98,6 +83,30 @@ export class UserService {
         relations: {
           position: true,
           team: true,
+          vacations: true,
+          attendedMeetings: {
+            attendees: true,
+          },
+          hostedMeetingsByMe: true,
+          posts: {
+            user: true,
+          },
+          likes: {
+            post: {
+              user: true,
+            },
+          },
+          comments: {
+            post: {
+              user: true,
+            },
+          },
+          answers: {
+            survey: {
+              user: true,
+            },
+          },
+          surveys: true,
         },
       });
       if (!findUser) {
@@ -198,7 +207,6 @@ export class UserService {
     loggedInUser: User,
     {
       userId,
-      password,
       positionId,
       teamId,
       isManager,
@@ -249,7 +257,6 @@ export class UserService {
       await this.userRepo.save([
         {
           id: userId,
-          ...(password && { password }),
           ...(findPosition && { position: findPosition }),
           ...(findTeam && { team: findTeam }),
           ...(loggedInUser.position.position === POSITION_CEO && { isManager }),
@@ -270,6 +277,31 @@ export class UserService {
     }
   }
 
+  async updateUserPassword(
+    loggedInUser: User,
+    { password }: UpdateUserPasswordInput,
+  ): Promise<UpdateUserPasswordOutput> {
+    try {
+      const findUser = await this.userRepo.findUser({
+        userId: loggedInUser.id,
+      });
+
+      // 이 방식으로 수정해야 User entity의 @BeforeUpdate의 트리거에 걸림
+      if (password) {
+        findUser.password = password;
+      }
+      await this.userRepo.save(findUser);
+
+      return {
+        ok: true,
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        error: error.message || '비밀번호 변경에 실패했습니다.',
+      };
+    }
+  }
   async deleteUser(
     loggedInUser: User,
     { id: userId }: DeleteUserInput,
