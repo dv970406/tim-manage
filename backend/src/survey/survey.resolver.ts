@@ -24,6 +24,10 @@ import {
   GetSurveysInput,
   GetSurveysOutput,
 } from './dtos/survey/get-surveys.dto';
+import {
+  SearchSurveysInput,
+  SearchSurveysOutput,
+} from './dtos/survey/search-surveys.dto';
 import { Survey } from './entities/survey.entity';
 import { SurveyService } from './survey.service';
 
@@ -55,6 +59,12 @@ export class SurveyResolver {
     return this.surveyService.getSurveys(loggedInUser, getSurveysInput);
   }
 
+  @Query((returns) => SearchSurveysOutput)
+  searchSurveys(
+    @Args('input') searchSurveysInput: SearchSurveysInput,
+  ): Promise<SearchSurveysOutput> {
+    return this.surveyService.searchSurveys(searchSurveysInput);
+  }
   // @Query((type) => GetMySurveysOutput)
   // @UseGuards(LoginGuard)
   // getMySurveys(@LoggedInUser() loggedInUser: User): Promise<GetSurveysOutput> {

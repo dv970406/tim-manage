@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
+import { Like } from 'typeorm';
 import {
   CreateSurveyInput,
   CreateSurveyOutput,
@@ -14,6 +15,10 @@ import {
   GetSurveysInput,
   GetSurveysOutput,
 } from './dtos/survey/get-surveys.dto';
+import {
+  SearchSurveysInput,
+  SearchSurveysOutput,
+} from './dtos/survey/search-surveys.dto';
 import { Survey, SurveyForm } from './entities/survey.entity';
 import { SurveyRepository } from './repositories/survey.repository';
 
@@ -69,6 +74,35 @@ export class SurveyService {
       };
     }
   }
+
+  async searchSurveys({
+    keyword,
+  }: SearchSurveysInput): Promise<SearchSurveysOutput> {
+    try {
+      const surveys = await this.surveyRepo.find({
+        where: {
+          surveyTitle: Like(`%${keyword}%`),
+        },
+        relations: {
+          user: true,
+        },
+        order: {
+          createdAt: 'DESC',
+        },
+      });
+
+      return {
+        ok: true,
+        surveys,
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        error: error.message || '찾을 수 없는 게시글입니다.',
+      };
+    }
+  }
+
   // async getMySurveys(loggedInUser: User): Promise<GetMySurveysOutput> {
   //   try {
   //     const findMySurveys = await this.surveyRepo.find({
@@ -100,7 +134,7 @@ export class SurveyService {
     try {
       const findSurvey = await this.surveyRepo.findSurvey({ surveyId });
 
-      // findSurvey에서 로그인한 유저의 대답을 필터링하려니까 다른 resolver에서도 다 userId를 넣어주어야 하므로 아래같이 처리
+      // findSurvey에서 로그인한 유저의 대답만을 남길 것이다.
       findSurvey.answers = findSurvey.answers.filter(
         (answer) => answer.user.id === loggedInUser.id,
       );

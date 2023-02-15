@@ -178,7 +178,7 @@ export class AnswerService {
         throw new Error('이미 답변한 설문입니다.');
       }
 
-      await this.answerRepo.save({
+      const newAnswer = await this.answerRepo.save({
         results,
         user: loggedInUser,
         survey: findSurvey,
@@ -186,6 +186,7 @@ export class AnswerService {
 
       return {
         ok: true,
+        answer: newAnswer,
         surveyId,
       };
     } catch (error) {

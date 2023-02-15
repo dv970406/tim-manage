@@ -10,4 +10,7 @@ export class ToggleLikeInput extends PickType(Like, []) {
 }
 
 @ObjectType()
-export class ToggleLikeOutput extends CoreOutput {}
+export class ToggleLikeOutput extends CoreOutput {
+  @Field((type) => Like, { nullable: true })
+  like?: Like;
+}

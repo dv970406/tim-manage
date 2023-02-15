@@ -166,6 +166,14 @@ type LoginOutput {
   token: String
 }
 
+type SearchUsersOutput {
+  ok: Boolean!
+  error: String
+  totalPage: Int
+  totalResult: Int
+  users: [User!]
+}
+
 type UpdateUserOutput {
   ok: Boolean!
   error: String
@@ -282,6 +290,7 @@ type UpdateVacationOutput {
 type CreateAnswerOutput {
   ok: Boolean!
   error: String
+  answer: Answer
   surveyId: ID
 }
 
@@ -351,6 +360,12 @@ type GetSurveysOutput {
   surveys: [Survey!]
 }
 
+type SearchSurveysOutput {
+  ok: Boolean!
+  error: String
+  surveys: [Survey!]
+}
+
 type CreateCommentOutput {
   ok: Boolean!
   error: String
@@ -380,6 +395,7 @@ type GetMyLikesOutput {
 type ToggleLikeOutput {
   ok: Boolean!
   error: String
+  like: Like
 }
 
 type CreatePostOutput {
@@ -401,6 +417,14 @@ type GetPostOutput {
 }
 
 type GetPostsOutput {
+  ok: Boolean!
+  error: String
+  totalPage: Int
+  totalResult: Int
+  posts: [Post!]
+}
+
+type SearchPostsOutput {
   ok: Boolean!
   error: String
   posts: [Post!]
@@ -473,6 +497,7 @@ type GetWeeklyMealOutput {
 
 type Query {
   getUsers: GetUsersOutput!
+  searchUsers(input: SearchUsersInput!): SearchUsersOutput!
   getUser(input: GetUserInput!): GetUserOutput!
   getMyInfo: GetUserOutput!
   getPositions: GetPositionsOutput!
@@ -483,10 +508,12 @@ type Query {
   getUnConfirmedByMeVacations: GetUnConfirmedByMeVacationsOutput!
   getVacation(input: GetVacationInput!): GetVacationOutput!
   getSurveys(input: GetSurveysInput!): GetSurveysOutput!
+  searchSurveys(input: SearchSurveysInput!): SearchSurveysOutput!
   getSurvey(input: GetSurveyInput!): GetSurveyOutput!
   getMyAnswers: GetMyAnswersOutput!
   getAnswersOfSurvey(input: GetAnswersOfsurveyInput!): GetAnswersOfsurveyOutput!
-  getPosts: GetPostsOutput!
+  getPosts(input: GetPostsInput!): GetPostsOutput!
+  searchPosts(input: SearchPostsInput!): SearchPostsOutput!
   getPost(input: GetPostInput!): GetPostOutput!
   getMyLikes: GetMyLikesOutput!
   getMyComments: GetMyCommentsOutput!
@@ -494,6 +521,11 @@ type Query {
   getMeeting(input: GetMeetingInput!): GetMeetingOutput!
   getKingOfMeeting: GetKingOfMeetingOutput!
   getWeeklyMeal: GetWeeklyMealOutput!
+}
+
+input SearchUsersInput {
+  page: Int! = 1
+  keyword: String
 }
 
 input GetUserInput {
@@ -516,12 +548,24 @@ input GetSurveysInput {
   onlyMine: Boolean
 }
 
+input SearchSurveysInput {
+  keyword: String
+}
+
 input GetSurveyInput {
   id: ID!
 }
 
 input GetAnswersOfsurveyInput {
   surveyId: ID!
+}
+
+input GetPostsInput {
+  page: Int! = 1
+}
+
+input SearchPostsInput {
+  keyword: String
 }
 
 input GetPostInput {

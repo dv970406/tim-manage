@@ -1,10 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
+import { GET_COUNT } from 'src/utils/pagination';
+import { Like } from 'typeorm';
 import { CreatePostInput, CreatePostOutput } from './dtos/post/create-post.dto';
 import { DeletePostInput, DeletePostOutput } from './dtos/post/delete-post.dto';
 import { GetPostInput, GetPostOutput } from './dtos/post/get-post.dto';
-import { GetPostsOutput } from './dtos/post/get-posts.dto';
+import { GetPostsInput, GetPostsOutput } from './dtos/post/get-posts.dto';
+import {
+  SearchPostsInput,
+  SearchPostsOutput,
+} from './dtos/post/search-posts.dto';
 import { UpdatePostInput, UpdatePostOutput } from './dtos/post/update-post.dto';
 import { Post } from './entities/post.entity';
 import { PostRepository } from './repositories/post.repository';
@@ -19,17 +25,21 @@ export class PostService {
   async isMyPost(loggedInUser: User, post: Post): Promise<boolean> {
     return loggedInUser.id === post.user.id;
   }
-  async getPosts(): Promise<GetPostsOutput> {
+  async getPosts({ page }: GetPostsInput): Promise<GetPostsOutput> {
     try {
-      const findPosts = await this.postRepo.find({
+      const [findPosts, totalPosts] = await this.postRepo.findAndCount({
         order: { createdAt: 'ASC' },
         relations: {
           user: true,
         },
+        take: GET_COUNT,
+        skip: (page - 1) * GET_COUNT,
       });
       return {
         ok: true,
         posts: findPosts,
+        totalPage: Math.ceil(totalPosts / GET_COUNT),
+        totalResult: totalPosts,
       };
     } catch (error) {
       return {
@@ -38,6 +48,38 @@ export class PostService {
       };
     }
   }
+
+  async searchPosts({ keyword }: SearchPostsInput): Promise<SearchPostsOutput> {
+    try {
+      const posts = await this.postRepo.find({
+        where: [
+          {
+            title: Like(`%${keyword}%`),
+          },
+          {
+            content: Like(`%${keyword}%`),
+          },
+        ],
+        relations: {
+          user: true,
+        },
+        order: {
+          createdAt: 'DESC',
+        },
+      });
+
+      return {
+        ok: true,
+        posts,
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        error: error.message || '찾을 수 없는 게시글입니다.',
+      };
+    }
+  }
+
   async getPost({ id: postId }: GetPostInput): Promise<GetPostOutput> {
     try {
       const findPost = await this.postRepo.findPost({ postId });

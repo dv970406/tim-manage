@@ -15,6 +15,7 @@ import { GetMyInfoOutput } from './dtos/get-myInfo.dto';
 import { GetUserInput, GetUserOutput } from './dtos/get-user.dto';
 import { GetUsersOutput } from './dtos/get-users.dto';
 import { LoginInput, LoginOutput } from './dtos/login.dto';
+import { SearchUsersInput, SearchUsersOutput } from './dtos/search-users.dto';
 import { UpdateUserInput, UpdateUserOutput } from './dtos/update-user.dto';
 import {
   UpdateUserPasswordInput,
@@ -30,6 +31,13 @@ export class UserResolver {
   @Query((returns) => GetUsersOutput)
   getUsers(): Promise<GetUsersOutput> {
     return this.userService.getUsers();
+  }
+
+  @Query((returns) => SearchUsersOutput)
+  searchUsers(
+    @Args('input') searchUsersInput: SearchUsersInput,
+  ): Promise<SearchUsersOutput> {
+    return this.userService.searchUsers(searchUsersInput);
   }
 
   @Query((returns) => GetUserOutput)

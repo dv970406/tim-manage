@@ -6,11 +6,14 @@ import { JwtService } from 'src/jwt/jwt.service';
 import { PositionRepository } from 'src/position/position.repository';
 import { Survey } from 'src/survey/entities/survey.entity';
 import { TeamRepository } from 'src/team/team.repository';
+import { GET_COUNT } from 'src/utils/pagination';
+import { Like } from 'typeorm';
 import { CreateUserInput, CreateUserOutput } from './dtos/create-user.dto';
 import { DeleteUserInput, DeleteUserOutput } from './dtos/delete-user.dto';
 import { GetUserInput, GetUserOutput } from './dtos/get-user.dto';
 import { GetUsersOutput } from './dtos/get-users.dto';
 import { LoginInput, LoginOutput } from './dtos/login.dto';
+import { SearchUsersInput, SearchUsersOutput } from './dtos/search-users.dto';
 import { UpdateUserInput, UpdateUserOutput } from './dtos/update-user.dto';
 import {
   UpdateUserPasswordInput,
@@ -47,6 +50,44 @@ export class UserService {
       return {
         ok: false,
         error: '유저 리스트 조회에 실패했습니다.',
+      };
+    }
+  }
+  async searchUsers({
+    page,
+    keyword,
+  }: SearchUsersInput): Promise<SearchUsersOutput> {
+    try {
+      const [findUsers, totalUsers] = await this.userRepo.findAndCount({
+        ...(keyword && {
+          where: [
+            {
+              name: Like(`%${keyword}%`),
+            },
+            {
+              email: Like(`%${keyword}%`),
+            },
+          ],
+        }),
+        order: { createdAt: 'DESC' },
+        relations: {
+          position: true,
+          team: true,
+        },
+        take: GET_COUNT,
+        skip: (page - 1) * GET_COUNT,
+      });
+
+      return {
+        ok: true,
+        users: findUsers,
+        totalPage: Math.ceil(totalUsers / GET_COUNT),
+        totalResult: totalUsers,
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        error: error.message || '찾을 수 없는 유저입니다.',
       };
     }
   }

@@ -15,6 +15,10 @@ import { CreatePostInput, CreatePostOutput } from './dtos/post/create-post.dto';
 import { DeletePostInput, DeletePostOutput } from './dtos/post/delete-post.dto';
 import { GetPostInput, GetPostOutput } from './dtos/post/get-post.dto';
 import { GetPostsInput, GetPostsOutput } from './dtos/post/get-posts.dto';
+import {
+  SearchPostsInput,
+  SearchPostsOutput,
+} from './dtos/post/search-posts.dto';
 import { UpdatePostInput, UpdatePostOutput } from './dtos/post/update-post.dto';
 import { Post } from './entities/post.entity';
 import { LikeService } from './like.service';
@@ -55,8 +59,17 @@ export class PostResolver {
   }
 
   @Query((type) => GetPostsOutput)
-  getPosts(): Promise<GetPostsOutput> {
-    return this.postService.getPosts();
+  getPosts(
+    @Args('input') getPostsInput: GetPostsInput,
+  ): Promise<GetPostsOutput> {
+    return this.postService.getPosts(getPostsInput);
+  }
+
+  @Query((returns) => SearchPostsOutput)
+  searchPosts(
+    @Args('input') searchPostsInput: SearchPostsInput,
+  ): Promise<SearchPostsOutput> {
+    return this.postService.searchPosts(searchPostsInput);
   }
 
   @Query((type) => GetPostOutput)

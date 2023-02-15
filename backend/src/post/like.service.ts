@@ -69,18 +69,27 @@ export class LikeService {
     try {
       const findPost = await this.postRepo.findPost({ postId });
 
-      const findLike = await this.likeRepo.findOneBy({
-        post: { id: postId },
-        user: { id: loggedInUser.id },
+      let findLike = await this.likeRepo.findOne({
+        where: {
+          post: { id: postId },
+          user: { id: loggedInUser.id },
+        },
+        relations: {
+          post: true,
+        },
       });
       if (findLike) {
         await this.likeRepo.delete({ id: findLike.id });
       } else {
-        await this.likeRepo.save({ user: loggedInUser, post: findPost });
+        findLike = await this.likeRepo.save({
+          user: loggedInUser,
+          post: findPost,
+        });
       }
 
       return {
         ok: true,
+        like: findLike,
       };
     } catch (error) {
       return {
