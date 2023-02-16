@@ -25,21 +25,29 @@ export class PostService {
   async isMyPost(loggedInUser: User, post: Post): Promise<boolean> {
     return loggedInUser.id === post.user.id;
   }
-  async getPosts({ page }: GetPostsInput): Promise<GetPostsOutput> {
+  async getPosts({ first }: GetPostsInput): Promise<GetPostsOutput> {
     try {
       const [findPosts, totalPosts] = await this.postRepo.findAndCount({
         order: { createdAt: 'ASC' },
         relations: {
           user: true,
         },
-        take: GET_COUNT,
-        skip: (page - 1) * GET_COUNT,
+        // take: GET_COUNT,
+        // skip: (page - 1) * GET_COUNT,
       });
+
+      const edges = findPosts.map((post) => ({
+        cursor: post.id,
+        node: post,
+      }));
+
       return {
         ok: true,
-        posts: findPosts,
-        totalPage: Math.ceil(totalPosts / GET_COUNT),
-        totalResult: totalPosts,
+        edges,
+        pageInfo: {
+          hasNextPage: true,
+          hasPreviousPage: true,
+        },
       };
     } catch (error) {
       return {
@@ -51,7 +59,7 @@ export class PostService {
 
   async searchPosts({ keyword }: SearchPostsInput): Promise<SearchPostsOutput> {
     try {
-      const posts = await this.postRepo.find({
+      const findPosts = await this.postRepo.find({
         where: [
           {
             title: Like(`%${keyword}%`),
@@ -68,9 +76,18 @@ export class PostService {
         },
       });
 
+      const edges = findPosts.map((post) => ({
+        cursor: post.id,
+        node: post,
+      }));
+
       return {
         ok: true,
-        posts,
+        edges,
+        pageInfo: {
+          hasNextPage: true,
+          hasPreviousPage: true,
+        },
       };
     } catch (error) {
       return {

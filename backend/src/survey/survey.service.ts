@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
+import { GET_COUNT } from 'src/utils/pagination';
 import { Like } from 'typeorm';
 import {
   CreateSurveyInput,
@@ -62,10 +63,21 @@ export class SurveyService {
             },
           },
         }),
+        // skip: (page - 1) * first,
       });
+
+      const edges = findSurveys.map((survey) => ({
+        cursor: survey.id,
+        node: survey,
+      }));
+
       return {
         ok: true,
-        surveys: findSurveys,
+        edges,
+        pageInfo: {
+          hasNextPage: true,
+          hasPreviousPage: true,
+        },
       };
     } catch (error) {
       return {
@@ -79,7 +91,7 @@ export class SurveyService {
     keyword,
   }: SearchSurveysInput): Promise<SearchSurveysOutput> {
     try {
-      const surveys = await this.surveyRepo.find({
+      const findSurveys = await this.surveyRepo.find({
         where: {
           surveyTitle: Like(`%${keyword}%`),
         },
@@ -91,9 +103,18 @@ export class SurveyService {
         },
       });
 
+      const edges = findSurveys.map((survey) => ({
+        cursor: survey.id,
+        node: survey,
+      }));
+
       return {
         ok: true,
-        surveys,
+        edges,
+        pageInfo: {
+          hasNextPage: true,
+          hasPreviousPage: true,
+        },
       };
     } catch (error) {
       return {

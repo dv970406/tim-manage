@@ -13,7 +13,7 @@ import { CreateUserInput, CreateUserOutput } from './dtos/create-user.dto';
 import { DeleteUserInput, DeleteUserOutput } from './dtos/delete-user.dto';
 import { GetMyInfoOutput } from './dtos/get-myInfo.dto';
 import { GetUserInput, GetUserOutput } from './dtos/get-user.dto';
-import { GetUsersOutput } from './dtos/get-users.dto';
+import { GetUsersInput, GetUsersOutput } from './dtos/get-users.dto';
 import { LoginInput, LoginOutput } from './dtos/login.dto';
 import { SearchUsersInput, SearchUsersOutput } from './dtos/search-users.dto';
 import { UpdateUserInput, UpdateUserOutput } from './dtos/update-user.dto';
@@ -29,13 +29,13 @@ export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
   @Query((returns) => GetUsersOutput)
-  getUsers(): Promise<GetUsersOutput> {
-    return this.userService.getUsers();
+  getUsers(@Args() getUsersInput: GetUsersInput): Promise<GetUsersOutput> {
+    return this.userService.getUsers(getUsersInput);
   }
 
   @Query((returns) => SearchUsersOutput)
   searchUsers(
-    @Args('input') searchUsersInput: SearchUsersInput,
+    @Args() searchUsersInput: SearchUsersInput,
   ): Promise<SearchUsersOutput> {
     return this.userService.searchUsers(searchUsersInput);
   }

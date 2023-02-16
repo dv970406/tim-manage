@@ -11,7 +11,7 @@ import { Like } from 'typeorm';
 import { CreateUserInput, CreateUserOutput } from './dtos/create-user.dto';
 import { DeleteUserInput, DeleteUserOutput } from './dtos/delete-user.dto';
 import { GetUserInput, GetUserOutput } from './dtos/get-user.dto';
-import { GetUsersOutput } from './dtos/get-users.dto';
+import { GetUsersInput, GetUsersOutput } from './dtos/get-users.dto';
 import { LoginInput, LoginOutput } from './dtos/login.dto';
 import { SearchUsersInput, SearchUsersOutput } from './dtos/search-users.dto';
 import { UpdateUserInput, UpdateUserOutput } from './dtos/update-user.dto';
@@ -32,7 +32,7 @@ export class UserService {
     @InjectRepository(TeamRepository) private readonly teamRepo: TeamRepository,
   ) {}
 
-  async getUsers(): Promise<GetUsersOutput> {
+  async getUsers({}: GetUsersInput): Promise<GetUsersOutput> {
     try {
       const findUsers = await this.userRepo.find({
         order: { createdAt: 'DESC' },
@@ -42,9 +42,18 @@ export class UserService {
         },
       });
 
+      const edges = findUsers.map((user) => ({
+        cursor: user.id,
+        node: user,
+      }));
+
       return {
         ok: true,
-        users: findUsers,
+        edges,
+        pageInfo: {
+          hasNextPage: true,
+          hasPreviousPage: true,
+        },
       };
     } catch (error) {
       return {
@@ -53,10 +62,7 @@ export class UserService {
       };
     }
   }
-  async searchUsers({
-    page,
-    keyword,
-  }: SearchUsersInput): Promise<SearchUsersOutput> {
+  async searchUsers({ keyword }: SearchUsersInput): Promise<SearchUsersOutput> {
     try {
       const [findUsers, totalUsers] = await this.userRepo.findAndCount({
         ...(keyword && {
@@ -74,15 +80,22 @@ export class UserService {
           position: true,
           team: true,
         },
-        take: GET_COUNT,
-        skip: (page - 1) * GET_COUNT,
+        // take: GET_COUNT,
+        // skip: (page - 1) * GET_COUNT,
       });
+
+      const edges = findUsers.map((user) => ({
+        cursor: user.id,
+        node: user,
+      }));
 
       return {
         ok: true,
-        users: findUsers,
-        totalPage: Math.ceil(totalUsers / GET_COUNT),
-        totalResult: totalUsers,
+        edges,
+        pageInfo: {
+          hasNextPage: true,
+          hasPreviousPage: true,
+        },
       };
     } catch (error) {
       return {

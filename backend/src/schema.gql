@@ -154,10 +154,23 @@ type GetUserOutput {
   user: User
 }
 
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type UserEdge {
+  cursor: ID!
+  node: User!
+}
+
 type GetUsersOutput {
   ok: Boolean!
   error: String
-  users: [User!]
+  edges: [UserEdge!]!
+  pageInfo: PageInfo!
 }
 
 type LoginOutput {
@@ -169,9 +182,8 @@ type LoginOutput {
 type SearchUsersOutput {
   ok: Boolean!
   error: String
-  totalPage: Int
-  totalResult: Int
-  users: [User!]
+  edges: [UserEdge!]!
+  pageInfo: PageInfo!
 }
 
 type UpdateUserOutput {
@@ -354,16 +366,23 @@ type GetSurveyOutput {
   survey: Survey
 }
 
+type SurveyEdge {
+  cursor: ID!
+  node: Survey!
+}
+
 type GetSurveysOutput {
   ok: Boolean!
   error: String
-  surveys: [Survey!]
+  edges: [SurveyEdge!]!
+  pageInfo: PageInfo!
 }
 
 type SearchSurveysOutput {
   ok: Boolean!
   error: String
-  surveys: [Survey!]
+  edges: [SurveyEdge!]!
+  pageInfo: PageInfo!
 }
 
 type CreateCommentOutput {
@@ -416,18 +435,23 @@ type GetPostOutput {
   post: Post
 }
 
+type PostEdge {
+  cursor: ID!
+  node: Post!
+}
+
 type GetPostsOutput {
   ok: Boolean!
   error: String
-  totalPage: Int
-  totalResult: Int
-  posts: [Post!]
+  edges: [PostEdge!]!
+  pageInfo: PageInfo!
 }
 
 type SearchPostsOutput {
   ok: Boolean!
   error: String
-  posts: [Post!]
+  edges: [PostEdge!]!
+  pageInfo: PageInfo!
 }
 
 type UpdatePostOutput {
@@ -496,8 +520,8 @@ type GetWeeklyMealOutput {
 }
 
 type Query {
-  getUsers: GetUsersOutput!
-  searchUsers(input: SearchUsersInput!): SearchUsersOutput!
+  getUsers(after: ID, before: ID, first: Int! = 10, last: Int! = 10): GetUsersOutput!
+  searchUsers(after: ID, before: ID, first: Int! = 10, last: Int! = 10, keyword: String): SearchUsersOutput!
   getUser(input: GetUserInput!): GetUserOutput!
   getMyInfo: GetUserOutput!
   getPositions: GetPositionsOutput!
@@ -507,12 +531,12 @@ type Query {
   getVacations: GetVacationsOutput!
   getUnConfirmedByMeVacations: GetUnConfirmedByMeVacationsOutput!
   getVacation(input: GetVacationInput!): GetVacationOutput!
-  getSurveys(input: GetSurveysInput!): GetSurveysOutput!
+  getSurveys(after: ID, before: ID, first: Int! = 10, last: Int! = 10, onlyMine: Boolean): GetSurveysOutput!
   searchSurveys(input: SearchSurveysInput!): SearchSurveysOutput!
   getSurvey(input: GetSurveyInput!): GetSurveyOutput!
   getMyAnswers: GetMyAnswersOutput!
   getAnswersOfSurvey(input: GetAnswersOfsurveyInput!): GetAnswersOfsurveyOutput!
-  getPosts(input: GetPostsInput!): GetPostsOutput!
+  getPosts(after: ID, before: ID, first: Int! = 10, last: Int! = 10): GetPostsOutput!
   searchPosts(input: SearchPostsInput!): SearchPostsOutput!
   getPost(input: GetPostInput!): GetPostOutput!
   getMyLikes: GetMyLikesOutput!
@@ -521,11 +545,6 @@ type Query {
   getMeeting(input: GetMeetingInput!): GetMeetingOutput!
   getKingOfMeeting: GetKingOfMeetingOutput!
   getWeeklyMeal: GetWeeklyMealOutput!
-}
-
-input SearchUsersInput {
-  page: Int! = 1
-  keyword: String
 }
 
 input GetUserInput {
@@ -544,10 +563,6 @@ input GetVacationInput {
   id: ID!
 }
 
-input GetSurveysInput {
-  onlyMine: Boolean
-}
-
 input SearchSurveysInput {
   keyword: String
 }
@@ -558,10 +573,6 @@ input GetSurveyInput {
 
 input GetAnswersOfsurveyInput {
   surveyId: ID!
-}
-
-input GetPostsInput {
-  page: Int! = 1
 }
 
 input SearchPostsInput {

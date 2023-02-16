@@ -59,9 +59,7 @@ export class PostResolver {
   }
 
   @Query((type) => GetPostsOutput)
-  getPosts(
-    @Args('input') getPostsInput: GetPostsInput,
-  ): Promise<GetPostsOutput> {
+  getPosts(@Args() getPostsInput: GetPostsInput): Promise<GetPostsOutput> {
     return this.postService.getPosts(getPostsInput);
   }
 
