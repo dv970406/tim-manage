@@ -67,7 +67,7 @@ export class UserResolver {
   }
 
   @Mutation((returns) => CreateUserOutput)
-  @UseGuards(ManagerGuard)
+  // @UseGuards(ManagerGuard)
   async createUser(
     @Args('input') createUserInput: CreateUserInput,
   ): Promise<CreateUserOutput> {

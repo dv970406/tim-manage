@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { DB_TABLE } from 'src/core/variables/constants';
 import { User } from 'src/user/entities/user.entity';
 import { UserRepository } from 'src/user/user.repository';
 import { CreateTeamInput, CreateTeamOutput } from './dtos/create-team.dto';
@@ -29,6 +30,7 @@ export class TeamService {
           leader: true,
         },
       });
+
       return {
         ok: true,
         teams: findTeams,
@@ -60,6 +62,7 @@ export class TeamService {
       await this.teamRepo.checkExistTeamName({ team });
 
       const newTeam = await this.teamRepo.save({ team });
+
       return {
         ok: true,
         team: newTeam,
@@ -132,6 +135,7 @@ export class TeamService {
       await this.teamRepo.save([{ id: teamId, team, leader: findUser }]);
 
       const updatedTeam = await this.teamRepo.findTeam({ teamId });
+
       return {
         ok: true,
         team: updatedTeam,

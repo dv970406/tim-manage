@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
 import { UserRepository } from 'src/user/user.repository';
+import { DB_TABLE } from 'src/core/variables/constants';
 import { In } from 'typeorm';
 import {
   CreateMeetingInput,
@@ -38,6 +39,7 @@ export class MeetingService {
           attendees: true,
         },
       });
+
       return {
         ok: true,
         meetings,

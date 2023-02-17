@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
-import { GET_COUNT } from 'src/utils/pagination';
-import { Like } from 'typeorm';
+import { DB_TABLE } from 'src/core/variables/constants';
+import { LessThan, Like, MoreThan } from 'typeorm';
 import {
   CreateSurveyInput,
   CreateSurveyOutput,
@@ -48,14 +48,19 @@ export class SurveyService {
 
   async getSurveys(
     loggedInUser: User,
-    { onlyMine = false }: GetSurveysInput,
+    { onlyMine = false, first, after }: GetSurveysInput,
   ): Promise<GetSurveysOutput> {
     try {
-      const findSurveys = await this.surveyRepo.find({
+      const [findSurveys, totalCount] = await this.surveyRepo.findAndCount({
         order: { createdAt: 'DESC' },
         relations: {
           user: true,
         },
+        where: {
+          ...(after && { createdAt: LessThan(after) }),
+        },
+        take: first,
+
         ...(onlyMine && {
           where: {
             user: {
@@ -63,20 +68,19 @@ export class SurveyService {
             },
           },
         }),
-        // skip: (page - 1) * first,
       });
 
       const edges = findSurveys.map((survey) => ({
-        cursor: survey.id,
+        cursor: survey.createdAt,
         node: survey,
       }));
-
+      const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
       return {
         ok: true,
         edges,
         pageInfo: {
-          hasNextPage: true,
-          hasPreviousPage: true,
+          hasNextPage: totalCount > first,
+          endCursor,
         },
       };
     } catch (error) {
@@ -104,17 +108,13 @@ export class SurveyService {
       });
 
       const edges = findSurveys.map((survey) => ({
-        cursor: survey.id,
+        cursor: survey.createdAt,
         node: survey,
       }));
 
       return {
         ok: true,
         edges,
-        pageInfo: {
-          hasNextPage: true,
-          hasPreviousPage: true,
-        },
       };
     } catch (error) {
       return {
@@ -159,6 +159,7 @@ export class SurveyService {
       findSurvey.answers = findSurvey.answers.filter(
         (answer) => answer.user.id === loggedInUser.id,
       );
+
       return {
         ok: true,
         survey: findSurvey,
@@ -208,9 +209,13 @@ export class SurveyService {
         user: loggedInUser,
       });
 
+      const edges = {
+        node: newSurvey,
+        cursor: newSurvey.createdAt,
+      };
       return {
         ok: true,
-        survey: newSurvey,
+        edges,
       };
     } catch (error) {
       return {

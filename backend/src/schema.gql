@@ -157,12 +157,12 @@ type GetUserOutput {
 type PageInfo {
   hasNextPage: Boolean!
   hasPreviousPage: Boolean!
-  startCursor: String
-  endCursor: String
+  startCursor: DateTime
+  endCursor: DateTime
 }
 
 type UserEdge {
-  cursor: ID!
+  cursor: DateTime!
   node: User!
 }
 
@@ -348,10 +348,15 @@ type GetMyAnswersOutput {
   answers: [Answer!]
 }
 
+type SurveyEdge {
+  cursor: DateTime!
+  node: Survey!
+}
+
 type CreateSurveyOutput {
   ok: Boolean!
   error: String
-  survey: Survey
+  edges: SurveyEdge!
 }
 
 type DeleteSurveyOutput {
@@ -366,16 +371,11 @@ type GetSurveyOutput {
   survey: Survey
 }
 
-type SurveyEdge {
-  cursor: ID!
-  node: Survey!
-}
-
 type GetSurveysOutput {
   ok: Boolean!
   error: String
   edges: [SurveyEdge!]!
-  pageInfo: PageInfo!
+  pageInfo: PageInfo
 }
 
 type SearchSurveysOutput {
@@ -436,7 +436,7 @@ type GetPostOutput {
 }
 
 type PostEdge {
-  cursor: ID!
+  cursor: DateTime!
   node: Post!
 }
 
@@ -520,8 +520,8 @@ type GetWeeklyMealOutput {
 }
 
 type Query {
-  getUsers(after: ID, before: ID, first: Int! = 10, last: Int! = 10): GetUsersOutput!
-  searchUsers(after: ID, before: ID, first: Int! = 10, last: Int! = 10, keyword: String): SearchUsersOutput!
+  getUsers(after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): GetUsersOutput!
+  searchUsers(after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10, keyword: String): SearchUsersOutput!
   getUser(input: GetUserInput!): GetUserOutput!
   getMyInfo: GetUserOutput!
   getPositions: GetPositionsOutput!
@@ -531,12 +531,12 @@ type Query {
   getVacations: GetVacationsOutput!
   getUnConfirmedByMeVacations: GetUnConfirmedByMeVacationsOutput!
   getVacation(input: GetVacationInput!): GetVacationOutput!
-  getSurveys(after: ID, before: ID, first: Int! = 10, last: Int! = 10, onlyMine: Boolean): GetSurveysOutput!
+  getSurveys(after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10, onlyMine: Boolean): GetSurveysOutput!
   searchSurveys(input: SearchSurveysInput!): SearchSurveysOutput!
   getSurvey(input: GetSurveyInput!): GetSurveyOutput!
   getMyAnswers: GetMyAnswersOutput!
   getAnswersOfSurvey(input: GetAnswersOfsurveyInput!): GetAnswersOfsurveyOutput!
-  getPosts(after: ID, before: ID, first: Int! = 10, last: Int! = 10): GetPostsOutput!
+  getPosts(after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): GetPostsOutput!
   searchPosts(input: SearchPostsInput!): SearchPostsOutput!
   getPost(input: GetPostInput!): GetPostOutput!
   getMyLikes: GetMyLikesOutput!

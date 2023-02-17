@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { DB_TABLE } from 'src/core/variables/constants';
 import { getThisWeekRange } from 'src/utils/time';
 import { Between } from 'typeorm';
 import {

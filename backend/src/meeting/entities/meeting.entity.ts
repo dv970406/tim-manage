@@ -1,8 +1,10 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { IsDate, IsNumber, IsString } from 'class-validator';
 import { CoreEntity } from 'src/core/entities/core.entity';
+import { DB_TABLE } from 'src/core/variables/constants';
 import { User } from 'src/user/entities/user.entity';
 import {
+  BeforeInsert,
   Column,
   Entity,
   JoinColumn,

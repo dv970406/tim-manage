@@ -13,8 +13,8 @@ export class PostsPaginationFormat {
 
 @ObjectType()
 export class PostEdge {
-  @Field((type) => ID)
-  cursor: string;
+  @Field((type) => Date)
+  cursor: Date;
 
   @Field((type) => Post)
   node: Post;

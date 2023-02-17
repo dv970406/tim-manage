@@ -14,8 +14,8 @@ export class SurveysPaginationFormat {
 
 @ObjectType()
 export class SurveyEdge {
-  @Field((type) => ID)
-  cursor: string;
+  @Field((type) => Date)
+  cursor: Date;
 
   @Field((type) => Survey)
   node: Survey;

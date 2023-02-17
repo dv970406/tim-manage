@@ -21,6 +21,6 @@ export class GetSurveysOutput extends CoreOutput {
   @Field((type) => [SurveyEdge])
   edges?: SurveyEdge[];
 
-  @Field((type) => PageInfo)
+  @Field((type) => PageInfo, { nullable: true })
   pageInfo?: PageInfo;
 }

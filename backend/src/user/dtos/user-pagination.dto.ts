@@ -12,8 +12,8 @@ export class UsersPaginationFormat {
 }
 @ObjectType()
 export class UserEdge {
-  @Field((type) => ID)
-  cursor: string;
+  @Field((type) => Date)
+  cursor: Date;
 
   @Field((type) => User)
   node: User;

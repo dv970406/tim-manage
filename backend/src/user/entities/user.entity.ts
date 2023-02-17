@@ -37,6 +37,7 @@ import { Comment } from 'src/post/entities/comment.entity';
 import { Answer } from 'src/survey/entities/answer.entity';
 import { Survey } from 'src/survey/entities/survey.entity';
 import { Meeting } from 'src/meeting/entities/meeting.entity';
+import { DB_TABLE } from 'src/core/variables/constants';
 @InputType('UserInputType', { isAbstract: true })
 @Entity()
 @ObjectType()

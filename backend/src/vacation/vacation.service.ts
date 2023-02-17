@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { DB_TABLE } from 'src/core/variables/constants';
 import { POSITION_CEO } from 'src/core/variables/position';
 import { User } from 'src/user/entities/user.entity';
 import { UserRepository } from 'src/user/user.repository';
@@ -40,7 +41,7 @@ export class VacationService {
       const beforeTwoMonth = new Date(new Date().setMonth(todayMonth - 2));
       const afterTwoMonth = new Date(new Date().setMonth(todayMonth + 2));
 
-      const vacations = await this.vacationRepo.find({
+      const findVacations = await this.vacationRepo.find({
         order: { startDate: 'ASC' },
         relations: {
           user: {
@@ -55,7 +56,7 @@ export class VacationService {
 
       return {
         ok: true,
-        vacations,
+        vacations: findVacations,
       };
     } catch (error) {
       return {

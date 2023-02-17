@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { DB_TABLE } from 'src/core/variables/constants';
 import { User } from 'src/user/entities/user.entity';
-import { GET_COUNT } from 'src/utils/pagination';
 import { Like } from 'typeorm';
 import { CreatePostInput, CreatePostOutput } from './dtos/post/create-post.dto';
 import { DeletePostInput, DeletePostOutput } from './dtos/post/delete-post.dto';
@@ -37,7 +37,7 @@ export class PostService {
       });
 
       const edges = findPosts.map((post) => ({
-        cursor: post.id,
+        cursor: post.createdAt,
         node: post,
       }));
 
@@ -46,7 +46,7 @@ export class PostService {
         edges,
         pageInfo: {
           hasNextPage: true,
-          hasPreviousPage: true,
+          endCursor: edges[edges.length - 1].cursor,
         },
       };
     } catch (error) {
@@ -77,16 +77,15 @@ export class PostService {
       });
 
       const edges = findPosts.map((post) => ({
-        cursor: post.id,
+        cursor: post.createdAt,
         node: post,
       }));
-
       return {
         ok: true,
         edges,
         pageInfo: {
           hasNextPage: true,
-          hasPreviousPage: true,
+          endCursor: edges[edges.length - 1].cursor,
         },
       };
     } catch (error) {
@@ -127,6 +126,7 @@ export class PostService {
         content,
         user: loggedInUser,
       });
+
       return {
         ok: true,
         post: newPost,
@@ -157,6 +157,7 @@ export class PostService {
       await this.postRepo.save([{ id: postId, title, content }]);
 
       const updatedPost = await this.postRepo.findPost({ postId });
+
       return {
         ok: true,
         post: updatedPost,

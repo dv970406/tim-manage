@@ -1,6 +1,7 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { CoreEntity } from 'src/core/entities/core.entity';
-import { Column, Entity } from 'typeorm';
+import { DB_TABLE } from 'src/core/variables/constants';
+import { BeforeInsert, Column, Entity } from 'typeorm';
 
 // 점심이 없는 요일도 있을 수 있음
 @InputType('MealInputType', { isAbstract: true })

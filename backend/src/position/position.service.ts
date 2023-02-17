@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { DB_TABLE } from 'src/core/variables/constants';
 import {
   CreatePositionInput,
   CreatePositionOutput,
@@ -27,6 +28,7 @@ export class PositionService {
       const findPositions = await this.positionRepo.find({
         order: { createdAt: 'DESC' },
       });
+
       return {
         ok: true,
         positions: findPositions,
@@ -44,6 +46,7 @@ export class PositionService {
   }: GetPositionInput): Promise<GetPositionOutput> {
     try {
       const findPosition = await this.positionRepo.findPosition({ positionId });
+
       return {
         ok: true,
         position: findPosition,
@@ -63,6 +66,7 @@ export class PositionService {
       await this.positionRepo.checkExistPositionName({ position });
 
       const newPosition = await this.positionRepo.save({ position });
+
       return {
         ok: true,
         position: newPosition,
@@ -89,6 +93,7 @@ export class PositionService {
       const updatedPosition = await this.positionRepo.findPosition({
         positionId,
       });
+
       return {
         ok: true,
         position: updatedPosition,

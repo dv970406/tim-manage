@@ -13,11 +13,11 @@ import { CoreOutput } from './core.dto';
 
 @ArgsType()
 export class PaginationInput {
-  @Field(() => ID, { nullable: true })
-  after?: string;
+  @Field(() => Date, { nullable: true })
+  after?: Date;
 
-  @Field(() => ID, { nullable: true })
-  before?: string;
+  @Field(() => Date, { nullable: true })
+  before?: Date;
 
   @Field(() => Int, { defaultValue: 10 })
   first?: number;
@@ -31,9 +31,9 @@ export class PageInfo {
   @Field((type) => Boolean)
   hasNextPage: Boolean;
   @Field((type) => Boolean)
-  hasPreviousPage: Boolean;
-  @Field((type) => String, { nullable: true })
-  startCursor?: string;
-  @Field((type) => String, { nullable: true })
-  endCursor?: string;
+  hasPreviousPage?: Boolean;
+  @Field((type) => Date, { nullable: true })
+  startCursor?: Date;
+  @Field((type) => Date, { nullable: true })
+  endCursor: Date;
 }

@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { isInt } from 'class-validator';
+import { DB_TABLE } from 'src/core/variables/constants';
 import { POSITION_CEO } from 'src/core/variables/position';
 import { JwtService } from 'src/jwt/jwt.service';
 import { PositionRepository } from 'src/position/position.repository';
-import { Survey } from 'src/survey/entities/survey.entity';
 import { TeamRepository } from 'src/team/team.repository';
-import { GET_COUNT } from 'src/utils/pagination';
 import { Like } from 'typeorm';
 import { CreateUserInput, CreateUserOutput } from './dtos/create-user.dto';
 import { DeleteUserInput, DeleteUserOutput } from './dtos/delete-user.dto';
@@ -43,7 +42,7 @@ export class UserService {
       });
 
       const edges = findUsers.map((user) => ({
-        cursor: user.id,
+        cursor: user.createdAt,
         node: user,
       }));
 
@@ -52,7 +51,7 @@ export class UserService {
         edges,
         pageInfo: {
           hasNextPage: true,
-          hasPreviousPage: true,
+          endCursor: edges[edges.length - 1].cursor,
         },
       };
     } catch (error) {
@@ -85,7 +84,7 @@ export class UserService {
       });
 
       const edges = findUsers.map((user) => ({
-        cursor: user.id,
+        cursor: user.createdAt,
         node: user,
       }));
 
@@ -94,7 +93,7 @@ export class UserService {
         edges,
         pageInfo: {
           hasNextPage: true,
-          hasPreviousPage: true,
+          endCursor: edges[edges.length - 1].cursor,
         },
       };
     } catch (error) {
@@ -166,6 +165,7 @@ export class UserService {
       if (!findUser) {
         throw new Error('존재하지 않는 유저입니다.');
       }
+
       return {
         ok: true,
         user: findUser,
@@ -198,7 +198,7 @@ export class UserService {
 
       const findTeam = await this.teamRepo.findTeam({ teamId });
 
-      const newUser = this.userRepo.create({
+      const createUser = this.userRepo.create({
         email,
         password: process.env.TEMPORARY_PASSWORD,
         isManager: false,
@@ -208,13 +208,14 @@ export class UserService {
         team: findTeam,
       });
 
-      await this.userRepo.save(newUser);
+      const newUser = await this.userRepo.save(createUser);
 
       return {
         ok: true,
         user: newUser,
       };
     } catch (error) {
+      console.log(error);
       return {
         ok: false,
         error: error.message || '계정 생성에 실패했습니다.',
@@ -319,6 +320,7 @@ export class UserService {
         },
       ]);
       const updatedUser = await this.userRepo.findUser({ userId });
+
       return {
         ok: true,
         user: updatedUser,
