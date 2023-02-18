@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DB_TABLE } from 'src/core/variables/constants';
 import { User } from 'src/user/entities/user.entity';
-import { Like } from 'typeorm';
+import { LessThan, Like } from 'typeorm';
 import { CreatePostInput, CreatePostOutput } from './dtos/post/create-post.dto';
 import { DeletePostInput, DeletePostOutput } from './dtos/post/delete-post.dto';
 import { GetPostInput, GetPostOutput } from './dtos/post/get-post.dto';
@@ -25,28 +25,30 @@ export class PostService {
   async isMyPost(loggedInUser: User, post: Post): Promise<boolean> {
     return loggedInUser.id === post.user.id;
   }
-  async getPosts({ first }: GetPostsInput): Promise<GetPostsOutput> {
+  async getPosts({ first, after }: GetPostsInput): Promise<GetPostsOutput> {
     try {
-      const [findPosts, totalPosts] = await this.postRepo.findAndCount({
-        order: { createdAt: 'ASC' },
+      const [findPosts, totalCount] = await this.postRepo.findAndCount({
+        order: { createdAt: 'DESC' },
         relations: {
           user: true,
         },
-        // take: GET_COUNT,
-        // skip: (page - 1) * GET_COUNT,
+        where: {
+          ...(after && { createdAt: LessThan(after) }),
+        },
+        take: first,
       });
 
       const edges = findPosts.map((post) => ({
         cursor: post.createdAt,
         node: post,
       }));
-
+      const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
       return {
         ok: true,
         edges,
         pageInfo: {
-          hasNextPage: true,
-          endCursor: edges[edges.length - 1].cursor,
+          hasNextPage: totalCount > first,
+          endCursor,
         },
       };
     } catch (error) {
@@ -57,17 +59,24 @@ export class PostService {
     }
   }
 
-  async searchPosts({ keyword }: SearchPostsInput): Promise<SearchPostsOutput> {
+  async searchPosts({
+    keyword,
+    first,
+    after,
+  }: SearchPostsInput): Promise<SearchPostsOutput> {
     try {
-      const findPosts = await this.postRepo.find({
+      const [findPosts, totalCount] = await this.postRepo.findAndCount({
         where: [
           {
             title: Like(`%${keyword}%`),
+            ...(after && { createdAt: LessThan(after) }),
           },
           {
             content: Like(`%${keyword}%`),
+            ...(after && { createdAt: LessThan(after) }),
           },
         ],
+        take: first,
         relations: {
           user: true,
         },
@@ -80,12 +89,14 @@ export class PostService {
         cursor: post.createdAt,
         node: post,
       }));
+      const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
+
       return {
         ok: true,
         edges,
         pageInfo: {
           hasNextPage: true,
-          endCursor: edges[edges.length - 1].cursor,
+          endCursor,
         },
       };
     } catch (error) {
@@ -127,9 +138,13 @@ export class PostService {
         user: loggedInUser,
       });
 
+      const edge = {
+        node: newPost,
+        cursor: newPost.createdAt,
+      };
       return {
         ok: true,
-        post: newPost,
+        edge,
       };
     } catch (error) {
       return {

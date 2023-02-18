@@ -6,7 +6,7 @@ import { POSITION_CEO } from 'src/core/variables/position';
 import { JwtService } from 'src/jwt/jwt.service';
 import { PositionRepository } from 'src/position/position.repository';
 import { TeamRepository } from 'src/team/team.repository';
-import { Like } from 'typeorm';
+import { LessThan, Like } from 'typeorm';
 import { CreateUserInput, CreateUserOutput } from './dtos/create-user.dto';
 import { DeleteUserInput, DeleteUserOutput } from './dtos/delete-user.dto';
 import { GetUserInput, GetUserOutput } from './dtos/get-user.dto';
@@ -31,27 +31,31 @@ export class UserService {
     @InjectRepository(TeamRepository) private readonly teamRepo: TeamRepository,
   ) {}
 
-  async getUsers({}: GetUsersInput): Promise<GetUsersOutput> {
+  async getUsers({ first, after }: GetUsersInput): Promise<GetUsersOutput> {
     try {
-      const findUsers = await this.userRepo.find({
+      const [findUsers, totalCount] = await this.userRepo.findAndCount({
         order: { createdAt: 'DESC' },
         relations: {
           position: true,
           team: true,
         },
+        where: {
+          ...(after && { createdAt: LessThan(after) }),
+        },
+        take: first,
       });
 
       const edges = findUsers.map((user) => ({
         cursor: user.createdAt,
         node: user,
       }));
-
+      const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
       return {
         ok: true,
         edges,
         pageInfo: {
-          hasNextPage: true,
-          endCursor: edges[edges.length - 1].cursor,
+          hasNextPage: totalCount > first,
+          endCursor,
         },
       };
     } catch (error) {
@@ -61,39 +65,44 @@ export class UserService {
       };
     }
   }
-  async searchUsers({ keyword }: SearchUsersInput): Promise<SearchUsersOutput> {
+  async searchUsers({
+    keyword,
+    first,
+    after,
+  }: SearchUsersInput): Promise<SearchUsersOutput> {
     try {
-      const [findUsers, totalUsers] = await this.userRepo.findAndCount({
+      const [findUsers, totalCount] = await this.userRepo.findAndCount({
         ...(keyword && {
           where: [
             {
               name: Like(`%${keyword}%`),
+              ...(after && { createdAt: LessThan(after) }),
             },
             {
               email: Like(`%${keyword}%`),
+              ...(after && { createdAt: LessThan(after) }),
             },
           ],
         }),
+        take: first,
         order: { createdAt: 'DESC' },
         relations: {
           position: true,
           team: true,
         },
-        // take: GET_COUNT,
-        // skip: (page - 1) * GET_COUNT,
       });
 
       const edges = findUsers.map((user) => ({
         cursor: user.createdAt,
         node: user,
       }));
-
+      const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
       return {
         ok: true,
         edges,
         pageInfo: {
-          hasNextPage: true,
-          endCursor: edges[edges.length - 1].cursor,
+          hasNextPage: totalCount > first,
+          endCursor,
         },
       };
     } catch (error) {
@@ -210,9 +219,13 @@ export class UserService {
 
       const newUser = await this.userRepo.save(createUser);
 
+      const edge = {
+        node: newUser,
+        cursor: newUser.createdAt,
+      };
       return {
         ok: true,
-        user: newUser,
+        edge,
       };
     } catch (error) {
       console.log(error);

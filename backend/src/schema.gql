@@ -136,10 +136,22 @@ type Position {
   users: [User!]!
 }
 
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: DateTime
+  endCursor: DateTime
+}
+
+type UserEdge {
+  cursor: DateTime!
+  node: User!
+}
+
 type CreateUserOutput {
   ok: Boolean!
   error: String
-  user: User
+  edge: UserEdge!
 }
 
 type DeleteUserOutput {
@@ -152,18 +164,6 @@ type GetUserOutput {
   ok: Boolean!
   error: String
   user: User
-}
-
-type PageInfo {
-  hasNextPage: Boolean!
-  hasPreviousPage: Boolean!
-  startCursor: DateTime
-  endCursor: DateTime
-}
-
-type UserEdge {
-  cursor: DateTime!
-  node: User!
 }
 
 type GetUsersOutput {
@@ -356,7 +356,7 @@ type SurveyEdge {
 type CreateSurveyOutput {
   ok: Boolean!
   error: String
-  edges: SurveyEdge!
+  edge: SurveyEdge!
 }
 
 type DeleteSurveyOutput {
@@ -417,10 +417,15 @@ type ToggleLikeOutput {
   like: Like
 }
 
+type PostEdge {
+  cursor: DateTime!
+  node: Post!
+}
+
 type CreatePostOutput {
   ok: Boolean!
   error: String
-  post: Post
+  edge: PostEdge!
 }
 
 type DeletePostOutput {
@@ -433,11 +438,6 @@ type GetPostOutput {
   ok: Boolean!
   error: String
   post: Post
-}
-
-type PostEdge {
-  cursor: DateTime!
-  node: Post!
 }
 
 type GetPostsOutput {

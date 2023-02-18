@@ -13,5 +13,5 @@ export class CreateSurveyInput extends PickType(Survey, [
 @ObjectType()
 export class CreateSurveyOutput extends CoreOutput {
   @Field((type) => SurveyEdge)
-  edges?: SurveyEdge;
+  edge?: SurveyEdge;
 }

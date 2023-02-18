@@ -93,15 +93,19 @@ export class SurveyService {
 
   async searchSurveys({
     keyword,
+    first,
+    after,
   }: SearchSurveysInput): Promise<SearchSurveysOutput> {
     try {
-      const findSurveys = await this.surveyRepo.find({
+      const [findSurveys, totalCount] = await this.surveyRepo.findAndCount({
         where: {
           surveyTitle: Like(`%${keyword}%`),
+          ...(after && { createdAt: LessThan(after) }),
         },
         relations: {
           user: true,
         },
+        take: first,
         order: {
           createdAt: 'DESC',
         },
@@ -111,10 +115,15 @@ export class SurveyService {
         cursor: survey.createdAt,
         node: survey,
       }));
+      const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
 
       return {
         ok: true,
         edges,
+        pageInfo: {
+          hasNextPage: totalCount > first,
+          endCursor,
+        },
       };
     } catch (error) {
       return {
@@ -209,13 +218,13 @@ export class SurveyService {
         user: loggedInUser,
       });
 
-      const edges = {
+      const edge = {
         node: newSurvey,
         cursor: newSurvey.createdAt,
       };
       return {
         ok: true,
-        edges,
+        edge,
       };
     } catch (error) {
       return {
