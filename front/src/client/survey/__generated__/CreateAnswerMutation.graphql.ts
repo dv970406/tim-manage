@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e5fa8a5ab85969a0215684be6c2a47f0>>
+ * @generated SignedSource<<8ca2503e195904eeb9f03e32fbc54c8c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,24 @@ export type CreateAnswerMutation$variables = {
 };
 export type CreateAnswerMutation$data = {
   readonly createAnswer: {
+    readonly answer: {
+      readonly id: string;
+      readonly results: ReadonlyArray<string>;
+      readonly survey: {
+        readonly answers: ReadonlyArray<{
+          readonly id: string;
+          readonly results: ReadonlyArray<string>;
+        }>;
+        readonly id: string;
+        readonly isAnswered: boolean;
+        readonly paragraphs: ReadonlyArray<{
+          readonly description: string | null;
+          readonly multipleChoice: ReadonlyArray<string>;
+          readonly paragraphTitle: string;
+        }>;
+        readonly surveyTitle: string;
+      };
+    } | null;
     readonly error: string | null;
     readonly ok: boolean;
     readonly surveyId: string | null;
@@ -36,7 +54,21 @@ v1 = {
   "kind": "LocalArgument",
   "name": "surveyId"
 },
-v2 = [
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "results",
+  "storageKey": null
+},
+v4 = [
   {
     "alias": null,
     "args": [
@@ -79,6 +111,90 @@ v2 = [
       {
         "alias": null,
         "args": null,
+        "concreteType": "Answer",
+        "kind": "LinkedField",
+        "name": "answer",
+        "plural": false,
+        "selections": [
+          (v2/*: any*/),
+          (v3/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Survey",
+            "kind": "LinkedField",
+            "name": "survey",
+            "plural": false,
+            "selections": [
+              (v2/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "surveyTitle",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isAnswered",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "SurveyForm",
+                "kind": "LinkedField",
+                "name": "paragraphs",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "paragraphTitle",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "description",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "multipleChoice",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Answer",
+                "kind": "LinkedField",
+                "name": "answers",
+                "plural": true,
+                "selections": [
+                  (v2/*: any*/),
+                  (v3/*: any*/)
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
         "kind": "ScalarField",
         "name": "surveyId",
         "storageKey": null
@@ -96,7 +212,7 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "CreateAnswerMutation",
-    "selections": (v2/*: any*/),
+    "selections": (v4/*: any*/),
     "type": "Mutation",
     "abstractKey": null
   },
@@ -108,19 +224,19 @@ return {
     ],
     "kind": "Operation",
     "name": "CreateAnswerMutation",
-    "selections": (v2/*: any*/)
+    "selections": (v4/*: any*/)
   },
   "params": {
-    "cacheID": "faa1b0479306e786fd8f21762d0d8ea3",
+    "cacheID": "5676285c48464e747cea27c79aa050f9",
     "id": null,
     "metadata": {},
     "name": "CreateAnswerMutation",
     "operationKind": "mutation",
-    "text": "mutation CreateAnswerMutation(\n  $surveyId: ID!\n  $results: [String!]!\n) {\n  createAnswer(input: {surveyId: $surveyId, results: $results}) {\n    ok\n    error\n    surveyId\n  }\n}\n"
+    "text": "mutation CreateAnswerMutation(\n  $surveyId: ID!\n  $results: [String!]!\n) {\n  createAnswer(input: {surveyId: $surveyId, results: $results}) {\n    ok\n    error\n    answer {\n      id\n      results\n      survey {\n        id\n        surveyTitle\n        isAnswered\n        paragraphs {\n          paragraphTitle\n          description\n          multipleChoice\n        }\n        answers {\n          id\n          results\n        }\n      }\n    }\n    surveyId\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "db426c37f64bcaa6c8b77dc475482459";
+(node as any).hash = "82fa555f477e97f91bf36ff8393ddcb2";
 
 export default node;

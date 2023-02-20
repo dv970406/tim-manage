@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<64622681c6281e51f20d478fe304b984>>
+ * @generated SignedSource<<f37c5997cd5d4d2bd748bfae9c40f5ae>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,10 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type UserTableContent_user$data = {
+  readonly createdAt: any;
   readonly email: string;
   readonly id: string;
+  readonly isManager: boolean;
   readonly joinDate: any;
   readonly name: string;
   readonly position: {
@@ -62,6 +64,13 @@ return {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "isManager",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Position",
       "kind": "LinkedField",
       "name": "position",
@@ -103,6 +112,13 @@ return {
       "kind": "ScalarField",
       "name": "joinDate",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "createdAt",
+      "storageKey": null
     }
   ],
   "type": "User",
@@ -110,6 +126,6 @@ return {
 };
 })();
 
-(node as any).hash = "48a4f16db17a82e56a30350e14633a5f";
+(node as any).hash = "47bd2e00e37487d1cbd5da5a6c115293";
 
 export default node;

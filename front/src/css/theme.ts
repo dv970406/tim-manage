@@ -3,6 +3,7 @@ import {
   IBgColors,
   IBolds,
   IBorderRadius,
+  IBreakpoints,
   IColors,
   IDisabled,
   IFonts,
@@ -19,6 +20,7 @@ export interface ITheme {
   bold: IBolds;
   spacing: ISpacing;
   borderRadius: IBorderRadius;
+  breakpoints: IBreakpoints;
 }
 export const theme: ITheme = {
   bgColors: {
@@ -92,6 +94,13 @@ export const theme: ITheme = {
     sm: 12,
     md: 15,
     lg: 20,
+  },
+
+  breakpoints: {
+    xs: 576,
+    sm: 768,
+    md: 992,
+    lg: 1200,
   },
 };
 

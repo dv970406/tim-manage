@@ -1,8 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ConnectionInput } from 'src/core/dtos/pagination.dto';
 import { DB_TABLE } from 'src/core/variables/constants';
 import { User } from 'src/user/entities/user.entity';
 import { UserRepository } from 'src/user/user.repository';
+import { LessThan } from 'typeorm';
+import { AnswersConnection } from './dtos/answer/answer-pagination.dto';
 import {
   CreateAnswerInput,
   CreateAnswerOutput,
@@ -29,6 +32,37 @@ export class AnswerService {
     @InjectRepository(UserRepository)
     private readonly userRepo: UserRepository,
   ) {}
+
+  async answersConnection(
+    user: User,
+    { first, after }: ConnectionInput,
+  ): Promise<AnswersConnection> {
+    const [findMyAnswers, totalCount] = await this.answerRepo.findAndCount({
+      order: { createdAt: 'DESC' },
+      where: {
+        user: {
+          id: user.id,
+        },
+        ...(after && { createdAt: LessThan(after) }),
+      },
+      take: first,
+    });
+
+    const edges = findMyAnswers.map((answer) => ({
+      cursor: answer.createdAt,
+      node: answer,
+    }));
+    const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
+
+    return {
+      edges,
+      pageInfo: {
+        endCursor,
+        hasNextPage: totalCount > first,
+      },
+    };
+  }
+
   async getMyAnswers(loggedInUser: User): Promise<GetMyAnswersOutput> {
     try {
       const findMyAnswers = await this.answerRepo.find({

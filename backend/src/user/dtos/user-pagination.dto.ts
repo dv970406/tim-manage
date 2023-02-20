@@ -3,7 +3,7 @@ import { PageInfo } from 'src/core/dtos/pagination.dto';
 import { User } from '../entities/user.entity';
 
 @ObjectType()
-export class UsersPaginationFormat {
+export class UsersConnection {
   @Field((type) => [UserEdge])
   edges?: UserEdge[];
 

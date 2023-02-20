@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2f3080c83163002e3c0eaa9508a54806>>
+ * @generated SignedSource<<ab6a0a457871bd618ce09b325b4f7c3c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,12 +15,23 @@ export type CreatePostMutation$variables = {
 };
 export type CreatePostMutation$data = {
   readonly createPost: {
+    readonly edge: {
+      readonly cursor: any;
+      readonly node: {
+        readonly countComments: number;
+        readonly countLikes: number;
+        readonly createdAt: any;
+        readonly id: string;
+        readonly isLiked: boolean;
+        readonly title: string;
+        readonly user: {
+          readonly id: string;
+          readonly name: string;
+        };
+      };
+    };
     readonly error: string | null;
     readonly ok: boolean;
-    readonly post: {
-      readonly id: string;
-      readonly title: string;
-    } | null;
   };
 };
 export type CreatePostMutation = {
@@ -39,7 +50,14 @@ v1 = {
   "kind": "LocalArgument",
   "name": "title"
 },
-v2 = [
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v3 = [
   {
     "alias": null,
     "args": [
@@ -82,23 +100,82 @@ v2 = [
       {
         "alias": null,
         "args": null,
-        "concreteType": "Post",
+        "concreteType": "PostEdge",
         "kind": "LinkedField",
-        "name": "post",
+        "name": "edge",
         "plural": false,
         "selections": [
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "id",
+            "name": "cursor",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "title",
+            "concreteType": "Post",
+            "kind": "LinkedField",
+            "name": "node",
+            "plural": false,
+            "selections": [
+              (v2/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "title",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "User",
+                "kind": "LinkedField",
+                "name": "user",
+                "plural": false,
+                "selections": [
+                  (v2/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "name",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isLiked",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "countLikes",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "countComments",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "createdAt",
+                "storageKey": null
+              }
+            ],
             "storageKey": null
           }
         ],
@@ -117,7 +194,7 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "CreatePostMutation",
-    "selections": (v2/*: any*/),
+    "selections": (v3/*: any*/),
     "type": "Mutation",
     "abstractKey": null
   },
@@ -129,19 +206,19 @@ return {
     ],
     "kind": "Operation",
     "name": "CreatePostMutation",
-    "selections": (v2/*: any*/)
+    "selections": (v3/*: any*/)
   },
   "params": {
-    "cacheID": "bd6a709a3f0df9ea948cc509277c86e0",
+    "cacheID": "092be6c7367201a0d3f55253b724f7f4",
     "id": null,
     "metadata": {},
     "name": "CreatePostMutation",
     "operationKind": "mutation",
-    "text": "mutation CreatePostMutation(\n  $title: String!\n  $content: String!\n) {\n  createPost(input: {title: $title, content: $content}) {\n    ok\n    error\n    post {\n      id\n      title\n    }\n  }\n}\n"
+    "text": "mutation CreatePostMutation(\n  $title: String!\n  $content: String!\n) {\n  createPost(input: {title: $title, content: $content}) {\n    ok\n    error\n    edge {\n      cursor\n      node {\n        id\n        title\n        user {\n          id\n          name\n        }\n        isLiked\n        countLikes\n        countComments\n        createdAt\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "b0e389b462a08c28399cbe39cdc0f48a";
+(node as any).hash = "532626d751b814a3f80e81bb632d3ff8";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<64b2f3995483899091458bb7440d80a6>>
+ * @generated SignedSource<<9fa0f5429bee6f7bb4cfd54b1f495a2c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,13 +18,27 @@ export type CreateUserMutation$variables = {
 };
 export type CreateUserMutation$data = {
   readonly createUser: {
+    readonly edge: {
+      readonly cursor: any;
+      readonly node: {
+        readonly createdAt: any;
+        readonly email: string;
+        readonly id: string;
+        readonly isManager: boolean;
+        readonly joinDate: any;
+        readonly name: string;
+        readonly position: {
+          readonly id: string;
+          readonly position: string;
+        };
+        readonly team: {
+          readonly id: string;
+          readonly team: string;
+        };
+      };
+    };
     readonly error: string | null;
     readonly ok: boolean;
-    readonly user: {
-      readonly email: string;
-      readonly id: string;
-      readonly name: string;
-    } | null;
   };
 };
 export type CreateUserMutation = {
@@ -58,7 +72,14 @@ v4 = {
   "kind": "LocalArgument",
   "name": "teamId"
 },
-v5 = [
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v6 = [
   {
     "alias": null,
     "args": [
@@ -116,30 +137,101 @@ v5 = [
       {
         "alias": null,
         "args": null,
-        "concreteType": "User",
+        "concreteType": "UserEdge",
         "kind": "LinkedField",
-        "name": "user",
+        "name": "edge",
         "plural": false,
         "selections": [
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "id",
+            "name": "cursor",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "email",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "name",
+            "concreteType": "User",
+            "kind": "LinkedField",
+            "name": "node",
+            "plural": false,
+            "selections": [
+              (v5/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "name",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "email",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isManager",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Position",
+                "kind": "LinkedField",
+                "name": "position",
+                "plural": false,
+                "selections": [
+                  (v5/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "position",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Team",
+                "kind": "LinkedField",
+                "name": "team",
+                "plural": false,
+                "selections": [
+                  (v5/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "team",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "joinDate",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "createdAt",
+                "storageKey": null
+              }
+            ],
             "storageKey": null
           }
         ],
@@ -161,7 +253,7 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "CreateUserMutation",
-    "selections": (v5/*: any*/),
+    "selections": (v6/*: any*/),
     "type": "Mutation",
     "abstractKey": null
   },
@@ -176,19 +268,19 @@ return {
     ],
     "kind": "Operation",
     "name": "CreateUserMutation",
-    "selections": (v5/*: any*/)
+    "selections": (v6/*: any*/)
   },
   "params": {
-    "cacheID": "30f2ef7d399644c47b3258ce797f8a46",
+    "cacheID": "eaca90a01ea93f4faa8b1224c4a25dfe",
     "id": null,
     "metadata": {},
     "name": "CreateUserMutation",
     "operationKind": "mutation",
-    "text": "mutation CreateUserMutation(\n  $email: String!\n  $name: String!\n  $joinDate: DateTime!\n  $positionId: ID!\n  $teamId: ID!\n) {\n  createUser(input: {email: $email, name: $name, joinDate: $joinDate, positionId: $positionId, teamId: $teamId}) {\n    ok\n    error\n    user {\n      id\n      email\n      name\n    }\n  }\n}\n"
+    "text": "mutation CreateUserMutation(\n  $email: String!\n  $name: String!\n  $joinDate: DateTime!\n  $positionId: ID!\n  $teamId: ID!\n) {\n  createUser(input: {email: $email, name: $name, joinDate: $joinDate, positionId: $positionId, teamId: $teamId}) {\n    ok\n    error\n    edge {\n      cursor\n      node {\n        id\n        name\n        email\n        isManager\n        position {\n          id\n          position\n        }\n        team {\n          id\n          team\n        }\n        joinDate\n        createdAt\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "5fdba5348da8facf97a33fa78889d5b2";
+(node as any).hash = "fb1eded1d1b6024a8c26514bae6caf64";
 
 export default node;

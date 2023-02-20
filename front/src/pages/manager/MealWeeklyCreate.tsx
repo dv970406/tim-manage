@@ -8,6 +8,7 @@ import { Section } from "../../components/atomics/sections/sections";
 import { EndSubmitButton } from "../../components/molecules/buttons/Buttons";
 import { createWorker } from "tesseract.js";
 import { GapBox } from "../../components/atomics/boxes/Boxes";
+import CenterBox from "../../components/molecules/boxes/CenterBox";
 
 interface IMealWeeklyCreateForm {
   excelFormatMeal?: File;
@@ -57,54 +58,38 @@ const MealWeeklyCreatePage = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        height: "100%",
-      }}
-    >
-      <GapBox
-        style={{
-          flexDirection: "row",
-          width: "70%",
-          height: "60%",
-        }}
-      >
-        <Section>
-          <Form onSubmit={handleSubmit(onExcelSubmit)}>
-            <input
-              {...register("excelFormatMeal")}
-              type="file"
-              id="excel-file"
-              accept=".xlsx,.csv"
-            />
-            <EndSubmitButton
-              onClick={handleSubmit(onExcelSubmit)}
-              disabled={createWeeklyMealLoading}
-              text="식단 추가"
-            />
-          </Form>
-        </Section>
-        <Section>
-          <Form onSubmit={handleSubmit(onImageSubmit)}>
-            <input
-              {...register("imageFormatMeal")}
-              type="file"
-              id="image-file"
-              accept=".png,.jpg"
-            />
-            <EndSubmitButton
-              onClick={handleSubmit(onImageSubmit)}
-              disabled={createWeeklyMealLoading}
-              text="식단 이미지 추가"
-            />
-          </Form>
-        </Section>
-      </GapBox>
-    </div>
+    <CenterBox>
+      <Section>
+        <Form onSubmit={handleSubmit(onExcelSubmit)}>
+          <input
+            {...register("excelFormatMeal")}
+            type="file"
+            id="excel-file"
+            accept=".xlsx,.csv"
+          />
+          <EndSubmitButton
+            onClick={handleSubmit(onExcelSubmit)}
+            disabled={createWeeklyMealLoading}
+            text="식단 추가"
+          />
+        </Form>
+      </Section>
+      <Section>
+        <Form onSubmit={handleSubmit(onImageSubmit)}>
+          <input
+            {...register("imageFormatMeal")}
+            type="file"
+            id="image-file"
+            accept=".png,.jpg"
+          />
+          <EndSubmitButton
+            onClick={handleSubmit(onImageSubmit)}
+            disabled={createWeeklyMealLoading}
+            text="식단 이미지 추가"
+          />
+        </Form>
+      </Section>
+    </CenterBox>
   );
 };
 

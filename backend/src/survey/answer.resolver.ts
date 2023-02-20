@@ -1,9 +1,18 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { LoggedInUser } from 'src/auth/auth-user.decorator';
 import { LoginGuard, ManagerGuard } from 'src/auth/auth.guard';
+import { ConnectionInput } from 'src/core/dtos/pagination.dto';
 import { User } from 'src/user/entities/user.entity';
 import { AnswerService } from './answer.service';
+import { AnswersConnection } from './dtos/answer/answer-pagination.dto';
 import {
   CreateAnswerInput,
   CreateAnswerOutput,
@@ -22,6 +31,14 @@ import { Answer } from './entities/answer.entity';
 @Resolver((of) => Answer)
 export class AnswerResolver {
   constructor(private readonly answerService: AnswerService) {}
+
+  @ResolveField((type) => AnswersConnection)
+  answersConnection(
+    @Parent() user: User,
+    @Args() answersConnectionInput: ConnectionInput,
+  ): Promise<AnswersConnection> {
+    return this.answerService.answersConnection(user, answersConnectionInput);
+  }
 
   @Query((type) => GetMyAnswersOutput)
   @UseGuards(LoginGuard)

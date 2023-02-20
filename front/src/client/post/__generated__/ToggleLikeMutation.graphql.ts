@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<871e9f507822fc077bd8841190192d5a>>
+ * @generated SignedSource<<25da7627f4eef1896176d8fe60e63c49>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,13 @@ export type ToggleLikeMutation$variables = {
 export type ToggleLikeMutation$data = {
   readonly toggleLike: {
     readonly error: string | null;
+    readonly like: {
+      readonly id: string;
+      readonly post: {
+        readonly id: string;
+        readonly title: string;
+      };
+    } | null;
     readonly ok: boolean;
   };
 };
@@ -31,7 +38,14 @@ var v0 = [
     "name": "postId"
   }
 ],
-v1 = [
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v2 = [
   {
     "alias": null,
     "args": [
@@ -65,6 +79,37 @@ v1 = [
         "kind": "ScalarField",
         "name": "error",
         "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Like",
+        "kind": "LinkedField",
+        "name": "like",
+        "plural": false,
+        "selections": [
+          (v1/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Post",
+            "kind": "LinkedField",
+            "name": "post",
+            "plural": false,
+            "selections": [
+              (v1/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "title",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
       }
     ],
     "storageKey": null
@@ -76,7 +121,7 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "ToggleLikeMutation",
-    "selections": (v1/*: any*/),
+    "selections": (v2/*: any*/),
     "type": "Mutation",
     "abstractKey": null
   },
@@ -85,19 +130,19 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "ToggleLikeMutation",
-    "selections": (v1/*: any*/)
+    "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "a0b291b0c6ab899a23f7a60c343d6926",
+    "cacheID": "a9740d12068dbdcdbaf31558976c7074",
     "id": null,
     "metadata": {},
     "name": "ToggleLikeMutation",
     "operationKind": "mutation",
-    "text": "mutation ToggleLikeMutation(\n  $postId: ID!\n) {\n  toggleLike(input: {postId: $postId}) {\n    ok\n    error\n  }\n}\n"
+    "text": "mutation ToggleLikeMutation(\n  $postId: ID!\n) {\n  toggleLike(input: {postId: $postId}) {\n    ok\n    error\n    like {\n      id\n      post {\n        id\n        title\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "d6039747ed16b388d69d9680078e12e9";
+(node as any).hash = "c02c4af1fe16747bc8a9207e5a0828e4";
 
 export default node;

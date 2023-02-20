@@ -1,7 +1,12 @@
 import { Module } from '@nestjs/common';
 import { CustomTypeOrmModule } from 'src/core/repository/custom-typeorm.module';
 import { PositionRepository } from 'src/position/position.repository';
+import { CommentRepository } from 'src/post/repositories/comment.repository';
+import { LikeRepository } from 'src/post/repositories/like.repository';
+import { PostRepository } from 'src/post/repositories/post.repository';
+import { AnswerRepository } from 'src/survey/repositories/answer.repository';
 import { TeamRepository } from 'src/team/team.repository';
+import { VacationRepository } from 'src/vacation/vacation.repository';
 import { UserRepository } from './user.repository';
 import { UserResolver } from './user.resolver';
 import { UserService } from './user.service';
@@ -12,6 +17,11 @@ import { UserService } from './user.service';
       UserRepository,
       PositionRepository,
       TeamRepository,
+      CommentRepository,
+      PostRepository,
+      LikeRepository,
+      AnswerRepository,
+      VacationRepository,
     ]),
   ],
   providers: [UserResolver, UserService],

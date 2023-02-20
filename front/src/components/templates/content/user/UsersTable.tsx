@@ -1,31 +1,77 @@
-import React from "react";
+import { graphql } from "babel-plugin-relay/macro";
+import { usePaginationFragment } from "react-relay";
 import { useGetMyInfo } from "../../../../client/user/GetMyInfo.client";
-import { ListBox } from "../../../atomics/boxes/Boxes";
-import Table from "../../../molecules/tables/Table";
-import SurveyTableContent from "../../../organisms/content/survey/SurveyTableContent";
-import { SurveyTableContent_survey$key } from "../../../organisms/content/survey/__generated__/SurveyTableContent_survey.graphql";
+import { InfiniteScrollListBox } from "../../../organisms/shared/InfiniteScroll";
 import UserTableContent from "../../../organisms/content/user/UserTableContent";
-import { UserTableContent_user$key } from "../../../organisms/content/user/__generated__/UserTableContent_user.graphql";
+import { GetUsersPaginationQuery } from "./__generated__/GetUsersPaginationQuery.graphql";
+import { UsersTable_user$key } from "./__generated__/UsersTable_user.graphql";
 
 interface IUsersTable {
-  users: readonly UserTableContent_user$key[];
+  users: UsersTable_user$key;
 }
+
+const getUsersFragment = graphql`
+  fragment UsersTable_user on Query
+  @argumentDefinitions(
+    keyword: { type: "String" }
+    first: { type: "Int!" }
+    after: { type: "DateTime" }
+  )
+  @refetchable(queryName: "UsersTablePaginationQuery") {
+    getUsers(keyword: $keyword, first: $first, after: $after)
+      @connection(key: "UsersTable_getUsers") {
+      ok
+      error
+      edges {
+        node {
+          ...UserTableContent_user
+        }
+        cursor
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+    }
+  }
+`;
+
 const UsersTable = ({ users }: IUsersTable) => {
   const { myInfo } = useGetMyInfo();
 
+  const {
+    data: {
+      getUsers: { edges },
+    },
+    loadNext,
+    isLoadingNext,
+    refetch,
+    hasNext,
+  } = usePaginationFragment<GetUsersPaginationQuery, UsersTable_user$key>(
+    getUsersFragment,
+    users
+  );
+
   return (
-    <ListBox>
-      {users.map(
-        (user: any) =>
-          user && (
-            <UserTableContent
-              key={user.__id}
-              user={user}
-              isManager={myInfo?.isManager}
-            />
-          )
-      )}
-    </ListBox>
+    <>
+      <InfiniteScrollListBox
+        refetch={refetch}
+        isLoadingNext={isLoadingNext}
+        loadNext={loadNext}
+        hasNext={hasNext}
+      >
+        {edges.map(
+          (user: any) =>
+            user && (
+              <UserTableContent
+                key={user.cursor}
+                user={user.node}
+                isManager={myInfo?.isManager}
+              />
+            )
+        )}
+      </InfiniteScrollListBox>
+    </>
   );
 };
 

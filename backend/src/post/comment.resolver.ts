@@ -9,8 +9,10 @@ import {
 } from '@nestjs/graphql';
 import { LoggedInUser } from 'src/auth/auth-user.decorator';
 import { LoginGuard, ManagerGuard } from 'src/auth/auth.guard';
+import { ConnectionInput } from 'src/core/dtos/pagination.dto';
 import { User } from 'src/user/entities/user.entity';
 import { CommentService } from './comment.service';
+import { CommentsConnection } from './dtos/comment/comment-pagination.dto';
 import {
   CreateCommentInput,
   CreateCommentOutput,

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ConnectionInput } from 'src/core/dtos/pagination.dto';
 import { DB_TABLE } from 'src/core/variables/constants';
 import { POSITION_CEO } from 'src/core/variables/position';
 import { User } from 'src/user/entities/user.entity';
@@ -24,6 +25,7 @@ import {
   UpdateVacationInput,
   UpdateVacationOutput,
 } from './dtos/update-vacation.dto';
+import { VacationsConnection } from './dtos/vacation-pagination.dto';
 import { VacationRepository } from './vacation.repository';
 
 @Injectable()
@@ -34,6 +36,7 @@ export class VacationService {
     @InjectRepository(UserRepository)
     private readonly userRepo: UserRepository,
   ) {}
+
   async getVacations(): Promise<GetVacationsOutput> {
     try {
       const todayMonth = new Date().getMonth();

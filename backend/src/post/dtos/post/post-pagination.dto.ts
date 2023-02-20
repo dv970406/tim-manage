@@ -3,7 +3,7 @@ import { PageInfo } from 'src/core/dtos/pagination.dto';
 import { Post } from 'src/post/entities/post.entity';
 
 @ObjectType()
-export class PostsPaginationFormat {
+export class PostsConnection {
   @Field((type) => [PostEdge])
   edges?: PostEdge[];
 

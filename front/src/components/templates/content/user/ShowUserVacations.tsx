@@ -1,38 +1,53 @@
 import { graphql } from "babel-plugin-relay/macro";
 import React from "react";
-import { useFragment } from "react-relay";
+import { useFragment, usePaginationFragment } from "react-relay";
 import { useOutletContext } from "react-router-dom";
-import { GapBox } from "../../../atomics/boxes/Boxes";
 import { MainText } from "../../../atomics/typographys/texts";
 import Table from "../../../molecules/tables/Table";
-import UnConfirmedVacationTableContent from "../../../organisms/content/manager/UnConfirmedVacationTableContent";
-import ShowUserVacationsHistory from "../../../organisms/content/user/ShowUserVacationsHistory";
+import UserVacationTableContent from "../../../organisms/content/user/UserVacationTableContent";
 import { ShowUserVacations_vacation$key } from "./__generated__/ShowUserVacations_vacation.graphql";
 
 const showUserVacationsFragment = graphql`
-  fragment ShowUserVacations_vacation on User {
+  fragment ShowUserVacations_vacation on User
+  @argumentDefinitions(first: { type: "Int!" }, after: { type: "DateTime" })
+  @refetchable(queryName: "ShowUserVacationsPaginationQuery") {
     availableVacation
-    vacations {
-      ...ShowUserVacationsHistory_vacation
+    myVacationsConnection(first: $first, after: $after)
+      @connection(key: "ShowUserVacations_myVacationsConnection") {
+      edges {
+        node {
+          ...UserVacationTableContent_vacation
+        }
+        cursor
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
     }
   }
 `;
 
 const ShowUserVacations = () => {
   const user: ShowUserVacations_vacation$key = useOutletContext();
-  const showUserVacationsData = useFragment(showUserVacationsFragment, user);
+  const {
+    data: {
+      myVacationsConnection: { edges },
+      availableVacation,
+    },
+  } = usePaginationFragment(showUserVacationsFragment, user);
 
   return (
     <>
-      <MainText>남은 휴가 : {showUserVacationsData.availableVacation}</MainText>
+      <MainText>남은 휴가 : {availableVacation}</MainText>
 
       <Table headers={["시작일", "종료일", "기간", "반차여부", "승인여부"]}>
-        {showUserVacationsData?.vacations?.map(
-          (vacation: any) =>
+        {edges?.map(
+          (vacation) =>
             vacation && (
-              <ShowUserVacationsHistory
-                key={vacation.__id}
-                vacation={vacation}
+              <UserVacationTableContent
+                key={vacation.cursor}
+                vacation={vacation.node}
               />
             )
         )}

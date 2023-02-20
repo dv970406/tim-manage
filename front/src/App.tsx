@@ -33,6 +33,8 @@ import ShowUserVacations from "./components/templates/content/user/ShowUserVacat
 import MyPage from "./pages/user/MyPage";
 import ShowUserInfo from "./components/templates/content/user/ShowUserInfo";
 import ShowUserAnswers from "./components/templates/content/user/ShowUserAnswers";
+import ShowUserComments from "./components/templates/content/user/ShowUserComments";
+import ShowUserLikes from "./components/templates/content/user/ShowUserLikes";
 
 // 접근제한 라우터는 나중에 고민
 const router = createBrowserRouter([
@@ -64,6 +66,14 @@ const router = createBrowserRouter([
           {
             path: "post",
             element: <ShowUserPosts />,
+          },
+          {
+            path: "comment",
+            element: <ShowUserComments />,
+          },
+          {
+            path: "like",
+            element: <ShowUserLikes />,
           },
           {
             path: "answer",

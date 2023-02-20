@@ -1,5 +1,6 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { IsString } from 'class-validator';
+import { Node } from 'src/core/dtos/node.dto';
 import { CoreEntity } from 'src/core/entities/core.entity';
 import { DB_TABLE } from 'src/core/variables/constants';
 import { User } from 'src/user/entities/user.entity';
@@ -16,8 +17,8 @@ import { Like } from './like.entity';
 
 @InputType('PostInputType', { isAbstract: true })
 @Entity()
-@ObjectType()
-export class Post extends CoreEntity {
+@ObjectType({ implements: Node })
+export class Post extends CoreEntity implements Node {
   @Column()
   @Field((type) => String)
   @IsString()

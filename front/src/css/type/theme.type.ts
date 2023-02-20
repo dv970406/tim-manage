@@ -54,3 +54,10 @@ export interface IBorderRadius {
   md: number;
   sm: number;
 }
+
+export interface IBreakpoints {
+  xs: number;
+  sm: number;
+  md: number;
+  lg: number;
+}

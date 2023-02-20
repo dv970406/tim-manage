@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<166927fe2407d5c51951168004a04662>>
+ * @generated SignedSource<<8190df25d460129047af5f7901e5d1df>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,17 +8,27 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment, RefetchableFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowUserAnswers_answer$data = {
-  readonly answers: ReadonlyArray<{
-    readonly id: string;
-    readonly results: ReadonlyArray<string>;
-    readonly survey: {
-      readonly id: string;
-      readonly " $fragmentSpreads": FragmentRefs<"SurveyTableContent_survey">;
+  readonly id: string;
+  readonly myAnswersConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly cursor: any;
+      readonly node: {
+        readonly id: string;
+        readonly results: ReadonlyArray<string>;
+        readonly survey: {
+          readonly id: string;
+          readonly " $fragmentSpreads": FragmentRefs<"SurveyTableContent_survey">;
+        };
+      };
+    }>;
+    readonly pageInfo: {
+      readonly endCursor: any | null;
+      readonly hasNextPage: boolean;
     };
-  }>;
+  };
   readonly " $fragmentType": "ShowUserAnswers_answer";
 };
 export type ShowUserAnswers_answer$key = {
@@ -27,7 +37,10 @@ export type ShowUserAnswers_answer$key = {
 };
 
 const node: ReaderFragment = (function(){
-var v0 = {
+var v0 = [
+  "myAnswersConnection"
+],
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -35,53 +48,150 @@ var v0 = {
   "storageKey": null
 };
 return {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "after"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "first"
+    }
+  ],
   "kind": "Fragment",
-  "metadata": null,
+  "metadata": {
+    "connection": [
+      {
+        "count": "first",
+        "cursor": "after",
+        "direction": "forward",
+        "path": (v0/*: any*/)
+      }
+    ],
+    "refetch": {
+      "connection": {
+        "forward": {
+          "count": "first",
+          "cursor": "after"
+        },
+        "backward": null,
+        "path": (v0/*: any*/)
+      },
+      "fragmentPathInResult": [
+        "node"
+      ],
+      "operation": require('./ShowUserAnswersPaginationQuery.graphql'),
+      "identifierField": "id"
+    }
+  },
   "name": "ShowUserAnswers_answer",
   "selections": [
     {
-      "alias": null,
+      "alias": "myAnswersConnection",
       "args": null,
-      "concreteType": "Answer",
+      "concreteType": "AnswersConnection",
       "kind": "LinkedField",
-      "name": "answers",
-      "plural": true,
+      "name": "__ShowUserAnswers_myAnswersConnection_connection",
+      "plural": false,
       "selections": [
-        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "results",
+          "concreteType": "AnswerEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Answer",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                (v1/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "results",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "Survey",
+                  "kind": "LinkedField",
+                  "name": "survey",
+                  "plural": false,
+                  "selections": [
+                    (v1/*: any*/),
+                    {
+                      "args": null,
+                      "kind": "FragmentSpread",
+                      "name": "SurveyTableContent_survey"
+                    }
+                  ],
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "__typename",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "cursor",
+              "storageKey": null
+            }
+          ],
           "storageKey": null
         },
         {
           "alias": null,
           "args": null,
-          "concreteType": "Survey",
+          "concreteType": "PageInfo",
           "kind": "LinkedField",
-          "name": "survey",
+          "name": "pageInfo",
           "plural": false,
           "selections": [
-            (v0/*: any*/),
             {
+              "alias": null,
               "args": null,
-              "kind": "FragmentSpread",
-              "name": "SurveyTableContent_survey"
+              "kind": "ScalarField",
+              "name": "endCursor",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "hasNextPage",
+              "storageKey": null
             }
           ],
           "storageKey": null
         }
       ],
       "storageKey": null
-    }
+    },
+    (v1/*: any*/)
   ],
   "type": "User",
   "abstractKey": null
 };
 })();
 
-(node as any).hash = "1d9b75468ea7ee9fdbe10de5f0c33ac0";
+(node as any).hash = "3b52afe8083de5327109618821723cf0";
 
 export default node;

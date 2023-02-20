@@ -38,10 +38,11 @@ import { Answer } from 'src/survey/entities/answer.entity';
 import { Survey } from 'src/survey/entities/survey.entity';
 import { Meeting } from 'src/meeting/entities/meeting.entity';
 import { DB_TABLE } from 'src/core/variables/constants';
+import { Node } from 'src/core/dtos/node.dto';
 @InputType('UserInputType', { isAbstract: true })
 @Entity()
-@ObjectType()
-export class User extends CoreEntity {
+@ObjectType({ implements: Node })
+export class User extends CoreEntity implements Node {
   @Column({ default: false })
   @Field((type) => Boolean, { defaultValue: false })
   @IsBoolean()

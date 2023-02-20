@@ -12,7 +12,12 @@ import { Any } from 'typeorm';
 import { CoreOutput } from './core.dto';
 
 @ArgsType()
-export class PaginationInput {
+export class ConnectionInput {
+  // search 목적
+  @Field(() => String, { nullable: true })
+  keyword?: string;
+
+  // pagination 목적
   @Field(() => Date, { nullable: true })
   after?: Date;
 

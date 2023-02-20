@@ -1,6 +1,5 @@
 import FullCalendar from "@fullcalendar/react"; // must go before plugins
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
-import { Section } from "../../../atomics/sections/sections";
 import interactionPlugin, {
   EventResizeDoneArg,
 } from "@fullcalendar/interaction"; // needed for dayClick
@@ -12,14 +11,7 @@ import {
   EventDropArg,
   EventInput,
 } from "@fullcalendar/core";
-import React, {
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { Dispatch, SetStateAction, useContext, useState } from "react";
 import {
   filteringSchedulesButtons,
   renderEventContent,
@@ -62,6 +54,10 @@ export default function VacationCalendar({
   const [clickedScheduleId, setClickedScheduleId] = useState("");
 
   const handleDateSelect = ({ start, end }: DateSelectArg) => {
+    // 과거의 날짜는 선택할 수 없게 함
+    const now = new Date();
+    if (start < now) return;
+
     const startDate = +new Date(start) + NINE_HOURS_TO_MILLISEC;
     const endDate = +new Date(end) - NINE_HOURS_TO_MILLISEC;
     setSelectedDate({ start: startDate, end: endDate });

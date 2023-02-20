@@ -1,14 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { isInt } from 'class-validator';
-import { DB_TABLE } from 'src/core/variables/constants';
+import { find } from 'rxjs';
+import { ConnectionInput } from 'src/core/dtos/pagination.dto';
 import { POSITION_CEO } from 'src/core/variables/position';
 import { JwtService } from 'src/jwt/jwt.service';
 import { PositionRepository } from 'src/position/position.repository';
+import { CommentsConnection } from 'src/post/dtos/comment/comment-pagination.dto';
+import { LikesConnection } from 'src/post/dtos/like/like-pagination.dto';
+import { PostsConnection } from 'src/post/dtos/post/post-pagination.dto';
+import { CommentRepository } from 'src/post/repositories/comment.repository';
+import { LikeRepository } from 'src/post/repositories/like.repository';
+import { PostRepository } from 'src/post/repositories/post.repository';
+import { AnswersConnection } from 'src/survey/dtos/answer/answer-pagination.dto';
+import { AnswerRepository } from 'src/survey/repositories/answer.repository';
 import { TeamRepository } from 'src/team/team.repository';
-import { LessThan, Like } from 'typeorm';
+import { VacationsConnection } from 'src/vacation/dtos/vacation-pagination.dto';
+import { VacationRepository } from 'src/vacation/vacation.repository';
+import { LessThan, Like as LikeSearch } from 'typeorm';
 import { CreateUserInput, CreateUserOutput } from './dtos/create-user.dto';
 import { DeleteUserInput, DeleteUserOutput } from './dtos/delete-user.dto';
+import { GetMyInfoInput, GetMyInfoOutput } from './dtos/get-myInfo.dto';
 import { GetUserInput, GetUserOutput } from './dtos/get-user.dto';
 import { GetUsersInput, GetUsersOutput } from './dtos/get-users.dto';
 import { LoginInput, LoginOutput } from './dtos/login.dto';
@@ -18,6 +30,7 @@ import {
   UpdateUserPasswordInput,
   UpdateUserPasswordOutput,
 } from './dtos/update-userPassword.dto';
+import { UsersConnection } from './dtos/user-pagination.dto';
 import { User } from './entities/user.entity';
 import { UserRepository } from './user.repository';
 
@@ -29,67 +42,210 @@ export class UserService {
     @InjectRepository(PositionRepository)
     private readonly positionRepo: PositionRepository,
     @InjectRepository(TeamRepository) private readonly teamRepo: TeamRepository,
+    @InjectRepository(AnswerRepository)
+    private readonly answerRepo: AnswerRepository,
+    @InjectRepository(VacationRepository)
+    private readonly vacationRepo: VacationRepository,
+    @InjectRepository(PostRepository) private readonly postRepo: PostRepository,
+    @InjectRepository(CommentRepository)
+    private readonly commentRepo: CommentRepository,
+    @InjectRepository(LikeRepository)
+    private readonly likeRepo: LikeRepository,
   ) {}
 
-  async getUsers({ first, after }: GetUsersInput): Promise<GetUsersOutput> {
-    try {
-      const [findUsers, totalCount] = await this.userRepo.findAndCount({
-        order: { createdAt: 'DESC' },
-        relations: {
-          position: true,
-          team: true,
+  async myAnswersConnection(
+    user: User,
+    { first, after }: ConnectionInput,
+  ): Promise<AnswersConnection> {
+    const [findMyAnswers, totalCount] = await this.answerRepo.findAndCount({
+      order: { createdAt: 'DESC' },
+      where: {
+        user: {
+          id: user.id,
         },
-        where: {
-          ...(after && { createdAt: LessThan(after) }),
-        },
-        take: first,
-      });
+        ...(after && { createdAt: LessThan(after) }),
+      },
+      relations: {
+        user: true,
+      },
+      take: first,
+    });
 
-      const edges = findUsers.map((user) => ({
-        cursor: user.createdAt,
-        node: user,
-      }));
-      const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
-      return {
-        ok: true,
-        edges,
-        pageInfo: {
-          hasNextPage: totalCount > first,
-          endCursor,
-        },
-      };
-    } catch (error) {
-      return {
-        ok: false,
-        error: '유저 리스트 조회에 실패했습니다.',
-      };
-    }
+    const edges = findMyAnswers.map((answer) => ({
+      cursor: answer.createdAt,
+      node: answer,
+    }));
+    const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
+
+    return {
+      edges,
+      pageInfo: {
+        endCursor,
+        hasNextPage: totalCount > first,
+      },
+    };
   }
-  async searchUsers({
+  async myVacationsConnection(
+    user: User,
+    { first, after }: ConnectionInput,
+  ): Promise<VacationsConnection> {
+    const [findMyVacations, totalCount] = await this.vacationRepo.findAndCount({
+      order: { createdAt: 'DESC' },
+      where: {
+        user: {
+          id: user.id,
+        },
+        ...(after && { createdAt: LessThan(after) }),
+      },
+      relations: {
+        user: true,
+      },
+      take: first,
+    });
+
+    const edges = findMyVacations.map((vacation) => ({
+      cursor: vacation.createdAt,
+      node: vacation,
+    }));
+    const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
+
+    return {
+      edges,
+      pageInfo: {
+        endCursor,
+        hasNextPage: totalCount > first,
+      },
+    };
+  }
+  async myPostsConnection(
+    user: User,
+    { first, after }: ConnectionInput,
+  ): Promise<PostsConnection> {
+    const [findMyPosts, totalCount] = await this.postRepo.findAndCount({
+      order: { createdAt: 'DESC' },
+      where: {
+        user: {
+          id: user.id,
+        },
+        ...(after && { createdAt: LessThan(after) }),
+      },
+      relations: {
+        user: true,
+      },
+      take: first,
+    });
+
+    const edges = findMyPosts.map((post) => ({
+      cursor: post.createdAt,
+      node: post,
+    }));
+    const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
+
+    return {
+      edges,
+      pageInfo: {
+        endCursor,
+        hasNextPage: totalCount > first,
+      },
+    };
+  }
+  async myLikesConnection(
+    user: User,
+    { first, after }: ConnectionInput,
+  ): Promise<LikesConnection> {
+    const [findMyLikes, totalCount] = await this.likeRepo.findAndCount({
+      order: { createdAt: 'DESC' },
+      where: {
+        user: {
+          id: user.id,
+        },
+        ...(after && { createdAt: LessThan(after) }),
+      },
+      relations: {
+        post: {
+          user: true,
+        },
+      },
+      take: first,
+    });
+
+    const edges = findMyLikes.map((like) => ({
+      cursor: like.createdAt,
+      node: like,
+    }));
+    const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
+
+    return {
+      edges,
+      pageInfo: {
+        endCursor,
+        hasNextPage: totalCount > first,
+      },
+    };
+  }
+  async myCommentsConnection(
+    user: User,
+    { first, after }: ConnectionInput,
+  ): Promise<CommentsConnection> {
+    const [findMyComments, totalCount] = await this.commentRepo.findAndCount({
+      order: { createdAt: 'DESC' },
+      where: {
+        user: {
+          id: user.id,
+        },
+        ...(after && { createdAt: LessThan(after) }),
+      },
+      relations: {
+        post: {
+          user: true,
+        },
+      },
+      take: first,
+    });
+
+    const edges = findMyComments.map((comment) => ({
+      cursor: comment.createdAt,
+      node: comment,
+    }));
+    const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
+
+    return {
+      edges,
+      pageInfo: {
+        endCursor,
+        hasNextPage: totalCount > first,
+      },
+    };
+  }
+
+  async getUsers({
     keyword,
     first,
     after,
-  }: SearchUsersInput): Promise<SearchUsersOutput> {
+  }: GetUsersInput): Promise<GetUsersOutput> {
     try {
       const [findUsers, totalCount] = await this.userRepo.findAndCount({
+        order: { createdAt: 'DESC' },
+        where: {
+          ...(after && { createdAt: LessThan(after) }),
+        },
         ...(keyword && {
           where: [
             {
-              name: Like(`%${keyword}%`),
+              name: LikeSearch(`%${keyword}%`),
               ...(after && { createdAt: LessThan(after) }),
             },
             {
-              email: Like(`%${keyword}%`),
+              email: LikeSearch(`%${keyword}%`),
               ...(after && { createdAt: LessThan(after) }),
             },
           ],
         }),
-        take: first,
-        order: { createdAt: 'DESC' },
         relations: {
           position: true,
           team: true,
         },
+        take: first,
       });
 
       const edges = findUsers.map((user) => ({
@@ -97,22 +253,72 @@ export class UserService {
         node: user,
       }));
       const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
+
       return {
         ok: true,
         edges,
         pageInfo: {
-          hasNextPage: totalCount > first,
           endCursor,
+          hasNextPage: totalCount > first,
         },
       };
     } catch (error) {
       return {
         ok: false,
-        error: error.message || '찾을 수 없는 유저입니다.',
+        error: error.message || '유저 목록 조회에 실패했습니다.',
       };
     }
   }
-  async getUser({ id: userId }: GetUserInput): Promise<GetUserOutput> {
+  // async searchUsers({
+  //   keyword,
+  //   first,
+  //   after,
+  // }: SearchUsersInput): Promise<SearchUsersOutput> {
+  //   try {
+  //     const [findUsers, totalCount] = await this.userRepo.findAndCount({
+  //       ...(keyword && {
+  //         where: [
+  //           {
+  //             name: LikeSearch(`%${keyword}%`),
+  //             ...(after && { createdAt: LessThan(after) }),
+  //           },
+  //           {
+  //             email: LikeSearch(`%${keyword}%`),
+  //             ...(after && { createdAt: LessThan(after) }),
+  //           },
+  //         ],
+  //       }),
+  //       take: first,
+  //       order: { createdAt: 'DESC' },
+  //       relations: {
+  //         position: true,
+  //         team: true,
+  //       },
+  //     });
+
+  //     const edges = findUsers.map((user) => ({
+  //       cursor: user.createdAt,
+  //       node: user,
+  //     }));
+  //     const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
+  //     return {
+  //       ok: true,
+  //       usersConnection: {
+  //         edges,
+  //         pageInfo: {
+  //           hasNextPage: totalCount > first,
+  //           endCursor,
+  //         },
+  //       },
+  //     };
+  //   } catch (error) {
+  //     return {
+  //       ok: false,
+  //       error: error.message || '찾을 수 없는 유저입니다.',
+  //     };
+  //   }
+  // }
+  async getUser({ userId }: GetUserInput): Promise<GetUserOutput> {
     try {
       const findUser = await this.userRepo.findOne({
         where: { id: userId },
@@ -138,39 +344,41 @@ export class UserService {
     }
   }
 
-  async getMyInfo({ id: userId }: GetUserInput): Promise<GetUserOutput> {
+  async getMyInfo(
+    loggedInUser: User,
+    { first, after }: GetMyInfoInput,
+  ): Promise<GetMyInfoOutput> {
     try {
       const findUser = await this.userRepo.findOne({
-        where: { id: userId },
+        where: { id: loggedInUser.id },
         relations: {
           position: true,
           team: true,
-          vacations: true,
           attendedMeetings: {
             attendees: true,
           },
           hostedMeetingsByMe: true,
-          posts: {
+          surveys: true,
+          vacations: true,
+          answers: {
             user: true,
-          },
-          likes: {
-            post: {
-              user: true,
-            },
           },
           comments: {
             post: {
               user: true,
             },
           },
-          answers: {
-            survey: {
+          likes: {
+            post: {
               user: true,
             },
           },
-          surveys: true,
+          posts: {
+            user: true,
+          },
         },
       });
+
       if (!findUser) {
         throw new Error('존재하지 않는 유저입니다.');
       }
@@ -178,6 +386,41 @@ export class UserService {
       return {
         ok: true,
         user: findUser,
+        // answersConnection: {
+        //   edges: user.answers.edges,
+        //   pageInfo: {
+        //     hasNextPage: myAnswersTotalCount > first,
+        //     endCursor: myAnswersEndCursor,
+        //   },
+        // },
+        // commentsConnection: {
+        //   edges: user.comments.edges,
+        //   pageInfo: {
+        //     hasNextPage: myCommentsTotalCount > first,
+        //     endCursor: myCommentsEndCursor,
+        //   },
+        // },
+        // likesConnection: {
+        //   edges: user.likes.edges,
+        //   pageInfo: {
+        //     hasNextPage: myLikesTotalCount > first,
+        //     endCursor: myLikesEndCursor,
+        //   },
+        // },
+        // postsConnection: {
+        //   edges: user.posts.edges,
+        //   pageInfo: {
+        //     hasNextPage: myPostsTotalCount > first,
+        //     endCursor: myPostsEndCursor,
+        //   },
+        // },
+        // vacationsConnection: {
+        //   edges: user.vacations.edges,
+        //   pageInfo: {
+        //     hasNextPage: myVacationsTotalCount > first,
+        //     endCursor: myVacationsEndCursor,
+        //   },
+        // },
       };
     } catch (error) {
       return {
@@ -228,7 +471,6 @@ export class UserService {
         edge,
       };
     } catch (error) {
-      console.log(error);
       return {
         ok: false,
         error: error.message || '계정 생성에 실패했습니다.',

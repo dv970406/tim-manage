@@ -1,4 +1,5 @@
 import { Environment, Network, Store, RecordSource } from "relay-runtime";
+import { GraphQLObjectType, GraphQLSchema, GraphQLString } from "graphql";
 
 export const TOKEN = "TOKEN";
 const store = new Store(new RecordSource());

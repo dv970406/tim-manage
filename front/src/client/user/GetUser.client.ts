@@ -3,14 +3,14 @@ import { PreloadedQuery, usePreloadedQuery } from "react-relay";
 import { GetUserQuery } from "./__generated__/GetUserQuery.graphql";
 
 export const getUserQuery = graphql`
-  query GetUserQuery($id: ID!) {
-    getUser(input: { id: $id }) {
+  query GetUserQuery($userId: ID!) {
+    getUser(userId: $userId) {
       ok
       error
       user {
         ...ShowUserInfo_user
-        ...ShowUserVacations_vacation
       }
+      # ...ShowUserVacations_vacation
     }
   }
 `;

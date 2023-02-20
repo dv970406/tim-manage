@@ -33,6 +33,7 @@ import { MeetingModule } from './meeting/meeting.module';
 import { Meeting } from './meeting/entities/meeting.entity';
 import { MealModule } from './meal/meal.module';
 import { Meal } from './meal/entities/meal.entity';
+import { Node } from './core/dtos/node.dto';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -87,6 +88,7 @@ import { Meal } from './meal/entities/meal.entity';
         Answer,
         Meeting,
         Meal,
+        Node,
       ],
     }),
     UserModule,

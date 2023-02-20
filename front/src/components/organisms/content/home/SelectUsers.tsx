@@ -1,11 +1,16 @@
 import { graphql } from "babel-plugin-relay/macro";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import ReactSelect, { GroupBase, MultiValue, StylesConfig } from "react-select";
-import { useSelectUsers } from "../../../../client/user/SelectUsers.client";
-import { GetUsersQuery$data } from "../../../../client/user/__generated__/GetUsersQuery.graphql";
+import {
+  useSelectUsers,
+  useSelectUsersPagination,
+} from "../../../../client/user/SelectUsers.client";
 import { theme } from "../../../../css/theme";
 import { SubTitle } from "../../../atomics/typographys/titles";
 import { GapBox } from "../../../atomics/boxes/Boxes";
+import { usePaginationFragment } from "react-relay";
+import { SelectUsersPaginationQuery } from "./__generated__/SelectUsersPaginationQuery.graphql";
+import { SelectUsers_user$key } from "./__generated__/SelectUsers_user.graphql";
 
 export interface IAttendee {
   readonly id: string;
@@ -23,6 +28,28 @@ interface ISelect {
 
 // 모든 유저의 정보를 가져와서 리스트에 띄워주고 참석자를 고를 수 있게 함
 // Multi Select가 필요해서 datalist를 여기에는 사용하지 않음
+
+const selectUsersQuery = graphql`
+  fragment SelectUsers_user on Query
+  @argumentDefinitions(first: { type: "Int!" }, after: { type: "DateTime" }) {
+    getUsers(first: $first, after: $after)
+      @connection(key: "SelectUsers_getUsers") {
+      ok
+      error
+      edges {
+        node {
+          id
+          name
+        }
+        cursor
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+    }
+  }
+`;
 const SelectUsers = ({ prevAttendees, setAttendeesId }: ISelect) => {
   const prevAttendeesBySelectOptions = prevAttendees?.map(
     (attendee: IAttendee) => ({
@@ -31,7 +58,28 @@ const SelectUsers = ({ prevAttendees, setAttendeesId }: ISelect) => {
     })
   );
 
-  const { usersBySelectOptions } = useSelectUsers();
+  // 여기서부터 useEffect까지 훅으로 묶고 싶은데 에러남..
+  const { users } = useSelectUsers();
+  const {
+    data: {
+      getUsers: { edges },
+    },
+  } = usePaginationFragment<SelectUsersPaginationQuery, SelectUsers_user$key>(
+    selectUsersQuery,
+    users
+  );
+
+  const [usersBySelectOptions, setUsersBySelectOptions] = useState<
+    ISelectFormat[]
+  >([]);
+  const newUserFormat = edges.map((user) => ({
+    value: user.node.id,
+    label: user.node.name,
+  }));
+
+  useEffect(() => {
+    setUsersBySelectOptions(newUserFormat);
+  }, []);
 
   const handleChangeSelect = (selectedUsers: MultiValue<any>) => {
     const attendeesIdArray = selectedUsers.map((user) => user.value);

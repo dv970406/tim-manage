@@ -1,10 +1,10 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Args, ArgsType, Field, ID, ObjectType } from '@nestjs/graphql';
 import { CoreOutput } from 'src/core/dtos/core.dto';
-import { PageInfo } from 'src/core/dtos/pagination.dto';
+import { ConnectionInput, PageInfo } from 'src/core/dtos/pagination.dto';
 import { Survey } from 'src/survey/entities/survey.entity';
 
 @ObjectType()
-export class SurveysPaginationFormat {
+export class SurveysConnection {
   @Field((type) => [SurveyEdge])
   edges?: SurveyEdge[];
 
@@ -19,4 +19,10 @@ export class SurveyEdge {
 
   @Field((type) => Survey)
   node: Survey;
+}
+
+@ArgsType()
+export class SurveysConnectionInput extends ConnectionInput {
+  @Field((type) => Boolean, { nullable: true })
+  onlyMine?: boolean;
 }

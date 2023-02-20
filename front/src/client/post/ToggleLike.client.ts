@@ -1,6 +1,6 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useState } from "react";
-import { commitMutation, useMutation } from "react-relay";
+import { commitMutation, ConnectionHandler, useMutation } from "react-relay";
 import { useNavigate } from "react-router-dom";
 import { environment } from "../client";
 import {
@@ -13,6 +13,13 @@ const toggleLikeQuery = graphql`
     toggleLike(input: { postId: $postId }) {
       ok
       error
+      like {
+        id
+        post {
+          id
+          title
+        }
+      }
     }
   }
 `;
@@ -34,10 +41,15 @@ export const useToggleLike = () => {
       },
       updater: (proxyStore, { toggleLike }) => {
         // 댓글 지워지면 해당 Post의 countComments -1 해줘야함
-        const rootGetPosts = proxyStore.get(
+        const rootGetPost = proxyStore.get(
           `client:root:getPost(input:{"id":"${variables.postId}"})`
         );
-        const targetPost = rootGetPosts?.getLinkedRecord("post");
+
+        const addLikePayload = proxyStore
+          .getRootField("toggleLike")
+          .getLinkedRecord("like");
+
+        const targetPost = rootGetPost?.getLinkedRecord("post");
         const prevCount = targetPost?.getValue("countLikes") || 0;
         const isLiked = targetPost?.getValue("isLiked");
         targetPost?.setValue(
@@ -45,6 +57,34 @@ export const useToggleLike = () => {
           "countLikes"
         );
         targetPost?.setValue(!isLiked, "isLiked");
+
+        const myInfoRecord = proxyStore
+          .get("client:root:getMyInfo")
+          ?.getLinkedRecord("user");
+
+        if (!myInfoRecord) return;
+        const myLikeConnection = ConnectionHandler.getConnection(
+          myInfoRecord,
+          "ShowUserLikes_myLikesConnection"
+        );
+        console.log(myLikeConnection);
+        if (myLikeConnection)
+          ConnectionHandler.insertEdgeBefore(myLikeConnection, addLikePayload);
+
+        // 좋아요를 달면 myInfo에 좋아요한 게시글을 추가
+        // const rootGetMyInfo = proxyStore.get("client:root:getMyInfo");
+        // const rootGetMyInfoUser = rootGetMyInfo?.getLinkedRecord("user");
+        // const oldMyLikes = rootGetMyInfoUser?.getLinkedRecords("likes");
+        // if (isLiked) {
+        //   if (toggleLike?.like?.id) proxyStore.delete(toggleLike?.like?.id);
+        // } else {
+        //   if (oldMyLikes) {
+        //     rootGetMyInfoUser?.setLinkedRecords(
+        //       [...oldMyLikes, addLikePayload],
+        //       "likes"
+        //     );
+        //   }
+        // }
       },
     });
   };

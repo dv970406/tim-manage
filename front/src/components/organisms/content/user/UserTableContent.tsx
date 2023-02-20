@@ -34,6 +34,7 @@ const userTableContentFragment = graphql`
     id
     name
     email
+    isManager
     position {
       id
       position
@@ -43,6 +44,7 @@ const userTableContentFragment = graphql`
       team
     }
     joinDate
+    createdAt
   }
 `;
 const UserTableContent = ({ user, isManager }: IUserTableContent) => {

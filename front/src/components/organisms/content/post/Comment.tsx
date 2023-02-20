@@ -1,9 +1,11 @@
 import { faEraser } from "@fortawesome/pro-solid-svg-icons";
 import { graphql } from "babel-plugin-relay/macro";
-import React, { MouseEventHandler } from "react";
+import React from "react";
 import { useFragment } from "react-relay";
 import { useDeleteComment } from "../../../../client/post/DeleteComment.client";
+import { theme } from "../../../../css/theme";
 import { getElaspedDay } from "../../../../utils/time/time";
+import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
 import { SectionText } from "../../../atomics/typographys/texts";
 import { SubTitle } from "../../../atomics/typographys/titles";
 import { ButtonIcon } from "../../../molecules/buttons/Buttons";
@@ -37,13 +39,16 @@ const Comment = ({ comment }: IComment) => {
   };
   return (
     <div>
-      <SubTitle>{commentData.user.name}</SubTitle>
-      {commentData.isMyComment && (
-        <ButtonIcon
-          icon={faEraser}
-          onClick={() => handleDeleteComment(commentData.id)}
-        />
-      )}
+      <RowBox style={{ justifyContent: "space-between" }}>
+        <SubTitle>{commentData.user.name}</SubTitle>
+        {commentData.isMyComment && (
+          <ButtonIcon
+            icon={faEraser}
+            onClick={() => handleDeleteComment(commentData.id)}
+            color={theme.colors.red}
+          />
+        )}
+      </RowBox>
       <SectionText>{commentData.content}</SectionText>
       <div>
         <SectionText>{getElaspedDay(commentData.createdAt)}</SectionText>

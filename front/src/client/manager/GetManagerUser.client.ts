@@ -7,8 +7,8 @@ import {
 import { GetManagerUserQuery } from "./__generated__/GetManagerUserQuery.graphql";
 
 export const getManagerUserQuery = graphql`
-  query GetManagerUserQuery($id: ID!, $skip: Boolean!) {
-    getUser(input: { id: $id }) @skip(if: $skip) {
+  query GetManagerUserQuery($userId: ID!, $skip: Boolean!) {
+    getUser(userId: $userId) @skip(if: $skip) {
       ok
       error
       user {
@@ -40,7 +40,7 @@ export const useGetManagerUser = (userId: string) => {
     getManagerUserQuery,
     {
       skip: !userId,
-      id: userId,
+      userId,
     }
   );
 

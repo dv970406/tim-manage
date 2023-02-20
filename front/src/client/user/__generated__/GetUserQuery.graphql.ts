@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8d1a7a84c0fe7b2b3d17ac16d74b100c>>
+ * @generated SignedSource<<b2216d3254ffc4d3d4c1a6adf554f813>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,14 +11,14 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type GetUserQuery$variables = {
-  id: string;
+  userId: string;
 };
 export type GetUserQuery$data = {
   readonly getUser: {
     readonly error: string | null;
     readonly ok: boolean;
     readonly user: {
-      readonly " $fragmentSpreads": FragmentRefs<"ShowUserInfo_user" | "ShowUserVacations_vacation">;
+      readonly " $fragmentSpreads": FragmentRefs<"ShowUserInfo_user">;
     } | null;
   };
 };
@@ -32,20 +32,14 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "id"
+    "name": "userId"
   }
 ],
 v1 = [
   {
-    "fields": [
-      {
-        "kind": "Variable",
-        "name": "id",
-        "variableName": "id"
-      }
-    ],
-    "kind": "ObjectValue",
-    "name": "input"
+    "kind": "Variable",
+    "name": "userId",
+    "variableName": "userId"
   }
 ],
 v2 = {
@@ -98,11 +92,6 @@ return {
                 "args": null,
                 "kind": "FragmentSpread",
                 "name": "ShowUserInfo_user"
-              },
-              {
-                "args": null,
-                "kind": "FragmentSpread",
-                "name": "ShowUserVacations_vacation"
               }
             ],
             "storageKey": null
@@ -204,85 +193,6 @@ return {
                   }
                 ],
                 "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "availableVacation",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Vacation",
-                "kind": "LinkedField",
-                "name": "vacations",
-                "plural": true,
-                "selections": [
-                  (v4/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "startDate",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "endDate",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "duration",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "isHalf",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Confirm",
-                    "kind": "LinkedField",
-                    "name": "confirmed",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "byCeo",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "byManager",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "byLeader",
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
               }
             ],
             "storageKey": null
@@ -293,16 +203,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b3f7cdb3bf93e8bde84e6bc3f7a02fd4",
+    "cacheID": "66aae691fc9093e4ddbb4a640d83faf4",
     "id": null,
     "metadata": {},
     "name": "GetUserQuery",
     "operationKind": "query",
-    "text": "query GetUserQuery(\n  $id: ID!\n) {\n  getUser(input: {id: $id}) {\n    ok\n    error\n    user {\n      ...ShowUserInfo_user\n      ...ShowUserVacations_vacation\n      id\n    }\n  }\n}\n\nfragment ShowUserInfo_user on User {\n  id\n  name\n  email\n  isManager\n  joinDate\n  position {\n    id\n    position\n  }\n  team {\n    id\n    team\n  }\n}\n\nfragment ShowUserVacationsHistory_vacation on Vacation {\n  id\n  startDate\n  endDate\n  duration\n  isHalf\n  confirmed {\n    byCeo\n    byManager\n    byLeader\n  }\n}\n\nfragment ShowUserVacations_vacation on User {\n  availableVacation\n  vacations {\n    ...ShowUserVacationsHistory_vacation\n    id\n  }\n}\n"
+    "text": "query GetUserQuery(\n  $userId: ID!\n) {\n  getUser(userId: $userId) {\n    ok\n    error\n    user {\n      ...ShowUserInfo_user\n      id\n    }\n  }\n}\n\nfragment ShowUserInfo_user on User {\n  id\n  name\n  email\n  isManager\n  joinDate\n  position {\n    id\n    position\n  }\n  team {\n    id\n    team\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "6e5aaff7c68c6699278ecd7b672afedd";
+(node as any).hash = "57aa0b8df7a7957a5e432ceb638dabe7";
 
 export default node;

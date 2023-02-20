@@ -1,6 +1,7 @@
 import { SideBarSection } from "../atomics/sections/sections";
 import NavTabButton from "../organisms/sidebar/NavTabButton";
 import {
+  faClose,
   faGameBoard,
   faHome,
   faPaperPlane,
@@ -10,8 +11,12 @@ import {
 } from "@fortawesome/pro-solid-svg-icons";
 
 import { useState } from "react";
-import { GapList, HorizontalDivider } from "../atomics/boxes/Boxes";
+import { GapList, HorizontalDivider, RowBox } from "../atomics/boxes/Boxes";
 import { SideBarContext } from "../../utils/contexts/sidebar.context";
+import { ButtonIcon } from "../molecules/buttons/Buttons";
+import { NavLink } from "react-router-dom";
+import { MainText } from "../atomics/typographys/texts";
+import { theme } from "../../css/theme";
 
 interface ISideBar {
   isManager?: boolean;
@@ -19,11 +24,34 @@ interface ISideBar {
 const SideBar = ({ isManager }: ISideBar) => {
   const [clickedTabs, setClickedTabs] = useState<string[]>([]);
 
+  const handleMenuClose = () => {
+    const sideBar = document.querySelector(".sidebar");
+    sideBar?.classList.remove("open");
+
+    const hamburgerMenu = document.querySelector(".hamburger_menu");
+    hamburgerMenu?.classList.add("open");
+  };
   return (
     <SideBarContext.Provider value={{ clickedTabs, setClickedTabs }}>
-      <SideBarSection>
+      <SideBarSection className="sidebar">
         <nav style={{ width: "100%" }}>
-          <a>dsa</a>
+          <RowBox
+            style={{
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: theme.spacing.md,
+            }}
+          >
+            <div>
+              <NavLink to="/" end>
+                {/* 이 부분 추후 이미지로 변경 */}
+                <MainText>팀솔루션</MainText>
+              </NavLink>
+            </div>
+            <div className="sidebar_close">
+              <ButtonIcon onClick={handleMenuClose} icon={faClose} />
+            </div>
+          </RowBox>
           <HorizontalDivider />
           <GapList>
             {isManager && (

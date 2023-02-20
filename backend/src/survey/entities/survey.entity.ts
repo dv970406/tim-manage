@@ -1,4 +1,5 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
+import { Node } from 'src/core/dtos/node.dto';
 import { CoreEntity } from 'src/core/entities/core.entity';
 import { DB_TABLE } from 'src/core/variables/constants';
 import { User } from 'src/user/entities/user.entity';
@@ -7,8 +8,8 @@ import { Answer } from './answer.entity';
 
 @InputType('SurveyInputType', { isAbstract: true })
 @Entity()
-@ObjectType()
-export class Survey extends CoreEntity {
+@ObjectType({ implements: Node })
+export class Survey extends CoreEntity implements Node {
   @Column()
   @Field((type) => String)
   surveyTitle: string;

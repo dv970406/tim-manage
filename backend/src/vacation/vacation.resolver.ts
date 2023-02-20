@@ -1,7 +1,15 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { LoggedInUser } from 'src/auth/auth-user.decorator';
 import { LoginGuard, ManagerGuard } from 'src/auth/auth.guard';
+import { ConnectionInput } from 'src/core/dtos/pagination.dto';
 import { User } from 'src/user/entities/user.entity';
 import {
   ConfirmVacationInput,
@@ -22,12 +30,14 @@ import {
   UpdateVacationInput,
   UpdateVacationOutput,
 } from './dtos/update-vacation.dto';
+import { VacationsConnection } from './dtos/vacation-pagination.dto';
 import { Vacation } from './entities/vacation.entity';
 import { VacationService } from './vacation.service';
 
 @Resolver((of) => Vacation)
 export class VacationResolver {
   constructor(private readonly vacationService: VacationService) {}
+
   @Query((type) => GetVacationsOutput)
   getVacations(): Promise<GetVacationsOutput> {
     return this.vacationService.getVacations();

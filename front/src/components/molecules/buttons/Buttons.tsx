@@ -13,7 +13,7 @@ interface IButtonIcon extends IIcon {
 export const ButtonIcon = ({ color, icon, size, onClick }: IButtonIcon) => {
   return (
     <button onClick={onClick} type="button">
-      <Icon icon={icon} color={color} size={size} />
+      <Icon icon={icon} color={color} size={size} />\
     </button>
   );
 };

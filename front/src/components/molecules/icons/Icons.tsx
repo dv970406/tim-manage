@@ -7,6 +7,7 @@ interface IBoxIcon extends IIcon {
 export const BoxIcon = ({ color, icon, bgColor, size }: IBoxIcon) => {
   return (
     <div
+      className="avatar_bg"
       style={{
         backgroundColor: bgColor ? bgColor : theme.bgColors.gray,
         padding: theme.spacing.sm,

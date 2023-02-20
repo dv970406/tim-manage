@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9757783345a3431011edcf072a18b9c2>>
+ * @generated SignedSource<<bed8df24e6afb527bf28060a5fa90fb5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,8 +10,8 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type GetManagerUserQuery$variables = {
-  id: string;
   skip: boolean;
+  userId: string;
 };
 export type GetManagerUserQuery$data = {
   readonly getUser?: {
@@ -41,26 +41,24 @@ export type GetManagerUserQuery = {
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "id"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "skip"
-  }
-],
+var v0 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "skip"
+},
 v1 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "userId"
+},
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v2 = [
+v3 = [
   {
     "condition": "skip",
     "kind": "Condition",
@@ -70,15 +68,9 @@ v2 = [
         "alias": null,
         "args": [
           {
-            "fields": [
-              {
-                "kind": "Variable",
-                "name": "id",
-                "variableName": "id"
-              }
-            ],
-            "kind": "ObjectValue",
-            "name": "input"
+            "kind": "Variable",
+            "name": "userId",
+            "variableName": "userId"
           }
         ],
         "concreteType": "GetUserOutput",
@@ -108,7 +100,7 @@ v2 = [
             "name": "user",
             "plural": false,
             "selections": [
-              (v1/*: any*/),
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -145,7 +137,7 @@ v2 = [
                 "name": "position",
                 "plural": false,
                 "selections": [
-                  (v1/*: any*/),
+                  (v2/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -164,7 +156,7 @@ v2 = [
                 "name": "team",
                 "plural": false,
                 "selections": [
-                  (v1/*: any*/),
+                  (v2/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -193,32 +185,38 @@ v2 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/)
+    ],
     "kind": "Fragment",
     "metadata": null,
     "name": "GetManagerUserQuery",
-    "selections": (v2/*: any*/),
+    "selections": (v3/*: any*/),
     "type": "Query",
     "abstractKey": null
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v1/*: any*/),
+      (v0/*: any*/)
+    ],
     "kind": "Operation",
     "name": "GetManagerUserQuery",
-    "selections": (v2/*: any*/)
+    "selections": (v3/*: any*/)
   },
   "params": {
-    "cacheID": "558d5b6ad575edd756cad020550566b7",
+    "cacheID": "2ef7530af7c22e883695fecb7be22337",
     "id": null,
     "metadata": {},
     "name": "GetManagerUserQuery",
     "operationKind": "query",
-    "text": "query GetManagerUserQuery(\n  $id: ID!\n  $skip: Boolean!\n) {\n  getUser(input: {id: $id}) @skip(if: $skip) {\n    ok\n    error\n    user {\n      id\n      name\n      email\n      isManager\n      joinDate\n      position {\n        id\n        position\n      }\n      team {\n        id\n        team\n      }\n      availableVacation\n    }\n  }\n}\n"
+    "text": "query GetManagerUserQuery(\n  $userId: ID!\n  $skip: Boolean!\n) {\n  getUser(userId: $userId) @skip(if: $skip) {\n    ok\n    error\n    user {\n      id\n      name\n      email\n      isManager\n      joinDate\n      position {\n        id\n        position\n      }\n      team {\n        id\n        team\n      }\n      availableVacation\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "1ed8be3ca81559dda190f43e6cf54d61";
+(node as any).hash = "d27d19e2a3ae96faddbf8b667a3fcf9f";
 
 export default node;

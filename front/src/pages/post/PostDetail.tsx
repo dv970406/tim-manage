@@ -54,7 +54,11 @@ const PostDetail = ({ getPostQueryReference }: IPostDetail) => {
           {post && <ContentZone post={post} />}
         </Section>
 
-        <Section style={{ width: "40%" }}>
+        <Section
+          style={{
+            width: "40%",
+          }}
+        >
           {post && <CommentsZone post={post} />}{" "}
         </Section>
       </GapBox>

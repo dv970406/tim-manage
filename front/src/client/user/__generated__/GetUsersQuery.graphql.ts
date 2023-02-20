@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f9be7928fa25f1c06cc66b5a60822252>>
+ * @generated SignedSource<<19b6afbbf34d148a1f343011f4b6961b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,13 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type GetUsersQuery$variables = {};
+export type GetUsersQuery$variables = {
+  after?: any | null;
+  first: number;
+  keyword?: string | null;
+};
 export type GetUsersQuery$data = {
-  readonly getUsers: {
-    readonly error: string | null;
-    readonly ok: boolean;
-    readonly users: ReadonlyArray<{
-      readonly " $fragmentSpreads": FragmentRefs<"UserTableContent_user">;
-    }> | null;
-  };
+  readonly " $fragmentSpreads": FragmentRefs<"UsersTable_user">;
 };
 export type GetUsersQuery = {
   response: GetUsersQuery$data;
@@ -27,20 +25,38 @@ export type GetUsersQuery = {
 
 const node: ConcreteRequest = (function(){
 var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "ok",
-  "storageKey": null
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "after"
 },
 v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "error",
-  "storageKey": null
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "first"
 },
 v2 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "keyword"
+},
+v3 = [
+  {
+    "kind": "Variable",
+    "name": "after",
+    "variableName": "after"
+  },
+  {
+    "kind": "Variable",
+    "name": "first",
+    "variableName": "first"
+  },
+  {
+    "kind": "Variable",
+    "name": "keyword",
+    "variableName": "keyword"
+  }
+],
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -49,39 +65,19 @@ v2 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/),
+      (v2/*: any*/)
+    ],
     "kind": "Fragment",
     "metadata": null,
     "name": "GetUsersQuery",
     "selections": [
       {
-        "alias": null,
-        "args": null,
-        "concreteType": "GetUsersOutput",
-        "kind": "LinkedField",
-        "name": "getUsers",
-        "plural": false,
-        "selections": [
-          (v0/*: any*/),
-          (v1/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "User",
-            "kind": "LinkedField",
-            "name": "users",
-            "plural": true,
-            "selections": [
-              {
-                "args": null,
-                "kind": "FragmentSpread",
-                "name": "UserTableContent_user"
-              }
-            ],
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
+        "args": (v3/*: any*/),
+        "kind": "FragmentSpread",
+        "name": "UsersTable_user"
       }
     ],
     "type": "Query",
@@ -89,76 +85,131 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": [
+      (v2/*: any*/),
+      (v1/*: any*/),
+      (v0/*: any*/)
+    ],
     "kind": "Operation",
     "name": "GetUsersQuery",
     "selections": [
       {
         "alias": null,
-        "args": null,
+        "args": (v3/*: any*/),
         "concreteType": "GetUsersOutput",
         "kind": "LinkedField",
         "name": "getUsers",
         "plural": false,
         "selections": [
-          (v0/*: any*/),
-          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
-            "concreteType": "User",
+            "kind": "ScalarField",
+            "name": "ok",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "error",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "UserEdge",
             "kind": "LinkedField",
-            "name": "users",
+            "name": "edges",
             "plural": true,
             "selections": [
-              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
-                "kind": "ScalarField",
-                "name": "name",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "email",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Position",
+                "concreteType": "User",
                 "kind": "LinkedField",
-                "name": "position",
+                "name": "node",
                 "plural": false,
                 "selections": [
-                  (v2/*: any*/),
+                  (v4/*: any*/),
                   {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
+                    "name": "name",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "email",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "isManager",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Position",
+                    "kind": "LinkedField",
                     "name": "position",
+                    "plural": false,
+                    "selections": [
+                      (v4/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "position",
+                        "storageKey": null
+                      }
+                    ],
                     "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Team",
-                "kind": "LinkedField",
-                "name": "team",
-                "plural": false,
-                "selections": [
-                  (v2/*: any*/),
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Team",
+                    "kind": "LinkedField",
+                    "name": "team",
+                    "plural": false,
+                    "selections": [
+                      (v4/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "team",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
                   {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "team",
+                    "name": "joinDate",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "createdAt",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "__typename",
                     "storageKey": null
                   }
                 ],
@@ -168,7 +219,32 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "joinDate",
+                "name": "cursor",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "PageInfo",
+            "kind": "LinkedField",
+            "name": "pageInfo",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "endCursor",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "hasNextPage",
                 "storageKey": null
               }
             ],
@@ -176,20 +252,31 @@ return {
           }
         ],
         "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": (v3/*: any*/),
+        "filters": [
+          "keyword"
+        ],
+        "handle": "connection",
+        "key": "UsersTable_getUsers",
+        "kind": "LinkedHandle",
+        "name": "getUsers"
       }
     ]
   },
   "params": {
-    "cacheID": "36f22020255a188d2473cff32157f8e8",
+    "cacheID": "73f9eeff55dde60ee6d662c460971622",
     "id": null,
     "metadata": {},
     "name": "GetUsersQuery",
     "operationKind": "query",
-    "text": "query GetUsersQuery {\n  getUsers {\n    ok\n    error\n    users {\n      ...UserTableContent_user\n      id\n    }\n  }\n}\n\nfragment UserTableContent_user on User {\n  id\n  name\n  email\n  position {\n    id\n    position\n  }\n  team {\n    id\n    team\n  }\n  joinDate\n}\n"
+    "text": "query GetUsersQuery(\n  $keyword: String\n  $first: Int!\n  $after: DateTime\n) {\n  ...UsersTable_user_3aPcrv\n}\n\nfragment UserTableContent_user on User {\n  id\n  name\n  email\n  isManager\n  position {\n    id\n    position\n  }\n  team {\n    id\n    team\n  }\n  joinDate\n  createdAt\n}\n\nfragment UsersTable_user_3aPcrv on Query {\n  getUsers(keyword: $keyword, first: $first, after: $after) {\n    ok\n    error\n    edges {\n      node {\n        ...UserTableContent_user\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "7a74bda6a36ef344a8623915d6b4fd10";
+(node as any).hash = "00cbce2d1a2094df779308cbe92c67db";
 
 export default node;

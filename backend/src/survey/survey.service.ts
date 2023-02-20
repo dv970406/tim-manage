@@ -22,6 +22,11 @@ import {
 } from './dtos/survey/search-surveys.dto';
 import { Survey, SurveyForm } from './entities/survey.entity';
 import { SurveyRepository } from './repositories/survey.repository';
+import { ConnectionInput } from 'src/core/dtos/pagination.dto';
+import {
+  SurveysConnection,
+  SurveysConnectionInput,
+} from './dtos/survey/survey-pagination.dto';
 
 @Injectable()
 export class SurveyService {
@@ -29,7 +34,6 @@ export class SurveyService {
     @InjectRepository(SurveyRepository)
     private readonly surveyRepo: SurveyRepository,
   ) {}
-
   async isMySurvey(loggedInUser: User, survey: Survey): Promise<boolean> {
     return loggedInUser.id === survey.user.id;
   }
@@ -46,21 +50,24 @@ export class SurveyService {
     });
   }
 
+  // 얘는 다시 얘 스스로가 edges를 return하는 것으로 되돌리자..
   async getSurveys(
     loggedInUser: User,
-    { onlyMine = false, first, after }: GetSurveysInput,
+    { onlyMine = false, keyword, first, after }: GetSurveysInput,
   ): Promise<GetSurveysOutput> {
     try {
-      const [findSurveys, totalCount] = await this.surveyRepo.findAndCount({
+      const [findMyAnswers, totalCount] = await this.surveyRepo.findAndCount({
         order: { createdAt: 'DESC' },
-        relations: {
-          user: true,
-        },
         where: {
           ...(after && { createdAt: LessThan(after) }),
         },
         take: first,
-
+        ...(keyword && {
+          where: {
+            surveyTitle: Like(`%${keyword}%`),
+            ...(after && { createdAt: LessThan(after) }),
+          },
+        }),
         ...(onlyMine && {
           where: {
             user: {
@@ -68,52 +75,17 @@ export class SurveyService {
             },
           },
         }),
-      });
-
-      const edges = findSurveys.map((survey) => ({
-        cursor: survey.createdAt,
-        node: survey,
-      }));
-      const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
-      return {
-        ok: true,
-        edges,
-        pageInfo: {
-          hasNextPage: totalCount > first,
-          endCursor,
-        },
-      };
-    } catch (error) {
-      return {
-        ok: false,
-        error: '설문 리스트 조회에 실패했습니다.',
-      };
-    }
-  }
-
-  async searchSurveys({
-    keyword,
-    first,
-    after,
-  }: SearchSurveysInput): Promise<SearchSurveysOutput> {
-    try {
-      const [findSurveys, totalCount] = await this.surveyRepo.findAndCount({
-        where: {
-          surveyTitle: Like(`%${keyword}%`),
-          ...(after && { createdAt: LessThan(after) }),
-        },
         relations: {
           user: true,
-        },
-        take: first,
-        order: {
-          createdAt: 'DESC',
+          answers: {
+            user: true,
+          },
         },
       });
 
-      const edges = findSurveys.map((survey) => ({
-        cursor: survey.createdAt,
-        node: survey,
+      const edges = findMyAnswers.map((user) => ({
+        cursor: user.createdAt,
+        node: user,
       }));
       const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
 
@@ -121,17 +93,55 @@ export class SurveyService {
         ok: true,
         edges,
         pageInfo: {
-          hasNextPage: totalCount > first,
           endCursor,
+          hasNextPage: totalCount > first,
         },
       };
     } catch (error) {
       return {
         ok: false,
-        error: error.message || '찾을 수 없는 게시글입니다.',
+        error: error.message || '설문 목록 조회에 실패했습니다.',
       };
     }
   }
+
+  // async searchSurveys({
+  //   keyword,
+  //   first,
+  //   after,
+  // }: SearchSurveysInput): Promise<SearchSurveysOutput> {
+  //   try {
+  //     const [findSurveys, totalCount] = await this.surveyRepo.findAndCount({
+  //       where: {
+  //         surveyTitle: Like(`%${keyword}%`),
+  //         ...(after && { createdAt: LessThan(after) }),
+  //       },
+  //       relations: {
+  //         user: true,
+  //       },
+  //       take: first,
+  //       order: {
+  //         createdAt: 'DESC',
+  //       },
+  //     });
+
+  //     const edges = findSurveys.map((survey) => ({
+  //       cursor: survey.createdAt,
+  //       node: survey,
+  //     }));
+  //     const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
+
+  //     return {
+  //       ok: true,
+  //       surveys
+  //     };
+  //   } catch (error) {
+  //     return {
+  //       ok: false,
+  //       error: error.message || '찾을 수 없는 게시글입니다.',
+  //     };
+  //   }
+  // }
 
   // async getMySurveys(loggedInUser: User): Promise<GetMySurveysOutput> {
   //   try {

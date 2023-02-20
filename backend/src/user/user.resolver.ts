@@ -9,9 +9,15 @@ import {
 } from '@nestjs/graphql';
 import { LoggedInUser } from 'src/auth/auth-user.decorator';
 import { LoginGuard, ManagerGuard } from 'src/auth/auth.guard';
+import { ConnectionInput } from 'src/core/dtos/pagination.dto';
+import { CommentsConnection } from 'src/post/dtos/comment/comment-pagination.dto';
+import { LikesConnection } from 'src/post/dtos/like/like-pagination.dto';
+import { PostsConnection } from 'src/post/dtos/post/post-pagination.dto';
+import { AnswersConnection } from 'src/survey/dtos/answer/answer-pagination.dto';
+import { VacationsConnection } from 'src/vacation/dtos/vacation-pagination.dto';
 import { CreateUserInput, CreateUserOutput } from './dtos/create-user.dto';
 import { DeleteUserInput, DeleteUserOutput } from './dtos/delete-user.dto';
-import { GetMyInfoOutput } from './dtos/get-myInfo.dto';
+import { GetMyInfoInput, GetMyInfoOutput } from './dtos/get-myInfo.dto';
 import { GetUserInput, GetUserOutput } from './dtos/get-user.dto';
 import { GetUsersInput, GetUsersOutput } from './dtos/get-users.dto';
 import { LoginInput, LoginOutput } from './dtos/login.dto';
@@ -21,6 +27,7 @@ import {
   UpdateUserPasswordInput,
   UpdateUserPasswordOutput,
 } from './dtos/update-userPassword.dto';
+import { UsersConnection } from './dtos/user-pagination.dto';
 import { User } from './entities/user.entity';
 import { UserService } from './user.service';
 
@@ -28,37 +35,76 @@ import { UserService } from './user.service';
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
+  @ResolveField((type) => AnswersConnection)
+  myAnswersConnection(
+    @Parent() user: User,
+    @Args() answersConnectionInput: ConnectionInput,
+  ): Promise<AnswersConnection> {
+    return this.userService.myAnswersConnection(user, answersConnectionInput);
+  }
+  @ResolveField((type) => VacationsConnection)
+  myVacationsConnection(
+    @Parent() user: User,
+    @Args() vacationsConnectionInput: ConnectionInput,
+  ): Promise<VacationsConnection> {
+    return this.userService.myVacationsConnection(
+      user,
+      vacationsConnectionInput,
+    );
+  }
+  @ResolveField((type) => PostsConnection)
+  myPostsConnection(
+    @Parent() user: User,
+    @Args() postsConnectionInput: ConnectionInput,
+  ): Promise<PostsConnection> {
+    return this.userService.myPostsConnection(user, postsConnectionInput);
+  }
+  @ResolveField((type) => LikesConnection)
+  myLikesConnection(
+    @Parent() user: User,
+    @Args() likesConnectionInput: ConnectionInput,
+  ): Promise<LikesConnection> {
+    return this.userService.myLikesConnection(user, likesConnectionInput);
+  }
+  @ResolveField((type) => CommentsConnection)
+  myCommentsConnection(
+    @Parent() user: User,
+    @Args() commentsConnectionInput: ConnectionInput,
+  ): Promise<CommentsConnection> {
+    return this.userService.myCommentsConnection(user, commentsConnectionInput);
+  }
+
   @Query((returns) => GetUsersOutput)
   getUsers(@Args() getUsersInput: GetUsersInput): Promise<GetUsersOutput> {
     return this.userService.getUsers(getUsersInput);
   }
 
-  @Query((returns) => SearchUsersOutput)
-  searchUsers(
-    @Args() searchUsersInput: SearchUsersInput,
-  ): Promise<SearchUsersOutput> {
-    return this.userService.searchUsers(searchUsersInput);
-  }
+  // @Query((returns) => SearchUsersOutput)
+  // searchUsers(
+  //   @Args() searchUsersInput: SearchUsersInput,
+  // ): Promise<SearchUsersOutput> {
+  //   return this.userService.searchUsers(searchUsersInput);
+  // }
 
   @Query((returns) => GetUserOutput)
   @UseGuards(ManagerGuard)
-  getUser(@Args('input') getUserInput: GetUserInput): Promise<GetUserOutput> {
+  getUser(@Args() getUserInput: GetUserInput): Promise<GetUserOutput> {
     return this.userService.getUser(getUserInput);
   }
 
-  @Query((returns) => GetUserOutput)
+  @Query((returns) => GetMyInfoOutput)
   @UseGuards(LoginGuard)
-  getMyInfo(@LoggedInUser() loggedInUser: User): GetMyInfoOutput {
-    if (!loggedInUser) {
+  getMyInfo(
+    @LoggedInUser() loggedInUser: User,
+    @Args() { isAllInfo, ...getMyInfoInput }: GetMyInfoInput,
+  ): Promise<GetMyInfoOutput> | GetMyInfoOutput {
+    // 내 정보 전부가 필요한 것이 아니라면 getMyInfo 서비스로 보내지 않고 바로 미들웨어에서 얻은 user정보 반환
+    if (!isAllInfo)
       return {
-        ok: false,
-        error: '존재하지 않는 유저입니다.',
+        ok: true,
+        user: loggedInUser,
       };
-    }
-    return {
-      ok: true,
-      user: loggedInUser,
-    };
+    return this.userService.getMyInfo(loggedInUser, getMyInfoInput);
   }
 
   @Mutation((returns) => LoginOutput)

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5787ae6bb252b79e7e57bf6ff08541c1>>
+ * @generated SignedSource<<20416a455fda7d8d324956aea83c24f8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ManagerSurveyTableContent_survey$data = {
+  readonly createdAt: any;
   readonly id: string;
   readonly isAnonymous: boolean;
   readonly surveyTitle: string;
@@ -47,12 +48,19 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "isAnonymous",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "createdAt",
+      "storageKey": null
     }
   ],
   "type": "Survey",
   "abstractKey": null
 };
 
-(node as any).hash = "b57bf6eff88c7d2e74a6b125ac1c808e";
+(node as any).hash = "faf57d3453139bfc6bba7935428c4dac";
 
 export default node;

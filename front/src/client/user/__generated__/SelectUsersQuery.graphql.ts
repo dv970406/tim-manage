@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<efbf7d00468b7730550b32699fe2eb5f>>
+ * @generated SignedSource<<11e6d0a28f939ac1ae2b1df8ce65eef8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,16 +9,13 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type SelectUsersQuery$variables = {};
+import { FragmentRefs } from "relay-runtime";
+export type SelectUsersQuery$variables = {
+  after?: any | null;
+  first: number;
+};
 export type SelectUsersQuery$data = {
-  readonly getUsers: {
-    readonly error: string | null;
-    readonly ok: boolean;
-    readonly users: ReadonlyArray<{
-      readonly id: string;
-      readonly name: string;
-    }> | null;
-  };
+  readonly " $fragmentSpreads": FragmentRefs<"SelectUsers_user">;
 };
 export type SelectUsersQuery = {
   response: SelectUsersQuery$data;
@@ -26,86 +23,178 @@ export type SelectUsersQuery = {
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = [
+var v0 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "after"
+},
+v1 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "first"
+},
+v2 = [
   {
-    "alias": null,
-    "args": null,
-    "concreteType": "GetUsersOutput",
-    "kind": "LinkedField",
-    "name": "getUsers",
-    "plural": false,
+    "kind": "Variable",
+    "name": "after",
+    "variableName": "after"
+  },
+  {
+    "kind": "Variable",
+    "name": "first",
+    "variableName": "first"
+  }
+];
+return {
+  "fragment": {
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/)
+    ],
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "SelectUsersQuery",
+    "selections": [
+      {
+        "args": (v2/*: any*/),
+        "kind": "FragmentSpread",
+        "name": "SelectUsers_user"
+      }
+    ],
+    "type": "Query",
+    "abstractKey": null
+  },
+  "kind": "Request",
+  "operation": {
+    "argumentDefinitions": [
+      (v1/*: any*/),
+      (v0/*: any*/)
+    ],
+    "kind": "Operation",
+    "name": "SelectUsersQuery",
     "selections": [
       {
         "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "ok",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "error",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "concreteType": "User",
+        "args": (v2/*: any*/),
+        "concreteType": "GetUsersOutput",
         "kind": "LinkedField",
-        "name": "users",
-        "plural": true,
+        "name": "getUsers",
+        "plural": false,
         "selections": [
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "id",
+            "name": "ok",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "name",
+            "name": "error",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "UserEdge",
+            "kind": "LinkedField",
+            "name": "edges",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "User",
+                "kind": "LinkedField",
+                "name": "node",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "id",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "name",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "__typename",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "cursor",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "PageInfo",
+            "kind": "LinkedField",
+            "name": "pageInfo",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "endCursor",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "hasNextPage",
+                "storageKey": null
+              }
+            ],
             "storageKey": null
           }
         ],
         "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": (v2/*: any*/),
+        "filters": null,
+        "handle": "connection",
+        "key": "SelectUsers_getUsers",
+        "kind": "LinkedHandle",
+        "name": "getUsers"
       }
-    ],
-    "storageKey": null
-  }
-];
-return {
-  "fragment": {
-    "argumentDefinitions": [],
-    "kind": "Fragment",
-    "metadata": null,
-    "name": "SelectUsersQuery",
-    "selections": (v0/*: any*/),
-    "type": "Query",
-    "abstractKey": null
-  },
-  "kind": "Request",
-  "operation": {
-    "argumentDefinitions": [],
-    "kind": "Operation",
-    "name": "SelectUsersQuery",
-    "selections": (v0/*: any*/)
+    ]
   },
   "params": {
-    "cacheID": "5e55ca5f5d3a9ca2ffe3a172f5873e13",
+    "cacheID": "d4e302f4174d200c8e66b4ef8ed38822",
     "id": null,
     "metadata": {},
     "name": "SelectUsersQuery",
     "operationKind": "query",
-    "text": "query SelectUsersQuery {\n  getUsers {\n    ok\n    error\n    users {\n      id\n      name\n    }\n  }\n}\n"
+    "text": "query SelectUsersQuery(\n  $first: Int!\n  $after: DateTime\n) {\n  ...SelectUsers_user_2HEEH6\n}\n\nfragment SelectUsers_user_2HEEH6 on Query {\n  getUsers(first: $first, after: $after) {\n    ok\n    error\n    edges {\n      node {\n        id\n        name\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "e479ec0b7746cb589393c7c8c1e7cb9b";
+(node as any).hash = "f795a3db5e70aab5aa868ca3fcc8b957";
 
 export default node;

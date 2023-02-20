@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ConnectionInput } from 'src/core/dtos/pagination.dto';
 import { User } from 'src/user/entities/user.entity';
+import { LessThan } from 'typeorm';
+import { CommentsConnection } from './dtos/comment/comment-pagination.dto';
 import {
   CreateCommentInput,
   CreateCommentOutput,

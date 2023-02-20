@@ -7,30 +7,29 @@ import {
 import { GetSurveysQuery } from "./__generated__/GetSurveysQuery.graphql";
 
 export const getSurveysQuery = graphql`
-  query GetSurveysQuery($onlyMine: Boolean) {
-    getSurveys(input: { onlyMine: $onlyMine }) {
-      ok
-      error
-      surveys {
-        ...SurveyTableContent_survey
-        ...ManagerSurveyTableContent_survey
-      }
-    }
+  query GetSurveysQuery(
+    $onlyMine: Boolean
+    $keyword: String
+    $first: Int!
+    $after: DateTime
+  ) {
+    ...SurveysTable_survey
+      @arguments(
+        onlyMine: $onlyMine
+        keyword: $keyword
+        first: $first
+        after: $after
+      )
   }
 `;
 
 export const useGetSurveys = (
   getSurveysQueryReference: PreloadedQuery<GetSurveysQuery>
 ) => {
-  const {
-    getSurveys: { ok, error, surveys },
-  } = usePreloadedQuery<GetSurveysQuery>(
+  const surveys = usePreloadedQuery<GetSurveysQuery>(
     getSurveysQuery,
     getSurveysQueryReference
   );
 
-  if (!ok) {
-    alert(error);
-  }
   return { surveys };
 };

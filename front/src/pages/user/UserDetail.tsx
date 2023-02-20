@@ -26,7 +26,7 @@ const UserDetailPage = () => {
 
   useEffect(() => {
     if (!userId) return;
-    loadUserQuery({ id: userId });
+    loadUserQuery({ userId });
   }, []);
   return (
     <Suspense fallback="Loading...">
@@ -57,10 +57,20 @@ const UserDetail = ({ getUserQueryReference }: IUserDetail) => {
           <NavIconButton path="vacation" icon={faV} />
         </RowBox>
       </Section>
-      <Section style={{ height: "100%" }}>
-        <Outlet context={user} />
-        {/* ShowUserVacations */}
-      </Section>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+
+          width: "100%",
+          height: "100%",
+        }}
+      >
+        <Section style={{ width: "50%" }}>
+          <Outlet context={user} />
+          {/* ShowUserVacations */}
+        </Section>
+      </div>
     </GapBox>
   );
 };

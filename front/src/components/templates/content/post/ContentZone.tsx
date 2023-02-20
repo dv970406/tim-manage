@@ -13,9 +13,6 @@ import {
 } from "@fortawesome/pro-solid-svg-icons";
 import { theme } from "../../../../css/theme";
 import { useNavigate } from "react-router-dom";
-import { SectionText } from "../../../atomics/typographys/texts";
-import { Icon } from "../../../atomics/icons/icons";
-import { useToggleLike } from "../../../../client/post/ToggleLike.client";
 import MetaData from "../../../organisms/content/post/MetaData";
 
 interface IContentZoneFragment extends ContentZone_post$key {

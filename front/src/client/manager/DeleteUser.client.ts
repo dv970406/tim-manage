@@ -1,11 +1,11 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useState } from "react";
-import { commitMutation, useMutation } from "react-relay";
+import { commitMutation, ConnectionHandler, useMutation } from "react-relay";
 import { environment } from "../client";
 import {
   DeleteUserMutation,
   DeleteUserMutation$variables,
-} from "../user/__generated__/DeleteUserMutation.graphql";
+} from "./__generated__/DeleteUserMutation.graphql";
 
 const deleteUserQuery = graphql`
   mutation DeleteUserMutation($id: ID!) {
@@ -34,6 +34,19 @@ export const useDeleteUser = () => {
           return;
         }
         alert("저장되었습니다.");
+      },
+      updater: (proxyStore, { deleteUser: { deletedUserId } }) => {
+        const userRecord = proxyStore.getRoot();
+        if (!userRecord) return;
+
+        const userConnection = ConnectionHandler.getConnection(
+          userRecord,
+          "UsersTable_getUsers"
+        );
+
+        if (!userConnection || !deletedUserId) return;
+
+        ConnectionHandler.deleteNode(userConnection, deletedUserId);
       },
     });
   };

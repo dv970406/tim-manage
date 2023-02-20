@@ -27,13 +27,14 @@ import { MainText } from "../../components/atomics/typographys/texts";
 import { ButtonIcon } from "../../components/molecules/buttons/Buttons";
 import NavIconButton from "../../components/organisms/header/NavIconButton";
 import { theme } from "../../css/theme";
+import { PAGINATION_LOAD_COUNT } from "../../utils/constants/share.constant";
 
 const MyPage = () => {
   const [getMyAllInfoQueryReference, loadUserQuery] =
     useQueryLoader<GetMyAllInfoQuery>(getMyAllInfoQuery);
 
   useEffect(() => {
-    loadUserQuery({});
+    loadUserQuery({ first: PAGINATION_LOAD_COUNT });
   }, []);
   return (
     <Suspense fallback="Loading...">
@@ -56,6 +57,8 @@ const My = ({ getMyAllInfoQueryReference }: IMy) => {
         <RowBox style={{ justifyContent: "center", alignItems: "center" }}>
           <NavIconButton path="" icon={faM} />
           <NavIconButton path="post" icon={faPooStorm} />
+          <NavIconButton path="comment" icon={faPooStorm} />
+          <NavIconButton path="like" icon={faPooStorm} />
           <NavIconButton path="answer" icon={faS} />
           <NavIconButton path="vacation" icon={faV} />
           <NavIconButton path="update" icon={faUserSecret} />

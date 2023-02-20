@@ -19,6 +19,7 @@ const managerUserTableContentFragment = graphql`
   fragment ManagerUserTableContent_user on User {
     id
     name
+    email
     isManager
     position {
       id
@@ -28,6 +29,8 @@ const managerUserTableContentFragment = graphql`
       id
       team
     }
+    joinDate
+    createdAt
   }
 `;
 const ManagerUserTableContent = ({
@@ -41,28 +44,28 @@ const ManagerUserTableContent = ({
   // 관리자인 사람과 대표님은 리스트에서 제외, 단 대표님이라면 모두 보이게함
   if (myPosition === POSITION_CEO) {
   } else if (
-    tableContentData.isManager ||
-    tableContentData.position.position === POSITION_CEO
+    tableContentData?.isManager ||
+    tableContentData?.position?.position === POSITION_CEO
   ) {
     return <></>;
   }
 
-  const clickedUser = clickedUserId === tableContentData.id;
+  const clickedUser = clickedUserId === tableContentData?.id;
   return (
     <Tr
-      onClick={() => setClickedUserId(tableContentData.id)}
+      onClick={() => setClickedUserId(tableContentData?.id)}
       style={{
         ...(clickedUser && { backgroundColor: theme.bgColors.purple }),
       }}
     >
       <Td role="gridcell">
-        <MainText>{tableContentData.name}</MainText>
+        <MainText>{tableContentData?.name}</MainText>
       </Td>
       <Td role="gridcell">
-        <MainText>{tableContentData.position.position}</MainText>
+        <MainText>{tableContentData?.position.position}</MainText>
       </Td>
       <Td role="gridcell">
-        <MainText>{tableContentData.team.team}</MainText>
+        <MainText>{tableContentData?.team.team}</MainText>
       </Td>
     </Tr>
   );

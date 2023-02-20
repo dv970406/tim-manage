@@ -6,6 +6,9 @@ import { GetMyLikesOutput } from './dtos/like/get-myLikes.dto';
 import { Post } from './entities/post.entity';
 import { LikeRepository } from './repositories/like.repository';
 import { PostRepository } from './repositories/post.repository';
+import { ConnectionInput } from 'src/core/dtos/pagination.dto';
+import { LikesConnection } from './dtos/like/like-pagination.dto';
+import { LessThan } from 'typeorm';
 
 @Injectable()
 export class LikeService {

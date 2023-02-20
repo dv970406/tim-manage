@@ -1,23 +1,16 @@
 import {
-  faComment,
   faEye,
   faEyeSlash,
-  faHeart,
   faEllipsisVertical,
-  faPooStorm,
   faBadgeCheck,
-  faClose,
-  faStar,
+  faPenCircle,
 } from "@fortawesome/pro-solid-svg-icons";
 import { graphql } from "babel-plugin-relay/macro";
 import { useState } from "react";
 import { useFragment } from "react-relay";
 import { useNavigate } from "react-router-dom";
 import { theme } from "../../../../css/theme";
-import {
-  getElaspedDay,
-  getKoreanDateFormat,
-} from "../../../../utils/time/time";
+import { getElaspedDay } from "../../../../utils/time/time";
 import {
   RowBox,
   HorizontalDivider,
@@ -63,7 +56,7 @@ const SurveyTableContent = ({ survey }: ISurveyTableContent) => {
       <RowBox>
         <BoxIcon
           bgColor={isHovering ? theme.bgColors.purple : theme.bgColors.gray}
-          icon={tableContentData.isAnswered ? faBadgeCheck : faStar}
+          icon={tableContentData.isAnswered ? faBadgeCheck : faPenCircle}
           size={"2x"}
         />
         <GapBox>

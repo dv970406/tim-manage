@@ -1,7 +1,3 @@
-import { useGetAnswersOfSurvey } from "../../../../client/manager/GetAnswersOfSurvey.client";
-import ApexChart from "react-apexcharts";
-import { ApexOptions } from "apexcharts";
-import { GetAnswersOfSurveyQuery$data } from "../../../../client/manager/__generated__/GetAnswersOfSurveyQuery.graphql";
 import { SubTitle, SectionTitle } from "../../../atomics/typographys/titles";
 import { GapBox, GapList } from "../../../atomics/boxes/Boxes";
 import { SectionText, MainText } from "../../../atomics/typographys/texts";

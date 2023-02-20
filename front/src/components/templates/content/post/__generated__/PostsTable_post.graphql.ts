@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<917b3ae5c48438d9433cd4903c2d8763>>
+ * @generated SignedSource<<2bded398b368b7260134d38681aee29a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,17 +8,22 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment, RefetchableFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PostsTable_post$data = {
-  readonly countComments: number;
-  readonly countLikes: number;
-  readonly createdAt: any;
-  readonly id: string;
-  readonly title: string;
-  readonly user: {
-    readonly id: string;
-    readonly name: string;
+  readonly getPosts: {
+    readonly edges: ReadonlyArray<{
+      readonly cursor: any;
+      readonly node: {
+        readonly " $fragmentSpreads": FragmentRefs<"PostTableContent_post">;
+      };
+    }>;
+    readonly error: string | null;
+    readonly ok: boolean;
+    readonly pageInfo: {
+      readonly endCursor: any | null;
+      readonly hasNextPage: boolean;
+    };
   };
   readonly " $fragmentType": "PostsTable_post";
 };
@@ -28,73 +33,155 @@ export type PostsTable_post$key = {
 };
 
 const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
+var v0 = [
+  "getPosts"
+];
 return {
-  "argumentDefinitions": [],
-  "kind": "Fragment",
-  "metadata": null,
-  "name": "PostsTable_post",
-  "selections": [
-    (v0/*: any*/),
+  "argumentDefinitions": [
     {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "title",
-      "storageKey": null
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "after"
     },
     {
-      "alias": null,
-      "args": null,
-      "concreteType": "User",
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "first"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "keyword"
+    }
+  ],
+  "kind": "Fragment",
+  "metadata": {
+    "connection": [
+      {
+        "count": "first",
+        "cursor": "after",
+        "direction": "forward",
+        "path": (v0/*: any*/)
+      }
+    ],
+    "refetch": {
+      "connection": {
+        "forward": {
+          "count": "first",
+          "cursor": "after"
+        },
+        "backward": null,
+        "path": (v0/*: any*/)
+      },
+      "fragmentPathInResult": [],
+      "operation": require('./PostsTablePaginationQuery.graphql')
+    }
+  },
+  "name": "PostsTable_post",
+  "selections": [
+    {
+      "alias": "getPosts",
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "keyword",
+          "variableName": "keyword"
+        }
+      ],
+      "concreteType": "GetPostsOutput",
       "kind": "LinkedField",
-      "name": "user",
+      "name": "__PostsTable_getPosts_connection",
       "plural": false,
       "selections": [
-        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "name",
+          "name": "ok",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "error",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PostEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Post",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "PostTableContent_post"
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "__typename",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "cursor",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PageInfo",
+          "kind": "LinkedField",
+          "name": "pageInfo",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "endCursor",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "hasNextPage",
+              "storageKey": null
+            }
+          ],
           "storageKey": null
         }
       ],
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "countLikes",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "countComments",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "createdAt",
-      "storageKey": null
     }
   ],
-  "type": "Post",
+  "type": "Query",
   "abstractKey": null
 };
 })();
 
-(node as any).hash = "4d2a0ef01cf8a9326549892bba6172c0";
+(node as any).hash = "a49044d425c4de1488a00137b8a53a7e";
 
 export default node;

@@ -1,7 +1,4 @@
 import styled from "@emotion/styled";
-import React from "react";
-import { theme } from "../../../css/theme";
-import { BoxIcon } from "../../molecules/icons/Icons";
 
 export const ColumnBox = styled.div(({ theme }) => ({
   display: "flex",
@@ -33,7 +30,17 @@ export const GapList = styled.ul(({ theme }) => ({
 export const ListBox = styled.ul(({ theme }) => ({
   display: "grid",
   gap: theme.spacing.lg,
-  gridTemplateColumns: "1fr 1fr 1fr 1fr",
+
+  // 변수화하고 싶은데.. emotion/styled 중에서도 이렇게 theme을 가져다 쓸 수 있는 방법에서는 미디어 쿼리를 변수화할 수 있는 방법을 모르겠다.
+  "@media (min-width: 567px)": {
+    gridTemplateColumns: "1fr 1fr",
+  },
+  "@media (min-width: 992px)": {
+    gridTemplateColumns: "1fr 1fr 1fr",
+  },
+  "@media (min-width: 1420px)": {
+    gridTemplateColumns: "1fr 1fr 1fr 1fr",
+  },
   width: "100%",
 }));
 

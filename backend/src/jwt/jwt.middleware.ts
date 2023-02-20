@@ -20,7 +20,7 @@ export class JwtMiddleware implements NestMiddleware {
 
         const userId = this.jwtService.verify(token.toString()).toString();
 
-        const { user } = await this.userService.getMyInfo({ id: userId });
+        const { user } = await this.userService.getUser({ userId });
 
         req['user'] = user;
       }

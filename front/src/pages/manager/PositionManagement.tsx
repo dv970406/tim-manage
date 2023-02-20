@@ -7,6 +7,7 @@ import {
 import { GetManagerPositionsQuery } from "../../client/manager/__generated__/GetManagerPositionsQuery.graphql";
 import { GapBox } from "../../components/atomics/boxes/Boxes";
 import { Section } from "../../components/atomics/sections/sections";
+import CenterBox from "../../components/molecules/boxes/CenterBox";
 import CreatePositionForm from "../../components/templates/content/manager/CreatePositionForm";
 import ManagerPositionsTable from "../../components/templates/content/manager/ManagerPositionsTable";
 import MutatePositionForm from "../../components/templates/content/manager/MutatePositionForm";
@@ -43,48 +44,32 @@ const PositionManagement = ({
   if (!positions) return <></>;
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        height: "100%",
-      }}
-    >
-      <GapBox
-        style={{
-          flexDirection: "row",
-          width: "70%",
-          height: "80%",
-        }}
-      >
-        <Section style={{ width: "60%" }}>
-          {positions && (
-            <ManagerPositionsTable
-              positions={positions}
+    <CenterBox>
+      <Section style={{ width: "60%" }}>
+        {positions && (
+          <ManagerPositionsTable
+            positions={positions}
+            clickedPositionId={clickedPositionId}
+            setClickedPositionId={setClickedPositionId}
+          />
+        )}
+      </Section>
+      <GapBox style={{ width: "40%", gap: theme.spacing.xl }}>
+        <Section>
+          <Suspense fallback="hihihihi">
+            <CreatePositionForm />
+          </Suspense>
+        </Section>
+        <Section>
+          <Suspense fallback="hihihihi">
+            <MutatePositionForm
               clickedPositionId={clickedPositionId}
               setClickedPositionId={setClickedPositionId}
             />
-          )}
+          </Suspense>
         </Section>
-        <GapBox style={{ width: "40%", gap: theme.spacing.xl }}>
-          <Section>
-            <Suspense fallback="hihihihi">
-              <CreatePositionForm />
-            </Suspense>
-          </Section>
-          <Section>
-            <Suspense fallback="hihihihi">
-              <MutatePositionForm
-                clickedPositionId={clickedPositionId}
-                setClickedPositionId={setClickedPositionId}
-              />
-            </Suspense>
-          </Section>
-        </GapBox>
       </GapBox>
-    </div>
+    </CenterBox>
   );
 };
 export default PositionManagementPage;

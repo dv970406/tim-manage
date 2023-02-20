@@ -13,18 +13,15 @@ import React, {
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useCreateSurvey } from "../../../../client/manager/CreateSurvey.client";
 import { theme } from "../../../../css/theme";
-import { GapBox } from "../../../atomics/boxes/Boxes";
-import { SubmitButton } from "../../../atomics/buttons/buttons";
 import { Form } from "../../../atomics/form/Form";
+import { ChoiceInput } from "../../../atomics/inputs/inputs";
 import { Section } from "../../../atomics/sections/sections";
-import { SectionTitle, SubTitle } from "../../../atomics/typographys/titles";
 import {
   ButtonIcon,
   EndSubmitButton,
 } from "../../../molecules/buttons/Buttons";
 import FormTitle from "../../../molecules/form/FormTitle";
 import { Checkbox } from "../../../molecules/inputs/Checkbox";
-import { ChoiceInput } from "../../../molecules/inputs/ChoiceInput";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 
 interface ICreateSurveyFormValue {

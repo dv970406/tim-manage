@@ -1,44 +1,22 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useEffect, useState } from "react";
-import { useLazyLoadQuery } from "react-relay";
-import {
-  IAttendee,
-  ISelectFormat,
-} from "../../components/organisms/content/home/SelectUsers";
+import { useLazyLoadQuery, usePaginationFragment } from "react-relay";
+import { PAGINATION_LOAD_COUNT } from "../../utils/constants/share.constant";
 import { SelectUsersQuery } from "./__generated__/SelectUsersQuery.graphql";
 
 export const selectUsersQuery = graphql`
-  query SelectUsersQuery {
-    getUsers {
-      ok
-      error
-      users {
-        id
-        name
-      }
-    }
+  query SelectUsersQuery($first: Int!, $after: DateTime) {
+    ...SelectUsers_user @arguments(first: $first, after: $after)
   }
 `;
 
 export const useSelectUsers = () => {
-  const [usersBySelectOptions, setUsersBySelectOptions] = useState<
-    ISelectFormat[]
-  >([]);
+  const users = useLazyLoadQuery<SelectUsersQuery>(selectUsersQuery, {
+    first: PAGINATION_LOAD_COUNT,
+  });
+  return { users };
+};
 
-  const {
-    getUsers: { ok, error, users },
-  } = useLazyLoadQuery<SelectUsersQuery>(selectUsersQuery, {});
-
-  useEffect(() => {
-    if (!ok) return alert(error);
-    const newUserFormat = users?.map((user: IAttendee) => ({
-      value: user.id,
-      label: user.name,
-    }));
-
-    if (!newUserFormat) return;
-    setUsersBySelectOptions(newUserFormat);
-  }, [ok]);
-
-  return { usersBySelectOptions };
+export const useSelectUsersPagination = () => {
+  // return { usersBySelectOptions };
 };

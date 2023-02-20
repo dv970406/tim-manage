@@ -1,6 +1,6 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useState } from "react";
-import { commitMutation, useMutation } from "react-relay";
+import { commitMutation, ConnectionHandler, useMutation } from "react-relay";
 import { useNavigate } from "react-router-dom";
 import { environment } from "../client";
 import {
@@ -27,10 +27,24 @@ const createUserQuery = graphql`
     ) {
       ok
       error
-      user {
-        id
-        email
-        name
+      edge {
+        cursor
+        node {
+          id
+          name
+          email
+          isManager
+          position {
+            id
+            position
+          }
+          team {
+            id
+            team
+          }
+          joinDate
+          createdAt
+        }
       }
     }
   }
@@ -45,18 +59,43 @@ export const useCreateUser = () => {
       mutation: createUserQuery,
       variables,
       updater: (proxyStore, response) => {
-        const addUserPayload = proxyStore
+        // const addUserPayload = proxyStore
+        //   .getRootField("createUser")
+        //   .getLinkedRecord("user");
+
+        // if (!addUserPayload) return;
+
+        // const rootGetUsers = proxyStore.get("client:root:getUsers");
+
+        // const oldUsers = rootGetUsers?.getLinkedRecords("users");
+        // if (!oldUsers) return;
+
+        // rootGetUsers?.setLinkedRecords([addUserPayload, ...oldUsers], "users");
+
+        const newUserEdge = proxyStore
           .getRootField("createUser")
-          .getLinkedRecord("user");
+          .getLinkedRecord("edge");
+        if (!newUserEdge) return;
 
-        if (!addUserPayload) return;
+        const userRecord = proxyStore.getRoot();
+        if (!userRecord) return;
 
-        const rootGetUsers = proxyStore.get("client:root:getUsers");
+        const userConnection = ConnectionHandler.getConnection(
+          userRecord,
+          "UsersTable_getUsers"
+        );
+        const managerUserConnection = ConnectionHandler.getConnection(
+          userRecord,
+          "ManagerUsersTable_getUsers"
+        );
 
-        const oldUsers = rootGetUsers?.getLinkedRecords("users");
-        if (!oldUsers) return;
-
-        rootGetUsers?.setLinkedRecords([addUserPayload, ...oldUsers], "users");
+        if (userConnection)
+          ConnectionHandler.insertEdgeBefore(userConnection, newUserEdge);
+        if (managerUserConnection)
+          ConnectionHandler.insertEdgeBefore(
+            managerUserConnection,
+            newUserEdge
+          );
       },
 
       onCompleted: ({ createUser: { ok, error } }) => {

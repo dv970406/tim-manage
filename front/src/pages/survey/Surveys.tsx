@@ -7,13 +7,14 @@ import {
 import { GetSurveysQuery } from "../../client/survey/__generated__/GetSurveysQuery.graphql";
 import { Section } from "../../components/atomics/sections/sections";
 import SurveysTable from "../../components/templates/content/survey/SurveysTable";
+import { PAGINATION_LOAD_COUNT } from "../../utils/constants/share.constant";
 
 const SurveysPage = () => {
   const [getSurveysQueryReference, loadGetSurveysQuery] =
     useQueryLoader<GetSurveysQuery>(getSurveysQuery);
 
   useEffect(() => {
-    loadGetSurveysQuery({ onlyMine: false });
+    loadGetSurveysQuery({ onlyMine: false, first: PAGINATION_LOAD_COUNT });
   }, []);
   return (
     <Suspense fallback="Surveys loading">

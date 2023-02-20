@@ -1,16 +1,46 @@
+import { graphql } from "babel-plugin-relay/macro";
 import React, { Dispatch, SetStateAction } from "react";
+import { usePaginationFragment } from "react-relay";
 import { useDeleteSurvey } from "../../../../client/manager/DeleteSurvey.client";
+import { getSurveysQuery } from "../../../../client/survey/GetSurveys.client";
 import { ColumnBox, GapBox } from "../../../atomics/boxes/Boxes";
 import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
 import Table from "../../../molecules/tables/Table";
 import ManagerSurveyTableContent from "../../../organisms/content/manager/ManagerSurveyTableContent";
-import { ManagerSurveyTableContent_survey$key } from "../../../organisms/content/manager/__generated__/ManagerSurveyTableContent_survey.graphql";
+import { SurveysTable_survey$key } from "../survey/__generated__/SurveysTable_survey.graphql";
+import { GetManagerSurveysPaginationQuery } from "./__generated__/GetManagerSurveysPaginationQuery.graphql";
+import { ManagerSurveysTable_survey$key } from "./__generated__/ManagerSurveysTable_survey.graphql";
 
 interface IManagerSurveysTable {
-  surveys: readonly ManagerSurveyTableContent_survey$key[];
+  surveys: ManagerSurveysTable_survey$key;
   clickedSurveyId: string;
   setClickedSurveyId: Dispatch<SetStateAction<string>>;
 }
+
+const getManagerSurveysFragment = graphql`
+  fragment ManagerSurveysTable_survey on Query
+  @argumentDefinitions(
+    onlyMine: { type: "Boolean" }
+    first: { type: "Int!" }
+    after: { type: "DateTime" }
+  )
+  @refetchable(queryName: "ManagerSurveysTablePaginationQuery") {
+    getSurveys(onlyMine: $onlyMine, first: $first, after: $after)
+      @connection(key: "ManagerSurveysTable_getSurveys") {
+      ok
+      error
+      edges {
+        node {
+          ...ManagerSurveyTableContent_survey
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+      }
+    }
+  }
+`;
 
 const ManagerSurveysTable = ({
   surveys,
@@ -23,15 +53,23 @@ const ManagerSurveysTable = ({
     deleteSurveyMutation({ id: clickedSurveyId });
   };
 
+  const {
+    data: {
+      getSurveys: { edges },
+    },
+  } = usePaginationFragment<
+    GetManagerSurveysPaginationQuery,
+    ManagerSurveysTable_survey$key
+  >(getManagerSurveysFragment, surveys);
   return (
     <ColumnBox>
       <Table headers={["내 설문"]}>
-        {surveys.map(
+        {edges.map(
           (survey: any) =>
             survey && (
               <ManagerSurveyTableContent
-                key={survey.__id}
-                survey={survey}
+                key={survey.cursor}
+                survey={survey.node}
                 clickedSurveyId={clickedSurveyId}
                 setClickedSurveyId={setClickedSurveyId}
               />

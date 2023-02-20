@@ -1,6 +1,6 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useState } from "react";
-import { commitMutation } from "react-relay";
+import { commitMutation, ConnectionHandler } from "react-relay";
 import { environment } from "../client";
 import {
   DeleteSurveyMutation,
@@ -32,6 +32,19 @@ export const useDeleteSurvey = () => {
           return;
         }
         alert("저장되었습니다.");
+      },
+      updater: (proxyStore, { deleteSurvey: { deletedSurveyId } }) => {
+        const surveyRecord = proxyStore.getRoot();
+        if (!surveyRecord) return;
+
+        const surveyConnection = ConnectionHandler.getConnection(
+          surveyRecord,
+          "SurveysTable_getSurveys"
+        );
+
+        if (!surveyConnection || !deletedSurveyId) return;
+
+        ConnectionHandler.deleteNode(surveyConnection, deletedSurveyId);
       },
     });
   };

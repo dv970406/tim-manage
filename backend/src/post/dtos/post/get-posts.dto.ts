@@ -7,12 +7,13 @@ import {
   PickType,
 } from '@nestjs/graphql';
 import { CoreOutput } from 'src/core/dtos/core.dto';
-import { PageInfo, PaginationInput } from 'src/core/dtos/pagination.dto';
+import { PageInfo, ConnectionInput } from 'src/core/dtos/pagination.dto';
 import { Post } from 'src/post/entities/post.entity';
-import { PostEdge, PostsPaginationFormat } from './post-pagination.dto';
+import { UsersConnection } from 'src/user/dtos/user-pagination.dto';
+import { PostEdge, PostsConnection } from './post-pagination.dto';
 
 @ArgsType()
-export class GetPostsInput extends PaginationInput {}
+export class GetPostsInput extends ConnectionInput {}
 
 @ObjectType()
 export class GetPostsOutput extends CoreOutput {

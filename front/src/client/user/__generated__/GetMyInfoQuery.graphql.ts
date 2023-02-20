@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ec79eb70c4c8451cce27b6d53c4cf542>>
+ * @generated SignedSource<<d50e01a93b3e7bc611e72ec71509f163>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -61,7 +61,7 @@ v2 = [
       {
         "alias": null,
         "args": null,
-        "concreteType": "GetUserOutput",
+        "concreteType": "GetMyInfoOutput",
         "kind": "LinkedField",
         "name": "getMyInfo",
         "plural": false,

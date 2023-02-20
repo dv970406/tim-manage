@@ -1,18 +1,11 @@
-import {
-  ArgsType,
-  Field,
-  ID,
-  InputType,
-  ObjectType,
-  PickType,
-} from '@nestjs/graphql';
+import { ArgsType, Field, ObjectType } from '@nestjs/graphql';
 import { CoreOutput } from 'src/core/dtos/core.dto';
-import { PageInfo, PaginationInput } from 'src/core/dtos/pagination.dto';
+import { PageInfo, ConnectionInput } from 'src/core/dtos/pagination.dto';
 import { User } from '../entities/user.entity';
-import { UserEdge, UsersPaginationFormat } from './user-pagination.dto';
+import { UserEdge, UsersConnection } from './user-pagination.dto';
 
 @ArgsType()
-export class GetUsersInput extends PaginationInput {}
+export class GetUsersInput extends ConnectionInput {}
 @ObjectType()
 export class GetUsersOutput extends CoreOutput {
   @Field((type) => [UserEdge])

@@ -12,7 +12,7 @@ const PostCreatePage = () => {
         height: "100%",
       }}
     >
-      <Section style={{ width: "40%" }}>
+      <Section style={{ width: "60%" }}>
         <CreatePostForm />
       </Section>
     </div>

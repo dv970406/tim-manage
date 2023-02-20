@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<825100256ad13cc68b851da6b163ab06>>
+ * @generated SignedSource<<f87fa5f60e8bcc17628c1005470a6a61>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,13 +8,23 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment, RefetchableFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowUserVacations_vacation$data = {
   readonly availableVacation: string;
-  readonly vacations: ReadonlyArray<{
-    readonly " $fragmentSpreads": FragmentRefs<"ShowUserVacationsHistory_vacation">;
-  }>;
+  readonly id: string;
+  readonly myVacationsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly cursor: any;
+      readonly node: {
+        readonly " $fragmentSpreads": FragmentRefs<"UserVacationTableContent_vacation">;
+      };
+    }>;
+    readonly pageInfo: {
+      readonly endCursor: any | null;
+      readonly hasNextPage: boolean;
+    };
+  };
   readonly " $fragmentType": "ShowUserVacations_vacation";
 };
 export type ShowUserVacations_vacation$key = {
@@ -22,10 +32,49 @@ export type ShowUserVacations_vacation$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ShowUserVacations_vacation">;
 };
 
-const node: ReaderFragment = {
-  "argumentDefinitions": [],
+const node: ReaderFragment = (function(){
+var v0 = [
+  "myVacationsConnection"
+];
+return {
+  "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "after"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "first"
+    }
+  ],
   "kind": "Fragment",
-  "metadata": null,
+  "metadata": {
+    "connection": [
+      {
+        "count": "first",
+        "cursor": "after",
+        "direction": "forward",
+        "path": (v0/*: any*/)
+      }
+    ],
+    "refetch": {
+      "connection": {
+        "forward": {
+          "count": "first",
+          "cursor": "after"
+        },
+        "backward": null,
+        "path": (v0/*: any*/)
+      },
+      "fragmentPathInResult": [
+        "node"
+      ],
+      "operation": require('./ShowUserVacationsPaginationQuery.graphql'),
+      "identifierField": "id"
+    }
+  },
   "name": "ShowUserVacations_vacation",
   "selections": [
     {
@@ -36,26 +85,95 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": null,
+      "alias": "myVacationsConnection",
       "args": null,
-      "concreteType": "Vacation",
+      "concreteType": "VacationsConnection",
       "kind": "LinkedField",
-      "name": "vacations",
-      "plural": true,
+      "name": "__ShowUserVacations_myVacationsConnection_connection",
+      "plural": false,
       "selections": [
         {
+          "alias": null,
           "args": null,
-          "kind": "FragmentSpread",
-          "name": "ShowUserVacationsHistory_vacation"
+          "concreteType": "VacationEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Vacation",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "UserVacationTableContent_vacation"
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "__typename",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "cursor",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PageInfo",
+          "kind": "LinkedField",
+          "name": "pageInfo",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "endCursor",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "hasNextPage",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
         }
       ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "id",
       "storageKey": null
     }
   ],
   "type": "User",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "3819a29ef441502462b2d77918eed7e6";
+(node as any).hash = "bb82f570c4ebc59d220c5e19a0962c1b";
 
 export default node;

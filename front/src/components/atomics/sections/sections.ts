@@ -1,6 +1,9 @@
 import { keyframes, Theme } from "@emotion/react";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
+import { theme } from "../../../css/theme";
+// [576, 768, 992, 1200]
+// const mq = (size: string) => `@media (min-width: ${theme.breakpoints[size]}px)`;
 
 export const BodySection = styled.div(({ theme }) => ({
   backgroundImage: `url("/background.png")`,
@@ -12,11 +15,29 @@ export const BodySection = styled.div(({ theme }) => ({
 }));
 
 export const SideBarSection = styled.aside(({ theme }) => ({
+  display: "none",
+
+  "@media (min-width: 1200px)": {
+    display: "flex",
+    width: 275,
+    "& .sidebar_close": {
+      display: "none",
+    },
+    position: "static",
+  },
+  "@media (max-width: 1200px)": {
+    "&.open": {
+      display: "flex",
+      width: 275,
+      position: "absolute",
+      overflow: "auto",
+      zIndex: 5,
+    },
+  },
+
   background: theme.bgColors.sectionGradient,
-  display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  width: 275,
   padding: theme.spacing.md,
   borderRadius: theme.borderRadius.lg,
 }));
@@ -29,6 +50,20 @@ export const MainSection = styled.main(({ theme }) => ({
 }));
 
 export const HeaderSection = styled.header(({ theme }) => ({
+  "@media (min-width: 1200px)": {
+    "& .hamburger_menu": {
+      display: "none",
+    },
+  },
+  "@media (max-width: 1200px)": {
+    "& .hamburger_menu": {
+      display: "none",
+      "&.open_menu": {
+        display: "block",
+      },
+    },
+  },
+
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",

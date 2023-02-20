@@ -1,6 +1,6 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useState } from "react";
-import { commitMutation, useMutation } from "react-relay";
+import { commitMutation, ConnectionHandler, useMutation } from "react-relay";
 import { useNavigate } from "react-router-dom";
 import { environment } from "../client";
 import {
@@ -34,6 +34,19 @@ export const useDeletePost = () => {
           return;
         }
         navigate("/post");
+      },
+      updater: (proxyStore, { deletePost: { deletedPostId } }) => {
+        const postRecord = proxyStore.getRoot();
+        if (!postRecord) return;
+
+        const postConnection = ConnectionHandler.getConnection(
+          postRecord,
+          "PostsTable_getPosts"
+        );
+
+        if (!postConnection || !deletedPostId) return;
+
+        ConnectionHandler.deleteNode(postConnection, deletedPostId);
       },
     });
   };

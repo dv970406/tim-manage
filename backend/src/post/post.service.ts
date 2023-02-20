@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ConnectionInput } from 'src/core/dtos/pagination.dto';
 import { DB_TABLE } from 'src/core/variables/constants';
 import { User } from 'src/user/entities/user.entity';
 import { LessThan, Like } from 'typeorm';
@@ -7,6 +8,7 @@ import { CreatePostInput, CreatePostOutput } from './dtos/post/create-post.dto';
 import { DeletePostInput, DeletePostOutput } from './dtos/post/delete-post.dto';
 import { GetPostInput, GetPostOutput } from './dtos/post/get-post.dto';
 import { GetPostsInput, GetPostsOutput } from './dtos/post/get-posts.dto';
+import { PostsConnection } from './dtos/post/post-pagination.dto';
 import {
   SearchPostsInput,
   SearchPostsOutput,
@@ -25,69 +27,38 @@ export class PostService {
   async isMyPost(loggedInUser: User, post: Post): Promise<boolean> {
     return loggedInUser.id === post.user.id;
   }
-  async getPosts({ first, after }: GetPostsInput): Promise<GetPostsOutput> {
-    try {
-      const [findPosts, totalCount] = await this.postRepo.findAndCount({
-        order: { createdAt: 'DESC' },
-        relations: {
-          user: true,
-        },
-        where: {
-          ...(after && { createdAt: LessThan(after) }),
-        },
-        take: first,
-      });
-
-      const edges = findPosts.map((post) => ({
-        cursor: post.createdAt,
-        node: post,
-      }));
-      const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
-      return {
-        ok: true,
-        edges,
-        pageInfo: {
-          hasNextPage: totalCount > first,
-          endCursor,
-        },
-      };
-    } catch (error) {
-      return {
-        ok: false,
-        error: '게시글 리스트 조회에 실패했습니다.',
-      };
-    }
-  }
-
-  async searchPosts({
+  async getPosts({
     keyword,
     first,
     after,
-  }: SearchPostsInput): Promise<SearchPostsOutput> {
+  }: GetPostsInput): Promise<GetPostsOutput> {
     try {
-      const [findPosts, totalCount] = await this.postRepo.findAndCount({
-        where: [
-          {
-            title: Like(`%${keyword}%`),
-            ...(after && { createdAt: LessThan(after) }),
-          },
-          {
-            content: Like(`%${keyword}%`),
-            ...(after && { createdAt: LessThan(after) }),
-          },
-        ],
-        take: first,
+      const [findMyPosts, totalCount] = await this.postRepo.findAndCount({
+        order: { createdAt: 'DESC' },
+        where: {
+          ...(after && { createdAt: LessThan(after) }),
+        },
+        ...(keyword && {
+          where: [
+            {
+              title: Like(`%${keyword}%`),
+              ...(after && { createdAt: LessThan(after) }),
+            },
+            {
+              content: Like(`%${keyword}%`),
+              ...(after && { createdAt: LessThan(after) }),
+            },
+          ],
+        }),
         relations: {
           user: true,
         },
-        order: {
-          createdAt: 'DESC',
-        },
+        take: first,
       });
 
-      const edges = findPosts.map((post) => ({
-        cursor: post.createdAt,
-        node: post,
+      const edges = findMyPosts.map((user) => ({
+        cursor: user.createdAt,
+        node: user,
       }));
       const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
 
@@ -95,17 +66,67 @@ export class PostService {
         ok: true,
         edges,
         pageInfo: {
-          hasNextPage: true,
           endCursor,
+          hasNextPage: totalCount > first,
         },
       };
     } catch (error) {
       return {
         ok: false,
-        error: error.message || '찾을 수 없는 게시글입니다.',
+        error: error.message || '게시글 목록 조회에 실패했습니다.',
       };
     }
   }
+
+  // async searchPosts({
+  //   keyword,
+  //   first,
+  //   after,
+  // }: SearchPostsInput): Promise<SearchPostsOutput> {
+  //   try {
+  //     const [findPosts, totalCount] = await this.postRepo.findAndCount({
+  //       where: [
+  //         {
+  //           title: Like(`%${keyword}%`),
+  //           ...(after && { createdAt: LessThan(after) }),
+  //         },
+  //         {
+  //           content: Like(`%${keyword}%`),
+  //           ...(after && { createdAt: LessThan(after) }),
+  //         },
+  //       ],
+  //       take: first,
+  //       relations: {
+  //         user: true,
+  //       },
+  //       order: {
+  //         createdAt: 'DESC',
+  //       },
+  //     });
+
+  //     const edges = findPosts.map((post) => ({
+  //       cursor: post.createdAt,
+  //       node: post,
+  //     }));
+  //     const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
+
+  //     return {
+  //       ok: true,
+  //       postsConnection: {
+  //         edges,
+  //         pageInfo: {
+  //           hasNextPage: totalCount > first,
+  //           endCursor,
+  //         },
+  //       },
+  //     };
+  //   } catch (error) {
+  //     return {
+  //       ok: false,
+  //       error: error.message || '찾을 수 없는 게시글입니다.',
+  //     };
+  //   }
+  // }
 
   async getPost({ id: postId }: GetPostInput): Promise<GetPostOutput> {
     try {

@@ -6,13 +6,10 @@ import {
 } from "@fortawesome/pro-solid-svg-icons";
 import { graphql } from "babel-plugin-relay/macro";
 import React, { useState } from "react";
-import { useFragment } from "react-relay";
+import { useFragment, usePaginationFragment } from "react-relay";
 import { useNavigate } from "react-router-dom";
 import { theme } from "../../../../css/theme";
-import {
-  getElaspedDay,
-  getKoreanDateFormat,
-} from "../../../../utils/time/time";
+import { getElaspedDay } from "../../../../utils/time/time";
 import {
   RowBox,
   HorizontalDivider,
@@ -20,17 +17,14 @@ import {
   ItemBox,
 } from "../../../atomics/boxes/Boxes";
 import { MainText } from "../../../atomics/typographys/texts";
-import {
-  MainTitle,
-  SectionTitle,
-  SubTitle,
-} from "../../../atomics/typographys/titles";
+import { SectionTitle } from "../../../atomics/typographys/titles";
 import { ButtonIcon } from "../../../molecules/buttons/Buttons";
 import { BoxIcon } from "../../../molecules/icons/Icons";
 import { PostTableContent_post$key } from "./__generated__/PostTableContent_post.graphql";
 
 interface IPostTableContent {
   post: PostTableContent_post$key;
+  comment?: string;
 }
 const postTableContentFragment = graphql`
   fragment PostTableContent_post on Post {
@@ -47,8 +41,9 @@ const postTableContentFragment = graphql`
   }
 `;
 
-const PostTableContent = ({ post }: IPostTableContent) => {
+const PostTableContent = ({ post, comment }: IPostTableContent) => {
   const tableContentData = useFragment(postTableContentFragment, post);
+
   const navigate = useNavigate();
   const postCreatedAt = getElaspedDay(tableContentData.createdAt);
 
@@ -76,7 +71,11 @@ const PostTableContent = ({ post }: IPostTableContent) => {
             <ButtonIcon onClick={() => null} icon={faEllipsisVertical} />
           </div>
           <div>
-            <MainText>{tableContentData.user.name}</MainText>
+            {comment ? (
+              <MainText color={theme.colors.blue}>{comment}</MainText>
+            ) : (
+              <MainText>{tableContentData.user.name}</MainText>
+            )}
           </div>
         </GapBox>
       </RowBox>

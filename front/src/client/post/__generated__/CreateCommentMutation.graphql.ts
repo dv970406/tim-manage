@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ebfdb956a0088df68e981ea9bf022085>>
+ * @generated SignedSource<<b91caffee3d4cb660807a595e8209f82>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,6 +20,10 @@ export type CreateCommentMutation$data = {
       readonly createdAt: any;
       readonly id: string;
       readonly isMyComment: boolean;
+      readonly post: {
+        readonly id: string;
+        readonly title: string;
+      };
       readonly user: {
         readonly id: string;
         readonly name: string;
@@ -141,6 +145,25 @@ v3 = [
             "kind": "ScalarField",
             "name": "isMyComment",
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Post",
+            "kind": "LinkedField",
+            "name": "post",
+            "plural": false,
+            "selections": [
+              (v2/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "title",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -180,16 +203,16 @@ return {
     "selections": (v3/*: any*/)
   },
   "params": {
-    "cacheID": "5f0756315ab37826c5be6a0b6b426b83",
+    "cacheID": "b8e599af50bd989fdf472bc587586583",
     "id": null,
     "metadata": {},
     "name": "CreateCommentMutation",
     "operationKind": "mutation",
-    "text": "mutation CreateCommentMutation(\n  $postId: ID!\n  $content: String!\n) {\n  createComment(input: {postId: $postId, content: $content}) {\n    ok\n    error\n    comment {\n      id\n      content\n      user {\n        id\n        name\n      }\n      createdAt\n      isMyComment\n    }\n    postId\n  }\n}\n"
+    "text": "mutation CreateCommentMutation(\n  $postId: ID!\n  $content: String!\n) {\n  createComment(input: {postId: $postId, content: $content}) {\n    ok\n    error\n    comment {\n      id\n      content\n      user {\n        id\n        name\n      }\n      createdAt\n      isMyComment\n      post {\n        id\n        title\n      }\n    }\n    postId\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "32fae7ee1a9dc26e19eda8859a0104d8";
+(node as any).hash = "635470ef8fff59d53ca43b8d34481511";
 
 export default node;

@@ -1,6 +1,5 @@
 import { ApexOptions } from "apexcharts";
 import ReactApexChart from "react-apexcharts";
-import { GetAnswersOfSurveyQuery$data } from "../../../../client/manager/__generated__/GetAnswersOfSurveyQuery.graphql";
 import { pieChartOptions } from "../../../../utils/chart/options";
 import { GapBox, GapList } from "../../../atomics/boxes/Boxes";
 import { SectionText } from "../../../atomics/typographys/texts";

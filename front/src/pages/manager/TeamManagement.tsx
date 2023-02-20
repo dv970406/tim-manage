@@ -8,6 +8,7 @@ import { GetManagerTeamsQuery } from "../../client/manager/__generated__/GetMana
 import { useGetMyInfo } from "../../client/user/GetMyInfo.client";
 import { GapBox } from "../../components/atomics/boxes/Boxes";
 import { Section } from "../../components/atomics/sections/sections";
+import CenterBox from "../../components/molecules/boxes/CenterBox";
 import Table from "../../components/molecules/tables/Table";
 import ManagerTeamTableContent from "../../components/organisms/content/manager/ManagerTeamTableContent";
 import CreateTeamForm from "../../components/templates/content/manager/CreateTeamForm";
@@ -45,48 +46,32 @@ const TeamManagement = ({ managerTeamsQueryReference }: ITeamManagement) => {
   if (!teams) return <></>;
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        height: "100%",
-      }}
-    >
-      <GapBox
-        style={{
-          flexDirection: "row",
-          width: "70%",
-          height: "80%",
-        }}
-      >
-        <Section style={{ width: "60%" }}>
-          {teams && (
-            <ManagerTeamsTable
-              teams={teams}
+    <CenterBox>
+      <Section style={{ width: "60%" }}>
+        {teams && (
+          <ManagerTeamsTable
+            teams={teams}
+            clickedTeamId={clickedTeamId}
+            setClickedTeamId={setClickedTeamId}
+          />
+        )}
+      </Section>
+      <GapBox style={{ width: "40%", gap: theme.spacing.xl }}>
+        <Section>
+          <Suspense fallback="hihihihi">
+            <CreateTeamForm />
+          </Suspense>
+        </Section>
+        <Section>
+          <Suspense fallback="hihihihi">
+            <MutateTeamForm
               clickedTeamId={clickedTeamId}
               setClickedTeamId={setClickedTeamId}
             />
-          )}
+          </Suspense>
         </Section>
-        <GapBox style={{ width: "40%", gap: theme.spacing.xl }}>
-          <Section>
-            <Suspense fallback="hihihihi">
-              <CreateTeamForm />
-            </Suspense>
-          </Section>
-          <Section>
-            <Suspense fallback="hihihihi">
-              <MutateTeamForm
-                clickedTeamId={clickedTeamId}
-                setClickedTeamId={setClickedTeamId}
-              />
-            </Suspense>
-          </Section>
-        </GapBox>
       </GapBox>
-    </div>
+    </CenterBox>
   );
 };
 export default TeamManagementPage;

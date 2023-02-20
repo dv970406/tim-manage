@@ -18,6 +18,7 @@ const managerSurveyTableContentFragment = graphql`
     id
     surveyTitle
     isAnonymous
+    createdAt
   }
 `;
 const ManagerSurveyTableContent = ({

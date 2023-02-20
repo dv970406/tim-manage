@@ -75,7 +75,6 @@ const AnswerSheet = ({ survey }: IAnswerSheet) => {
         onSubmit={createAnswer}
         style={{
           ...(answerSheetData.isAnswered && {
-            opacity: theme.disabled.opacity,
             pointerEvents: "none",
           }),
         }}

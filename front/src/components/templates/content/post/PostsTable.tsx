@@ -1,23 +1,69 @@
+import { graphql } from "babel-plugin-relay/macro";
 import React from "react";
-import { ListBox } from "../../../atomics/boxes/Boxes";
-import Table from "../../../molecules/tables/Table";
+import { usePaginationFragment } from "react-relay";
+import { InfiniteScrollListBox } from "../../../organisms/shared/InfiniteScroll";
 import PostTableContent from "../../../organisms/content/post/PostTableContent";
-import { PostTableContent_post$key } from "../../../organisms/content/post/__generated__/PostTableContent_post.graphql";
+import { GetPostsPaginationQuery } from "../../../organisms/content/post/__generated__/GetPostsPaginationQuery.graphql";
+import { PostsTable_post$key } from "./__generated__/PostsTable_post.graphql";
 
 interface IPostsTable {
-  posts: readonly PostTableContent_post$key[];
+  posts: PostsTable_post$key;
 }
 
+const getPostsFragment = graphql`
+  fragment PostsTable_post on Query
+  @argumentDefinitions(
+    keyword: { type: "String" }
+    first: { type: "Int!" }
+    after: { type: "DateTime" }
+  )
+  @refetchable(queryName: "PostsTablePaginationQuery") {
+    getPosts(keyword: $keyword, first: $first, after: $after)
+      @connection(key: "PostsTable_getPosts") {
+      ok
+      error
+      edges {
+        node {
+          ...PostTableContent_post
+        }
+        cursor
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+    }
+  }
+`;
+
 const PostsTable = ({ posts }: IPostsTable) => {
+  const {
+    data: {
+      getPosts: { edges },
+    },
+    loadNext,
+    isLoadingNext,
+    refetch,
+    hasNext,
+  } = usePaginationFragment<GetPostsPaginationQuery, PostsTable_post$key>(
+    getPostsFragment,
+    posts
+  );
+
   return (
-    <ListBox>
-      {posts
-        .map(
+    <>
+      <InfiniteScrollListBox
+        refetch={refetch}
+        loadNext={loadNext}
+        hasNext={hasNext}
+        isLoadingNext={isLoadingNext}
+      >
+        {edges.map(
           (post: any) =>
-            post && <PostTableContent key={post.__id} post={post} />
-        )
-        .reverse()}
-    </ListBox>
+            post && <PostTableContent key={post.cursor} post={post.node} />
+        )}
+      </InfiniteScrollListBox>
+    </>
   );
 };
 

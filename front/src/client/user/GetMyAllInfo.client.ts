@@ -1,25 +1,19 @@
 import { graphql } from "babel-plugin-relay/macro";
-import { useEffect } from "react";
-import {
-  PreloadedQuery,
-  useLazyLoadQuery,
-  usePreloadedQuery,
-} from "react-relay";
-import { useNavigate } from "react-router-dom";
-import { TOKEN } from "../client";
+import { PreloadedQuery, usePreloadedQuery } from "react-relay";
 import { GetMyAllInfoQuery } from "./__generated__/GetMyAllInfoQuery.graphql";
-import { GetMyInfoQuery } from "./__generated__/GetMyInfoQuery.graphql";
 
 export const getMyAllInfoQuery = graphql`
-  query GetMyAllInfoQuery {
-    getMyInfo {
+  query GetMyAllInfoQuery($first: Int!, $after: DateTime) {
+    getMyInfo(first: $first, after: $after) {
       ok
       error
       user {
         ...ShowUserInfo_user
-        ...ShowUserPosts_post
-        ...ShowUserAnswers_answer
-        ...ShowUserVacations_vacation
+        ...ShowUserPosts_post @arguments(first: $first, after: $after)
+        ...ShowUserComments_comment @arguments(first: $first, after: $after)
+        ...ShowUserLikes_like @arguments(first: $first, after: $after)
+        ...ShowUserAnswers_answer @arguments(first: $first, after: $after)
+        ...ShowUserVacations_vacation @arguments(first: $first, after: $after)
       }
     }
   }

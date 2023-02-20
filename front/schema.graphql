@@ -11,6 +11,17 @@ type Answer {
   survey: Survey!
   user: User!
   results: [String!]!
+  answersConnection(keyword: String, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): AnswersConnection!
+}
+
+type AnswerEdge {
+  cursor: DateTime!
+  node: Answer!
+}
+
+type AnswersConnection {
+  edges: [AnswerEdge!]!
+  pageInfo: PageInfo!
 }
 
 type ChartFormatResult {
@@ -26,6 +37,16 @@ type Comment {
   user: User!
   post: Post!
   isMyComment: Boolean!
+}
+
+type CommentEdge {
+  cursor: DateTime!
+  node: Comment!
+}
+
+type CommentsConnection {
+  edges: [CommentEdge!]!
+  pageInfo: PageInfo!
 }
 
 type Confirm {
@@ -52,6 +73,7 @@ input CreateAnswerInput {
 type CreateAnswerOutput {
   ok: Boolean!
   error: String
+  answer: Answer
   surveyId: ID
 }
 
@@ -98,7 +120,7 @@ input CreatePostInput {
 type CreatePostOutput {
   ok: Boolean!
   error: String
-  post: Post
+  edge: PostEdge!
 }
 
 input CreateSurveyInput {
@@ -110,7 +132,7 @@ input CreateSurveyInput {
 type CreateSurveyOutput {
   ok: Boolean!
   error: String
-  survey: Survey
+  edge: SurveyEdge!
 }
 
 input CreateTeamInput {
@@ -134,7 +156,7 @@ input CreateUserInput {
 type CreateUserOutput {
   ok: Boolean!
   error: String
-  user: User
+  edge: UserEdge!
 }
 
 input CreateVacationInput {
@@ -301,6 +323,12 @@ type GetMyCommentsOutput {
   comments: [Comment!]
 }
 
+type GetMyInfoOutput {
+  ok: Boolean!
+  error: String
+  user: User
+}
+
 type GetMyLikesOutput {
   ok: Boolean!
   error: String
@@ -336,7 +364,8 @@ type GetPostOutput {
 type GetPostsOutput {
   ok: Boolean!
   error: String
-  posts: [Post!]
+  edges: [PostEdge!]!
+  pageInfo: PageInfo!
 }
 
 input GetSurveyInput {
@@ -349,14 +378,11 @@ type GetSurveyOutput {
   survey: Survey
 }
 
-input GetSurveysInput {
-  onlyMine: Boolean
-}
-
 type GetSurveysOutput {
   ok: Boolean!
   error: String
-  surveys: [Survey!]
+  edges: [SurveyEdge!]!
+  pageInfo: PageInfo!
 }
 
 input GetTeamInput {
@@ -381,10 +407,6 @@ type GetUnConfirmedByMeVacationsOutput {
   vacations: [Vacation!]
 }
 
-input GetUserInput {
-  id: ID!
-}
-
 type GetUserOutput {
   ok: Boolean!
   error: String
@@ -394,7 +416,8 @@ type GetUserOutput {
 type GetUsersOutput {
   ok: Boolean!
   error: String
-  users: [User!]
+  edges: [UserEdge!]!
+  pageInfo: PageInfo!
 }
 
 input GetVacationInput {
@@ -425,6 +448,16 @@ type Like {
   updatedAt: DateTime!
   user: User!
   post: Post!
+}
+
+type LikeEdge {
+  cursor: DateTime!
+  node: Like!
+}
+
+type LikesConnection {
+  edges: [LikeEdge!]!
+  pageInfo: PageInfo!
 }
 
 input LoginInput {
@@ -498,6 +531,17 @@ type Mutation {
   createWeeklyMeal(input: CreateWeeklyMealInput!): CreateWeeklyMealOutput!
 }
 
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: DateTime
+  endCursor: DateTime
+}
+
 type Position {
   id: ID!
   createdAt: DateTime!
@@ -506,7 +550,7 @@ type Position {
   users: [User!]!
 }
 
-type Post {
+type Post implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -521,10 +565,21 @@ type Post {
   countComments: Float!
 }
 
+type PostEdge {
+  cursor: DateTime!
+  node: Post!
+}
+
+type PostsConnection {
+  edges: [PostEdge!]!
+  pageInfo: PageInfo!
+}
+
 type Query {
-  getUsers: GetUsersOutput!
-  getUser(input: GetUserInput!): GetUserOutput!
-  getMyInfo: GetUserOutput!
+  getUsers(keyword: String, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): GetUsersOutput!
+  getUser(keyword: String, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10, userId: ID!): GetUserOutput!
+  getMyInfo(keyword: String, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10, isAllInfo: Boolean = false): GetMyInfoOutput!
+  node(id: ID!): ID!
   getPositions: GetPositionsOutput!
   getPosition(input: GetPositionInput!): GetPositionOutput!
   getTeams: GetTeamsOutput!
@@ -532,11 +587,11 @@ type Query {
   getVacations: GetVacationsOutput!
   getUnConfirmedByMeVacations: GetUnConfirmedByMeVacationsOutput!
   getVacation(input: GetVacationInput!): GetVacationOutput!
-  getSurveys(input: GetSurveysInput!): GetSurveysOutput!
+  getSurveys(onlyMine: Boolean, keyword: String, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): GetSurveysOutput!
   getSurvey(input: GetSurveyInput!): GetSurveyOutput!
   getMyAnswers: GetMyAnswersOutput!
   getAnswersOfSurvey(input: GetAnswersOfsurveyInput!): GetAnswersOfsurveyOutput!
-  getPosts: GetPostsOutput!
+  getPosts(keyword: String, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): GetPostsOutput!
   getPost(input: GetPostInput!): GetPostOutput!
   getMyLikes: GetMyLikesOutput!
   getMyComments: GetMyCommentsOutput!
@@ -557,7 +612,7 @@ type ShortAnswerFormat {
   shortAnswers: [String!]!
 }
 
-type Survey {
+type Survey implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -568,6 +623,11 @@ type Survey {
   user: User!
   isMySurvey: Boolean!
   isAnswered: Boolean!
+}
+
+type SurveyEdge {
+  cursor: DateTime!
+  node: Survey!
 }
 
 type SurveyForm {
@@ -598,6 +658,7 @@ input ToggleLikeInput {
 type ToggleLikeOutput {
   ok: Boolean!
   error: String
+  like: Like
 }
 
 input UpdateMeetingInput {
@@ -689,7 +750,7 @@ type UpdateVacationOutput {
   vacation: Vacation
 }
 
-type User {
+type User implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -709,6 +770,16 @@ type User {
   comments: [Comment!]!
   surveys: [Survey!]!
   answers: [Answer!]!
+  myAnswersConnection(keyword: String, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): AnswersConnection!
+  myVacationsConnection(keyword: String, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): VacationsConnection!
+  myPostsConnection(keyword: String, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): PostsConnection!
+  myLikesConnection(keyword: String, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): LikesConnection!
+  myCommentsConnection(keyword: String, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): CommentsConnection!
+}
+
+type UserEdge {
+  cursor: DateTime!
+  node: User!
 }
 
 type Vacation {
@@ -721,5 +792,15 @@ type Vacation {
   duration: Float!
   confirmed: Confirm!
   user: User!
+}
+
+type VacationEdge {
+  cursor: DateTime!
+  node: Vacation!
+}
+
+type VacationsConnection {
+  edges: [VacationEdge!]!
+  pageInfo: PageInfo!
 }
 
