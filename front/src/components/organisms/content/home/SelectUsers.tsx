@@ -21,9 +21,10 @@ export interface ISelectFormat {
   value: string;
   label: string;
 }
-interface ISelect {
+interface ISelectUsers {
   prevAttendees?: IAttendee[];
   setAttendeesId: Dispatch<SetStateAction<string[]>>;
+  users: SelectUsers_user$key;
 }
 
 // 모든 유저의 정보를 가져와서 리스트에 띄워주고 참석자를 고를 수 있게 함
@@ -31,7 +32,8 @@ interface ISelect {
 
 const selectUsersQuery = graphql`
   fragment SelectUsers_user on Query
-  @argumentDefinitions(first: { type: "Int!" }, after: { type: "DateTime" }) {
+  @argumentDefinitions(first: { type: "Int!" }, after: { type: "DateTime" })
+  @refetchable(queryName: "SelectUsersPaginationQuery") {
     getUsers(first: $first, after: $after)
       @connection(key: "SelectUsers_getUsers") {
       ok
@@ -50,16 +52,12 @@ const selectUsersQuery = graphql`
     }
   }
 `;
-const SelectUsers = ({ prevAttendees, setAttendeesId }: ISelect) => {
-  const prevAttendeesBySelectOptions = prevAttendees?.map(
-    (attendee: IAttendee) => ({
-      value: attendee.id,
-      label: attendee.name,
-    })
-  );
-
+const SelectUsers = ({
+  prevAttendees,
+  setAttendeesId,
+  users,
+}: ISelectUsers) => {
   // 여기서부터 useEffect까지 훅으로 묶고 싶은데 에러남..
-  const { users } = useSelectUsers();
   const {
     data: {
       getUsers: { edges },
@@ -69,22 +67,23 @@ const SelectUsers = ({ prevAttendees, setAttendeesId }: ISelect) => {
     users
   );
 
-  const [usersBySelectOptions, setUsersBySelectOptions] = useState<
-    ISelectFormat[]
-  >([]);
-  const newUserFormat = edges.map((user) => ({
+  const newUserFormat = prevAttendees?.map((user) => ({
+    value: user.id,
+    label: user.name,
+  }));
+  const [selectedUsers, setSelectedUsers] = useState<ISelectFormat[]>(
+    newUserFormat!
+  );
+
+  const handleChangeSelect = (selectedUsersArray: MultiValue<any>) => {
+    const attendeesIdArray = selectedUsersArray.map((user) => user.value);
+    setAttendeesId(attendeesIdArray);
+  };
+
+  const selectableUsers = edges.map((user) => ({
     value: user.node.id,
     label: user.node.name,
   }));
-
-  useEffect(() => {
-    setUsersBySelectOptions(newUserFormat);
-  }, []);
-
-  const handleChangeSelect = (selectedUsers: MultiValue<any>) => {
-    const attendeesIdArray = selectedUsers.map((user) => user.value);
-    setAttendeesId(attendeesIdArray);
-  };
 
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   return (
@@ -98,7 +97,7 @@ const SelectUsers = ({ prevAttendees, setAttendeesId }: ISelect) => {
       </label>
       <ReactSelect
         id="attendees"
-        defaultValue={prevAttendeesBySelectOptions}
+        value={selectedUsers}
         isMulti
         menuIsOpen={menuIsOpen}
         onMenuOpen={() => setMenuIsOpen(true)}
@@ -107,7 +106,7 @@ const SelectUsers = ({ prevAttendees, setAttendeesId }: ISelect) => {
         noOptionsMessage={() => "존재하지 않는 이름입니다."}
         placeholder="참석할 인원을 골라주세요."
         name="attendees"
-        options={usersBySelectOptions}
+        options={selectableUsers}
         styles={selectStyles}
         onChange={handleChangeSelect}
       />
@@ -118,6 +117,10 @@ const SelectUsers = ({ prevAttendees, setAttendeesId }: ISelect) => {
 export default SelectUsers;
 
 const selectStyles: StylesConfig<unknown, true, GroupBase<unknown>> = {
+  input: (styles) => ({
+    ...styles,
+    color: theme.colors.white,
+  }),
   control: (styles, { isFocused, menuIsOpen }) => ({
     ...styles,
     backgroundColor: "none",

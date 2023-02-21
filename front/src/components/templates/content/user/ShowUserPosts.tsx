@@ -1,10 +1,11 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useFragment, usePaginationFragment } from "react-relay";
 import { useOutletContext } from "react-router-dom";
+import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
 import { RowBox, ListBox } from "../../../atomics/boxes/Boxes";
 import { SectionTitle } from "../../../atomics/typographys/titles";
 import PostTableContent from "../../../organisms/content/post/PostTableContent";
-import { InfiniteScrollListBox } from "../../../organisms/shared/InfiniteScroll";
+import { ManageDataList } from "../../../organisms/shared/ManageDataList";
 import { ShowUserPosts_post$key } from "./__generated__/ShowUserPosts_post.graphql";
 
 // 여기도 connection으로
@@ -42,7 +43,8 @@ const ShowUserPosts = () => {
     <>
       {" "}
       <SectionTitle>게시글 목록</SectionTitle>
-      <InfiniteScrollListBox
+      <ManageDataList
+        dataTableName={MODAL_NAME.CREATE_POST}
         loadNext={loadNext}
         hasNext={hasNext}
         isLoadingNext={isLoadingNext}
@@ -50,9 +52,11 @@ const ShowUserPosts = () => {
       >
         {myPostsConnection?.edges?.map(
           (post) =>
-            post && <PostTableContent key={post.cursor} post={post.node} />
+            post?.node && (
+              <PostTableContent key={post.cursor} post={post.node} />
+            )
         )}
-      </InfiniteScrollListBox>
+      </ManageDataList>
     </>
   );
 };

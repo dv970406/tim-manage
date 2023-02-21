@@ -26,7 +26,7 @@ const ShowUserInfo = () => {
   const user: ShowUserInfo_user$key = useOutletContext();
   const userInfo = useFragment(showUserInfoFragment, user);
 
-  return <GapBox>{userInfo.email}</GapBox>;
+  return <GapBox>{userInfo?.email}</GapBox>;
 };
 
 export default ShowUserInfo;

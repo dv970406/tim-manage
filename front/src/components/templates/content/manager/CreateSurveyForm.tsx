@@ -13,9 +13,13 @@ import React, {
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useCreateSurvey } from "../../../../client/manager/CreateSurvey.client";
 import { theme } from "../../../../css/theme";
+import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
+import { closeModal } from "../../../../utils/modal/controlModal";
+import { GapBox, RowBox } from "../../../atomics/boxes/Boxes";
 import { Form } from "../../../atomics/form/Form";
 import { ChoiceInput } from "../../../atomics/inputs/inputs";
 import { Section } from "../../../atomics/sections/sections";
+import { MainText } from "../../../atomics/typographys/texts";
 import {
   ButtonIcon,
   EndSubmitButton,
@@ -72,6 +76,8 @@ const paragraphsReducer = (
     case ACTION_TYPES.ADD_CHOICE:
       if (!isParagraphIndexExist) return copiedParagraphs;
 
+      if (copiedParagraphs[paragraphIndex].multipleChoice.length >= 5)
+        return copiedParagraphs;
       copiedParagraphs[paragraphIndex].multipleChoice.push("");
 
       return copiedParagraphs;
@@ -106,7 +112,7 @@ const paragraphsReducer = (
 const initialParagraph: IParagraph[] = [
   { paragraphTitle: "", description: "", multipleChoice: [] },
 ];
-// useReducerf로 정리가능할듯
+
 const CreateSurveyForm = ({}: ICreateSurveyForm) => {
   const {
     register,
@@ -133,6 +139,8 @@ const CreateSurveyForm = ({}: ICreateSurveyForm) => {
       isAnonymous,
       paragraphs,
     });
+
+    closeModal(MODAL_NAME.CREATE_SURVEY);
   };
 
   const isSubmitDisabled = !!errors.surveyTitle || !watchSurveyTitle;
@@ -144,16 +152,6 @@ const CreateSurveyForm = ({}: ICreateSurveyForm) => {
   ) => {
     const { value } = event.currentTarget;
 
-    // setParagraphs((prev) => {
-    //   const copiedPrev = [...prev];
-    //   const findMultipleChoiceOfMatchingParagraph =
-    //     copiedPrev[paragraphIndex].multipleChoice;
-
-    //   findMultipleChoiceOfMatchingParagraph[choiceIndex] = value;
-    //   copiedPrev[paragraphIndex].multipleChoice =
-    //     findMultipleChoiceOfMatchingParagraph;
-    //   return copiedPrev;
-    // });
     dispatch({
       type: ACTION_TYPES.ADD_CHOICE_VALUE,
       value,
@@ -167,11 +165,7 @@ const CreateSurveyForm = ({}: ICreateSurveyForm) => {
     paragraphIndex: number
   ) => {
     const { value } = event.currentTarget;
-    // setParagraphs((prev) => {
-    //   const copiedPrev = [...prev];
-    //   copiedPrev[paragraphIndex].paragraphTitle = value;
-    //   return copiedPrev;
-    // });
+
     dispatch({ type: ACTION_TYPES.ADD_PARAGRAPH_TITLE, value, paragraphIndex });
   };
 
@@ -180,11 +174,7 @@ const CreateSurveyForm = ({}: ICreateSurveyForm) => {
     paragraphIndex: number
   ) => {
     const { value } = event.currentTarget;
-    // setParagraphs((prev) => {
-    //   const copiedPrev = [...prev];
-    //   copiedPrev[paragraphIndex].description = value;
-    //   return copiedPrev;
-    // });
+
     dispatch({
       type: ACTION_TYPES.ADD_PARAGRAPH_DESCRIPTION,
       value,
@@ -193,18 +183,10 @@ const CreateSurveyForm = ({}: ICreateSurveyForm) => {
   };
 
   const addParagraphs = () => {
-    // setParagraphs((prev) => [
-    //   ...prev,
-    //   { paragraphTitle: "", description: "", multipleChoice: [] },
-    // ]);
     dispatch({ type: ACTION_TYPES.ADD_PARAGRAPH });
   };
 
   const addChoices = (paragraphIndex: number) => {
-    // setParagraphs((prev) => {
-    //   prev[paragraphIndex].multipleChoice.push("");
-    //   return prev;
-    // });
     dispatch({ type: ACTION_TYPES.ADD_CHOICE, paragraphIndex });
   };
 
@@ -212,6 +194,7 @@ const CreateSurveyForm = ({}: ICreateSurveyForm) => {
     <>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <FormTitle formTitle="새 설문" />
+
         <TextInput
           icon={faTag}
           label="설문 제목"
@@ -238,7 +221,10 @@ const CreateSurveyForm = ({}: ICreateSurveyForm) => {
           defaultChecked={false}
           onClick={() => setIsAnonymous((prev) => !prev)}
         />
-        <ButtonIcon onClick={addParagraphs} icon={faPlus} />
+        <RowBox style={{ gap: theme.spacing.sm }}>
+          <ButtonIcon onClick={addParagraphs} icon={faPlus} />
+          <MainText>단락 추가</MainText>
+        </RowBox>
         {paragraphs.map((count, paragraphIndex) => (
           <Section key={paragraphIndex}>
             <TextInput
@@ -255,10 +241,13 @@ const CreateSurveyForm = ({}: ICreateSurveyForm) => {
                 handleParagraphDescription(event, paragraphIndex)
               }
             />
-            <ButtonIcon
-              onClick={() => addChoices(paragraphIndex)}
-              icon={faPlus}
-            />
+            <RowBox style={{ gap: theme.spacing.sm }}>
+              <ButtonIcon
+                onClick={() => addChoices(paragraphIndex)}
+                icon={faPlus}
+              />
+              <MainText>지문 추가</MainText>
+            </RowBox>
             <Section
               style={{
                 display: "flex",

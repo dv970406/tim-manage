@@ -1,7 +1,7 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { usePaginationFragment } from "react-relay";
 import { useGetMyInfo } from "../../../../client/user/GetMyInfo.client";
-import { InfiniteScrollListBox } from "../../../organisms/shared/InfiniteScroll";
+import { ManageDataList } from "../../../organisms/shared/ManageDataList";
 import UserTableContent from "../../../organisms/content/user/UserTableContent";
 import { GetUsersPaginationQuery } from "./__generated__/GetUsersPaginationQuery.graphql";
 import { UsersTable_user$key } from "./__generated__/UsersTable_user.graphql";
@@ -54,15 +54,16 @@ const UsersTable = ({ users }: IUsersTable) => {
 
   return (
     <>
-      <InfiniteScrollListBox
+      <ManageDataList
+        dataTableName="create-user"
         refetch={refetch}
         isLoadingNext={isLoadingNext}
         loadNext={loadNext}
         hasNext={hasNext}
       >
         {edges.map(
-          (user: any) =>
-            user && (
+          (user) =>
+            user.node && (
               <UserTableContent
                 key={user.cursor}
                 user={user.node}
@@ -70,7 +71,7 @@ const UsersTable = ({ users }: IUsersTable) => {
               />
             )
         )}
-      </InfiniteScrollListBox>
+      </ManageDataList>
     </>
   );
 };

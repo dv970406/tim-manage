@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<78e0ae907b4c27f9a77bde644e4b05c3>>
+ * @generated SignedSource<<cee457e3b152ea0d426363db80be47c5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,7 +8,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from 'relay-runtime';
+import { ReaderFragment, RefetchableFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SelectUsers_user$data = {
   readonly getUsers: {
@@ -33,7 +33,11 @@ export type SelectUsers_user$key = {
   readonly " $fragmentSpreads": FragmentRefs<"SelectUsers_user">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  "getUsers"
+];
+return {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -53,11 +57,21 @@ const node: ReaderFragment = {
         "count": "first",
         "cursor": "after",
         "direction": "forward",
-        "path": [
-          "getUsers"
-        ]
+        "path": (v0/*: any*/)
       }
-    ]
+    ],
+    "refetch": {
+      "connection": {
+        "forward": {
+          "count": "first",
+          "cursor": "after"
+        },
+        "backward": null,
+        "path": (v0/*: any*/)
+      },
+      "fragmentPathInResult": [],
+      "operation": require('./SelectUsersPaginationQuery.graphql')
+    }
   },
   "name": "SelectUsers_user",
   "selections": [
@@ -165,7 +179,8 @@ const node: ReaderFragment = {
   "type": "Query",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "e077137d9da68bb11f74356e2c277ee7";
+(node as any).hash = "1884d5ce0ffebc3736bfaf5374210ab9";
 
 export default node;

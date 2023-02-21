@@ -45,12 +45,12 @@ const PostTableContent = ({ post, comment }: IPostTableContent) => {
   const tableContentData = useFragment(postTableContentFragment, post);
 
   const navigate = useNavigate();
-  const postCreatedAt = getElaspedDay(tableContentData.createdAt);
-
   const [isHovering, setIsHovering] = useState(false);
+
+  const postCreatedAt = getElaspedDay(tableContentData?.createdAt);
   return (
     <ItemBox
-      onClick={() => navigate(`/post/${tableContentData.id}`)}
+      onClick={() => navigate(`/post/${tableContentData?.id}`)}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
@@ -67,14 +67,14 @@ const PostTableContent = ({ post, comment }: IPostTableContent) => {
               justifyContent: "space-between",
             }}
           >
-            <SectionTitle>{tableContentData.title}</SectionTitle>
+            <SectionTitle>{tableContentData?.title}</SectionTitle>
             <ButtonIcon onClick={() => null} icon={faEllipsisVertical} />
           </div>
           <div>
             {comment ? (
               <MainText color={theme.colors.blue}>{comment}</MainText>
             ) : (
-              <MainText>{tableContentData.user.name}</MainText>
+              <MainText>{tableContentData?.user.name}</MainText>
             )}
           </div>
         </GapBox>
@@ -103,13 +103,13 @@ const PostTableContent = ({ post, comment }: IPostTableContent) => {
           >
             <BoxIcon
               color={
-                tableContentData.isLiked
+                tableContentData?.isLiked
                   ? theme.bgColors.red
                   : theme.bgColors.white
               }
               icon={faHeart}
             />
-            <MainText>{tableContentData.countLikes}</MainText>
+            <MainText>{tableContentData?.countLikes}</MainText>
           </div>
           <div
             style={{
@@ -119,7 +119,7 @@ const PostTableContent = ({ post, comment }: IPostTableContent) => {
             }}
           >
             <BoxIcon icon={faComment} />
-            <MainText>{tableContentData.countComments}</MainText>
+            <MainText>{tableContentData?.countComments}</MainText>
           </div>
         </div>
         <MainText>{postCreatedAt}</MainText>

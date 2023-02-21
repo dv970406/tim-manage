@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<58ba43d6cf3946cb4236061302910237>>
+ * @generated SignedSource<<cbe27c361a225dbb33e04c8c8083fe49>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -153,21 +153,14 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "hasNextPage",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "hasPreviousPage",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
                 "name": "endCursor",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "hasNextPage",
                 "storageKey": null
               }
             ],
@@ -188,16 +181,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "409456d93a461e72bba7827c2f940cd4",
+    "cacheID": "b795e17b9627fa289514f3e165a5dd62",
     "id": null,
     "metadata": {},
     "name": "SelectUsersPaginationQuery",
     "operationKind": "query",
-    "text": "query SelectUsersPaginationQuery(\n  $after: DateTime\n  $first: Int!\n) {\n  ...SelectUsers_user_2HEEH6\n}\n\nfragment SelectUsers_user_2HEEH6 on Query {\n  getUsers(first: $first, after: $after) {\n    ok\n    error\n    edges {\n      node {\n        id\n        name\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n    }\n  }\n}\n"
+    "text": "query SelectUsersPaginationQuery(\n  $after: DateTime\n  $first: Int!\n) {\n  ...SelectUsers_user_2HEEH6\n}\n\nfragment SelectUsers_user_2HEEH6 on Query {\n  getUsers(first: $first, after: $after) {\n    ok\n    error\n    edges {\n      node {\n        id\n        name\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "16f6f3b2ecdc8b38920d8510bd36db54";
+(node as any).hash = "1884d5ce0ffebc3736bfaf5374210ab9";
 
 export default node;

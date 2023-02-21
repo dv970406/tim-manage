@@ -109,17 +109,23 @@ export class MeetingService {
         throw new Error('시간대의 형식을 확인해주세요.');
       }
 
-      const attendees = await this.userRepo.findBy({
-        id: In(attendeesIds),
+      const attendees = await this.userRepo.find({
+        where: { id: In(attendeesIds) },
+        select: {
+          id: true,
+          name: true,
+        },
       });
 
-      const newMeeting = await this.meetingRepo.save({
+      const createMeeting = this.meetingRepo.create({
         title,
         startTime,
         endTime,
         host: loggedInUser,
         attendees,
       });
+
+      const newMeeting = await this.meetingRepo.save(createMeeting);
 
       return {
         ok: true,
@@ -156,13 +162,9 @@ export class MeetingService {
         findMeeting.startTime = startTime;
       }
 
-      let attendees = [];
       if (attendeesIds?.length > 0) {
-        attendeesIds.forEach(async (attendeeId) => {
-          const findAttendee = await this.userRepo.findUser({
-            userId: attendeeId,
-          });
-          return attendees.push(findAttendee);
+        const attendees = await this.userRepo.findBy({
+          id: In(attendeesIds),
         });
         findMeeting.attendees = attendees;
       }

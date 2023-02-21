@@ -66,7 +66,9 @@ export class UserService {
         ...(after && { createdAt: LessThan(after) }),
       },
       relations: {
-        user: true,
+        survey: {
+          user: true,
+        },
       },
       take: first,
     });
@@ -325,7 +327,6 @@ export class UserService {
         relations: {
           position: true,
           team: true,
-          vacations: true,
         },
       });
 
@@ -354,31 +355,32 @@ export class UserService {
         relations: {
           position: true,
           team: true,
-          attendedMeetings: {
-            attendees: true,
-          },
-          hostedMeetingsByMe: true,
-          surveys: true,
-          vacations: true,
-          answers: {
-            user: true,
-          },
-          comments: {
-            post: {
-              user: true,
-            },
-          },
-          likes: {
-            post: {
-              user: true,
-            },
-          },
-          posts: {
-            user: true,
-          },
+          // attendedMeetings: {
+          //   attendees: true,
+          // },
+          // hostedMeetingsByMe: true,
+          // surveys: true,
+          // vacations: true,
+          // answers: {
+          //   survey: {
+          //     user: true,
+          //   },
+          // },
+          // comments: {
+          //   post: {
+          //     user: true,
+          //   },
+          // },
+          // likes: {
+          //   post: {
+          //     user: true,
+          //   },
+          // },
+          // posts: {
+          //   user: true,
+          // },
         },
       });
-
       if (!findUser) {
         throw new Error('존재하지 않는 유저입니다.');
       }
@@ -386,41 +388,6 @@ export class UserService {
       return {
         ok: true,
         user: findUser,
-        // answersConnection: {
-        //   edges: user.answers.edges,
-        //   pageInfo: {
-        //     hasNextPage: myAnswersTotalCount > first,
-        //     endCursor: myAnswersEndCursor,
-        //   },
-        // },
-        // commentsConnection: {
-        //   edges: user.comments.edges,
-        //   pageInfo: {
-        //     hasNextPage: myCommentsTotalCount > first,
-        //     endCursor: myCommentsEndCursor,
-        //   },
-        // },
-        // likesConnection: {
-        //   edges: user.likes.edges,
-        //   pageInfo: {
-        //     hasNextPage: myLikesTotalCount > first,
-        //     endCursor: myLikesEndCursor,
-        //   },
-        // },
-        // postsConnection: {
-        //   edges: user.posts.edges,
-        //   pageInfo: {
-        //     hasNextPage: myPostsTotalCount > first,
-        //     endCursor: myPostsEndCursor,
-        //   },
-        // },
-        // vacationsConnection: {
-        //   edges: user.vacations.edges,
-        //   pageInfo: {
-        //     hasNextPage: myVacationsTotalCount > first,
-        //     endCursor: myVacationsEndCursor,
-        //   },
-        // },
       };
     } catch (error) {
       return {

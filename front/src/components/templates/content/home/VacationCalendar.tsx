@@ -31,10 +31,15 @@ import {
   meetingTimeFormatForDb,
 } from "../../../../utils/time/time";
 import { NINE_HOURS_TO_MILLISEC } from "../../../../utils/constants/time.constant";
+import { openModal } from "../../../../utils/modal/controlModal";
+import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
+import CreateScheduleModal from "./CreateScheduleModal";
+import MutateMeetingModal from "./MutateMeetingModal";
 
 // 모달 안켜지면 관련 파일 다운로드 안하도록 Lazy로딩
-const CreateScheduleModal = React.lazy(() => import("./CreateScheduleModal"));
-const MutateMeetingModal = React.lazy(() => import("./MutateMeetingModal"));
+// 그런데 dialog식으로 바꾸면서 더이상 의미없어짐,, 성능 고려하면 dialog보단 포탈+div가 나은듯(포탈 + div + context API는 lazy로딩 가능)
+// const CreateScheduleModal = React.lazy(() => import("./CreateScheduleModal"));
+// const MutateMeetingModal = React.lazy(() => import("./MutateMeetingModal"));
 
 interface IVacationCalendar {
   schedules: EventInput[];
@@ -45,7 +50,7 @@ export default function VacationCalendar({
   setFilteringSchedules,
 }: IVacationCalendar) {
   // const [modalState, setModalState] = useRecoilState(modalStateRecoil);
-  const { currentModal, setCurrentModal } = useContext(ModalContext);
+  // const { currentModal, setCurrentModal } = useContext(ModalContext);
 
   const [selectedDate, setSelectedDate] = useState<DateRangeInput>({
     start: "",
@@ -61,7 +66,8 @@ export default function VacationCalendar({
     const startDate = +new Date(start) + NINE_HOURS_TO_MILLISEC;
     const endDate = +new Date(end) - NINE_HOURS_TO_MILLISEC;
     setSelectedDate({ start: startDate, end: endDate });
-    setCurrentModal(MODAL.CREATE_SCHEDULE);
+
+    openModal(MODAL_NAME.CREATE_SCHEDULE);
   };
 
   const { deleteVacationMutation, deleteVacationLoading } = useDeleteVacation();
@@ -69,15 +75,17 @@ export default function VacationCalendar({
     const { type, isMine } = clickInfo.event.extendedProps;
     const { start } = clickInfo.event;
     const now = new Date();
-    if (!isMine || start! < now) return;
-
     const scheduleId = clickInfo.event.id;
+    if (!isMine || start! < now || !scheduleId) return;
+
     if (type === SCHEDULES.VACATION) {
       if (deleteVacationLoading) return;
       deleteVacationMutation({ id: scheduleId });
     } else if (type === SCHEDULES.MEETING) {
       setClickedScheduleId(scheduleId);
-      setCurrentModal(MODAL.MUTATE_MEETING);
+      // setCurrentModal(MODAL.MUTATE_MEETING);
+
+      openModal(MODAL_NAME.MUTATE_MEETING);
     }
   };
 
@@ -88,8 +96,8 @@ export default function VacationCalendar({
     const { start, end } = eventResizeInfo.event._instance?.range!;
 
     const now = new Date();
-    if (!isMine || start < now) return;
     const scheduleId = eventResizeInfo.event.id;
+    if (!isMine || start < now || !scheduleId) return;
 
     if (type === SCHEDULES.VACATION) {
       if (updateVacationLoading || !start || !end) return;
@@ -116,7 +124,7 @@ export default function VacationCalendar({
     const { type, isMine, isHalf } = eventDropInfo.event.extendedProps;
     const scheduleId = eventDropInfo.event.id;
     const { start, end } = eventDropInfo.event._instance?.range!;
-    if (!isMine) return;
+    if (!isMine || !scheduleId) return;
 
     if (start < new Date()) {
       const isOk = window.confirm(
@@ -185,12 +193,8 @@ export default function VacationCalendar({
         eventDisplay="block"
         dayCellContent={({ date }) => date.getDate()}
       />
-      {currentModal === MODAL.CREATE_SCHEDULE && (
-        <CreateScheduleModal selectedDate={selectedDate} />
-      )}
-      {currentModal === MODAL.MUTATE_MEETING && (
-        <MutateMeetingModal scheduleId={clickedScheduleId} />
-      )}
+      <CreateScheduleModal selectedDate={selectedDate} />
+      <MutateMeetingModal scheduleId={clickedScheduleId} />
     </>
   );
 }

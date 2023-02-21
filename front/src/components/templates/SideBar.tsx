@@ -59,9 +59,9 @@ const SideBar = ({ isManager }: ISideBar) => {
                 tabName="관리자"
                 icon={faQ}
                 lists={[
-                  { name: "직원 추가", path: "/manager/user/create" },
+                  // { name: "직원 추가", path: "/manager/user/create" },
                   { name: "직원 관리", path: "/manager/user" },
-                  { name: "설문 추가", path: "/manager/survey/create" },
+                  // { name: "설문 추가", path: "/manager/survey/create" },
                   { name: "설문 관리", path: "/manager/survey" },
                   { name: "미승인 휴가", path: "/manager/vacation" },
                   { name: "직책 관리", path: "/manager/position" },
@@ -93,7 +93,7 @@ const SideBar = ({ isManager }: ISideBar) => {
               icon={faGameBoard}
               lists={[
                 { name: "게시글", path: "/post" },
-                { name: "게시글 추가", path: "/post/create" },
+                // { name: "게시글 추가", path: "/post/create" },
               ]}
             />
           </GapList>

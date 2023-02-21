@@ -107,7 +107,6 @@ export class User extends CoreEntity implements Node {
   vacations: Vacation[];
 
   @ManyToMany((type) => Meeting, (meeting) => meeting.attendees)
-  @JoinTable()
   @Field((type) => [Meeting])
   attendedMeetings: Meeting[];
 

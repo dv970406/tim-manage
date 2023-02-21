@@ -12,7 +12,7 @@ export const SizingBox = styled.div(({ theme }) => ({
   display: "flex",
   gap: theme.spacing.sm,
   width: "70%",
-  height: "80%",
+  minHeight: "50%",
 }));
 
 interface ICenterBox {

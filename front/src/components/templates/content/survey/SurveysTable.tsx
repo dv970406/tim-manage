@@ -1,11 +1,15 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { usePaginationFragment } from "react-relay";
-import { InfiniteScrollListBox } from "../../../organisms/shared/InfiniteScroll";
+import { ManageDataList } from "../../../organisms/shared/ManageDataList";
 import SurveyTableContent from "../../../organisms/content/survey/SurveyTableContent";
 import { GetSurveysPaginationQuery } from "./__generated__/GetSurveysPaginationQuery.graphql";
 import { SurveysTable_survey$key } from "./__generated__/SurveysTable_survey.graphql";
-import SearchBox from "../../../molecules/inputs/SearchBox";
+import DataToolBar from "../../../molecules/inputs/DataToolBar";
 import { ChangeEventHandler, useEffect, useState } from "react";
+import Modal from "../../Modal";
+import CreateScheduleModal from "../home/CreateScheduleModal";
+import MutateMeetingModal from "../home/MutateMeetingModal";
+import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
 
 interface ISurveysTable {
   surveys: SurveysTable_survey$key;
@@ -57,19 +61,20 @@ const SurveysTable = ({ surveys }: ISurveysTable) => {
 
   return (
     <>
-      <InfiniteScrollListBox
+      <ManageDataList
+        dataTableName={MODAL_NAME.CREATE_SURVEY}
         refetch={refetch}
         isLoadingNext={isLoadingNext}
         hasNext={hasNext}
         loadNext={loadNext}
       >
         {edges.map(
-          (survey: any) =>
-            survey && (
+          (survey) =>
+            survey.node && (
               <SurveyTableContent key={survey.cursor} survey={survey.node} />
             )
         )}
-      </InfiniteScrollListBox>
+      </ManageDataList>
     </>
   );
 };

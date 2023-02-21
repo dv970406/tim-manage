@@ -16,7 +16,10 @@ export const Icon = ({ color, icon, size, animation }: IIcon) => {
       icon={icon}
       color={color || theme.colors.white}
       size={size || "sm"}
-      style={animation}
+      style={{
+        ...animation,
+        transition: "color 0.3s",
+      }}
     />
   );
 };

@@ -1,10 +1,11 @@
 import { graphql } from "babel-plugin-relay/macro";
 import React from "react";
 import { usePaginationFragment } from "react-relay";
-import { InfiniteScrollListBox } from "../../../organisms/shared/InfiniteScroll";
+import { ManageDataList } from "../../../organisms/shared/ManageDataList";
 import PostTableContent from "../../../organisms/content/post/PostTableContent";
 import { GetPostsPaginationQuery } from "../../../organisms/content/post/__generated__/GetPostsPaginationQuery.graphql";
 import { PostsTable_post$key } from "./__generated__/PostsTable_post.graphql";
+import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
 
 interface IPostsTable {
   posts: PostsTable_post$key;
@@ -52,17 +53,18 @@ const PostsTable = ({ posts }: IPostsTable) => {
 
   return (
     <>
-      <InfiniteScrollListBox
+      <ManageDataList
+        dataTableName={MODAL_NAME.CREATE_POST}
         refetch={refetch}
         loadNext={loadNext}
         hasNext={hasNext}
         isLoadingNext={isLoadingNext}
       >
         {edges.map(
-          (post: any) =>
-            post && <PostTableContent key={post.cursor} post={post.node} />
+          (post) =>
+            post.node && <PostTableContent key={post.cursor} post={post.node} />
         )}
-      </InfiniteScrollListBox>
+      </ManageDataList>
     </>
   );
 };

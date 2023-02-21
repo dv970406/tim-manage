@@ -13,3 +13,8 @@
   border-bottom-left-radius: var(--border-radius-md);
   border-bottom-right-radius: var(--border-radius-md);
 }
+
+/* 텍스트 에디터 placeholder 컬러 변경*/
+.quill > .ql-container > .ql-editor.ql-blank::before {
+  color: darkgray;
+}

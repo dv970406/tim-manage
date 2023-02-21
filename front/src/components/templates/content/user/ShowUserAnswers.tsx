@@ -42,9 +42,12 @@ const ShowUserAnswers = () => {
   return (
     <ListBox>
       {edges.map(
-        (answer: any) =>
-          answer && (
-            <SurveyTableContent key={answer.id} survey={answer.survey} />
+        (answer) =>
+          answer?.node?.id && (
+            <SurveyTableContent
+              key={answer.node.id}
+              survey={answer.node.survey}
+            />
           )
       )}
     </ListBox>

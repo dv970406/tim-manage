@@ -49,7 +49,6 @@ const UserManagement = ({ managerUsersQueryReference }: IUserManagement) => {
         style={{
           width: "60%",
           overflow: "auto",
-          height: "100%",
           gap: theme.spacing.xl,
         }}
       >

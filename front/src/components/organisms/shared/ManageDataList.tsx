@@ -12,7 +12,7 @@ import Table from "../../molecules/tables/Table";
 import { GapBox, ListBox } from "../../atomics/boxes/Boxes";
 import { Options } from "react-relay/relay-hooks/useRefetchableFragmentNode";
 import { Section } from "../../atomics/sections/sections";
-import SearchBox from "../../molecules/inputs/SearchBox";
+import DataToolBar from "../../molecules/inputs/DataToolBar";
 
 export const ObserveBox = styled.div`
   height: 30px;
@@ -25,18 +25,20 @@ interface IInfiniteScroll {
   loadNext: LoadMoreFn<any>;
 }
 
-interface IInfiniteScrollListBox extends IInfiniteScroll {
+interface IManageDataList extends IInfiniteScroll {
   refetch: RefetchFnDynamic<any, any, Options>;
+  dataTableName: string;
 }
 
 // Search, Pagination(Infinite Scroll) 구현하는 컴포넌트
-export const InfiniteScrollListBox = ({
+export const ManageDataList = ({
   children,
   hasNext,
   isLoadingNext,
   loadNext,
   refetch,
-}: IInfiniteScrollListBox) => {
+  dataTableName,
+}: IManageDataList) => {
   // 스크롤이 바닥에 닿았는지 감지해서 relay의 loadNext를 실행시키는 훅
   const ref = useInfiniteScroll(async (entry, observer) => {
     observer.unobserve(entry.target);
@@ -66,7 +68,7 @@ export const InfiniteScrollListBox = ({
     <>
       <GapBox>
         <Section>
-          <SearchBox onChange={handleChange} />
+          <DataToolBar onChange={handleChange} dataTableName={dataTableName} />
         </Section>
         <ListBox>{children}</ListBox>
         {(isLoadingNext || isPending) && <p>기다려바</p>}
@@ -76,16 +78,16 @@ export const InfiniteScrollListBox = ({
   );
 };
 
-interface IInfiniteScrollTable extends IInfiniteScroll {
+interface IManageDataTable extends IInfiniteScroll {
   headers: string[];
 }
-export const InfiniteScrollTable = ({
+export const ManageDataTable = ({
   children,
   hasNext,
   isLoadingNext,
   loadNext,
   headers,
-}: IInfiniteScrollTable) => {
+}: IManageDataTable) => {
   const ref = useInfiniteScroll(async (entry, observer) => {
     observer.unobserve(entry.target);
     console.log(hasNext, isLoadingNext);

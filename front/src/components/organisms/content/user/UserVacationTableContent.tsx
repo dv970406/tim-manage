@@ -30,6 +30,8 @@ const UserVacationTableContent = ({ vacation }: IUserVacationTableContent) => {
     userVacationTableContentFragment,
     vacation
   );
+  if (!tableContentData) return <></>;
+
   const {
     confirmed: { byCeo, byLeader, byManager },
   } = tableContentData;

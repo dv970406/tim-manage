@@ -7,7 +7,6 @@ import { globalStyles, theme } from "./css/theme";
 import SurveyManagementPage from "./pages/manager/SurveyManagement";
 import UserManagementPage from "./pages/manager/UserManagement";
 import ErrorPage from "./pages/Error";
-
 import HomePage from "./pages/Home";
 import Layout from "./pages/Layout";
 import LoginPage from "./pages/Login";
@@ -35,6 +34,7 @@ import ShowUserInfo from "./components/templates/content/user/ShowUserInfo";
 import ShowUserAnswers from "./components/templates/content/user/ShowUserAnswers";
 import ShowUserComments from "./components/templates/content/user/ShowUserComments";
 import ShowUserLikes from "./components/templates/content/user/ShowUserLikes";
+import "./styles.css";
 
 // 접근제한 라우터는 나중에 고민
 const router = createBrowserRouter([

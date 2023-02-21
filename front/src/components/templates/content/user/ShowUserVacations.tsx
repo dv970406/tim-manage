@@ -44,7 +44,7 @@ const ShowUserVacations = () => {
       <Table headers={["시작일", "종료일", "기간", "반차여부", "승인여부"]}>
         {edges?.map(
           (vacation) =>
-            vacation && (
+            vacation?.node && (
               <UserVacationTableContent
                 key={vacation.cursor}
                 vacation={vacation.node}

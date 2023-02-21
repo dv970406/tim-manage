@@ -5,8 +5,6 @@ import { useDeleteMeeting } from "../../../../client/meeting/DeleteMeeting.clien
 import { useGetMeeting } from "../../../../client/meeting/GetMeeting.client";
 import { useUpdateMeeting } from "../../../../client/meeting/UpdateMeeting.client";
 import { theme } from "../../../../css/theme";
-import { ModalContext } from "../../../../utils/contexts/modal.context";
-import { SubmitButton } from "../../../atomics/buttons/buttons";
 import { Form } from "../../../atomics/form/Form";
 import { GapBox } from "../../../atomics/boxes/Boxes";
 import { TextInput } from "../../../molecules/inputs/TextInput";
@@ -14,14 +12,15 @@ import Modal from "../../Modal";
 import { IMeetingFormValue } from "./CreateScheduleModal";
 import SelectUsers from "../../../organisms/content/home/SelectUsers";
 import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
+import { closeModal } from "../../../../utils/modal/controlModal";
+import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
+import { useSelectUsers } from "../../../../client/user/SelectUsers.client";
 
 interface IMutateMeetingModal {
   scheduleId: string;
 }
 
 const MutateMeetingModal = ({ scheduleId }: IMutateMeetingModal) => {
-  const { setCurrentModal } = useContext(ModalContext);
-
   const { meeting } = useGetMeeting(scheduleId);
 
   const prevAttendeesIds =
@@ -33,6 +32,7 @@ const MutateMeetingModal = ({ scheduleId }: IMutateMeetingModal) => {
     register,
     formState: { errors },
     setValue,
+    reset,
   } = useForm<IMeetingFormValue>({
     mode: "onChange",
   });
@@ -46,28 +46,34 @@ const MutateMeetingModal = ({ scheduleId }: IMutateMeetingModal) => {
   const { deleteMeetingMutation, deleteMeetingLoading } = useDeleteMeeting();
 
   const onSubmit: SubmitHandler<IMeetingFormValue> = ({ title }) => {
-    if (updateMeetingLoading) return;
+    if (updateMeetingLoading || !scheduleId) return;
     updateMeetingMutation({
       meetingId: scheduleId,
       title,
       attendeesIds,
     });
-    setCurrentModal("");
+
+    closeModal(MODAL_NAME.MUTATE_MEETING);
   };
 
   const handleDeleteVacation = () => {
-    if (deleteMeetingLoading) return;
+    if (deleteMeetingLoading || !scheduleId) return;
     deleteMeetingMutation({ id: scheduleId });
-    setCurrentModal("");
+
+    closeModal(MODAL_NAME.MUTATE_MEETING);
   };
+
+  const { users } = useSelectUsers();
+
   return (
-    <Modal>
+    <Modal modalName={MODAL_NAME.MUTATE_MEETING}>
       <Form
         onSubmit={handleSubmit(onSubmit)}
         style={{
           justifyContent: "space-between",
-          height: "100%",
+          height: 400,
         }}
+        method="dialog"
       >
         <GapBox>
           <div>
@@ -94,16 +100,14 @@ const MutateMeetingModal = ({ scheduleId }: IMutateMeetingModal) => {
               errorMessage={errors?.title && errors?.title.message}
             />
           </div>
-          <div>
-            <SelectUsers
-              prevAttendees={meeting?.attendees as any}
-              setAttendeesId={setAttendeesId}
-            />
-          </div>
+
+          <SelectUsers
+            prevAttendees={meeting?.attendees as any}
+            setAttendeesId={setAttendeesId}
+            users={users}
+          />
         </GapBox>
-        <div
-          style={{ display: "flex", gap: theme.spacing.sm, marginTop: "auto" }}
-        >
+        <div style={{ display: "flex", gap: theme.spacing.sm }}>
           <EndSubmitButton
             onClick={handleSubmit(onSubmit)}
             disabled={updateMeetingLoading}

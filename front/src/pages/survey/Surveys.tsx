@@ -6,6 +6,7 @@ import {
 } from "../../client/survey/GetSurveys.client";
 import { GetSurveysQuery } from "../../client/survey/__generated__/GetSurveysQuery.graphql";
 import { Section } from "../../components/atomics/sections/sections";
+import CreateSurveyModal from "../../components/templates/content/survey/CreateSurveyModal";
 import SurveysTable from "../../components/templates/content/survey/SurveysTable";
 import { PAGINATION_LOAD_COUNT } from "../../utils/constants/share.constant";
 
@@ -32,7 +33,11 @@ const Surveys = ({ getSurveysQueryReference }: ISurveys) => {
   const { surveys } = useGetSurveys(getSurveysQueryReference);
 
   return (
-    <Section noneBg>{surveys && <SurveysTable surveys={surveys} />}</Section>
+    /* Section이 있어야 Observer가 제대로 동작해서 Infinite Scroll이 정상 작동함 */
+    <Section noneBg>
+      <CreateSurveyModal />
+      {surveys && <SurveysTable surveys={surveys} />}
+    </Section>
   );
 };
 export default SurveysPage;

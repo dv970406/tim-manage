@@ -1,7 +1,7 @@
 import { graphql } from "babel-plugin-relay/macro";
 import React, { Dispatch, SetStateAction } from "react";
 import { usePaginationFragment } from "react-relay";
-import { InfiniteScrollTable } from "../../../organisms/shared/InfiniteScroll";
+import { ManageDataTable } from "../../../organisms/shared/ManageDataList";
 import Table from "../../../molecules/tables/Table";
 import ManagerUserTableContent from "../../../organisms/content/manager/ManagerUserTableContent";
 import { GetManagerUsersPaginationQuery } from "./__generated__/GetManagerUsersPaginationQuery.graphql";
@@ -57,7 +57,7 @@ const ManagerUsersTable = ({
 
   return (
     <>
-      <InfiniteScrollTable
+      <ManageDataTable
         headers={["이름", "직책", "팀"]}
         loadNext={loadNext}
         isLoadingNext={isLoadingNext}
@@ -75,7 +75,7 @@ const ManagerUsersTable = ({
               />
             )
         )}
-      </InfiniteScrollTable>
+      </ManageDataTable>
     </>
   );
 };

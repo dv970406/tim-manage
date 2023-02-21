@@ -6,4 +6,5 @@ export const Form = styled.form(({ theme }) => ({
   gap: theme.spacing.sm,
   width: "100%",
   height: "100%",
+  color: theme.colors.white,
 }));

@@ -16,6 +16,9 @@ import { Radio } from "../../../molecules/inputs/Radio";
 import Modal from "../../../templates/Modal";
 import SelectUsers from "../../../organisms/content/home/SelectUsers";
 import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
+import { closeModal } from "../../../../utils/modal/controlModal";
+import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
+import { useSelectUsers } from "../../../../client/user/SelectUsers.client";
 
 interface ICreateScheduleModal {
   selectedDate: DateRangeInput;
@@ -36,7 +39,6 @@ const CreateScheduleModal = ({
   });
   const { createVacationMutation, createVacationLoading } = useCreateVacation();
   const { createMeetingMutation, createMeetingLoading } = useCreateMeeting();
-  const { setCurrentModal } = useContext(ModalContext);
 
   const [kindOfSchedule, setKindOfSchedule] = useState(SCHEDULES.VACATION);
 
@@ -44,6 +46,7 @@ const CreateScheduleModal = ({
 
   const onSubmit: SubmitHandler<IMeetingFormValue> = ({ title }) => {
     if (!start || !end) return;
+
     if (kindOfSchedule === SCHEDULES.VACATION) {
       if (createVacationLoading) return;
       const isHalf = window.confirm("반차입니까?");
@@ -55,6 +58,7 @@ const CreateScheduleModal = ({
       });
     } else if (kindOfSchedule === SCHEDULES.MEETING) {
       if (createMeetingLoading) return;
+      console.log(title, start, end, attendeesIds);
       createMeetingMutation({
         title,
         startTime: start,
@@ -62,17 +66,21 @@ const CreateScheduleModal = ({
         attendeesIds,
       });
     }
-    setCurrentModal("");
+
+    closeModal(MODAL_NAME.CREATE_SCHEDULE);
   };
 
+  const { users } = useSelectUsers();
+
   return (
-    <Modal>
+    <Modal modalName={MODAL_NAME.CREATE_SCHEDULE}>
       <Form
         onSubmit={handleSubmit(onSubmit)}
         style={{
           justifyContent: "space-between",
           height: "100%",
         }}
+        method="dialog"
       >
         <GapBox>
           <fieldset
@@ -124,7 +132,7 @@ const CreateScheduleModal = ({
                 />
               </div>
               <div>
-                <SelectUsers setAttendeesId={setAttendeesId} />
+                <SelectUsers setAttendeesId={setAttendeesId} users={users} />
               </div>
             </>
           )}

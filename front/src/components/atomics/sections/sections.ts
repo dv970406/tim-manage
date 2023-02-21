@@ -109,27 +109,32 @@ export const Article = styled.article(({ theme }) => ({
   borderRadius: theme.borderRadius.lg,
 }));
 
-export const ModalBackground = styled.div(({ theme }) => ({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  position: "absolute",
-  top: 0,
-  left: 0,
-  width: "100%",
-  height: "100%",
-  backgroundColor: theme.bgColors.translucent,
-  zIndex: 999,
-  animation: `${modalBgShow} 0.3s`,
-}));
+// export const ModalBackground = styled.div(({ theme }) => ({
+//   display: "flex",
+//   justifyContent: "center",
+//   alignItems: "center",
+//   position: "absolute",
+//   top: 0,
+//   left: 0,
+//   width: "100%",
+//   height: "100%",
+//   backgroundColor: theme.bgColors.translucent,
+//   zIndex: 999,
+//   animation: `${modalBgShow} 0.3s`,
+// }));
 
-export const ModalSection = styled.section(({ theme }) => ({
-  animation: `${modalShow} 0.3s`,
-  width: 600,
-  height: 400,
-  background: theme.bgColors.sectionGradient,
+export const ModalDialog = styled.dialog(({ theme }) => ({
+  "::backdrop": {
+    backgroundColor: theme.bgColors.translucent,
+  },
+  animation: `${modalShow} 0.5s`,
+  width: 700,
+  background: theme.bgColors.gray,
   borderRadius: theme.borderRadius.lg,
   padding: theme.spacing.xl,
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
 }));
 
 // 모달 애니메이션

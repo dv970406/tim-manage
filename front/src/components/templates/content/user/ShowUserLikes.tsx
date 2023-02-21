@@ -4,7 +4,7 @@ import { useOutletContext } from "react-router-dom";
 import { RowBox, ListBox } from "../../../atomics/boxes/Boxes";
 import { SectionTitle } from "../../../atomics/typographys/titles";
 import PostTableContent from "../../../organisms/content/post/PostTableContent";
-import { InfiniteScrollListBox } from "../../../organisms/shared/InfiniteScroll";
+import { ManageDataList } from "../../../organisms/shared/ManageDataList";
 import { ShowUserLikes_like$key } from "./__generated__/ShowUserLikes_like.graphql";
 
 // 여기도 connection으로
@@ -47,7 +47,8 @@ const ShowUserLikes = () => {
     <>
       {" "}
       <SectionTitle>좋아요 목록</SectionTitle>
-      <InfiniteScrollListBox
+      <ManageDataList
+        dataTableName=""
         loadNext={loadNext}
         hasNext={hasNext}
         isLoadingNext={isLoadingNext}
@@ -55,11 +56,11 @@ const ShowUserLikes = () => {
       >
         {edges?.map(
           (like) =>
-            like && (
+            like?.node?.post && (
               <PostTableContent key={like.node.id} post={like.node.post} />
             )
         )}
-      </InfiniteScrollListBox>
+      </ManageDataList>
     </>
   );
 };
