@@ -63,8 +63,6 @@ const MutateMeetingModal = ({ scheduleId }: IMutateMeetingModal) => {
     closeModal(MODAL_NAME.MUTATE_MEETING);
   };
 
-  const { users } = useSelectUsers();
-
   return (
     <Modal modalName={MODAL_NAME.MUTATE_MEETING}>
       <Form
@@ -101,11 +99,12 @@ const MutateMeetingModal = ({ scheduleId }: IMutateMeetingModal) => {
             />
           </div>
 
-          <SelectUsers
-            prevAttendees={meeting?.attendees as any}
-            setAttendeesId={setAttendeesId}
-            users={users}
-          />
+          {meeting?.attendees && (
+            <SelectUsers
+              prevAttendees={meeting?.attendees as any}
+              setAttendeesId={setAttendeesId}
+            />
+          )}
         </GapBox>
         <div style={{ display: "flex", gap: theme.spacing.sm }}>
           <EndSubmitButton

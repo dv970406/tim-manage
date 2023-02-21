@@ -4,6 +4,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useCreatePost } from "../../../../client/post/CreatePost.client";
+import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
+import { closeModal } from "../../../../utils/modal/controlModal";
 import { formats, modules } from "../../../../utils/quill/props";
 import { GapBox } from "../../../atomics/boxes/Boxes";
 import { SubmitButton } from "../../../atomics/buttons/buttons";
@@ -23,6 +25,7 @@ const CreatePostForm = () => {
     register,
     formState: { errors },
     watch,
+    reset,
   } = useForm<ICreatePostFormValue>({
     mode: "onChange",
   });
@@ -40,6 +43,9 @@ const CreatePostForm = () => {
       title,
       content,
     });
+    closeModal(MODAL_NAME.CREATE_POST);
+    reset();
+    setContent("");
   };
 
   return (
@@ -66,6 +72,7 @@ const CreatePostForm = () => {
         <GapBox>
           <SubTitle>게시글 내용</SubTitle>
           <ReactQuill
+            // react-quill은 react-hook-form register 안먹힘
             theme="snow"
             value={content}
             onChange={handleChange}

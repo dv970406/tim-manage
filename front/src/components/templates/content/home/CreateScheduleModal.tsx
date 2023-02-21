@@ -58,7 +58,6 @@ const CreateScheduleModal = ({
       });
     } else if (kindOfSchedule === SCHEDULES.MEETING) {
       if (createMeetingLoading) return;
-      console.log(title, start, end, attendeesIds);
       createMeetingMutation({
         title,
         startTime: start,
@@ -69,8 +68,6 @@ const CreateScheduleModal = ({
 
     closeModal(MODAL_NAME.CREATE_SCHEDULE);
   };
-
-  const { users } = useSelectUsers();
 
   return (
     <Modal modalName={MODAL_NAME.CREATE_SCHEDULE}>
@@ -131,9 +128,7 @@ const CreateScheduleModal = ({
                   errorMessage={errors?.title && errors?.title.message}
                 />
               </div>
-              <div>
-                <SelectUsers setAttendeesId={setAttendeesId} users={users} />
-              </div>
+              <SelectUsers setAttendeesId={setAttendeesId} />
             </>
           )}
         </GapBox>

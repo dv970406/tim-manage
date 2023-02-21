@@ -11,6 +11,7 @@ import { GapBox } from "../../../atomics/boxes/Boxes";
 import { usePaginationFragment } from "react-relay";
 import { SelectUsersPaginationQuery } from "./__generated__/SelectUsersPaginationQuery.graphql";
 import { SelectUsers_user$key } from "./__generated__/SelectUsers_user.graphql";
+import { PAGINATION_LOAD_COUNT } from "../../../../utils/constants/share.constant";
 
 export interface IAttendee {
   readonly id: string;
@@ -24,7 +25,6 @@ export interface ISelectFormat {
 interface ISelectUsers {
   prevAttendees?: IAttendee[];
   setAttendeesId: Dispatch<SetStateAction<string[]>>;
-  users: SelectUsers_user$key;
 }
 
 // 모든 유저의 정보를 가져와서 리스트에 띄워주고 참석자를 고를 수 있게 함
@@ -52,31 +52,37 @@ const selectUsersQuery = graphql`
     }
   }
 `;
-const SelectUsers = ({
-  prevAttendees,
-  setAttendeesId,
-  users,
-}: ISelectUsers) => {
-  // 여기서부터 useEffect까지 훅으로 묶고 싶은데 에러남..
+const SelectUsers = ({ prevAttendees, setAttendeesId }: ISelectUsers) => {
+  const { users } = useSelectUsers();
+
   const {
     data: {
       getUsers: { edges },
     },
+    loadNext,
+    hasNext,
+    isLoadingNext,
   } = usePaginationFragment<SelectUsersPaginationQuery, SelectUsers_user$key>(
     selectUsersQuery,
     users
   );
 
-  const newUserFormat = prevAttendees?.map((user) => ({
+  const prevSelectedUsers = prevAttendees?.map((user) => ({
     value: user.id,
     label: user.name,
   }));
-  const [selectedUsers, setSelectedUsers] = useState<ISelectFormat[]>(
-    newUserFormat!
-  );
 
-  const handleChangeSelect = (selectedUsersArray: MultiValue<any>) => {
-    const attendeesIdArray = selectedUsersArray.map((user) => user.value);
+  const [selectedUsers, setSelectedUsers] = useState(prevSelectedUsers);
+
+  useEffect(() => {
+    setSelectedUsers(prevSelectedUsers);
+  }, [prevAttendees]);
+
+  const handleChangeSelect = (selectedUsersArray: any) => {
+    const attendeesIdArray = selectedUsersArray.map(
+      (user: ISelectFormat) => user.value
+    );
+    setSelectedUsers(selectedUsersArray);
     setAttendeesId(attendeesIdArray);
   };
 
@@ -86,6 +92,12 @@ const SelectUsers = ({
   }));
 
   const [menuIsOpen, setMenuIsOpen] = useState(false);
+
+  const getMoreData = () => {
+    if (!hasNext || isLoadingNext) return;
+    console.log("reached");
+    loadNext(PAGINATION_LOAD_COUNT);
+  };
   return (
     <GapBox>
       <label
@@ -98,6 +110,7 @@ const SelectUsers = ({
       <ReactSelect
         id="attendees"
         value={selectedUsers}
+        maxMenuHeight={200}
         isMulti
         menuIsOpen={menuIsOpen}
         onMenuOpen={() => setMenuIsOpen(true)}
@@ -109,6 +122,8 @@ const SelectUsers = ({
         options={selectableUsers}
         styles={selectStyles}
         onChange={handleChangeSelect}
+        // infinite scroll에 활용
+        onMenuScrollToBottom={getMoreData}
       />
     </GapBox>
   );

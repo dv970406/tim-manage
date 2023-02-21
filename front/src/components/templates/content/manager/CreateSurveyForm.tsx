@@ -223,19 +223,19 @@ const CreateSurveyForm = ({}: ICreateSurveyForm) => {
         />
         <RowBox style={{ gap: theme.spacing.sm }}>
           <ButtonIcon onClick={addParagraphs} icon={faPlus} />
-          <MainText>단락 추가</MainText>
+          <MainText>추가</MainText>
         </RowBox>
-        {paragraphs.map((count, paragraphIndex) => (
+        {paragraphs?.map((count, paragraphIndex) => (
           <Section key={paragraphIndex}>
             <TextInput
-              label="단락 제목"
-              placeholder="단락 제목"
+              label={`주제${paragraphIndex + 1}`}
+              placeholder="주제"
               icon={faTable}
               onChange={(event) => handleParagraphTitle(event, paragraphIndex)}
             />
             <TextInput
-              label="단락 설명"
-              placeholder="단락 설명"
+              label={`설명${paragraphIndex + 1}`}
+              placeholder="설명"
               icon={faRuler}
               onChange={(event) =>
                 handleParagraphDescription(event, paragraphIndex)
