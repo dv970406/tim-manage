@@ -2,6 +2,7 @@ import { graphql } from "babel-plugin-relay/macro";
 import { useState } from "react";
 import { commitMutation, ConnectionHandler, useMutation } from "react-relay";
 import { useNavigate } from "react-router-dom";
+import { insertEdgeToData } from "../../utils/store/connection";
 import { environment } from "../client";
 import {
   CreateSurveyMutation,
@@ -48,12 +49,12 @@ const createSurveyQuery = graphql`
 
 export const useCreateSurvey = () => {
   const [createSurveyLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
   const createSurveyMutation = (variables: CreateSurveyMutation$variables) => {
     setIsLoading(true);
     commitMutation<CreateSurveyMutation>(environment, {
       mutation: createSurveyQuery,
       variables,
+
       updater: (proxyStore) => {
         // pagination 적용하기 이전에 썼던 store 업데이트
         // const addSurveyPayload = proxyStore
@@ -79,34 +80,28 @@ export const useCreateSurvey = () => {
           .getLinkedRecord("edge");
         if (!newSurveyEdge) return;
 
-        const surveyRecord = proxyStore.getRoot();
-        if (!surveyRecord) return;
+        const rootRecord = proxyStore.getRoot();
 
-        const surveyConnection = ConnectionHandler.getConnection(
+        insertEdgeToData({
           // parent 필요. 만약 type User가 가진 surveys들을 가져오는 것이라면 해당 user의 dataRecord를 넣어야힘
           // 지금같은 경우는 getSurveys의 부모가 type Query이므로 getRoot로 client:root값을 parent로 넣은 것
-          surveyRecord,
-          "SurveysTable_getSurveys",
+          record: rootRecord,
+          key: "SurveysTable_getSurveys",
+          newEdge: newSurveyEdge,
           // first, after 같은 @connection이 제공해주는 argument이외의 값은 아래처럼 filters 값으로 넣어주어야 한다! 안적으면 undefined뜸!!
-          {
+          options: {
             onlyMine: false,
-          }
-        );
+          },
+        });
 
-        const managerSurveyConnection = ConnectionHandler.getConnection(
-          surveyRecord,
-          "ManagerSurveysTable_getSurveys",
-          {
+        insertEdgeToData({
+          record: rootRecord,
+          key: "ManagerSurveysTable_getSurveys",
+          newEdge: newSurveyEdge,
+          options: {
             onlyMine: true,
-          }
-        );
-        if (surveyConnection)
-          ConnectionHandler.insertEdgeBefore(surveyConnection, newSurveyEdge);
-        if (managerSurveyConnection)
-          ConnectionHandler.insertEdgeBefore(
-            managerSurveyConnection,
-            newSurveyEdge
-          );
+          },
+        });
       },
 
       onCompleted: ({ createSurvey: { ok, error } }) => {
@@ -115,7 +110,6 @@ export const useCreateSurvey = () => {
           alert(error);
           return;
         }
-        navigate("/survey");
       },
     });
   };

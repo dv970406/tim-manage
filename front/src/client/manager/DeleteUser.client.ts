@@ -1,6 +1,7 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useState } from "react";
 import { commitMutation, ConnectionHandler, useMutation } from "react-relay";
+import { deleteEdgeOfData } from "../../utils/store/connection";
 import { environment } from "../client";
 import {
   DeleteUserMutation,
@@ -36,17 +37,13 @@ export const useDeleteUser = () => {
         alert("저장되었습니다.");
       },
       updater: (proxyStore, { deleteUser: { deletedUserId } }) => {
-        const userRecord = proxyStore.getRoot();
-        if (!userRecord) return;
+        const rootRecord = proxyStore.getRoot();
 
-        const userConnection = ConnectionHandler.getConnection(
-          userRecord,
-          "UsersTable_getUsers"
-        );
-
-        if (!userConnection || !deletedUserId) return;
-
-        ConnectionHandler.deleteNode(userConnection, deletedUserId);
+        deleteEdgeOfData({
+          record: rootRecord,
+          key: "UsersTable_getUsers",
+          dataId: deletedUserId,
+        });
       },
     });
   };

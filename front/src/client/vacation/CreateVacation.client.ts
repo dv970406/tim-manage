@@ -1,6 +1,7 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useEffect, useState } from "react";
-import { commitMutation } from "react-relay";
+import { commitMutation, ConnectionHandler } from "react-relay";
+import { insertEdgeToData } from "../../utils/store/connection";
 import { environment } from "../client";
 import {
   CreateVacationMutation,
@@ -49,21 +50,31 @@ export const useCreateVacation = () => {
       mutation: createVacationQuery,
       variables,
       updater: (proxyStore, response) => {
-        const addVacationPayload = proxyStore
+        const newVacationEdge = proxyStore
           .getRootField("createVacation")
           .getLinkedRecord("vacation");
 
-        if (!addVacationPayload) return;
+        if (!newVacationEdge) return;
 
-        const rootGetVacations = proxyStore.get("client:root:getVacations");
+        const vacationsRecord = proxyStore.get("client:root:getVacations");
 
-        const oldVacations = rootGetVacations?.getLinkedRecords("vacations");
+        const oldVacations = vacationsRecord?.getLinkedRecords("vacations");
         if (!oldVacations) return;
 
-        rootGetVacations?.setLinkedRecords(
-          [addVacationPayload, ...oldVacations],
+        vacationsRecord?.setLinkedRecords(
+          [newVacationEdge, ...oldVacations],
           "vacations"
         );
+
+        const myInfoRecord = proxyStore
+          .get("client:root:getMyInfo")
+          ?.getLinkedRecord("user");
+
+        insertEdgeToData({
+          record: myInfoRecord,
+          key: "ShowUserVacations_myVacationsConnection",
+          newEdge: newVacationEdge,
+        });
       },
 
       onCompleted: ({ createVacation: { ok, error } }) => {

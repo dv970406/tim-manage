@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e20ec225ed9872bb1e849112a38d62fb>>
+ * @generated SignedSource<<1dea75415629715e4024b60c093dbe37>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,10 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type GetMeetingQuery$variables = {
   id: string;
+  skip: boolean;
 };
 export type GetMeetingQuery$data = {
-  readonly getMeeting: {
+  readonly getMeeting?: {
     readonly error: string | null;
     readonly meeting: {
       readonly attendees: ReadonlyArray<{
@@ -43,6 +44,11 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "id"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "skip"
   }
 ],
 v1 = {
@@ -64,94 +70,101 @@ v2 = [
 ],
 v3 = [
   {
-    "alias": null,
-    "args": [
-      {
-        "fields": [
-          {
-            "kind": "Variable",
-            "name": "id",
-            "variableName": "id"
-          }
-        ],
-        "kind": "ObjectValue",
-        "name": "input"
-      }
-    ],
-    "concreteType": "GetMeetingOutput",
-    "kind": "LinkedField",
-    "name": "getMeeting",
-    "plural": false,
+    "condition": "skip",
+    "kind": "Condition",
+    "passingValue": false,
     "selections": [
       {
         "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "ok",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "error",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "concreteType": "Meeting",
+        "args": [
+          {
+            "fields": [
+              {
+                "kind": "Variable",
+                "name": "id",
+                "variableName": "id"
+              }
+            ],
+            "kind": "ObjectValue",
+            "name": "input"
+          }
+        ],
+        "concreteType": "GetMeetingOutput",
         "kind": "LinkedField",
-        "name": "meeting",
+        "name": "getMeeting",
         "plural": false,
         "selections": [
-          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "title",
+            "name": "ok",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "startTime",
+            "name": "error",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "endTime",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "User",
+            "concreteType": "Meeting",
             "kind": "LinkedField",
-            "name": "attendees",
-            "plural": true,
-            "selections": (v2/*: any*/),
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "User",
-            "kind": "LinkedField",
-            "name": "host",
+            "name": "meeting",
             "plural": false,
-            "selections": (v2/*: any*/),
+            "selections": [
+              (v1/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "title",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "startTime",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "endTime",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "User",
+                "kind": "LinkedField",
+                "name": "attendees",
+                "plural": true,
+                "selections": (v2/*: any*/),
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "User",
+                "kind": "LinkedField",
+                "name": "host",
+                "plural": false,
+                "selections": (v2/*: any*/),
+                "storageKey": null
+              }
+            ],
             "storageKey": null
           }
         ],
         "storageKey": null
       }
-    ],
-    "storageKey": null
+    ]
   }
 ];
 return {
@@ -172,16 +185,16 @@ return {
     "selections": (v3/*: any*/)
   },
   "params": {
-    "cacheID": "4360f6a73ed59cbdd0a01f78abcd8165",
+    "cacheID": "70a8bffb42ce29fa489a776092aff482",
     "id": null,
     "metadata": {},
     "name": "GetMeetingQuery",
     "operationKind": "query",
-    "text": "query GetMeetingQuery(\n  $id: ID!\n) {\n  getMeeting(input: {id: $id}) {\n    ok\n    error\n    meeting {\n      id\n      title\n      startTime\n      endTime\n      attendees {\n        id\n        name\n      }\n      host {\n        id\n        name\n      }\n    }\n  }\n}\n"
+    "text": "query GetMeetingQuery(\n  $id: ID!\n  $skip: Boolean!\n) {\n  getMeeting(input: {id: $id}) @skip(if: $skip) {\n    ok\n    error\n    meeting {\n      id\n      title\n      startTime\n      endTime\n      attendees {\n        id\n        name\n      }\n      host {\n        id\n        name\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "56dd5b6e1b2fbe581210998b8ae8c9e2";
+(node as any).hash = "39baccfece08a6e80bbf136b7c62f0bf";
 
 export default node;

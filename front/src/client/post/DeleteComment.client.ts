@@ -1,7 +1,8 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useState } from "react";
-import { commitMutation, useMutation } from "react-relay";
+import { commitMutation, ConnectionHandler, useMutation } from "react-relay";
 import { useNavigate } from "react-router-dom";
+import { deleteEdgeOfData } from "../../utils/store/connection";
 import { environment } from "../client";
 import {
   DeleteCommentMutation,
@@ -36,14 +37,27 @@ export const useDeleteComment = () => {
           return;
         }
       },
-      updater: (proxyStore, { deleteComment }) => {
+      updater: (
+        proxyStore,
+        { deleteComment: { deletedCommentId, postId } }
+      ) => {
         // 댓글 지워지면 해당 Post의 countComments -1 해줘야함
         const rootGetPosts = proxyStore.get(
-          `client:root:getPost(input:{"id":"${deleteComment.postId}"})`
+          `client:root:getPost(input:{"id":"${postId}"})`
         );
         const targetPost = rootGetPosts?.getLinkedRecord("post");
         const prevCount = targetPost?.getValue("countComments") || 0;
         targetPost?.setValue(+prevCount - 1, "countComments");
+
+        const myInfoRecord = proxyStore
+          .get("client:root:getMyInfo")
+          ?.getLinkedRecord("user");
+
+        deleteEdgeOfData({
+          record: myInfoRecord,
+          key: "ShowUserComments_myCommentsConnection",
+          dataId: deletedCommentId,
+        });
       },
     });
   };

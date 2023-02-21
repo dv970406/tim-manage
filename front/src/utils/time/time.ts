@@ -56,6 +56,7 @@ export const getElaspedDay = (time: Date | number) => {
 
   if (elapsedDays === 0) return "오늘";
 
+  if (!elapsedDays) return;
   return formatter.format(elapsedDays, "day");
 };
 

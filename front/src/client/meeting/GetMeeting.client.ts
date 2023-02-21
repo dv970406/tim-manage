@@ -3,8 +3,8 @@ import { useLazyLoadQuery } from "react-relay";
 import { GetMeetingQuery } from "./__generated__/GetMeetingQuery.graphql";
 
 const getMeetingQuery = graphql`
-  query GetMeetingQuery($id: ID!) {
-    getMeeting(input: { id: $id }) {
+  query GetMeetingQuery($id: ID!, $skip: Boolean!) {
+    getMeeting(input: { id: $id }) @skip(if: $skip) {
       ok
       error
       meeting {
@@ -26,15 +26,14 @@ const getMeetingQuery = graphql`
 `;
 
 export const useGetMeeting = (meetingId: string) => {
-  const {
-    getMeeting: { ok, error, meeting },
-  } = useLazyLoadQuery<GetMeetingQuery>(getMeetingQuery, {
+  const { getMeeting } = useLazyLoadQuery<GetMeetingQuery>(getMeetingQuery, {
+    skip: !meetingId,
     id: meetingId,
   });
 
-  if (!ok) {
-    alert(error);
+  if (meetingId && !getMeeting?.ok) {
+    alert(getMeeting?.error);
   }
 
-  return { meeting };
+  return { meeting: getMeeting?.meeting };
 };

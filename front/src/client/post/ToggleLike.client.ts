@@ -2,6 +2,10 @@ import { graphql } from "babel-plugin-relay/macro";
 import { useState } from "react";
 import { commitMutation, ConnectionHandler, useMutation } from "react-relay";
 import { useNavigate } from "react-router-dom";
+import {
+  deleteEdgeOfData,
+  insertEdgeToData,
+} from "../../utils/store/connection";
 import { environment } from "../client";
 import {
   ToggleLikeMutation,
@@ -45,7 +49,7 @@ export const useToggleLike = () => {
           `client:root:getPost(input:{"id":"${variables.postId}"})`
         );
 
-        const addLikePayload = proxyStore
+        const newLikeEdge = proxyStore
           .getRootField("toggleLike")
           .getLinkedRecord("like");
 
@@ -62,29 +66,19 @@ export const useToggleLike = () => {
           .get("client:root:getMyInfo")
           ?.getLinkedRecord("user");
 
-        if (!myInfoRecord) return;
-        const myLikeConnection = ConnectionHandler.getConnection(
-          myInfoRecord,
-          "ShowUserLikes_myLikesConnection"
-        );
-        console.log(myLikeConnection);
-        if (myLikeConnection)
-          ConnectionHandler.insertEdgeBefore(myLikeConnection, addLikePayload);
-
-        // 좋아요를 달면 myInfo에 좋아요한 게시글을 추가
-        // const rootGetMyInfo = proxyStore.get("client:root:getMyInfo");
-        // const rootGetMyInfoUser = rootGetMyInfo?.getLinkedRecord("user");
-        // const oldMyLikes = rootGetMyInfoUser?.getLinkedRecords("likes");
-        // if (isLiked) {
-        //   if (toggleLike?.like?.id) proxyStore.delete(toggleLike?.like?.id);
-        // } else {
-        //   if (oldMyLikes) {
-        //     rootGetMyInfoUser?.setLinkedRecords(
-        //       [...oldMyLikes, addLikePayload],
-        //       "likes"
-        //     );
-        //   }
-        // }
+        if (isLiked) {
+          deleteEdgeOfData({
+            record: myInfoRecord,
+            key: "ShowUserLikes_myLikesConnection",
+            dataId: toggleLike.like?.id,
+          });
+        } else {
+          insertEdgeToData({
+            record: myInfoRecord,
+            key: "ShowUserLikes_myLikesConnection",
+            newEdge: newLikeEdge,
+          });
+        }
       },
     });
   };

@@ -2,6 +2,7 @@ import { graphql } from "babel-plugin-relay/macro";
 import { useState } from "react";
 import { commitMutation, ConnectionHandler, useMutation } from "react-relay";
 import { useNavigate } from "react-router-dom";
+import { insertEdgeToData } from "../../utils/store/connection";
 import { environment } from "../client";
 import {
   CreateUserMutation,
@@ -52,50 +53,30 @@ const createUserQuery = graphql`
 
 export const useCreateUser = () => {
   const [createUserLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
   const createUserMutation = (variables: CreateUserMutation$variables) => {
     setIsLoading(true);
     commitMutation<CreateUserMutation>(environment, {
       mutation: createUserQuery,
       variables,
       updater: (proxyStore, response) => {
-        // const addUserPayload = proxyStore
-        //   .getRootField("createUser")
-        //   .getLinkedRecord("user");
-
-        // if (!addUserPayload) return;
-
-        // const rootGetUsers = proxyStore.get("client:root:getUsers");
-
-        // const oldUsers = rootGetUsers?.getLinkedRecords("users");
-        // if (!oldUsers) return;
-
-        // rootGetUsers?.setLinkedRecords([addUserPayload, ...oldUsers], "users");
-
         const newUserEdge = proxyStore
           .getRootField("createUser")
           .getLinkedRecord("edge");
         if (!newUserEdge) return;
 
-        const userRecord = proxyStore.getRoot();
-        if (!userRecord) return;
+        const rootRecord = proxyStore.getRoot();
 
-        const userConnection = ConnectionHandler.getConnection(
-          userRecord,
-          "UsersTable_getUsers"
-        );
-        const managerUserConnection = ConnectionHandler.getConnection(
-          userRecord,
-          "ManagerUsersTable_getUsers"
-        );
+        insertEdgeToData({
+          record: rootRecord,
+          key: "UsersTable_getUsers",
+          newEdge: newUserEdge,
+        });
 
-        if (userConnection)
-          ConnectionHandler.insertEdgeBefore(userConnection, newUserEdge);
-        if (managerUserConnection)
-          ConnectionHandler.insertEdgeBefore(
-            managerUserConnection,
-            newUserEdge
-          );
+        insertEdgeToData({
+          record: rootRecord,
+          key: "ManagerUsersTable_getUsers",
+          newEdge: newUserEdge,
+        });
       },
 
       onCompleted: ({ createUser: { ok, error } }) => {
@@ -104,7 +85,6 @@ export const useCreateUser = () => {
           alert(error);
           return;
         }
-        navigate("/manager/user");
       },
     });
   };

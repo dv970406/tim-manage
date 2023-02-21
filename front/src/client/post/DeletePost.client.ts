@@ -2,6 +2,7 @@ import { graphql } from "babel-plugin-relay/macro";
 import { useState } from "react";
 import { commitMutation, ConnectionHandler, useMutation } from "react-relay";
 import { useNavigate } from "react-router-dom";
+import { deleteEdgeOfData } from "../../utils/store/connection";
 import { environment } from "../client";
 import {
   DeletePostMutation,
@@ -36,17 +37,23 @@ export const useDeletePost = () => {
         navigate("/post");
       },
       updater: (proxyStore, { deletePost: { deletedPostId } }) => {
-        const postRecord = proxyStore.getRoot();
-        if (!postRecord) return;
+        const rootRecord = proxyStore.getRoot();
 
-        const postConnection = ConnectionHandler.getConnection(
-          postRecord,
-          "PostsTable_getPosts"
-        );
+        deleteEdgeOfData({
+          record: rootRecord,
+          key: "PostsTable_getPosts",
+          dataId: deletedPostId,
+        });
 
-        if (!postConnection || !deletedPostId) return;
+        const myInfoRecord = proxyStore
+          .get("client:root:getMyInfo")
+          ?.getLinkedRecord("user");
 
-        ConnectionHandler.deleteNode(postConnection, deletedPostId);
+        deleteEdgeOfData({
+          record: myInfoRecord,
+          key: "ShowUserPosts_myPostsConnection",
+          dataId: deletedPostId,
+        });
       },
     });
   };

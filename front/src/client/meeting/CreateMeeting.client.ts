@@ -42,12 +42,6 @@ const createMeetingQuery = graphql`
   }
 `;
 
-// export const useCreateMeeting = () => {
-//   const mutate = useMutation<CreateMeetingMutation>(createMeetingQuery);
-
-//   return mutate;
-// };
-
 export const useCreateMeeting = () => {
   const [createMeetingLoading, setIsLoading] = useState(false);
 

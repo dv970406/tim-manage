@@ -1,6 +1,7 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useState } from "react";
-import { commitMutation } from "relay-runtime";
+import { commitMutation, ConnectionHandler } from "relay-runtime";
+import { deleteEdgeOfData } from "../../utils/store/connection";
 import { environment } from "../client";
 import {
   DeleteVacationMutation,
@@ -33,6 +34,17 @@ export const useDeleteVacation = () => {
           alert(error);
           return;
         }
+      },
+      updater: (proxyStore, { deleteVacation: { deletedVacationId } }) => {
+        const myInfoRecord = proxyStore
+          .get("client:root:getMyInfo")
+          ?.getLinkedRecord("user");
+
+        deleteEdgeOfData({
+          record: myInfoRecord,
+          key: "ShowUserVacations_myVacationsConnection",
+          dataId: deletedVacationId,
+        });
       },
     });
   };
