@@ -73,11 +73,11 @@ export class VacationService {
   ): Promise<GetUnConfirmedByMeVacationsOutput> {
     try {
       let unConfirmedByMeVacations = await this.vacationRepo.find({
-        where: {
-          startDate: MoreThan(new Date()),
-        },
+        // where: {
+        //   startDate: MoreThan(new Date()),
+        // },
         order: {
-          createdAt: 'ASC',
+          createdAt: 'DESC',
         },
         relations: {
           user: {
@@ -314,6 +314,11 @@ export class VacationService {
       if (startDate && endDate) {
         findVacation.duration = duration;
       }
+
+      const targetUser = await this.userRepo.findUser({
+        userId: loggedInUser.id,
+      });
+      findVacation.user = targetUser;
       const updatedVacation = await this.vacationRepo.save(findVacation);
 
       return {

@@ -25,7 +25,6 @@ import {
   GetAnswersOfsurveyInput,
   GetAnswersOfsurveyOutput,
 } from './dtos/answer/get-answersOfSurvey.dto';
-import { GetMyAnswersOutput } from './dtos/answer/get-myAnswers.dto';
 import { Answer } from './entities/answer.entity';
 
 @Resolver((of) => Answer)
@@ -38,14 +37,6 @@ export class AnswerResolver {
     @Args() answersConnectionInput: ConnectionInput,
   ): Promise<AnswersConnection> {
     return this.answerService.answersConnection(user, answersConnectionInput);
-  }
-
-  @Query((type) => GetMyAnswersOutput)
-  @UseGuards(LoginGuard)
-  getMyAnswers(
-    @LoggedInUser() loggedInUser: User,
-  ): Promise<GetMyAnswersOutput> {
-    return this.answerService.getMyAnswers(loggedInUser);
   }
 
   @Query((type) => GetAnswersOfsurveyOutput)

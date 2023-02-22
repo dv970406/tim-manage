@@ -9,18 +9,12 @@ import {
 } from '@nestjs/graphql';
 import { LoggedInUser } from 'src/auth/auth-user.decorator';
 import { LoginGuard, ManagerGuard } from 'src/auth/auth.guard';
-import { ConnectionInput } from 'src/core/dtos/pagination.dto';
 import { User } from 'src/user/entities/user.entity';
 import { CommentService } from './comment.service';
 import { CreatePostInput, CreatePostOutput } from './dtos/post/create-post.dto';
 import { DeletePostInput, DeletePostOutput } from './dtos/post/delete-post.dto';
 import { GetPostInput, GetPostOutput } from './dtos/post/get-post.dto';
 import { GetPostsInput, GetPostsOutput } from './dtos/post/get-posts.dto';
-import { PostsConnection } from './dtos/post/post-pagination.dto';
-import {
-  SearchPostsInput,
-  SearchPostsOutput,
-} from './dtos/post/search-posts.dto';
 import { UpdatePostInput, UpdatePostOutput } from './dtos/post/update-post.dto';
 import { Post } from './entities/post.entity';
 import { LikeService } from './like.service';
@@ -64,13 +58,6 @@ export class PostResolver {
   getPosts(@Args() getPostsInput: GetPostsInput): Promise<GetPostsOutput> {
     return this.postService.getPosts(getPostsInput);
   }
-
-  // @Query((returns) => SearchPostsOutput)
-  // searchPosts(
-  //   @Args('input') searchPostsInput: SearchPostsInput,
-  // ): Promise<SearchPostsOutput> {
-  //   return this.postService.searchPosts(searchPostsInput);
-  // }
 
   @Query((type) => GetPostOutput)
   getPost(@Args('input') getPostInput: GetPostInput): Promise<GetPostOutput> {

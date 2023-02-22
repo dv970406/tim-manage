@@ -18,7 +18,6 @@ import {
   GetAnswersOfsurveyInput,
   GetAnswersOfsurveyOutput,
 } from './dtos/answer/get-answersOfSurvey.dto';
-import { GetMyAnswersOutput } from './dtos/answer/get-myAnswers.dto';
 import { AnswerRepository } from './repositories/answer.repository';
 import { SurveyRepository } from './repositories/survey.repository';
 
@@ -61,34 +60,6 @@ export class AnswerService {
         hasNextPage: totalCount > first,
       },
     };
-  }
-
-  async getMyAnswers(loggedInUser: User): Promise<GetMyAnswersOutput> {
-    try {
-      const findMyAnswers = await this.answerRepo.find({
-        where: {
-          user: {
-            id: loggedInUser.id,
-          },
-        },
-        order: {
-          createdAt: 'DESC',
-        },
-        relations: {
-          survey: true,
-        },
-      });
-
-      return {
-        ok: true,
-        answers: findMyAnswers,
-      };
-    } catch (error) {
-      return {
-        ok: false,
-        error: '답변 리스트 조회에 실패했습니다.',
-      };
-    }
   }
 
   async getAnswersOfSurvey(

@@ -1,18 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ConnectionInput } from 'src/core/dtos/pagination.dto';
-import { DB_TABLE } from 'src/core/variables/constants';
 import { User } from 'src/user/entities/user.entity';
 import { LessThan, Like } from 'typeorm';
 import { CreatePostInput, CreatePostOutput } from './dtos/post/create-post.dto';
 import { DeletePostInput, DeletePostOutput } from './dtos/post/delete-post.dto';
 import { GetPostInput, GetPostOutput } from './dtos/post/get-post.dto';
 import { GetPostsInput, GetPostsOutput } from './dtos/post/get-posts.dto';
-import { PostsConnection } from './dtos/post/post-pagination.dto';
-import {
-  SearchPostsInput,
-  SearchPostsOutput,
-} from './dtos/post/search-posts.dto';
 import { UpdatePostInput, UpdatePostOutput } from './dtos/post/update-post.dto';
 import { Post } from './entities/post.entity';
 import { PostRepository } from './repositories/post.repository';
@@ -77,56 +70,6 @@ export class PostService {
       };
     }
   }
-
-  // async searchPosts({
-  //   keyword,
-  //   first,
-  //   after,
-  // }: SearchPostsInput): Promise<SearchPostsOutput> {
-  //   try {
-  //     const [findPosts, totalCount] = await this.postRepo.findAndCount({
-  //       where: [
-  //         {
-  //           title: Like(`%${keyword}%`),
-  //           ...(after && { createdAt: LessThan(after) }),
-  //         },
-  //         {
-  //           content: Like(`%${keyword}%`),
-  //           ...(after && { createdAt: LessThan(after) }),
-  //         },
-  //       ],
-  //       take: first,
-  //       relations: {
-  //         user: true,
-  //       },
-  //       order: {
-  //         createdAt: 'DESC',
-  //       },
-  //     });
-
-  //     const edges = findPosts.map((post) => ({
-  //       cursor: post.createdAt,
-  //       node: post,
-  //     }));
-  //     const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
-
-  //     return {
-  //       ok: true,
-  //       postsConnection: {
-  //         edges,
-  //         pageInfo: {
-  //           hasNextPage: totalCount > first,
-  //           endCursor,
-  //         },
-  //       },
-  //     };
-  //   } catch (error) {
-  //     return {
-  //       ok: false,
-  //       error: error.message || '찾을 수 없는 게시글입니다.',
-  //     };
-  //   }
-  // }
 
   async getPost({ id: postId }: GetPostInput): Promise<GetPostOutput> {
     try {

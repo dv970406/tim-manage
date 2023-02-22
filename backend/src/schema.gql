@@ -2,6 +2,10 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+interface Node {
+  id: ID!
+}
+
 type Confirm {
   byCeo: Boolean!
   byLeader: Boolean!
@@ -67,10 +71,6 @@ type Post implements Node {
   countComments: Float!
 }
 
-interface Node {
-  id: ID!
-}
-
 type Survey implements Node {
   id: ID!
   createdAt: DateTime!
@@ -97,7 +97,13 @@ type Answer {
   survey: Survey!
   user: User!
   results: [String!]!
-  answersConnection(keyword: String, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): AnswersConnection!
+  answersConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): AnswersConnection!
+}
+
+input Orders {
+  order1: [String!]
+  order2: [String!]
+  order3: [String!]
 }
 
 type Meeting {
@@ -131,11 +137,11 @@ type User implements Node {
   comments: [Comment!]!
   surveys: [Survey!]!
   answers: [Answer!]!
-  myAnswersConnection(keyword: String, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): AnswersConnection!
-  myVacationsConnection(keyword: String, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): VacationsConnection!
-  myPostsConnection(keyword: String, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): PostsConnection!
-  myLikesConnection(keyword: String, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): LikesConnection!
-  myCommentsConnection(keyword: String, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): CommentsConnection!
+  myAnswersConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): AnswersConnection!
+  myVacationsConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): VacationsConnection!
+  myPostsConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): PostsConnection!
+  myLikesConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): LikesConnection!
+  myCommentsConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): CommentsConnection!
 }
 
 type Position {
@@ -401,12 +407,6 @@ type GetAnswersOfsurveyOutput {
   responseRate: ResponseRate
 }
 
-type GetMyAnswersOutput {
-  ok: Boolean!
-  error: String
-  answers: [Answer!]
-}
-
 type SurveyEdge {
   cursor: DateTime!
   node: Survey!
@@ -449,18 +449,6 @@ type DeleteCommentOutput {
   error: String
   deletedCommentId: ID
   postId: ID
-}
-
-type GetMyCommentsOutput {
-  ok: Boolean!
-  error: String
-  comments: [Comment!]
-}
-
-type GetMyLikesOutput {
-  ok: Boolean!
-  error: String
-  likes: [Like!]
 }
 
 type ToggleLikeOutput {
@@ -512,12 +500,6 @@ type DeleteMeetingOutput {
   deletedMeetingId: ID
 }
 
-type GetKingOfMeetingOutput {
-  ok: Boolean!
-  error: String
-  users: [User!]
-}
-
 type GetMeetingOutput {
   ok: Boolean!
   error: String
@@ -560,10 +542,10 @@ type GetWeeklyMealOutput {
 }
 
 type Query {
-  getUsers(keyword: String, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): GetUsersOutput!
-  getUser(keyword: String, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10, userId: ID!): GetUserOutput!
+  getUsers(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): GetUsersOutput!
+  getUser(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10, userId: ID!): GetUserOutput!
   getMyInfo(isAllInfo: Boolean = false): GetMyInfoOutput!
-  node(id: ID!): ID!
+  node(id: ID!): Node!
   getPositions: GetPositionsOutput!
   getPosition(input: GetPositionInput!): GetPositionOutput!
   getTeams: GetTeamsOutput!
@@ -571,17 +553,13 @@ type Query {
   getVacations: GetVacationsOutput!
   getUnConfirmedByMeVacations: GetUnConfirmedByMeVacationsOutput!
   getVacation(input: GetVacationInput!): GetVacationOutput!
-  getSurveys(onlyMine: Boolean, keyword: String, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): GetSurveysOutput!
+  getSurveys(onlyMine: Boolean, keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): GetSurveysOutput!
   getSurvey(input: GetSurveyInput!): GetSurveyOutput!
-  getMyAnswers: GetMyAnswersOutput!
   getAnswersOfSurvey(input: GetAnswersOfsurveyInput!): GetAnswersOfsurveyOutput!
-  getPosts(keyword: String, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): GetPostsOutput!
+  getPosts(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): GetPostsOutput!
   getPost(input: GetPostInput!): GetPostOutput!
-  getMyLikes: GetMyLikesOutput!
-  getMyComments: GetMyCommentsOutput!
   getMeetings: GetMeetingsOutput!
   getMeeting(input: GetMeetingInput!): GetMeetingOutput!
-  getKingOfMeeting: GetKingOfMeetingOutput!
   getWeeklyMeal: GetWeeklyMealOutput!
 }
 

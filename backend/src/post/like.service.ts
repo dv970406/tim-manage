@@ -2,13 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
 import { ToggleLikeInput, ToggleLikeOutput } from './dtos/like/toggle-like.dto';
-import { GetMyLikesOutput } from './dtos/like/get-myLikes.dto';
 import { Post } from './entities/post.entity';
 import { LikeRepository } from './repositories/like.repository';
 import { PostRepository } from './repositories/post.repository';
-import { ConnectionInput } from 'src/core/dtos/pagination.dto';
-import { LikesConnection } from './dtos/like/like-pagination.dto';
-import { LessThan } from 'typeorm';
 
 @Injectable()
 export class LikeService {
@@ -38,31 +34,6 @@ export class LikeService {
         },
       },
     });
-  }
-
-  async getMyLikes(loggedInUser: User): Promise<GetMyLikesOutput> {
-    try {
-      const findLikes = await this.likeRepo.find({
-        where: {
-          user: {
-            id: loggedInUser.id,
-          },
-        },
-        order: { createdAt: 'DESC' },
-        relations: {
-          post: true,
-        },
-      });
-      return {
-        ok: true,
-        likes: findLikes,
-      };
-    } catch (error) {
-      return {
-        ok: false,
-        error: '좋아요 리스트 조회에 실패했습니다.',
-      };
-    }
   }
 
   async toggleLike(

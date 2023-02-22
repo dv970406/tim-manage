@@ -17,20 +17,18 @@ import { AnswerRepository } from 'src/survey/repositories/answer.repository';
 import { TeamRepository } from 'src/team/team.repository';
 import { VacationsConnection } from 'src/vacation/dtos/vacation-pagination.dto';
 import { VacationRepository } from 'src/vacation/vacation.repository';
-import { LessThan, Like, Like as LikeSearch } from 'typeorm';
+import { In, LessThan, Like, Like as LikeSearch } from 'typeorm';
 import { CreateUserInput, CreateUserOutput } from './dtos/create-user.dto';
 import { DeleteUserInput, DeleteUserOutput } from './dtos/delete-user.dto';
 import { GetMyInfoInput, GetMyInfoOutput } from './dtos/get-myInfo.dto';
 import { GetUserInput, GetUserOutput } from './dtos/get-user.dto';
 import { GetUsersInput, GetUsersOutput } from './dtos/get-users.dto';
 import { LoginInput, LoginOutput } from './dtos/login.dto';
-import { SearchUsersInput, SearchUsersOutput } from './dtos/search-users.dto';
 import { UpdateUserInput, UpdateUserOutput } from './dtos/update-user.dto';
 import {
   UpdateUserPasswordInput,
   UpdateUserPasswordOutput,
 } from './dtos/update-userPassword.dto';
-import { UsersConnection } from './dtos/user-pagination.dto';
 import { User } from './entities/user.entity';
 import { UserRepository } from './user.repository';
 
@@ -134,7 +132,6 @@ export class UserService {
     loggedInUser: User,
     { keyword, first, after }: ConnectionInput,
   ): Promise<PostsConnection> {
-    console.log('keyword : ', keyword);
     const [findMyPosts, totalCount] = await this.postRepo.findAndCount({
       order: { createdAt: 'DESC' },
       where: {
@@ -166,14 +163,12 @@ export class UserService {
       },
       take: first,
     });
-    console.log('findMyPosts : ', findMyPosts);
 
     const edges = findMyPosts.map((post) => ({
       cursor: post.createdAt,
       node: post,
     }));
     const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
-    console.log('edges : ', edges);
 
     return {
       edges,
@@ -298,6 +293,7 @@ export class UserService {
 
   async getUsers({
     keyword,
+    orders,
     first,
     after,
   }: GetUsersInput): Promise<GetUsersOutput> {
@@ -318,6 +314,20 @@ export class UserService {
               ...(after && { createdAt: LessThan(after) }),
             },
           ],
+        }),
+        ...(orders && {
+          where: {
+            position: {
+              ...(orders?.order1 &&
+                orders?.order1.length > 0 && { id: In(orders.order1) }),
+              ...(after && { createdAt: LessThan(after) }),
+            },
+            team: {
+              ...(orders?.order2 &&
+                orders?.order2.length > 0 && { id: In(orders.order2) }),
+              ...(after && { createdAt: LessThan(after) }),
+            },
+          },
         }),
         relations: {
           position: true,
@@ -347,55 +357,7 @@ export class UserService {
       };
     }
   }
-  // async searchUsers({
-  //   keyword,
-  //   first,
-  //   after,
-  // }: SearchUsersInput): Promise<SearchUsersOutput> {
-  //   try {
-  //     const [findUsers, totalCount] = await this.userRepo.findAndCount({
-  //       ...(keyword && {
-  //         where: [
-  //           {
-  //             name: LikeSearch(`%${keyword}%`),
-  //             ...(after && { createdAt: LessThan(after) }),
-  //           },
-  //           {
-  //             email: LikeSearch(`%${keyword}%`),
-  //             ...(after && { createdAt: LessThan(after) }),
-  //           },
-  //         ],
-  //       }),
-  //       take: first,
-  //       order: { createdAt: 'DESC' },
-  //       relations: {
-  //         position: true,
-  //         team: true,
-  //       },
-  //     });
 
-  //     const edges = findUsers.map((user) => ({
-  //       cursor: user.createdAt,
-  //       node: user,
-  //     }));
-  //     const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
-  //     return {
-  //       ok: true,
-  //       usersConnection: {
-  //         edges,
-  //         pageInfo: {
-  //           hasNextPage: totalCount > first,
-  //           endCursor,
-  //         },
-  //       },
-  //     };
-  //   } catch (error) {
-  //     return {
-  //       ok: false,
-  //       error: error.message || '찾을 수 없는 유저입니다.',
-  //     };
-  //   }
-  // }
   async getUser({ userId }: GetUserInput): Promise<GetUserOutput> {
     try {
       const findUser = await this.userRepo.findOne({
@@ -428,30 +390,6 @@ export class UserService {
         relations: {
           position: true,
           team: true,
-          // attendedMeetings: {
-          //   attendees: true,
-          // },
-          // hostedMeetingsByMe: true,
-          // surveys: true,
-          // vacations: true,
-          // answers: {
-          //   survey: {
-          //     user: true,
-          //   },
-          // },
-          // comments: {
-          //   post: {
-          //     user: true,
-          //   },
-          // },
-          // likes: {
-          //   post: {
-          //     user: true,
-          //   },
-          // },
-          // posts: {
-          //   user: true,
-          // },
         },
       });
       if (!findUser) {

@@ -12,7 +12,6 @@ import {
   DeleteCommentInput,
   DeleteCommentOutput,
 } from './dtos/Comment/delete-comment.dto';
-import { GetMyCommentsOutput } from './dtos/comment/get-myComments.dto';
 import { Comment } from './entities/comment.entity';
 import { Post } from './entities/post.entity';
 import { CommentRepository } from './repositories/comment.repository';
@@ -36,30 +35,6 @@ export class CommentService {
         id: post.id,
       },
     });
-  }
-  async getMyComments(loggedInUser: User): Promise<GetMyCommentsOutput> {
-    try {
-      const findComments = await this.commentRepo.find({
-        where: {
-          user: {
-            id: loggedInUser.id,
-          },
-        },
-        order: { createdAt: 'DESC' },
-        relations: {
-          post: true,
-        },
-      });
-      return {
-        ok: true,
-        comments: findComments,
-      };
-    } catch (error) {
-      return {
-        ok: false,
-        error: '댓글 리스트 조회에 실패했습니다.',
-      };
-    }
   }
 
   async createComment(

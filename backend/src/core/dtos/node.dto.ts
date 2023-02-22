@@ -1,9 +1,17 @@
-import { ArgsType, Field, ID, InterfaceType } from '@nestjs/graphql';
+import {
+  ArgsType,
+  Field,
+  ID,
+  InterfaceType,
+  ObjectType,
+} from '@nestjs/graphql';
 
-@InterfaceType()
-export abstract class Node {
+@InterfaceType({
+  resolveType: (obj) => obj.__typename,
+})
+export class Node {
   @Field(() => ID)
-  id: Node;
+  id: string;
 }
 
 @ArgsType()

@@ -12,7 +12,6 @@ import {
   DeleteMeetingInput,
   DeleteMeetingOutput,
 } from './dtos/delete-meeting.dto';
-import { GetKingOfMeetingOutput } from './dtos/get-kingOfMeeting.dto';
 import { GetMeetingInput, GetMeetingOutput } from './dtos/get-meeting.dto';
 import { GetMeetingsOutput } from './dtos/get-meetings.dto';
 import {
@@ -65,31 +64,6 @@ export class MeetingService {
       return {
         ok: false,
         error: error.message || '회의 조회에 실패했습니다.',
-      };
-    }
-  }
-
-  async getKingOfMeeting(): Promise<GetKingOfMeetingOutput> {
-    try {
-      const kings = await this.userRepo.find({
-        // order: {
-        //   attendedMeetings: {
-        //     attendees: {
-        //       id: 'DESC',
-        //     },
-        //   },
-        // },
-        take: 3,
-      });
-
-      return {
-        ok: true,
-        users: kings,
-      };
-    } catch (error) {
-      return {
-        ok: false,
-        error: error.message || '회의왕 조회에 실패했습니다.',
       };
     }
   }

@@ -18,7 +18,6 @@ import {
   DeleteMeetingInput,
   DeleteMeetingOutput,
 } from './dtos/delete-meeting.dto';
-import { GetKingOfMeetingOutput } from './dtos/get-kingOfMeeting.dto';
 import { GetMeetingInput, GetMeetingOutput } from './dtos/get-meeting.dto';
 import { GetMeetingsOutput } from './dtos/get-meetings.dto';
 import {
@@ -42,11 +41,6 @@ export class MeetingResolver {
     @Args('input') getMeetingInput: GetMeetingInput,
   ): Promise<GetMeetingOutput> {
     return this.meetingService.getMeeting(getMeetingInput);
-  }
-
-  @Query((type) => GetKingOfMeetingOutput)
-  getKingOfMeeting(): Promise<GetKingOfMeetingOutput> {
-    return this.meetingService.getKingOfMeeting();
   }
 
   @Mutation((type) => CreateMeetingOutput)

@@ -16,17 +16,9 @@ import {
   GetSurveysInput,
   GetSurveysOutput,
 } from './dtos/survey/get-surveys.dto';
-import {
-  SearchSurveysInput,
-  SearchSurveysOutput,
-} from './dtos/survey/search-surveys.dto';
 import { Survey, SurveyForm } from './entities/survey.entity';
 import { SurveyRepository } from './repositories/survey.repository';
 import { ConnectionInput } from 'src/core/dtos/pagination.dto';
-import {
-  SurveysConnection,
-  SurveysConnectionInput,
-} from './dtos/survey/survey-pagination.dto';
 
 @Injectable()
 export class SurveyService {
@@ -105,68 +97,6 @@ export class SurveyService {
     }
   }
 
-  // async searchSurveys({
-  //   keyword,
-  //   first,
-  //   after,
-  // }: SearchSurveysInput): Promise<SearchSurveysOutput> {
-  //   try {
-  //     const [findSurveys, totalCount] = await this.surveyRepo.findAndCount({
-  //       where: {
-  //         surveyTitle: Like(`%${keyword}%`),
-  //         ...(after && { createdAt: LessThan(after) }),
-  //       },
-  //       relations: {
-  //         user: true,
-  //       },
-  //       take: first,
-  //       order: {
-  //         createdAt: 'DESC',
-  //       },
-  //     });
-
-  //     const edges = findSurveys.map((survey) => ({
-  //       cursor: survey.createdAt,
-  //       node: survey,
-  //     }));
-  //     const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
-
-  //     return {
-  //       ok: true,
-  //       surveys
-  //     };
-  //   } catch (error) {
-  //     return {
-  //       ok: false,
-  //       error: error.message || '찾을 수 없는 게시글입니다.',
-  //     };
-  //   }
-  // }
-
-  // async getMySurveys(loggedInUser: User): Promise<GetMySurveysOutput> {
-  //   try {
-  //     const findMySurveys = await this.surveyRepo.find({
-  //       order: { createdAt: 'DESC' },
-  //       relations: {
-  //         user: true,
-  //       },
-  //       where: {
-  //         user: {
-  //           id: loggedInUser.id,
-  //         },
-  //       },
-  //     });
-  //     return {
-  //       ok: true,
-  //       surveys: findMySurveys,
-  //     };
-  //   } catch (error) {
-  //     return {
-  //       ok: false,
-  //       error: '설문 리스트 조회에 실패했습니다.',
-  //     };
-  //   }
-  // }
   async getSurvey(
     loggedInUser: User,
     { id: surveyId }: GetSurveyInput,

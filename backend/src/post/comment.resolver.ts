@@ -3,16 +3,13 @@ import {
   Args,
   Mutation,
   Parent,
-  Query,
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
 import { LoggedInUser } from 'src/auth/auth-user.decorator';
-import { LoginGuard, ManagerGuard } from 'src/auth/auth.guard';
-import { ConnectionInput } from 'src/core/dtos/pagination.dto';
+import { LoginGuard } from 'src/auth/auth.guard';
 import { User } from 'src/user/entities/user.entity';
 import { CommentService } from './comment.service';
-import { CommentsConnection } from './dtos/comment/comment-pagination.dto';
 import {
   CreateCommentInput,
   CreateCommentOutput,
@@ -21,7 +18,6 @@ import {
   DeleteCommentInput,
   DeleteCommentOutput,
 } from './dtos/comment/delete-comment.dto';
-import { GetMyCommentsOutput } from './dtos/comment/get-myComments.dto';
 import { Comment } from './entities/comment.entity';
 
 @Resolver((of) => Comment)
@@ -34,14 +30,6 @@ export class CommentResolver {
     @Parent() comment: Comment,
   ): Promise<boolean> {
     return this.commentService.isMyComment(loggedInUser, comment);
-  }
-
-  @Query((type) => GetMyCommentsOutput)
-  @UseGuards(LoginGuard)
-  getMyComments(
-    @LoggedInUser() loggedInUser: User,
-  ): Promise<GetMyCommentsOutput> {
-    return this.commentService.getMyComments(loggedInUser);
   }
 
   @Mutation((type) => CreateCommentOutput)
