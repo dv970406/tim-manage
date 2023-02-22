@@ -578,7 +578,7 @@ type PostsConnection {
 type Query {
   getUsers(keyword: String, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): GetUsersOutput!
   getUser(keyword: String, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10, userId: ID!): GetUserOutput!
-  getMyInfo(keyword: String, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10, isAllInfo: Boolean = false): GetMyInfoOutput!
+  getMyInfo(isAllInfo: Boolean = false): GetMyInfoOutput!
   node(id: ID!): ID!
   getPositions: GetPositionsOutput!
   getPosition(input: GetPositionInput!): GetPositionOutput!

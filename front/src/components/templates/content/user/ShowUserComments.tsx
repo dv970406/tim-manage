@@ -10,9 +10,8 @@ import { ShowUserComments_comment$key } from "./__generated__/ShowUserComments_c
 // 여기도 connection으로
 const showUserCommentsFragment = graphql`
   fragment ShowUserComments_comment on User
-  @argumentDefinitions(first: { type: "Int!" }, after: { type: "DateTime" })
   @refetchable(queryName: "ShowUserCommentsPaginationQuery") {
-    myCommentsConnection(first: $first, after: $after)
+    myCommentsConnection(keyword: $keyword, first: $first, after: $after)
       @connection(key: "ShowUserComments_myCommentsConnection") {
       edges {
         node {

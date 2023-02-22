@@ -1,15 +1,4 @@
-import { Type } from '@nestjs/common';
-import {
-  ArgsType,
-  Field,
-  ID,
-  InputType,
-  Int,
-  ObjectType,
-} from '@nestjs/graphql';
-import { Post } from 'src/post/entities/post.entity';
-import { Any } from 'typeorm';
-import { CoreOutput } from './core.dto';
+import { ArgsType, Field, Int, ObjectType } from '@nestjs/graphql';
 
 @ArgsType()
 export class ConnectionInput {

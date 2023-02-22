@@ -9,7 +9,7 @@ import { VacationsConnection } from 'src/vacation/dtos/vacation-pagination.dto';
 import { User } from '../entities/user.entity';
 
 @ArgsType()
-export class GetMyInfoInput extends ConnectionInput {
+export class GetMyInfoInput {
   @Field((type) => Boolean, { nullable: true, defaultValue: false })
   isAllInfo?: boolean;
 }

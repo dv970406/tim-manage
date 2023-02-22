@@ -3,17 +3,17 @@ import { PreloadedQuery, usePreloadedQuery } from "react-relay";
 import { GetMyAllInfoQuery } from "./__generated__/GetMyAllInfoQuery.graphql";
 
 export const getMyAllInfoQuery = graphql`
-  query GetMyAllInfoQuery($first: Int!, $after: DateTime) {
-    getMyInfo(first: $first, after: $after) {
+  query GetMyAllInfoQuery($keyword: String, $first: Int!, $after: DateTime) {
+    getMyInfo {
       ok
       error
       user {
         ...ShowUserInfo_user
-        ...ShowUserPosts_post @arguments(first: $first, after: $after)
-        ...ShowUserComments_comment @arguments(first: $first, after: $after)
-        ...ShowUserLikes_like @arguments(first: $first, after: $after)
-        ...ShowUserAnswers_answer @arguments(first: $first, after: $after)
-        ...ShowUserVacations_vacation @arguments(first: $first, after: $after)
+        ...ShowUserPosts_post
+        ...ShowUserComments_comment
+        ...ShowUserLikes_like
+        ...ShowUserAnswers_answer
+        ...ShowUserVacations_vacation
       }
     }
   }

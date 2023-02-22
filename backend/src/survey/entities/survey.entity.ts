@@ -9,7 +9,7 @@ import { Answer } from './answer.entity';
 @InputType('SurveyInputType', { isAbstract: true })
 @Entity()
 @ObjectType({ implements: Node })
-export class Survey extends CoreEntity implements Node {
+export class Survey extends CoreEntity {
   @Column()
   @Field((type) => String)
   surveyTitle: string;

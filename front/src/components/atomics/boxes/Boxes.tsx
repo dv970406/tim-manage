@@ -1,3 +1,4 @@
+import { Theme } from "@emotion/react";
 import styled from "@emotion/styled";
 
 export const ColumnBox = styled.div(({ theme }) => ({
@@ -19,6 +20,19 @@ export const GapBox = styled.div(({ theme }) => ({
   flexDirection: "column",
   gap: theme.spacing.sm,
   width: "100%",
+}));
+interface IScrollBox {
+  theme?: Theme;
+  height: string;
+  gap?: string;
+}
+export const ScrollBox = styled.div(({ theme, height, gap }: IScrollBox) => ({
+  overflow: "auto",
+  display: "flex",
+  flexDirection: "column",
+  gap: gap || theme?.spacing.xl,
+  width: "100%",
+  height,
 }));
 
 export const GapList = styled.ul(({ theme }) => ({

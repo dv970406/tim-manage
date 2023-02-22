@@ -5,11 +5,11 @@ import { useOutletContext } from "react-router-dom";
 import { MainText } from "../../../atomics/typographys/texts";
 import Table from "../../../molecules/tables/Table";
 import UserVacationTableContent from "../../../organisms/content/user/UserVacationTableContent";
+import { ShowUserVacationsPaginationQuery } from "./__generated__/ShowUserVacationsPaginationQuery.graphql";
 import { ShowUserVacations_vacation$key } from "./__generated__/ShowUserVacations_vacation.graphql";
 
 const showUserVacationsFragment = graphql`
   fragment ShowUserVacations_vacation on User
-  @argumentDefinitions(first: { type: "Int!" }, after: { type: "DateTime" })
   @refetchable(queryName: "ShowUserVacationsPaginationQuery") {
     availableVacation
     myVacationsConnection(first: $first, after: $after)
@@ -35,7 +35,10 @@ const ShowUserVacations = () => {
       myVacationsConnection: { edges },
       availableVacation,
     },
-  } = usePaginationFragment(showUserVacationsFragment, user);
+  } = usePaginationFragment<
+    ShowUserVacationsPaginationQuery,
+    ShowUserVacations_vacation$key
+  >(showUserVacationsFragment, user);
 
   return (
     <>

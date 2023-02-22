@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8190df25d460129047af5f7901e5d1df>>
+ * @generated SignedSource<<91bad21c0219ccd0cecec9d1316d6f69>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,7 +19,6 @@ export type ShowUserAnswers_answer$data = {
         readonly id: string;
         readonly results: ReadonlyArray<string>;
         readonly survey: {
-          readonly id: string;
           readonly " $fragmentSpreads": FragmentRefs<"SurveyTableContent_survey">;
         };
       };
@@ -50,14 +49,16 @@ v1 = {
 return {
   "argumentDefinitions": [
     {
-      "defaultValue": null,
-      "kind": "LocalArgument",
+      "kind": "RootArgument",
       "name": "after"
     },
     {
-      "defaultValue": null,
-      "kind": "LocalArgument",
+      "kind": "RootArgument",
       "name": "first"
+    },
+    {
+      "kind": "RootArgument",
+      "name": "keyword"
     }
   ],
   "kind": "Fragment",
@@ -90,7 +91,13 @@ return {
   "selections": [
     {
       "alias": "myAnswersConnection",
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "keyword",
+          "variableName": "keyword"
+        }
+      ],
       "concreteType": "AnswersConnection",
       "kind": "LinkedField",
       "name": "__ShowUserAnswers_myAnswersConnection_connection",
@@ -128,7 +135,6 @@ return {
                   "name": "survey",
                   "plural": false,
                   "selections": [
-                    (v1/*: any*/),
                     {
                       "args": null,
                       "kind": "FragmentSpread",
@@ -192,6 +198,6 @@ return {
 };
 })();
 
-(node as any).hash = "3b52afe8083de5327109618821723cf0";
+(node as any).hash = "9673a02cc1fd129eb4b998327a1dc140";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0f13c509aacdfa0b04415451a2096f55>>
+ * @generated SignedSource<<193de61d21e1731604140f5d42eba167>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -38,14 +38,16 @@ var v0 = [
 return {
   "argumentDefinitions": [
     {
-      "defaultValue": null,
-      "kind": "LocalArgument",
+      "kind": "RootArgument",
       "name": "after"
     },
     {
-      "defaultValue": null,
-      "kind": "LocalArgument",
+      "kind": "RootArgument",
       "name": "first"
+    },
+    {
+      "kind": "RootArgument",
+      "name": "keyword"
     }
   ],
   "kind": "Fragment",
@@ -78,7 +80,13 @@ return {
   "selections": [
     {
       "alias": "myPostsConnection",
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "keyword",
+          "variableName": "keyword"
+        }
+      ],
       "concreteType": "PostsConnection",
       "kind": "LinkedField",
       "name": "__ShowUserPosts_myPostsConnection_connection",
@@ -166,6 +174,6 @@ return {
 };
 })();
 
-(node as any).hash = "faf971da5722ab8dbbf8bb314ac43f06";
+(node as any).hash = "575fd6806106d2e981684440052008f8";
 
 export default node;

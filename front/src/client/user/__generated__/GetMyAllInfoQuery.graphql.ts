@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ee853462dcf602f76a959762024aa078>>
+ * @generated SignedSource<<20bf9b3708d5a17bdec3badb6e40b58c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type GetMyAllInfoQuery$variables = {
   after?: any | null;
   first: number;
+  keyword?: string | null;
 };
 export type GetMyAllInfoQuery$data = {
   readonly getMyInfo: {
@@ -39,18 +40,11 @@ v1 = {
   "kind": "LocalArgument",
   "name": "first"
 },
-v2 = [
-  {
-    "kind": "Variable",
-    "name": "after",
-    "variableName": "after"
-  },
-  {
-    "kind": "Variable",
-    "name": "first",
-    "variableName": "first"
-  }
-],
+v2 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "keyword"
+},
 v3 = {
   "alias": null,
   "args": null,
@@ -80,13 +74,32 @@ v6 = {
   "storageKey": null
 },
 v7 = {
+  "kind": "Variable",
+  "name": "after",
+  "variableName": "after"
+},
+v8 = {
+  "kind": "Variable",
+  "name": "first",
+  "variableName": "first"
+},
+v9 = [
+  (v7/*: any*/),
+  (v8/*: any*/),
+  {
+    "kind": "Variable",
+    "name": "keyword",
+    "variableName": "keyword"
+  }
+],
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "title",
   "storageKey": null
 },
-v8 = {
+v11 = {
   "alias": null,
   "args": null,
   "concreteType": "User",
@@ -99,49 +112,49 @@ v8 = {
   ],
   "storageKey": null
 },
-v9 = {
+v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "isLiked",
   "storageKey": null
 },
-v10 = {
+v13 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "countLikes",
   "storageKey": null
 },
-v11 = {
+v14 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "countComments",
   "storageKey": null
 },
-v12 = {
+v15 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "createdAt",
   "storageKey": null
 },
-v13 = {
+v16 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v14 = {
+v17 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v15 = {
+v18 = {
   "alias": null,
   "args": null,
   "concreteType": "PageInfo",
@@ -166,7 +179,10 @@ v15 = {
   ],
   "storageKey": null
 },
-v16 = {
+v19 = [
+  "keyword"
+],
+v20 = {
   "alias": null,
   "args": null,
   "concreteType": "Post",
@@ -175,20 +191,25 @@ v16 = {
   "plural": false,
   "selections": [
     (v5/*: any*/),
-    (v7/*: any*/),
-    (v8/*: any*/),
-    (v9/*: any*/),
     (v10/*: any*/),
     (v11/*: any*/),
-    (v12/*: any*/)
+    (v12/*: any*/),
+    (v13/*: any*/),
+    (v14/*: any*/),
+    (v15/*: any*/)
   ],
   "storageKey": null
-};
+},
+v21 = [
+  (v7/*: any*/),
+  (v8/*: any*/)
+];
 return {
   "fragment": {
     "argumentDefinitions": [
       (v0/*: any*/),
-      (v1/*: any*/)
+      (v1/*: any*/),
+      (v2/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
@@ -196,7 +217,7 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": (v2/*: any*/),
+        "args": null,
         "concreteType": "GetMyInfoOutput",
         "kind": "LinkedField",
         "name": "getMyInfo",
@@ -218,27 +239,27 @@ return {
                 "name": "ShowUserInfo_user"
               },
               {
-                "args": (v2/*: any*/),
+                "args": null,
                 "kind": "FragmentSpread",
                 "name": "ShowUserPosts_post"
               },
               {
-                "args": (v2/*: any*/),
+                "args": null,
                 "kind": "FragmentSpread",
                 "name": "ShowUserComments_comment"
               },
               {
-                "args": (v2/*: any*/),
+                "args": null,
                 "kind": "FragmentSpread",
                 "name": "ShowUserLikes_like"
               },
               {
-                "args": (v2/*: any*/),
+                "args": null,
                 "kind": "FragmentSpread",
                 "name": "ShowUserAnswers_answer"
               },
               {
-                "args": (v2/*: any*/),
+                "args": null,
                 "kind": "FragmentSpread",
                 "name": "ShowUserVacations_vacation"
               }
@@ -255,6 +276,7 @@ return {
   "kind": "Request",
   "operation": {
     "argumentDefinitions": [
+      (v2/*: any*/),
       (v1/*: any*/),
       (v0/*: any*/)
     ],
@@ -263,7 +285,7 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": (v2/*: any*/),
+        "args": null,
         "concreteType": "GetMyInfoOutput",
         "kind": "LinkedField",
         "name": "getMyInfo",
@@ -342,7 +364,7 @@ return {
               },
               {
                 "alias": null,
-                "args": (v2/*: any*/),
+                "args": (v9/*: any*/),
                 "concreteType": "PostsConnection",
                 "kind": "LinkedField",
                 "name": "myPostsConnection",
@@ -365,28 +387,28 @@ return {
                         "plural": false,
                         "selections": [
                           (v5/*: any*/),
-                          (v7/*: any*/),
-                          (v8/*: any*/),
-                          (v9/*: any*/),
                           (v10/*: any*/),
                           (v11/*: any*/),
                           (v12/*: any*/),
-                          (v13/*: any*/)
+                          (v13/*: any*/),
+                          (v14/*: any*/),
+                          (v15/*: any*/),
+                          (v16/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v14/*: any*/)
+                      (v17/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v15/*: any*/)
+                  (v18/*: any*/)
                 ],
                 "storageKey": null
               },
               {
                 "alias": null,
-                "args": (v2/*: any*/),
-                "filters": null,
+                "args": (v9/*: any*/),
+                "filters": (v19/*: any*/),
                 "handle": "connection",
                 "key": "ShowUserPosts_myPostsConnection",
                 "kind": "LinkedHandle",
@@ -394,7 +416,7 @@ return {
               },
               {
                 "alias": null,
-                "args": (v2/*: any*/),
+                "args": (v9/*: any*/),
                 "concreteType": "CommentsConnection",
                 "kind": "LinkedField",
                 "name": "myCommentsConnection",
@@ -417,7 +439,7 @@ return {
                         "plural": false,
                         "selections": [
                           (v5/*: any*/),
-                          (v16/*: any*/),
+                          (v20/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -425,22 +447,22 @@ return {
                             "name": "content",
                             "storageKey": null
                           },
-                          (v13/*: any*/)
+                          (v16/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v14/*: any*/)
+                      (v17/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v15/*: any*/)
+                  (v18/*: any*/)
                 ],
                 "storageKey": null
               },
               {
                 "alias": null,
-                "args": (v2/*: any*/),
-                "filters": null,
+                "args": (v9/*: any*/),
+                "filters": (v19/*: any*/),
                 "handle": "connection",
                 "key": "ShowUserComments_myCommentsConnection",
                 "kind": "LinkedHandle",
@@ -448,7 +470,7 @@ return {
               },
               {
                 "alias": null,
-                "args": (v2/*: any*/),
+                "args": (v9/*: any*/),
                 "concreteType": "LikesConnection",
                 "kind": "LinkedField",
                 "name": "myLikesConnection",
@@ -471,23 +493,23 @@ return {
                         "plural": false,
                         "selections": [
                           (v5/*: any*/),
-                          (v16/*: any*/),
-                          (v13/*: any*/)
+                          (v20/*: any*/),
+                          (v16/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v14/*: any*/)
+                      (v17/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v15/*: any*/)
+                  (v18/*: any*/)
                 ],
                 "storageKey": null
               },
               {
                 "alias": null,
-                "args": (v2/*: any*/),
-                "filters": null,
+                "args": (v9/*: any*/),
+                "filters": (v19/*: any*/),
                 "handle": "connection",
                 "key": "ShowUserLikes_myLikesConnection",
                 "kind": "LinkedHandle",
@@ -495,7 +517,7 @@ return {
               },
               {
                 "alias": null,
-                "args": (v2/*: any*/),
+                "args": (v9/*: any*/),
                 "concreteType": "AnswersConnection",
                 "kind": "LinkedField",
                 "name": "myAnswersConnection",
@@ -548,7 +570,7 @@ return {
                                 "name": "isAnonymous",
                                 "storageKey": null
                               },
-                              (v8/*: any*/),
+                              (v11/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -556,26 +578,26 @@ return {
                                 "name": "isAnswered",
                                 "storageKey": null
                               },
-                              (v12/*: any*/)
+                              (v15/*: any*/)
                             ],
                             "storageKey": null
                           },
-                          (v13/*: any*/)
+                          (v16/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v14/*: any*/)
+                      (v17/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v15/*: any*/)
+                  (v18/*: any*/)
                 ],
                 "storageKey": null
               },
               {
                 "alias": null,
-                "args": (v2/*: any*/),
-                "filters": null,
+                "args": (v9/*: any*/),
+                "filters": (v19/*: any*/),
                 "handle": "connection",
                 "key": "ShowUserAnswers_myAnswersConnection",
                 "kind": "LinkedHandle",
@@ -590,7 +612,7 @@ return {
               },
               {
                 "alias": null,
-                "args": (v2/*: any*/),
+                "args": (v21/*: any*/),
                 "concreteType": "VacationsConnection",
                 "kind": "LinkedField",
                 "name": "myVacationsConnection",
@@ -673,21 +695,21 @@ return {
                             ],
                             "storageKey": null
                           },
-                          (v13/*: any*/)
+                          (v16/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v14/*: any*/)
+                      (v17/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v15/*: any*/)
+                  (v18/*: any*/)
                 ],
                 "storageKey": null
               },
               {
                 "alias": null,
-                "args": (v2/*: any*/),
+                "args": (v21/*: any*/),
                 "filters": null,
                 "handle": "connection",
                 "key": "ShowUserVacations_myVacationsConnection",
@@ -703,16 +725,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a3260c693d6c1d24ebb06075dac38a9b",
+    "cacheID": "d4f1379b4cbe188fabe53830b974358d",
     "id": null,
     "metadata": {},
     "name": "GetMyAllInfoQuery",
     "operationKind": "query",
-    "text": "query GetMyAllInfoQuery(\n  $first: Int!\n  $after: DateTime\n) {\n  getMyInfo(first: $first, after: $after) {\n    ok\n    error\n    user {\n      ...ShowUserInfo_user\n      ...ShowUserPosts_post_2HEEH6\n      ...ShowUserComments_comment_2HEEH6\n      ...ShowUserLikes_like_2HEEH6\n      ...ShowUserAnswers_answer_2HEEH6\n      ...ShowUserVacations_vacation_2HEEH6\n      id\n    }\n  }\n}\n\nfragment PostTableContent_post on Post {\n  id\n  title\n  user {\n    id\n    name\n  }\n  isLiked\n  countLikes\n  countComments\n  createdAt\n}\n\nfragment ShowUserAnswers_answer_2HEEH6 on User {\n  myAnswersConnection(first: $first, after: $after) {\n    edges {\n      node {\n        id\n        results\n        survey {\n          id\n          ...SurveyTableContent_survey\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment ShowUserComments_comment_2HEEH6 on User {\n  myCommentsConnection(first: $first, after: $after) {\n    edges {\n      node {\n        id\n        post {\n          ...PostTableContent_post\n          id\n        }\n        content\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment ShowUserInfo_user on User {\n  id\n  name\n  email\n  isManager\n  joinDate\n  position {\n    id\n    position\n  }\n  team {\n    id\n    team\n  }\n}\n\nfragment ShowUserLikes_like_2HEEH6 on User {\n  myLikesConnection(first: $first, after: $after) {\n    edges {\n      node {\n        id\n        post {\n          ...PostTableContent_post\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment ShowUserPosts_post_2HEEH6 on User {\n  myPostsConnection(first: $first, after: $after) {\n    edges {\n      node {\n        ...PostTableContent_post\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment ShowUserVacations_vacation_2HEEH6 on User {\n  availableVacation\n  myVacationsConnection(first: $first, after: $after) {\n    edges {\n      node {\n        ...UserVacationTableContent_vacation\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment SurveyTableContent_survey on Survey {\n  id\n  surveyTitle\n  isAnonymous\n  user {\n    id\n    name\n  }\n  isAnswered\n  createdAt\n}\n\nfragment UserVacationTableContent_vacation on Vacation {\n  id\n  startDate\n  endDate\n  duration\n  isHalf\n  confirmed {\n    byCeo\n    byManager\n    byLeader\n  }\n}\n"
+    "text": "query GetMyAllInfoQuery(\n  $keyword: String\n  $first: Int!\n  $after: DateTime\n) {\n  getMyInfo {\n    ok\n    error\n    user {\n      ...ShowUserInfo_user\n      ...ShowUserPosts_post\n      ...ShowUserComments_comment\n      ...ShowUserLikes_like\n      ...ShowUserAnswers_answer\n      ...ShowUserVacations_vacation\n      id\n    }\n  }\n}\n\nfragment PostTableContent_post on Post {\n  id\n  title\n  user {\n    id\n    name\n  }\n  isLiked\n  countLikes\n  countComments\n  createdAt\n}\n\nfragment ShowUserAnswers_answer on User {\n  myAnswersConnection(keyword: $keyword, first: $first, after: $after) {\n    edges {\n      node {\n        id\n        results\n        survey {\n          ...SurveyTableContent_survey\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment ShowUserComments_comment on User {\n  myCommentsConnection(keyword: $keyword, first: $first, after: $after) {\n    edges {\n      node {\n        id\n        post {\n          ...PostTableContent_post\n          id\n        }\n        content\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment ShowUserInfo_user on User {\n  id\n  name\n  email\n  isManager\n  joinDate\n  position {\n    id\n    position\n  }\n  team {\n    id\n    team\n  }\n}\n\nfragment ShowUserLikes_like on User {\n  myLikesConnection(keyword: $keyword, first: $first, after: $after) {\n    edges {\n      node {\n        id\n        post {\n          ...PostTableContent_post\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment ShowUserPosts_post on User {\n  myPostsConnection(keyword: $keyword, first: $first, after: $after) {\n    edges {\n      node {\n        ...PostTableContent_post\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment ShowUserVacations_vacation on User {\n  availableVacation\n  myVacationsConnection(first: $first, after: $after) {\n    edges {\n      node {\n        ...UserVacationTableContent_vacation\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment SurveyTableContent_survey on Survey {\n  id\n  surveyTitle\n  isAnonymous\n  user {\n    id\n    name\n  }\n  isAnswered\n  createdAt\n}\n\nfragment UserVacationTableContent_vacation on Vacation {\n  id\n  startDate\n  endDate\n  duration\n  isHalf\n  confirmed {\n    byCeo\n    byManager\n    byLeader\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "2805fa0e1064f6dff5ddf8268825e3e7";
+(node as any).hash = "6214dc167f120fd152fc74d010c719a1";
 
 export default node;

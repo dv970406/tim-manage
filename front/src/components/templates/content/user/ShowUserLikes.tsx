@@ -10,9 +10,8 @@ import { ShowUserLikes_like$key } from "./__generated__/ShowUserLikes_like.graph
 // 여기도 connection으로
 const showUserLikesFragment = graphql`
   fragment ShowUserLikes_like on User
-  @argumentDefinitions(first: { type: "Int!" }, after: { type: "DateTime" })
   @refetchable(queryName: "ShowUserLikesPaginationQuery") {
-    myLikesConnection(first: $first, after: $after)
+    myLikesConnection(keyword: $keyword, first: $first, after: $after)
       @connection(key: "ShowUserLikes_myLikesConnection") {
       edges {
         node {

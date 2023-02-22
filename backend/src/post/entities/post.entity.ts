@@ -18,7 +18,7 @@ import { Like } from './like.entity';
 @InputType('PostInputType', { isAbstract: true })
 @Entity()
 @ObjectType({ implements: Node })
-export class Post extends CoreEntity implements Node {
+export class Post extends CoreEntity {
   @Column()
   @Field((type) => String)
   @IsString()

@@ -64,7 +64,7 @@ const SurveyManagement = ({
       </Section>
 
       <GapBox style={{ width: "30%", gap: theme.spacing.xl }}>
-        <Section style={{ height: "50%", overflow: "auto" }}>
+        <Section style={{ height: "50%" }}>
           <ManagerSurveysTable
             surveys={surveys}
             clickedSurveyId={clickedSurveyId}

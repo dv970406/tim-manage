@@ -17,7 +17,7 @@ import { AnswerRepository } from 'src/survey/repositories/answer.repository';
 import { TeamRepository } from 'src/team/team.repository';
 import { VacationsConnection } from 'src/vacation/dtos/vacation-pagination.dto';
 import { VacationRepository } from 'src/vacation/vacation.repository';
-import { LessThan, Like as LikeSearch } from 'typeorm';
+import { LessThan, Like, Like as LikeSearch } from 'typeorm';
 import { CreateUserInput, CreateUserOutput } from './dtos/create-user.dto';
 import { DeleteUserInput, DeleteUserOutput } from './dtos/delete-user.dto';
 import { GetMyInfoInput, GetMyInfoOutput } from './dtos/get-myInfo.dto';
@@ -54,17 +54,28 @@ export class UserService {
   ) {}
 
   async myAnswersConnection(
-    user: User,
-    { first, after }: ConnectionInput,
+    loggedInUser: User,
+    { keyword, first, after }: ConnectionInput,
   ): Promise<AnswersConnection> {
     const [findMyAnswers, totalCount] = await this.answerRepo.findAndCount({
       order: { createdAt: 'DESC' },
       where: {
         user: {
-          id: user.id,
+          id: loggedInUser.id,
         },
         ...(after && { createdAt: LessThan(after) }),
       },
+      ...(keyword && {
+        where: {
+          user: {
+            id: loggedInUser.id,
+          },
+          survey: {
+            surveyTitle: Like(`%${keyword}%`),
+          },
+          ...(after && { createdAt: LessThan(after) }),
+        },
+      }),
       relations: {
         survey: {
           user: true,
@@ -88,14 +99,14 @@ export class UserService {
     };
   }
   async myVacationsConnection(
-    user: User,
+    loggedInUser: User,
     { first, after }: ConnectionInput,
   ): Promise<VacationsConnection> {
     const [findMyVacations, totalCount] = await this.vacationRepo.findAndCount({
       order: { createdAt: 'DESC' },
       where: {
         user: {
-          id: user.id,
+          id: loggedInUser.id,
         },
         ...(after && { createdAt: LessThan(after) }),
       },
@@ -120,28 +131,49 @@ export class UserService {
     };
   }
   async myPostsConnection(
-    user: User,
-    { first, after }: ConnectionInput,
+    loggedInUser: User,
+    { keyword, first, after }: ConnectionInput,
   ): Promise<PostsConnection> {
+    console.log('keyword : ', keyword);
     const [findMyPosts, totalCount] = await this.postRepo.findAndCount({
       order: { createdAt: 'DESC' },
       where: {
         user: {
-          id: user.id,
+          id: loggedInUser.id,
         },
         ...(after && { createdAt: LessThan(after) }),
       },
+      ...(keyword && {
+        where: [
+          {
+            user: {
+              id: loggedInUser.id,
+            },
+            title: Like(`%${keyword}%`),
+            ...(after && { createdAt: LessThan(after) }),
+          },
+          {
+            user: {
+              id: loggedInUser.id,
+            },
+            content: Like(`%${keyword}%`),
+            ...(after && { createdAt: LessThan(after) }),
+          },
+        ],
+      }),
       relations: {
         user: true,
       },
       take: first,
     });
+    console.log('findMyPosts : ', findMyPosts);
 
     const edges = findMyPosts.map((post) => ({
       cursor: post.createdAt,
       node: post,
     }));
     const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
+    console.log('edges : ', edges);
 
     return {
       edges,
@@ -152,17 +184,39 @@ export class UserService {
     };
   }
   async myLikesConnection(
-    user: User,
-    { first, after }: ConnectionInput,
+    loggedInUser: User,
+    { keyword, first, after }: ConnectionInput,
   ): Promise<LikesConnection> {
     const [findMyLikes, totalCount] = await this.likeRepo.findAndCount({
       order: { createdAt: 'DESC' },
       where: {
         user: {
-          id: user.id,
+          id: loggedInUser.id,
         },
         ...(after && { createdAt: LessThan(after) }),
       },
+      ...(keyword && {
+        where: [
+          {
+            user: {
+              id: loggedInUser.id,
+            },
+            post: {
+              title: Like(`%${keyword}%`),
+            },
+            ...(after && { createdAt: LessThan(after) }),
+          },
+          {
+            user: {
+              id: loggedInUser.id,
+            },
+            post: {
+              content: Like(`%${keyword}%`),
+            },
+            ...(after && { createdAt: LessThan(after) }),
+          },
+        ],
+      }),
       relations: {
         post: {
           user: true,
@@ -186,17 +240,39 @@ export class UserService {
     };
   }
   async myCommentsConnection(
-    user: User,
-    { first, after }: ConnectionInput,
+    loggedInUser: User,
+    { keyword, first, after }: ConnectionInput,
   ): Promise<CommentsConnection> {
     const [findMyComments, totalCount] = await this.commentRepo.findAndCount({
       order: { createdAt: 'DESC' },
       where: {
         user: {
-          id: user.id,
+          id: loggedInUser.id,
         },
         ...(after && { createdAt: LessThan(after) }),
       },
+      ...(keyword && {
+        where: [
+          {
+            user: {
+              id: loggedInUser.id,
+            },
+            post: {
+              title: Like(`%${keyword}%`),
+            },
+            ...(after && { createdAt: LessThan(after) }),
+          },
+          {
+            user: {
+              id: loggedInUser.id,
+            },
+            post: {
+              content: Like(`%${keyword}%`),
+            },
+            ...(after && { createdAt: LessThan(after) }),
+          },
+        ],
+      }),
       relations: {
         post: {
           user: true,
@@ -345,10 +421,7 @@ export class UserService {
     }
   }
 
-  async getMyInfo(
-    loggedInUser: User,
-    { first, after }: GetMyInfoInput,
-  ): Promise<GetMyInfoOutput> {
+  async getMyInfo(loggedInUser: User): Promise<GetMyInfoOutput> {
     try {
       const findUser = await this.userRepo.findOne({
         where: { id: loggedInUser.id },

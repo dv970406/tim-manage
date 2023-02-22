@@ -42,7 +42,7 @@ import { Node } from 'src/core/dtos/node.dto';
 @InputType('UserInputType', { isAbstract: true })
 @Entity()
 @ObjectType({ implements: Node })
-export class User extends CoreEntity implements Node {
+export class User extends CoreEntity {
   @Column({ default: false })
   @Field((type) => Boolean, { defaultValue: false })
   @IsBoolean()

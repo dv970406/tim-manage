@@ -12,7 +12,6 @@ const Table = ({ headers, children }: ITable) => {
       <table
         style={{
           width: "100%",
-          tableLayout: "fixed",
           borderCollapse: "collapse",
         }}
       >
@@ -31,7 +30,7 @@ const Table = ({ headers, children }: ITable) => {
             ))}
           </tr>
         </thead>
-        <tbody>{children}</tbody>
+        <tbody style={{ overflow: "auto" }}>{children}</tbody>
       </table>
     </>
   );

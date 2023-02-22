@@ -27,7 +27,7 @@ interface IInfiniteScroll {
 
 interface IManageDataList extends IInfiniteScroll {
   refetch: RefetchFnDynamic<any, any, Options>;
-  dataTableName: string;
+  dataTableName?: string;
 }
 
 // Search, Pagination(Infinite Scroll) 구현하는 컴포넌트

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<79f9070ded49a4e05ee4ada0bd988e5a>>
+ * @generated SignedSource<<d4ff8e21ca383e1a8a0b2911eb6affc4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,7 @@ export type ShowUserCommentsPaginationQuery$variables = {
   after?: any | null;
   first: number;
   id: string;
+  keyword?: string | null;
 };
 export type ShowUserCommentsPaginationQuery$data = {
   readonly node: string;
@@ -24,31 +25,34 @@ export type ShowUserCommentsPaginationQuery = {
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "after"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "first"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "id"
-  }
-],
-v1 = [
+var v0 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "after"
+},
+v1 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "first"
+},
+v2 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "id"
+},
+v3 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "keyword"
+},
+v4 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "id"
   }
 ],
-v2 = [
+v5 = [
   {
     "kind": "Variable",
     "name": "after",
@@ -58,9 +62,14 @@ v2 = [
     "kind": "Variable",
     "name": "first",
     "variableName": "first"
+  },
+  {
+    "kind": "Variable",
+    "name": "keyword",
+    "variableName": "keyword"
   }
 ],
-v3 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -69,21 +78,26 @@ v3 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/),
+      (v2/*: any*/),
+      (v3/*: any*/)
+    ],
     "kind": "Fragment",
     "metadata": null,
     "name": "ShowUserCommentsPaginationQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v4/*: any*/),
         "concreteType": "ID",
         "kind": "LinkedField",
         "name": "node",
         "plural": false,
         "selections": [
           {
-            "args": (v2/*: any*/),
+            "args": null,
             "kind": "FragmentSpread",
             "name": "ShowUserComments_comment"
           }
@@ -96,13 +110,18 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/),
+      (v3/*: any*/),
+      (v2/*: any*/)
+    ],
     "kind": "Operation",
     "name": "ShowUserCommentsPaginationQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v4/*: any*/),
         "concreteType": "ID",
         "kind": "LinkedField",
         "name": "node",
@@ -113,7 +132,7 @@ return {
             "selections": [
               {
                 "alias": null,
-                "args": (v2/*: any*/),
+                "args": (v5/*: any*/),
                 "concreteType": "CommentsConnection",
                 "kind": "LinkedField",
                 "name": "myCommentsConnection",
@@ -135,7 +154,7 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v3/*: any*/),
+                          (v6/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -144,7 +163,7 @@ return {
                             "name": "post",
                             "plural": false,
                             "selections": [
-                              (v3/*: any*/),
+                              (v6/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -160,7 +179,7 @@ return {
                                 "name": "user",
                                 "plural": false,
                                 "selections": [
-                                  (v3/*: any*/),
+                                  (v6/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -259,14 +278,16 @@ return {
               },
               {
                 "alias": null,
-                "args": (v2/*: any*/),
-                "filters": null,
+                "args": (v5/*: any*/),
+                "filters": [
+                  "keyword"
+                ],
                 "handle": "connection",
                 "key": "ShowUserComments_myCommentsConnection",
                 "kind": "LinkedHandle",
                 "name": "myCommentsConnection"
               },
-              (v3/*: any*/)
+              (v6/*: any*/)
             ],
             "type": "User",
             "abstractKey": null
@@ -277,16 +298,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2ca0539183a7ae90785a2c359d26d3c5",
+    "cacheID": "7fce2ffe4c6e0ea56193fa7bbc1c3576",
     "id": null,
     "metadata": {},
     "name": "ShowUserCommentsPaginationQuery",
     "operationKind": "query",
-    "text": "query ShowUserCommentsPaginationQuery(\n  $after: DateTime\n  $first: Int!\n  $id: ID!\n) {\n  node(id: $id) {\n    ...ShowUserComments_comment_2HEEH6\n  }\n}\n\nfragment PostTableContent_post on Post {\n  id\n  title\n  user {\n    id\n    name\n  }\n  isLiked\n  countLikes\n  countComments\n  createdAt\n}\n\nfragment ShowUserComments_comment_2HEEH6 on User {\n  myCommentsConnection(first: $first, after: $after) {\n    edges {\n      node {\n        id\n        post {\n          ...PostTableContent_post\n          id\n        }\n        content\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n"
+    "text": "query ShowUserCommentsPaginationQuery(\n  $after: DateTime\n  $first: Int!\n  $keyword: String\n  $id: ID!\n) {\n  node(id: $id) {\n    ...ShowUserComments_comment\n  }\n}\n\nfragment PostTableContent_post on Post {\n  id\n  title\n  user {\n    id\n    name\n  }\n  isLiked\n  countLikes\n  countComments\n  createdAt\n}\n\nfragment ShowUserComments_comment on User {\n  myCommentsConnection(keyword: $keyword, first: $first, after: $after) {\n    edges {\n      node {\n        id\n        post {\n          ...PostTableContent_post\n          id\n        }\n        content\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n"
   }
 };
 })();
 
-(node as any).hash = "7a79f34b040276b59fe3bdb442a4c530";
+(node as any).hash = "a948e4d1fbe7d10d57fbadab9ad8ec16";
 
 export default node;

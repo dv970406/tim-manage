@@ -3,10 +3,11 @@ import React, { Dispatch, SetStateAction } from "react";
 import { usePaginationFragment } from "react-relay";
 import { useDeleteSurvey } from "../../../../client/manager/DeleteSurvey.client";
 import { getSurveysQuery } from "../../../../client/survey/GetSurveys.client";
-import { ColumnBox, GapBox } from "../../../atomics/boxes/Boxes";
+import { ColumnBox, GapBox, ScrollBox } from "../../../atomics/boxes/Boxes";
 import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
 import Table from "../../../molecules/tables/Table";
 import ManagerSurveyTableContent from "../../../organisms/content/manager/ManagerSurveyTableContent";
+import { ManageDataTable } from "../../../organisms/shared/ManageDataList";
 import { SurveysTable_survey$key } from "../survey/__generated__/SurveysTable_survey.graphql";
 import { GetManagerSurveysPaginationQuery } from "./__generated__/GetManagerSurveysPaginationQuery.graphql";
 import { ManagerSurveysTable_survey$key } from "./__generated__/ManagerSurveysTable_survey.graphql";
@@ -57,31 +58,42 @@ const ManagerSurveysTable = ({
     data: {
       getSurveys: { edges },
     },
+    hasNext,
+    isLoadingNext,
+    loadNext,
   } = usePaginationFragment<
     GetManagerSurveysPaginationQuery,
     ManagerSurveysTable_survey$key
   >(getManagerSurveysFragment, surveys);
   return (
-    <ColumnBox>
-      <Table headers={["내 설문"]}>
-        {edges.map(
-          (survey: any) =>
-            survey && (
-              <ManagerSurveyTableContent
-                key={survey.cursor}
-                survey={survey.node}
-                clickedSurveyId={clickedSurveyId}
-                setClickedSurveyId={setClickedSurveyId}
-              />
-            )
-        )}
-      </Table>
+    <>
+      <ScrollBox height="90%">
+        <ManageDataTable
+          headers={["내 설문"]}
+          loadNext={loadNext}
+          hasNext={hasNext}
+          isLoadingNext={isLoadingNext}
+        >
+          {edges.map(
+            (survey) =>
+              survey && (
+                <ManagerSurveyTableContent
+                  key={survey.cursor}
+                  survey={survey.node}
+                  clickedSurveyId={clickedSurveyId}
+                  setClickedSurveyId={setClickedSurveyId}
+                />
+              )
+          )}
+        </ManageDataTable>
+      </ScrollBox>
+
       <EndSubmitButton
         text="삭제"
         onClick={handleDeleteSurvey}
         disabled={!clickedSurveyId || deleteSurveyLoading}
       />
-    </ColumnBox>
+    </>
   );
 };
 

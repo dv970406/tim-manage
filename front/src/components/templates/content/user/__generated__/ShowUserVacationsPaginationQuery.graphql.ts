@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<786d9e8270f548317a82477cbf49ecb1>>
+ * @generated SignedSource<<a107ce3669331eb3e59769adcd29d2bf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -83,7 +83,7 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": (v2/*: any*/),
+            "args": null,
             "kind": "FragmentSpread",
             "name": "ShowUserVacations_vacation"
           }
@@ -271,16 +271,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "95f71a49eac04baf73cda3a6e0a51689",
+    "cacheID": "8290cc56d2bc4993e9a23b8aa59a0cfa",
     "id": null,
     "metadata": {},
     "name": "ShowUserVacationsPaginationQuery",
     "operationKind": "query",
-    "text": "query ShowUserVacationsPaginationQuery(\n  $after: DateTime\n  $first: Int!\n  $id: ID!\n) {\n  node(id: $id) {\n    ...ShowUserVacations_vacation_2HEEH6\n  }\n}\n\nfragment ShowUserVacations_vacation_2HEEH6 on User {\n  availableVacation\n  myVacationsConnection(first: $first, after: $after) {\n    edges {\n      node {\n        ...UserVacationTableContent_vacation\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment UserVacationTableContent_vacation on Vacation {\n  id\n  startDate\n  endDate\n  duration\n  isHalf\n  confirmed {\n    byCeo\n    byManager\n    byLeader\n  }\n}\n"
+    "text": "query ShowUserVacationsPaginationQuery(\n  $after: DateTime\n  $first: Int!\n  $id: ID!\n) {\n  node(id: $id) {\n    ...ShowUserVacations_vacation\n  }\n}\n\nfragment ShowUserVacations_vacation on User {\n  availableVacation\n  myVacationsConnection(first: $first, after: $after) {\n    edges {\n      node {\n        ...UserVacationTableContent_vacation\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment UserVacationTableContent_vacation on Vacation {\n  id\n  startDate\n  endDate\n  duration\n  isHalf\n  confirmed {\n    byCeo\n    byManager\n    byLeader\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "bb82f570c4ebc59d220c5e19a0962c1b";
+(node as any).hash = "26f51f67ba74c836aad952e28418b1a9";
 
 export default node;

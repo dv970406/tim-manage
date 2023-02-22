@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bc7a8de71a310d3b5e93b267e70624a5>>
+ * @generated SignedSource<<ab80c6366ff7cb01319f9bbeb41f0a24>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,7 @@ export type ShowUserPostsPaginationQuery$variables = {
   after?: any | null;
   first: number;
   id: string;
+  keyword?: string | null;
 };
 export type ShowUserPostsPaginationQuery$data = {
   readonly node: string;
@@ -24,31 +25,34 @@ export type ShowUserPostsPaginationQuery = {
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "after"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "first"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "id"
-  }
-],
-v1 = [
+var v0 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "after"
+},
+v1 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "first"
+},
+v2 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "id"
+},
+v3 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "keyword"
+},
+v4 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "id"
   }
 ],
-v2 = [
+v5 = [
   {
     "kind": "Variable",
     "name": "after",
@@ -58,9 +62,14 @@ v2 = [
     "kind": "Variable",
     "name": "first",
     "variableName": "first"
+  },
+  {
+    "kind": "Variable",
+    "name": "keyword",
+    "variableName": "keyword"
   }
 ],
-v3 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -69,21 +78,26 @@ v3 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/),
+      (v2/*: any*/),
+      (v3/*: any*/)
+    ],
     "kind": "Fragment",
     "metadata": null,
     "name": "ShowUserPostsPaginationQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v4/*: any*/),
         "concreteType": "ID",
         "kind": "LinkedField",
         "name": "node",
         "plural": false,
         "selections": [
           {
-            "args": (v2/*: any*/),
+            "args": null,
             "kind": "FragmentSpread",
             "name": "ShowUserPosts_post"
           }
@@ -96,13 +110,18 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/),
+      (v3/*: any*/),
+      (v2/*: any*/)
+    ],
     "kind": "Operation",
     "name": "ShowUserPostsPaginationQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v4/*: any*/),
         "concreteType": "ID",
         "kind": "LinkedField",
         "name": "node",
@@ -113,7 +132,7 @@ return {
             "selections": [
               {
                 "alias": null,
-                "args": (v2/*: any*/),
+                "args": (v5/*: any*/),
                 "concreteType": "PostsConnection",
                 "kind": "LinkedField",
                 "name": "myPostsConnection",
@@ -135,7 +154,7 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v3/*: any*/),
+                          (v6/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -151,7 +170,7 @@ return {
                             "name": "user",
                             "plural": false,
                             "selections": [
-                              (v3/*: any*/),
+                              (v6/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -240,14 +259,16 @@ return {
               },
               {
                 "alias": null,
-                "args": (v2/*: any*/),
-                "filters": null,
+                "args": (v5/*: any*/),
+                "filters": [
+                  "keyword"
+                ],
                 "handle": "connection",
                 "key": "ShowUserPosts_myPostsConnection",
                 "kind": "LinkedHandle",
                 "name": "myPostsConnection"
               },
-              (v3/*: any*/)
+              (v6/*: any*/)
             ],
             "type": "User",
             "abstractKey": null
@@ -258,16 +279,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "395475d1b50604d7c4b1bf1375238b88",
+    "cacheID": "2e2b15d204b4a767c21bc546c58bb5f4",
     "id": null,
     "metadata": {},
     "name": "ShowUserPostsPaginationQuery",
     "operationKind": "query",
-    "text": "query ShowUserPostsPaginationQuery(\n  $after: DateTime\n  $first: Int!\n  $id: ID!\n) {\n  node(id: $id) {\n    ...ShowUserPosts_post_2HEEH6\n  }\n}\n\nfragment PostTableContent_post on Post {\n  id\n  title\n  user {\n    id\n    name\n  }\n  isLiked\n  countLikes\n  countComments\n  createdAt\n}\n\nfragment ShowUserPosts_post_2HEEH6 on User {\n  myPostsConnection(first: $first, after: $after) {\n    edges {\n      node {\n        ...PostTableContent_post\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n"
+    "text": "query ShowUserPostsPaginationQuery(\n  $after: DateTime\n  $first: Int!\n  $keyword: String\n  $id: ID!\n) {\n  node(id: $id) {\n    ...ShowUserPosts_post\n  }\n}\n\nfragment PostTableContent_post on Post {\n  id\n  title\n  user {\n    id\n    name\n  }\n  isLiked\n  countLikes\n  countComments\n  createdAt\n}\n\nfragment ShowUserPosts_post on User {\n  myPostsConnection(keyword: $keyword, first: $first, after: $after) {\n    edges {\n      node {\n        ...PostTableContent_post\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n"
   }
 };
 })();
 
-(node as any).hash = "faf971da5722ab8dbbf8bb314ac43f06";
+(node as any).hash = "575fd6806106d2e981684440052008f8";
 
 export default node;

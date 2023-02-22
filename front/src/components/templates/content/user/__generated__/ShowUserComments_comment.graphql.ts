@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f42f8d8624bc7668f59d64a1cec834cc>>
+ * @generated SignedSource<<5aaa75c70d08484cd5ec4910b8ef3580>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -49,14 +49,16 @@ v1 = {
 return {
   "argumentDefinitions": [
     {
-      "defaultValue": null,
-      "kind": "LocalArgument",
+      "kind": "RootArgument",
       "name": "after"
     },
     {
-      "defaultValue": null,
-      "kind": "LocalArgument",
+      "kind": "RootArgument",
       "name": "first"
+    },
+    {
+      "kind": "RootArgument",
+      "name": "keyword"
     }
   ],
   "kind": "Fragment",
@@ -89,7 +91,13 @@ return {
   "selections": [
     {
       "alias": "myCommentsConnection",
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "keyword",
+          "variableName": "keyword"
+        }
+      ],
       "concreteType": "CommentsConnection",
       "kind": "LinkedField",
       "name": "__ShowUserComments_myCommentsConnection_connection",
@@ -190,6 +198,6 @@ return {
 };
 })();
 
-(node as any).hash = "7a79f34b040276b59fe3bdb442a4c530";
+(node as any).hash = "a948e4d1fbe7d10d57fbadab9ad8ec16";
 
 export default node;

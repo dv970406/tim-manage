@@ -96,7 +96,7 @@ export class UserResolver {
   @UseGuards(LoginGuard)
   getMyInfo(
     @LoggedInUser() loggedInUser: User,
-    @Args() { isAllInfo, ...getMyInfoInput }: GetMyInfoInput,
+    @Args() { isAllInfo }: GetMyInfoInput,
   ): Promise<GetMyInfoOutput> | GetMyInfoOutput {
     // 내 정보 전부가 필요한 것이 아니라면 getMyInfo 서비스로 보내지 않고 바로 미들웨어에서 얻은 user정보 반환
     if (!isAllInfo)
@@ -104,7 +104,7 @@ export class UserResolver {
         ok: true,
         user: loggedInUser,
       };
-    return this.userService.getMyInfo(loggedInUser, getMyInfoInput);
+    return this.userService.getMyInfo(loggedInUser);
   }
 
   @Mutation((returns) => LoginOutput)

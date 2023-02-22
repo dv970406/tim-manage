@@ -1,6 +1,6 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useFragment } from "react-relay";
-import { ColumnBox, GapBox } from "../../../atomics/boxes/Boxes";
+import { ColumnBox, GapBox, ScrollBox } from "../../../atomics/boxes/Boxes";
 import { CommentsZone_post$key } from "./__generated__/CommentsZone_post.graphql";
 import Comment from "../../../organisms/content/post/Comment";
 import CreateComment from "../../../organisms/content/post/CreateComment";
@@ -27,9 +27,7 @@ const CommentsZone = ({ post }: ICommentsZone) => {
 
   return (
     <ColumnBox>
-      <GapBox
-        style={{ overflow: "auto", height: "100%", gap: theme.spacing.xl }}
-      >
+      <ScrollBox height="100%">
         {/* reverse로 뒤집어야함 - createComment mutation의 updater 부분 참조 */}
         {commentsZoneData.comments
           .map(
@@ -37,7 +35,7 @@ const CommentsZone = ({ post }: ICommentsZone) => {
               comment && <Comment key={comment.__id} comment={comment} />
           )
           .reverse()}
-      </GapBox>
+      </ScrollBox>
       <GapBox>
         <CreateComment postId={post.id} />
       </GapBox>

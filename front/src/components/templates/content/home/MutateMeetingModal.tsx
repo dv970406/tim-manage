@@ -99,12 +99,10 @@ const MutateMeetingModal = ({ scheduleId }: IMutateMeetingModal) => {
             />
           </div>
 
-          {meeting?.attendees && (
-            <SelectUsers
-              prevAttendees={meeting?.attendees as any}
-              setAttendeesId={setAttendeesId}
-            />
-          )}
+          <SelectUsers
+            prevAttendees={meeting?.attendees as any}
+            setAttendeesId={setAttendeesId}
+          />
         </GapBox>
         <div style={{ display: "flex", gap: theme.spacing.sm }}>
           <EndSubmitButton

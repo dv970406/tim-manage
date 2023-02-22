@@ -17,6 +17,7 @@ import { MainText } from "../../components/atomics/typographys/texts";
 import { ButtonIcon } from "../../components/molecules/buttons/Buttons";
 import NavIconButton from "../../components/organisms/header/NavIconButton";
 import { theme } from "../../css/theme";
+import { PAGINATION_LOAD_COUNT } from "../../utils/constants/share.constant";
 
 const UserDetailPage = () => {
   const { userId } = useParams();
@@ -26,7 +27,7 @@ const UserDetailPage = () => {
 
   useEffect(() => {
     if (!userId) return;
-    loadUserQuery({ userId });
+    loadUserQuery({ userId, first: PAGINATION_LOAD_COUNT });
   }, []);
   return (
     <Suspense fallback="Loading...">

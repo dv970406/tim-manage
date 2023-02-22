@@ -4,20 +4,19 @@ import { useFragment, usePaginationFragment } from "react-relay";
 import { useOutletContext } from "react-router-dom";
 import { GapBox, ListBox } from "../../../atomics/boxes/Boxes";
 import SurveyTableContent from "../../../organisms/content/survey/SurveyTableContent";
+import { ManageDataList } from "../../../organisms/shared/ManageDataList";
 import { ShowUserAnswers_answer$key } from "./__generated__/ShowUserAnswers_answer.graphql";
 
 const showUserAnswersFragment = graphql`
   fragment ShowUserAnswers_answer on User
-  @argumentDefinitions(first: { type: "Int!" }, after: { type: "DateTime" })
   @refetchable(queryName: "ShowUserAnswersPaginationQuery") {
-    myAnswersConnection(first: $first, after: $after)
+    myAnswersConnection(keyword: $keyword, first: $first, after: $after)
       @connection(key: "ShowUserAnswers_myAnswersConnection") {
       edges {
         node {
           id
           results
           survey {
-            id
             ...SurveyTableContent_survey
           }
         }
@@ -37,10 +36,19 @@ const ShowUserAnswers = () => {
     data: {
       myAnswersConnection: { edges },
     },
+    hasNext,
+    isLoadingNext,
+    loadNext,
+    refetch,
   } = usePaginationFragment(showUserAnswersFragment, user);
 
   return (
-    <ListBox>
+    <ManageDataList
+      hasNext={hasNext}
+      isLoadingNext={isLoadingNext}
+      loadNext={loadNext}
+      refetch={refetch}
+    >
       {edges.map(
         (answer) =>
           answer?.node?.id && (
@@ -50,7 +58,7 @@ const ShowUserAnswers = () => {
             />
           )
       )}
-    </ListBox>
+    </ManageDataList>
   );
 };
 

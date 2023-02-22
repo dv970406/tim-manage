@@ -11,9 +11,8 @@ import { ShowUserPosts_post$key } from "./__generated__/ShowUserPosts_post.graph
 // 여기도 connection으로
 const showUserPostsFragment = graphql`
   fragment ShowUserPosts_post on User
-  @argumentDefinitions(first: { type: "Int!" }, after: { type: "DateTime" })
   @refetchable(queryName: "ShowUserPostsPaginationQuery") {
-    myPostsConnection(first: $first, after: $after)
+    myPostsConnection(keyword: $keyword, first: $first, after: $after)
       @connection(key: "ShowUserPosts_myPostsConnection") {
       edges {
         node {
@@ -44,7 +43,6 @@ const ShowUserPosts = () => {
       {" "}
       <SectionTitle>게시글 목록</SectionTitle>
       <ManageDataList
-        dataTableName={MODAL_NAME.CREATE_POST}
         loadNext={loadNext}
         hasNext={hasNext}
         isLoadingNext={isLoadingNext}
