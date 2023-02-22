@@ -10,7 +10,7 @@ import { BoxIcon } from "../icons/Icons";
 interface ISelect {
   icon: IconProp;
   label: string;
-  register: UseFormRegisterReturn<string>;
+  register?: UseFormRegisterReturn<string>;
   listName: string;
   list: any;
   errorMessage?: string;

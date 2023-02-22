@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1f63c8756a35187dcb2d06ec5a479bcb>>
+ * @generated SignedSource<<74a3e17d0cd854da927004d881256edf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowUserInfo_user$data = {
+  readonly availableVacation: string;
   readonly email: string;
   readonly id: string;
   readonly isManager: boolean;
@@ -111,6 +112,13 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "availableVacation",
+      "storageKey": null
     }
   ],
   "type": "User",
@@ -118,6 +126,6 @@ return {
 };
 })();
 
-(node as any).hash = "419416e7c76c09578c1d20a3b88d8ac7";
+(node as any).hash = "aa1dc4917de4b8bad93a2a4629adbd03";
 
 export default node;

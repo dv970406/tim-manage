@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9fedae550030eea707a4de75c1ed229c>>
+ * @generated SignedSource<<84c5e369a6ce72b7931c12f96fce6420>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,10 +10,16 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
+export type Orders = {
+  order1?: ReadonlyArray<string> | null;
+  order2?: ReadonlyArray<string> | null;
+  order3?: ReadonlyArray<string> | null;
+};
 export type UsersTablePaginationQuery$variables = {
   after?: any | null;
   first: number;
   keyword?: string | null;
+  orders?: Orders | null;
 };
 export type UsersTablePaginationQuery$data = {
   readonly " $fragmentSpreads": FragmentRefs<"UsersTable_user">;
@@ -39,6 +45,11 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "keyword"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "orders"
   }
 ],
 v1 = [
@@ -56,6 +67,11 @@ v1 = [
     "kind": "Variable",
     "name": "keyword",
     "variableName": "keyword"
+  },
+  {
+    "kind": "Variable",
+    "name": "orders",
+    "variableName": "orders"
   }
 ],
 v2 = {
@@ -251,7 +267,8 @@ return {
         "alias": null,
         "args": (v1/*: any*/),
         "filters": [
-          "keyword"
+          "keyword",
+          "orders"
         ],
         "handle": "connection",
         "key": "UsersTable_getUsers",
@@ -261,16 +278,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e24f3d950c2a531050dcd901b50d54ee",
+    "cacheID": "00b895492f791d25bca8461f853743a1",
     "id": null,
     "metadata": {},
     "name": "UsersTablePaginationQuery",
     "operationKind": "query",
-    "text": "query UsersTablePaginationQuery(\n  $after: DateTime\n  $first: Int!\n  $keyword: String\n) {\n  ...UsersTable_user_3aPcrv\n}\n\nfragment UserTableContent_user on User {\n  id\n  name\n  email\n  isManager\n  position {\n    id\n    position\n  }\n  team {\n    id\n    team\n  }\n  joinDate\n  createdAt\n}\n\nfragment UsersTable_user_3aPcrv on Query {\n  getUsers(keyword: $keyword, first: $first, after: $after) {\n    ok\n    error\n    edges {\n      node {\n        ...UserTableContent_user\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query UsersTablePaginationQuery(\n  $after: DateTime\n  $first: Int!\n  $keyword: String\n  $orders: Orders\n) {\n  ...UsersTable_user_2FAYjm\n}\n\nfragment UserTableContent_user on User {\n  id\n  name\n  email\n  isManager\n  position {\n    id\n    position\n  }\n  team {\n    id\n    team\n  }\n  joinDate\n  createdAt\n}\n\nfragment UsersTable_user_2FAYjm on Query {\n  getUsers(keyword: $keyword, orders: $orders, first: $first, after: $after) {\n    ok\n    error\n    edges {\n      node {\n        ...UserTableContent_user\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "a0a7993be2ab8243bcfd4556299a2f6c";
+(node as any).hash = "4e331daac6caf4af4c86a6af8cd1f524";
 
 export default node;

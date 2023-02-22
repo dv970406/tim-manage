@@ -7,7 +7,7 @@ import { environment } from "../client";
 import {
   CreateUserMutation,
   CreateUserMutation$variables,
-} from "../user/__generated__/CreateUserMutation.graphql";
+} from "./__generated__/CreateUserMutation.graphql";
 
 const createUserQuery = graphql`
   mutation CreateUserMutation(

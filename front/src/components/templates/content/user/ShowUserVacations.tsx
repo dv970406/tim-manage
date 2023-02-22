@@ -2,9 +2,11 @@ import { graphql } from "babel-plugin-relay/macro";
 import React from "react";
 import { useFragment, usePaginationFragment } from "react-relay";
 import { useOutletContext } from "react-router-dom";
+import { RowBox } from "../../../atomics/boxes/Boxes";
 import { MainText } from "../../../atomics/typographys/texts";
 import Table from "../../../molecules/tables/Table";
 import UserVacationTableContent from "../../../organisms/content/user/UserVacationTableContent";
+import { ManageDataTable } from "../../../organisms/shared/ManageDataList";
 import { ShowUserVacationsPaginationQuery } from "./__generated__/ShowUserVacationsPaginationQuery.graphql";
 import { ShowUserVacations_vacation$key } from "./__generated__/ShowUserVacations_vacation.graphql";
 
@@ -35,6 +37,9 @@ const ShowUserVacations = () => {
       myVacationsConnection: { edges },
       availableVacation,
     },
+    hasNext,
+    loadNext,
+    isLoadingNext,
   } = usePaginationFragment<
     ShowUserVacationsPaginationQuery,
     ShowUserVacations_vacation$key
@@ -42,9 +47,16 @@ const ShowUserVacations = () => {
 
   return (
     <>
-      <MainText>남은 휴가 : {availableVacation}</MainText>
-
-      <Table headers={["시작일", "종료일", "기간", "반차여부", "승인여부"]}>
+      <RowBox style={{ justifyContent: "space-between" }}>
+        <MainText>사용 연차 목록</MainText>
+        <MainText>남은 휴가 : {availableVacation}</MainText>
+      </RowBox>
+      <ManageDataTable
+        hasNext={hasNext}
+        loadNext={loadNext}
+        isLoadingNext={isLoadingNext}
+        headers={["시작일", "종료일", "기간", "반차여부", "승인여부"]}
+      >
         {edges?.map(
           (vacation) =>
             vacation?.node && (
@@ -54,7 +66,7 @@ const ShowUserVacations = () => {
               />
             )
         )}
-      </Table>
+      </ManageDataTable>
     </>
   );
 };

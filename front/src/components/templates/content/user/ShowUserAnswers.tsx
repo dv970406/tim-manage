@@ -3,6 +3,7 @@ import React from "react";
 import { useFragment, usePaginationFragment } from "react-relay";
 import { useOutletContext } from "react-router-dom";
 import { GapBox, ListBox } from "../../../atomics/boxes/Boxes";
+import { SectionTitle } from "../../../atomics/typographys/titles";
 import SurveyTableContent from "../../../organisms/content/survey/SurveyTableContent";
 import { ManageDataList } from "../../../organisms/shared/ManageDataList";
 import { ShowUserAnswers_answer$key } from "./__generated__/ShowUserAnswers_answer.graphql";
@@ -43,22 +44,26 @@ const ShowUserAnswers = () => {
   } = usePaginationFragment(showUserAnswersFragment, user);
 
   return (
-    <ManageDataList
-      hasNext={hasNext}
-      isLoadingNext={isLoadingNext}
-      loadNext={loadNext}
-      refetch={refetch}
-    >
-      {edges.map(
-        (answer) =>
-          answer?.node?.id && (
-            <SurveyTableContent
-              key={answer.node.id}
-              survey={answer.node.survey}
-            />
-          )
-      )}
-    </ManageDataList>
+    <>
+      <SectionTitle>답변 목록</SectionTitle>
+
+      <ManageDataList
+        hasNext={hasNext}
+        isLoadingNext={isLoadingNext}
+        loadNext={loadNext}
+        refetch={refetch}
+      >
+        {edges.map(
+          (answer) =>
+            answer?.node?.id && (
+              <SurveyTableContent
+                key={answer.node.id}
+                survey={answer.node.survey}
+              />
+            )
+        )}
+      </ManageDataList>
+    </>
   );
 };
 

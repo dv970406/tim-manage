@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<20bf9b3708d5a17bdec3badb6e40b58c>>
+ * @generated SignedSource<<85223977bfe69fe1238cfdec5a7c3375>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -364,6 +364,13 @@ return {
               },
               {
                 "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "availableVacation",
+                "storageKey": null
+              },
+              {
+                "alias": null,
                 "args": (v9/*: any*/),
                 "concreteType": "PostsConnection",
                 "kind": "LinkedField",
@@ -605,13 +612,6 @@ return {
               },
               {
                 "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "availableVacation",
-                "storageKey": null
-              },
-              {
-                "alias": null,
                 "args": (v21/*: any*/),
                 "concreteType": "VacationsConnection",
                 "kind": "LinkedField",
@@ -725,12 +725,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d4f1379b4cbe188fabe53830b974358d",
+    "cacheID": "d5ba8f6bccd37fc4e74e73ecafccd822",
     "id": null,
     "metadata": {},
     "name": "GetMyAllInfoQuery",
     "operationKind": "query",
-    "text": "query GetMyAllInfoQuery(\n  $keyword: String\n  $first: Int!\n  $after: DateTime\n) {\n  getMyInfo {\n    ok\n    error\n    user {\n      ...ShowUserInfo_user\n      ...ShowUserPosts_post\n      ...ShowUserComments_comment\n      ...ShowUserLikes_like\n      ...ShowUserAnswers_answer\n      ...ShowUserVacations_vacation\n      id\n    }\n  }\n}\n\nfragment PostTableContent_post on Post {\n  id\n  title\n  user {\n    id\n    name\n  }\n  isLiked\n  countLikes\n  countComments\n  createdAt\n}\n\nfragment ShowUserAnswers_answer on User {\n  myAnswersConnection(keyword: $keyword, first: $first, after: $after) {\n    edges {\n      node {\n        id\n        results\n        survey {\n          ...SurveyTableContent_survey\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment ShowUserComments_comment on User {\n  myCommentsConnection(keyword: $keyword, first: $first, after: $after) {\n    edges {\n      node {\n        id\n        post {\n          ...PostTableContent_post\n          id\n        }\n        content\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment ShowUserInfo_user on User {\n  id\n  name\n  email\n  isManager\n  joinDate\n  position {\n    id\n    position\n  }\n  team {\n    id\n    team\n  }\n}\n\nfragment ShowUserLikes_like on User {\n  myLikesConnection(keyword: $keyword, first: $first, after: $after) {\n    edges {\n      node {\n        id\n        post {\n          ...PostTableContent_post\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment ShowUserPosts_post on User {\n  myPostsConnection(keyword: $keyword, first: $first, after: $after) {\n    edges {\n      node {\n        ...PostTableContent_post\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment ShowUserVacations_vacation on User {\n  availableVacation\n  myVacationsConnection(first: $first, after: $after) {\n    edges {\n      node {\n        ...UserVacationTableContent_vacation\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment SurveyTableContent_survey on Survey {\n  id\n  surveyTitle\n  isAnonymous\n  user {\n    id\n    name\n  }\n  isAnswered\n  createdAt\n}\n\nfragment UserVacationTableContent_vacation on Vacation {\n  id\n  startDate\n  endDate\n  duration\n  isHalf\n  confirmed {\n    byCeo\n    byManager\n    byLeader\n  }\n}\n"
+    "text": "query GetMyAllInfoQuery(\n  $keyword: String\n  $first: Int!\n  $after: DateTime\n) {\n  getMyInfo {\n    ok\n    error\n    user {\n      ...ShowUserInfo_user\n      ...ShowUserPosts_post\n      ...ShowUserComments_comment\n      ...ShowUserLikes_like\n      ...ShowUserAnswers_answer\n      ...ShowUserVacations_vacation\n      id\n    }\n  }\n}\n\nfragment PostTableContent_post on Post {\n  id\n  title\n  user {\n    id\n    name\n  }\n  isLiked\n  countLikes\n  countComments\n  createdAt\n}\n\nfragment ShowUserAnswers_answer on User {\n  myAnswersConnection(keyword: $keyword, first: $first, after: $after) {\n    edges {\n      node {\n        id\n        results\n        survey {\n          ...SurveyTableContent_survey\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment ShowUserComments_comment on User {\n  myCommentsConnection(keyword: $keyword, first: $first, after: $after) {\n    edges {\n      node {\n        id\n        post {\n          ...PostTableContent_post\n          id\n        }\n        content\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment ShowUserInfo_user on User {\n  id\n  name\n  email\n  isManager\n  joinDate\n  position {\n    id\n    position\n  }\n  team {\n    id\n    team\n  }\n  availableVacation\n}\n\nfragment ShowUserLikes_like on User {\n  myLikesConnection(keyword: $keyword, first: $first, after: $after) {\n    edges {\n      node {\n        id\n        post {\n          ...PostTableContent_post\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment ShowUserPosts_post on User {\n  myPostsConnection(keyword: $keyword, first: $first, after: $after) {\n    edges {\n      node {\n        ...PostTableContent_post\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment ShowUserVacations_vacation on User {\n  availableVacation\n  myVacationsConnection(first: $first, after: $after) {\n    edges {\n      node {\n        ...UserVacationTableContent_vacation\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment SurveyTableContent_survey on Survey {\n  id\n  surveyTitle\n  isAnonymous\n  user {\n    id\n    name\n  }\n  isAnswered\n  createdAt\n}\n\nfragment UserVacationTableContent_vacation on Vacation {\n  id\n  startDate\n  endDate\n  duration\n  isHalf\n  confirmed {\n    byCeo\n    byManager\n    byLeader\n  }\n}\n"
   }
 };
 })();

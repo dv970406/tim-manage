@@ -1,6 +1,13 @@
-import { faCirclePlus, faSearch } from "@fortawesome/pro-solid-svg-icons";
+import {
+  faCirclePlus,
+  faSearch,
+  faUsers,
+  faWaffle,
+} from "@fortawesome/pro-solid-svg-icons";
 import React, { ChangeEventHandler, MouseEventHandler, useState } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
+import { useGetPositions } from "../../../client/position/GetPositions.client";
+import { useGetTeams } from "../../../client/team/GetTeams.client";
 import { useGetMyInfo } from "../../../client/user/GetMyInfo.client";
 import { theme } from "../../../css/theme";
 import { DB_TABLE } from "../../../utils/constants/share.constant";
@@ -8,6 +15,7 @@ import { openModal } from "../../../utils/modal/controlModal";
 import { RowBox } from "../../atomics/boxes/Boxes";
 import { ButtonIcon } from "../buttons/Buttons";
 import { BoxIcon } from "../icons/Icons";
+import Select from "./Select";
 
 interface IDataToolBar {
   onChange: ChangeEventHandler<HTMLInputElement>;
@@ -58,6 +66,7 @@ const DataToolBar = ({ onChange, dataTableName }: IDataToolBar) => {
           style={{ width: "100%" }}
         />
       </div>
+
       {myInfo?.isManager &&
         dataTableName &&
         dataTableName !== DB_TABLE.POST && (

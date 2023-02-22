@@ -45,7 +45,7 @@ const SideBar = ({ isManager }: ISideBar) => {
             <div>
               <NavLink to="/" end>
                 {/* 이 부분 추후 이미지로 변경 */}
-                <MainText>팀솔루션</MainText>
+                <img src="/logo.png" width={190} height={30} />
               </NavLink>
             </div>
             <div className="sidebar_close">

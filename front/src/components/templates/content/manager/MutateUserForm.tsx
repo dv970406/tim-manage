@@ -19,13 +19,13 @@ import { useGetTeams } from "../../../../client/team/GetTeams.client";
 import Select from "../../../molecules/inputs/Select";
 import { useGetManagerUser } from "../../../../client/manager/GetManagerUser.client";
 import { Radio } from "../../../molecules/inputs/Radio";
-import { POSITION_CEO } from "../../../../utils/constants/user.constant";
 import { isInt } from "@fullcalendar/core/internal";
 import { useDeleteUser } from "../../../../client/manager/DeleteUser.client";
 import { useUpdateUser } from "../../../../client/manager/UpdateUser.client";
 import { Checkbox } from "../../../molecules/inputs/Checkbox";
 import FormTitle from "../../../molecules/form/FormTitle";
 import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
+import { POSITION } from "../../../../utils/constants/user.constant";
 
 interface IMutateUserFormValue {
   name: string;
@@ -124,7 +124,7 @@ const MutateUserForm = ({
       positionId,
       teamId,
       availableVacation,
-      ...(myPosition === POSITION_CEO && { isManager }),
+      ...(myPosition === POSITION["대표"] && { isManager }),
     });
   };
   const { deleteUserMutation, deleteUserLoading } = useDeleteUser();
@@ -253,7 +253,7 @@ const MutateUserForm = ({
         }
       />
 
-      {myPosition === POSITION_CEO && (
+      {myPosition === POSITION["대표"] && (
         <Checkbox
           id="isManager"
           defaultChecked={isManager}

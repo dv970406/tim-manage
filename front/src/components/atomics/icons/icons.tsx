@@ -18,7 +18,7 @@ export const Icon = ({ color, icon, size, animation }: IIcon) => {
       size={size || "sm"}
       style={{
         ...animation,
-        transition: "color 0.3s",
+        transition: "all 0.3s",
       }}
     />
   );

@@ -20,6 +20,7 @@ const showUserInfoFragment = graphql`
       id
       team
     }
+    availableVacation
   }
 `;
 const ShowUserInfo = () => {

@@ -38,17 +38,12 @@ const updateVacationQuery = graphql`
         user {
           id
           name
+          availableVacation
         }
       }
     }
   }
 `;
-
-// export const useCreateVacation = () => {
-//   const mutate = useMutation<CreateVacationMutation>(createVacationQuery);
-
-//   return mutate;
-// };
 
 export const useUpdateVacation = () => {
   const [updateVacationLoading, setIsLoading] = useState(false);
@@ -65,6 +60,16 @@ export const useUpdateVacation = () => {
         if (!ok) {
           return alert(error);
         }
+      },
+      updater: (proxyStore, { updateVacation }) => {
+        const myInfoRecord = proxyStore.get("client:root:getMyInfo");
+
+        const updatedAvailableVacationRecord = proxyStore
+          .getRootField("updateVacation")
+          .getLinkedRecord("vacation")
+          .getLinkedRecord("user");
+
+        myInfoRecord?.setLinkedRecord(updatedAvailableVacationRecord, "user");
       },
     });
   };

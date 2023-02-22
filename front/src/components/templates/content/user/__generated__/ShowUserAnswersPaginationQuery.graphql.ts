@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<91b1e7a1c8758595da08e7760a084df8>>
+ * @generated SignedSource<<8371bd1679a0ee3294eac3064ec86fad>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,7 +17,9 @@ export type ShowUserAnswersPaginationQuery$variables = {
   keyword?: string | null;
 };
 export type ShowUserAnswersPaginationQuery$data = {
-  readonly node: string;
+  readonly node: {
+    readonly " $fragmentSpreads": FragmentRefs<"ShowUserAnswers_answer">;
+  };
 };
 export type ShowUserAnswersPaginationQuery = {
   response: ShowUserAnswersPaginationQuery$data;
@@ -52,7 +54,21 @@ v4 = [
     "variableName": "id"
   }
 ],
-v5 = [
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v7 = [
   {
     "kind": "Variable",
     "name": "after",
@@ -68,14 +84,7 @@ v5 = [
     "name": "keyword",
     "variableName": "keyword"
   }
-],
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
+];
 return {
   "fragment": {
     "argumentDefinitions": [
@@ -91,7 +100,7 @@ return {
       {
         "alias": null,
         "args": (v4/*: any*/),
-        "concreteType": "ID",
+        "concreteType": null,
         "kind": "LinkedField",
         "name": "node",
         "plural": false,
@@ -122,17 +131,19 @@ return {
       {
         "alias": null,
         "args": (v4/*: any*/),
-        "concreteType": "ID",
+        "concreteType": null,
         "kind": "LinkedField",
         "name": "node",
         "plural": false,
         "selections": [
+          (v5/*: any*/),
+          (v6/*: any*/),
           {
             "kind": "InlineFragment",
             "selections": [
               {
                 "alias": null,
-                "args": (v5/*: any*/),
+                "args": (v7/*: any*/),
                 "concreteType": "AnswersConnection",
                 "kind": "LinkedField",
                 "name": "myAnswersConnection",
@@ -221,13 +232,7 @@ return {
                             ],
                             "storageKey": null
                           },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "__typename",
-                            "storageKey": null
-                          }
+                          (v5/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -271,7 +276,7 @@ return {
               },
               {
                 "alias": null,
-                "args": (v5/*: any*/),
+                "args": (v7/*: any*/),
                 "filters": [
                   "keyword"
                 ],
@@ -279,8 +284,7 @@ return {
                 "key": "ShowUserAnswers_myAnswersConnection",
                 "kind": "LinkedHandle",
                 "name": "myAnswersConnection"
-              },
-              (v6/*: any*/)
+              }
             ],
             "type": "User",
             "abstractKey": null
@@ -291,12 +295,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a719d2e23e6f7ee17293aa38ada34691",
+    "cacheID": "c0a2340298d14f0f402aa26e294bada0",
     "id": null,
     "metadata": {},
     "name": "ShowUserAnswersPaginationQuery",
     "operationKind": "query",
-    "text": "query ShowUserAnswersPaginationQuery(\n  $after: DateTime\n  $first: Int!\n  $keyword: String\n  $id: ID!\n) {\n  node(id: $id) {\n    ...ShowUserAnswers_answer\n  }\n}\n\nfragment ShowUserAnswers_answer on User {\n  myAnswersConnection(keyword: $keyword, first: $first, after: $after) {\n    edges {\n      node {\n        id\n        results\n        survey {\n          ...SurveyTableContent_survey\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment SurveyTableContent_survey on Survey {\n  id\n  surveyTitle\n  isAnonymous\n  user {\n    id\n    name\n  }\n  isAnswered\n  createdAt\n}\n"
+    "text": "query ShowUserAnswersPaginationQuery(\n  $after: DateTime\n  $first: Int!\n  $keyword: String\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...ShowUserAnswers_answer\n    id\n  }\n}\n\nfragment ShowUserAnswers_answer on User {\n  myAnswersConnection(keyword: $keyword, first: $first, after: $after) {\n    edges {\n      node {\n        id\n        results\n        survey {\n          ...SurveyTableContent_survey\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment SurveyTableContent_survey on Survey {\n  id\n  surveyTitle\n  isAnonymous\n  user {\n    id\n    name\n  }\n  isAnswered\n  createdAt\n}\n"
   }
 };
 })();

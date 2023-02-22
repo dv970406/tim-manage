@@ -3,7 +3,7 @@ import React, { Dispatch, SetStateAction } from "react";
 import { useFragment } from "react-relay";
 import { useNavigate } from "react-router-dom";
 import { theme } from "../../../../css/theme";
-import { POSITION_CEO } from "../../../../utils/constants/user.constant";
+import { POSITION } from "../../../../utils/constants/user.constant";
 import { MainText } from "../../../atomics/typographys/texts";
 import { Td, Tr } from "../../../molecules/tables/Td";
 import { ManagerUserTableContent_user$key } from "../../../templates/content/manager/__generated__/ManagerUserTableContent_user.graphql";
@@ -42,10 +42,10 @@ const ManagerUserTableContent = ({
   const tableContentData = useFragment(managerUserTableContentFragment, user);
 
   // 관리자인 사람과 대표님은 리스트에서 제외, 단 대표님이라면 모두 보이게함
-  if (myPosition === POSITION_CEO) {
+  if (myPosition === POSITION["대표"]) {
   } else if (
     tableContentData?.isManager ||
-    tableContentData?.position?.position === POSITION_CEO
+    tableContentData?.position?.position === POSITION["대표"]
   ) {
     return <></>;
   }

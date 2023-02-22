@@ -5,7 +5,7 @@ import { environment } from "../client";
 import {
   DeletePositionMutation,
   DeletePositionMutation$variables,
-} from "../position/__generated__/DeletePositionMutation.graphql";
+} from "./__generated__/DeletePositionMutation.graphql";
 
 const deletePositionQuery = graphql`
   mutation DeletePositionMutation($id: ID!) {

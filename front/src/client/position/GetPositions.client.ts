@@ -1,6 +1,6 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useLazyLoadQuery } from "react-relay";
-import { POSITION_CEO } from "../../utils/constants/user.constant";
+import { POSITION } from "../../utils/constants/user.constant";
 import { GetPositionsQuery } from "./__generated__/GetPositionsQuery.graphql";
 
 const getPositionsQuery = graphql`
@@ -26,7 +26,7 @@ export const useGetPositions = () => {
   }
 
   const positionsExceptCeo = positions?.filter(
-    (position) => position.position !== POSITION_CEO
+    (position) => position.position !== POSITION["대표"]
   );
-  return { positionsExceptCeo };
+  return { positionsExceptCeo, positions };
 };

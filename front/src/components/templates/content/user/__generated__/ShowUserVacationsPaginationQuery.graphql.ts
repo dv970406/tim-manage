@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a107ce3669331eb3e59769adcd29d2bf>>
+ * @generated SignedSource<<847bba7b1f2ff8b8b3e0109fb6f3044a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,9 @@ export type ShowUserVacationsPaginationQuery$variables = {
   id: string;
 };
 export type ShowUserVacationsPaginationQuery$data = {
-  readonly node: string;
+  readonly node: {
+    readonly " $fragmentSpreads": FragmentRefs<"ShowUserVacations_vacation">;
+  };
 };
 export type ShowUserVacationsPaginationQuery = {
   response: ShowUserVacationsPaginationQuery$data;
@@ -48,7 +50,21 @@ v1 = [
     "variableName": "id"
   }
 ],
-v2 = [
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v4 = [
   {
     "kind": "Variable",
     "name": "after",
@@ -59,14 +75,7 @@ v2 = [
     "name": "first",
     "variableName": "first"
   }
-],
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -77,7 +86,7 @@ return {
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "ID",
+        "concreteType": null,
         "kind": "LinkedField",
         "name": "node",
         "plural": false,
@@ -103,11 +112,13 @@ return {
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "ID",
+        "concreteType": null,
         "kind": "LinkedField",
         "name": "node",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
+          (v3/*: any*/),
           {
             "kind": "InlineFragment",
             "selections": [
@@ -120,7 +131,7 @@ return {
               },
               {
                 "alias": null,
-                "args": (v2/*: any*/),
+                "args": (v4/*: any*/),
                 "concreteType": "VacationsConnection",
                 "kind": "LinkedField",
                 "name": "myVacationsConnection",
@@ -203,13 +214,7 @@ return {
                             ],
                             "storageKey": null
                           },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "__typename",
-                            "storageKey": null
-                          }
+                          (v2/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -253,14 +258,13 @@ return {
               },
               {
                 "alias": null,
-                "args": (v2/*: any*/),
+                "args": (v4/*: any*/),
                 "filters": null,
                 "handle": "connection",
                 "key": "ShowUserVacations_myVacationsConnection",
                 "kind": "LinkedHandle",
                 "name": "myVacationsConnection"
-              },
-              (v3/*: any*/)
+              }
             ],
             "type": "User",
             "abstractKey": null
@@ -271,12 +275,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8290cc56d2bc4993e9a23b8aa59a0cfa",
+    "cacheID": "aa8a4de0fc6b5a4f5e42c42eac8dc2a3",
     "id": null,
     "metadata": {},
     "name": "ShowUserVacationsPaginationQuery",
     "operationKind": "query",
-    "text": "query ShowUserVacationsPaginationQuery(\n  $after: DateTime\n  $first: Int!\n  $id: ID!\n) {\n  node(id: $id) {\n    ...ShowUserVacations_vacation\n  }\n}\n\nfragment ShowUserVacations_vacation on User {\n  availableVacation\n  myVacationsConnection(first: $first, after: $after) {\n    edges {\n      node {\n        ...UserVacationTableContent_vacation\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment UserVacationTableContent_vacation on Vacation {\n  id\n  startDate\n  endDate\n  duration\n  isHalf\n  confirmed {\n    byCeo\n    byManager\n    byLeader\n  }\n}\n"
+    "text": "query ShowUserVacationsPaginationQuery(\n  $after: DateTime\n  $first: Int!\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...ShowUserVacations_vacation\n    id\n  }\n}\n\nfragment ShowUserVacations_vacation on User {\n  availableVacation\n  myVacationsConnection(first: $first, after: $after) {\n    edges {\n      node {\n        ...UserVacationTableContent_vacation\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment UserVacationTableContent_vacation on Vacation {\n  id\n  startDate\n  endDate\n  duration\n  isHalf\n  confirmed {\n    byCeo\n    byManager\n    byLeader\n  }\n}\n"
   }
 };
 })();

@@ -5,7 +5,7 @@ import { environment } from "../client";
 import {
   CreatePositionMutation,
   CreatePositionMutation$variables,
-} from "../position/__generated__/CreatePositionMutation.graphql";
+} from "./__generated__/CreatePositionMutation.graphql";
 
 const createPositionQuery = graphql`
   mutation CreatePositionMutation($position: String!) {

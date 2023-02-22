@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ab80c6366ff7cb01319f9bbeb41f0a24>>
+ * @generated SignedSource<<0ed0c8285b7dff1e8d5407486f1afefa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,7 +17,9 @@ export type ShowUserPostsPaginationQuery$variables = {
   keyword?: string | null;
 };
 export type ShowUserPostsPaginationQuery$data = {
-  readonly node: string;
+  readonly node: {
+    readonly " $fragmentSpreads": FragmentRefs<"ShowUserPosts_post">;
+  };
 };
 export type ShowUserPostsPaginationQuery = {
   response: ShowUserPostsPaginationQuery$data;
@@ -52,7 +54,21 @@ v4 = [
     "variableName": "id"
   }
 ],
-v5 = [
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v7 = [
   {
     "kind": "Variable",
     "name": "after",
@@ -68,14 +84,7 @@ v5 = [
     "name": "keyword",
     "variableName": "keyword"
   }
-],
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
+];
 return {
   "fragment": {
     "argumentDefinitions": [
@@ -91,7 +100,7 @@ return {
       {
         "alias": null,
         "args": (v4/*: any*/),
-        "concreteType": "ID",
+        "concreteType": null,
         "kind": "LinkedField",
         "name": "node",
         "plural": false,
@@ -122,17 +131,19 @@ return {
       {
         "alias": null,
         "args": (v4/*: any*/),
-        "concreteType": "ID",
+        "concreteType": null,
         "kind": "LinkedField",
         "name": "node",
         "plural": false,
         "selections": [
+          (v5/*: any*/),
+          (v6/*: any*/),
           {
             "kind": "InlineFragment",
             "selections": [
               {
                 "alias": null,
-                "args": (v5/*: any*/),
+                "args": (v7/*: any*/),
                 "concreteType": "PostsConnection",
                 "kind": "LinkedField",
                 "name": "myPostsConnection",
@@ -209,13 +220,7 @@ return {
                             "name": "createdAt",
                             "storageKey": null
                           },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "__typename",
-                            "storageKey": null
-                          }
+                          (v5/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -259,7 +264,7 @@ return {
               },
               {
                 "alias": null,
-                "args": (v5/*: any*/),
+                "args": (v7/*: any*/),
                 "filters": [
                   "keyword"
                 ],
@@ -267,8 +272,7 @@ return {
                 "key": "ShowUserPosts_myPostsConnection",
                 "kind": "LinkedHandle",
                 "name": "myPostsConnection"
-              },
-              (v6/*: any*/)
+              }
             ],
             "type": "User",
             "abstractKey": null
@@ -279,12 +283,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2e2b15d204b4a767c21bc546c58bb5f4",
+    "cacheID": "7d13bbb23ed74a19eb9519fce02bc680",
     "id": null,
     "metadata": {},
     "name": "ShowUserPostsPaginationQuery",
     "operationKind": "query",
-    "text": "query ShowUserPostsPaginationQuery(\n  $after: DateTime\n  $first: Int!\n  $keyword: String\n  $id: ID!\n) {\n  node(id: $id) {\n    ...ShowUserPosts_post\n  }\n}\n\nfragment PostTableContent_post on Post {\n  id\n  title\n  user {\n    id\n    name\n  }\n  isLiked\n  countLikes\n  countComments\n  createdAt\n}\n\nfragment ShowUserPosts_post on User {\n  myPostsConnection(keyword: $keyword, first: $first, after: $after) {\n    edges {\n      node {\n        ...PostTableContent_post\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n"
+    "text": "query ShowUserPostsPaginationQuery(\n  $after: DateTime\n  $first: Int!\n  $keyword: String\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...ShowUserPosts_post\n    id\n  }\n}\n\nfragment PostTableContent_post on Post {\n  id\n  title\n  user {\n    id\n    name\n  }\n  isLiked\n  countLikes\n  countComments\n  createdAt\n}\n\nfragment ShowUserPosts_post on User {\n  myPostsConnection(keyword: $keyword, first: $first, after: $after) {\n    edges {\n      node {\n        ...PostTableContent_post\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n"
   }
 };
 })();

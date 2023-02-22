@@ -131,7 +131,7 @@ const SelectUsers = ({ prevAttendees, setAttendeesId }: ISelectUsers) => {
 
 export default SelectUsers;
 
-const selectStyles: StylesConfig<unknown, true, GroupBase<unknown>> = {
+export const selectStyles: StylesConfig<unknown, true, GroupBase<unknown>> = {
   input: (styles) => ({
     ...styles,
     color: theme.colors.white,

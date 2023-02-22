@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<19b6afbbf34d148a1f343011f4b6961b>>
+ * @generated SignedSource<<6a14bd5746a433b6ca7e6ec6ee0554ac>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,10 +10,16 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
+export type Orders = {
+  order1?: ReadonlyArray<string> | null;
+  order2?: ReadonlyArray<string> | null;
+  order3?: ReadonlyArray<string> | null;
+};
 export type GetUsersQuery$variables = {
   after?: any | null;
   first: number;
   keyword?: string | null;
+  orders?: Orders | null;
 };
 export type GetUsersQuery$data = {
   readonly " $fragmentSpreads": FragmentRefs<"UsersTable_user">;
@@ -39,7 +45,12 @@ v2 = {
   "kind": "LocalArgument",
   "name": "keyword"
 },
-v3 = [
+v3 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "orders"
+},
+v4 = [
   {
     "kind": "Variable",
     "name": "after",
@@ -54,9 +65,14 @@ v3 = [
     "kind": "Variable",
     "name": "keyword",
     "variableName": "keyword"
+  },
+  {
+    "kind": "Variable",
+    "name": "orders",
+    "variableName": "orders"
   }
 ],
-v4 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -68,14 +84,15 @@ return {
     "argumentDefinitions": [
       (v0/*: any*/),
       (v1/*: any*/),
-      (v2/*: any*/)
+      (v2/*: any*/),
+      (v3/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
     "name": "GetUsersQuery",
     "selections": [
       {
-        "args": (v3/*: any*/),
+        "args": (v4/*: any*/),
         "kind": "FragmentSpread",
         "name": "UsersTable_user"
       }
@@ -87,6 +104,7 @@ return {
   "operation": {
     "argumentDefinitions": [
       (v2/*: any*/),
+      (v3/*: any*/),
       (v1/*: any*/),
       (v0/*: any*/)
     ],
@@ -95,7 +113,7 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v4/*: any*/),
         "concreteType": "GetUsersOutput",
         "kind": "LinkedField",
         "name": "getUsers",
@@ -131,7 +149,7 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v4/*: any*/),
+                  (v5/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -161,7 +179,7 @@ return {
                     "name": "position",
                     "plural": false,
                     "selections": [
-                      (v4/*: any*/),
+                      (v5/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -180,7 +198,7 @@ return {
                     "name": "team",
                     "plural": false,
                     "selections": [
-                      (v4/*: any*/),
+                      (v5/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -255,9 +273,10 @@ return {
       },
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v4/*: any*/),
         "filters": [
-          "keyword"
+          "keyword",
+          "orders"
         ],
         "handle": "connection",
         "key": "UsersTable_getUsers",
@@ -267,16 +286,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "73f9eeff55dde60ee6d662c460971622",
+    "cacheID": "a134c54aad414b493d677039f1216e82",
     "id": null,
     "metadata": {},
     "name": "GetUsersQuery",
     "operationKind": "query",
-    "text": "query GetUsersQuery(\n  $keyword: String\n  $first: Int!\n  $after: DateTime\n) {\n  ...UsersTable_user_3aPcrv\n}\n\nfragment UserTableContent_user on User {\n  id\n  name\n  email\n  isManager\n  position {\n    id\n    position\n  }\n  team {\n    id\n    team\n  }\n  joinDate\n  createdAt\n}\n\nfragment UsersTable_user_3aPcrv on Query {\n  getUsers(keyword: $keyword, first: $first, after: $after) {\n    ok\n    error\n    edges {\n      node {\n        ...UserTableContent_user\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query GetUsersQuery(\n  $keyword: String\n  $orders: Orders\n  $first: Int!\n  $after: DateTime\n) {\n  ...UsersTable_user_2FAYjm\n}\n\nfragment UserTableContent_user on User {\n  id\n  name\n  email\n  isManager\n  position {\n    id\n    position\n  }\n  team {\n    id\n    team\n  }\n  joinDate\n  createdAt\n}\n\nfragment UsersTable_user_2FAYjm on Query {\n  getUsers(keyword: $keyword, orders: $orders, first: $first, after: $after) {\n    ok\n    error\n    edges {\n      node {\n        ...UserTableContent_user\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "00cbce2d1a2094df779308cbe92c67db";
+(node as any).hash = "5ad801d93fa4c63b7651f8c58591c3a1";
 
 export default node;

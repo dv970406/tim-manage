@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e3c818dbdbd3f70eebfe8bc6078e0bbc>>
+ * @generated SignedSource<<37a2fd2d4d3a026d3deea3fc4161ab4a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,6 +31,7 @@ export type UpdateVacationMutation$data = {
       readonly isHalf: boolean;
       readonly startDate: any;
       readonly user: {
+        readonly availableVacation: string;
         readonly id: string;
         readonly name: string;
       };
@@ -204,6 +205,13 @@ v5 = [
                 "kind": "ScalarField",
                 "name": "name",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "availableVacation",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -243,16 +251,16 @@ return {
     "selections": (v5/*: any*/)
   },
   "params": {
-    "cacheID": "428abce268c315e287ddf1aa535e9275",
+    "cacheID": "defd4cc054de1ca67f043189d13aab5e",
     "id": null,
     "metadata": {},
     "name": "UpdateVacationMutation",
     "operationKind": "mutation",
-    "text": "mutation UpdateVacationMutation(\n  $vacationId: ID!\n  $startDate: DateTime\n  $endDate: DateTime\n  $isHalf: Boolean\n) {\n  updateVacation(input: {vacationId: $vacationId, startDate: $startDate, endDate: $endDate, isHalf: $isHalf}) {\n    ok\n    error\n    vacation {\n      id\n      startDate\n      endDate\n      confirmed {\n        byCeo\n        byLeader\n        byManager\n      }\n      isHalf\n      duration\n      user {\n        id\n        name\n      }\n    }\n  }\n}\n"
+    "text": "mutation UpdateVacationMutation(\n  $vacationId: ID!\n  $startDate: DateTime\n  $endDate: DateTime\n  $isHalf: Boolean\n) {\n  updateVacation(input: {vacationId: $vacationId, startDate: $startDate, endDate: $endDate, isHalf: $isHalf}) {\n    ok\n    error\n    vacation {\n      id\n      startDate\n      endDate\n      confirmed {\n        byCeo\n        byLeader\n        byManager\n      }\n      isHalf\n      duration\n      user {\n        id\n        name\n        availableVacation\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "0e2318aaa13cc2752bd6d67dbbcafc44";
+(node as any).hash = "1c4b0d41daf949f686f18eee91058031";
 
 export default node;

@@ -3,9 +3,10 @@ import { usePaginationFragment } from "react-relay";
 import { useGetMyInfo } from "../../../../client/user/GetMyInfo.client";
 import { ManageDataList } from "../../../organisms/shared/ManageDataList";
 import UserTableContent from "../../../organisms/content/user/UserTableContent";
-import { GetUsersPaginationQuery } from "./__generated__/GetUsersPaginationQuery.graphql";
 import { UsersTable_user$key } from "./__generated__/UsersTable_user.graphql";
-
+import OrderUsers from "../../../organisms/content/user/OrderUsers";
+import { UsersTablePaginationQuery } from "./__generated__/UsersTablePaginationQuery.graphql";
+import { ColumnBox } from "../../../atomics/boxes/Boxes";
 interface IUsersTable {
   users: UsersTable_user$key;
 }
@@ -14,11 +15,12 @@ const getUsersFragment = graphql`
   fragment UsersTable_user on Query
   @argumentDefinitions(
     keyword: { type: "String" }
+    orders: { type: "Orders" }
     first: { type: "Int!" }
     after: { type: "DateTime" }
   )
   @refetchable(queryName: "UsersTablePaginationQuery") {
-    getUsers(keyword: $keyword, first: $first, after: $after)
+    getUsers(keyword: $keyword, orders: $orders, first: $first, after: $after)
       @connection(key: "UsersTable_getUsers") {
       ok
       error
@@ -47,13 +49,14 @@ const UsersTable = ({ users }: IUsersTable) => {
     isLoadingNext,
     refetch,
     hasNext,
-  } = usePaginationFragment<GetUsersPaginationQuery, UsersTable_user$key>(
+  } = usePaginationFragment<UsersTablePaginationQuery, UsersTable_user$key>(
     getUsersFragment,
     users
   );
 
   return (
     <>
+      <OrderUsers refetch={refetch} />
       <ManageDataList
         dataTableName="create-user"
         refetch={refetch}

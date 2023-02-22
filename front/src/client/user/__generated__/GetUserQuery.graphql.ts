@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<911803b9727dd8a2bd2ac980e865148f>>
+ * @generated SignedSource<<3b6335931dca0c1385f5411583b90380>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -387,12 +387,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2f578c5ac04e0d602e1da78fc42fd7cf",
+    "cacheID": "95ab6d510f938f18ff744bdc676f8905",
     "id": null,
     "metadata": {},
     "name": "GetUserQuery",
     "operationKind": "query",
-    "text": "query GetUserQuery(\n  $userId: ID!\n  $first: Int!\n  $after: DateTime\n) {\n  getUser(userId: $userId) {\n    ok\n    error\n    user {\n      ...ShowUserInfo_user\n      ...ShowUserVacations_vacation\n      id\n    }\n  }\n}\n\nfragment ShowUserInfo_user on User {\n  id\n  name\n  email\n  isManager\n  joinDate\n  position {\n    id\n    position\n  }\n  team {\n    id\n    team\n  }\n}\n\nfragment ShowUserVacations_vacation on User {\n  availableVacation\n  myVacationsConnection(first: $first, after: $after) {\n    edges {\n      node {\n        ...UserVacationTableContent_vacation\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment UserVacationTableContent_vacation on Vacation {\n  id\n  startDate\n  endDate\n  duration\n  isHalf\n  confirmed {\n    byCeo\n    byManager\n    byLeader\n  }\n}\n"
+    "text": "query GetUserQuery(\n  $userId: ID!\n  $first: Int!\n  $after: DateTime\n) {\n  getUser(userId: $userId) {\n    ok\n    error\n    user {\n      ...ShowUserInfo_user\n      ...ShowUserVacations_vacation\n      id\n    }\n  }\n}\n\nfragment ShowUserInfo_user on User {\n  id\n  name\n  email\n  isManager\n  joinDate\n  position {\n    id\n    position\n  }\n  team {\n    id\n    team\n  }\n  availableVacation\n}\n\nfragment ShowUserVacations_vacation on User {\n  availableVacation\n  myVacationsConnection(first: $first, after: $after) {\n    edges {\n      node {\n        ...UserVacationTableContent_vacation\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment UserVacationTableContent_vacation on Vacation {\n  id\n  startDate\n  endDate\n  duration\n  isHalf\n  confirmed {\n    byCeo\n    byManager\n    byLeader\n  }\n}\n"
   }
 };
 })();

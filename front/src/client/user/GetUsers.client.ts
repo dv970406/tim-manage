@@ -3,9 +3,19 @@ import { PreloadedQuery, usePreloadedQuery } from "react-relay";
 import { GetUsersQuery } from "./__generated__/GetUsersQuery.graphql";
 
 export const getUsersQuery = graphql`
-  query GetUsersQuery($keyword: String, $first: Int!, $after: DateTime) {
+  query GetUsersQuery(
+    $keyword: String
+    $orders: Orders
+    $first: Int!
+    $after: DateTime
+  ) {
     ...UsersTable_user
-      @arguments(keyword: $keyword, first: $first, after: $after)
+      @arguments(
+        keyword: $keyword
+        orders: $orders
+        first: $first
+        after: $after
+      )
   }
 `;
 

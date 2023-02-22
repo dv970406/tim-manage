@@ -10,7 +10,8 @@ import { useState } from "react";
 import { useFragment } from "react-relay";
 import { useNavigate } from "react-router-dom";
 import { theme } from "../../../../css/theme";
-import { POSITION_CEO } from "../../../../utils/constants/user.constant";
+import { POSITION } from "../../../../utils/constants/user.constant";
+import { getPositionIcon, getTeamIcon } from "../../../../utils/shared";
 import { getKoreanDateFormat } from "../../../../utils/time/time";
 import {
   RowBox,
@@ -106,13 +107,9 @@ const UserTableContent = ({ user, isManager }: IUserTableContent) => {
             }}
           >
             <BoxIcon
-              icon={
-                tableContentData.position.position === POSITION_CEO
-                  ? faCrown
-                  : faBackpack
-              }
+              icon={getPositionIcon(tableContentData.position.position)}
               color={
-                tableContentData.position.position === POSITION_CEO
+                tableContentData.position.position === POSITION["대표"]
                   ? "gold"
                   : undefined
               }
@@ -127,7 +124,7 @@ const UserTableContent = ({ user, isManager }: IUserTableContent) => {
               alignItems: "center",
             }}
           >
-            <BoxIcon icon={faUsers} />
+            <BoxIcon icon={getTeamIcon(tableContentData.team.team)} />
             <MainText>{tableContentData.team.team}</MainText>
           </div>
         </div>
