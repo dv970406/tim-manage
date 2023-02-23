@@ -36,41 +36,58 @@ export class UserResolver {
 
   @ResolveField((type) => AnswersConnection)
   myAnswersConnection(
-    @Parent() user: User,
+    @Parent() loggedInUser: User,
     @Args() answersConnectionInput: ConnectionInput,
   ): Promise<AnswersConnection> {
-    return this.userService.myAnswersConnection(user, answersConnectionInput);
+    return this.userService.myAnswersConnection(
+      loggedInUser,
+      answersConnectionInput,
+    );
   }
   @ResolveField((type) => VacationsConnection)
   myVacationsConnection(
-    @Parent() user: User,
+    @Parent() loggedInUser: User,
     @Args() vacationsConnectionInput: ConnectionInput,
   ): Promise<VacationsConnection> {
     return this.userService.myVacationsConnection(
-      user,
+      loggedInUser,
       vacationsConnectionInput,
     );
   }
   @ResolveField((type) => PostsConnection)
   myPostsConnection(
-    @Parent() user: User,
+    @Parent() loggedInUser: User,
     @Args() postsConnectionInput: ConnectionInput,
   ): Promise<PostsConnection> {
-    return this.userService.myPostsConnection(user, postsConnectionInput);
+    return this.userService.myPostsConnection(
+      loggedInUser,
+      postsConnectionInput,
+    );
   }
   @ResolveField((type) => LikesConnection)
   myLikesConnection(
-    @Parent() user: User,
+    @Parent() loggedInUser: User,
     @Args() likesConnectionInput: ConnectionInput,
   ): Promise<LikesConnection> {
-    return this.userService.myLikesConnection(user, likesConnectionInput);
+    return this.userService.myLikesConnection(
+      loggedInUser,
+      likesConnectionInput,
+    );
   }
   @ResolveField((type) => CommentsConnection)
   myCommentsConnection(
-    @Parent() user: User,
+    @Parent() loggedInUser: User,
     @Args() commentsConnectionInput: ConnectionInput,
   ): Promise<CommentsConnection> {
-    return this.userService.myCommentsConnection(user, commentsConnectionInput);
+    return this.userService.myCommentsConnection(
+      loggedInUser,
+      commentsConnectionInput,
+    );
+  }
+
+  @ResolveField((type) => Boolean)
+  isLeader(@Parent() loggedInUser: User): Promise<boolean> {
+    return this.userService.isLeader(loggedInUser);
   }
 
   @Query((returns) => GetUsersOutput)

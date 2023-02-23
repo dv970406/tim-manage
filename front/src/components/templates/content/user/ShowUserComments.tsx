@@ -42,7 +42,6 @@ const ShowUserComments = () => {
     isLoadingNext,
     refetch,
   } = usePaginationFragment(showUserCommentsFragment, user);
-
   return (
     <>
       {" "}

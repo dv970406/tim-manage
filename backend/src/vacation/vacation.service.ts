@@ -82,6 +82,7 @@ export class VacationService {
         relations: {
           user: {
             team: true,
+            position: true,
           },
         },
       });
@@ -109,6 +110,7 @@ export class VacationService {
       }
       // 아래 조건 순서대로 해야 manager이면서 leader인 경우 leader로 우선 인식되게 할 수 있음
       else if (loggedInUser.team.leaderId === loggedInUser.id && !amICeo) {
+        // 리더인 경우 본인 팀의 팀원들의 미승인 휴가만 조회할 수 있게함
         unConfirmedByMeVacations = unConfirmedByMeVacations.filter(
           (vacation) =>
             vacation.user.team.leaderId === loggedInUser.id &&
@@ -319,6 +321,12 @@ export class VacationService {
         userId: loggedInUser.id,
       });
       findVacation.user = targetUser;
+
+      // 수정시 모든 승인 해제
+      findVacation.confirmed.byCeo = false;
+      findVacation.confirmed.byLeader = false;
+      findVacation.confirmed.byManager = false;
+
       const updatedVacation = await this.vacationRepo.save(findVacation);
 
       return {

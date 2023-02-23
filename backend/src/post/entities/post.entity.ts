@@ -18,7 +18,7 @@ import { Like } from './like.entity';
 @InputType('PostInputType', { isAbstract: true })
 @Entity()
 @ObjectType({ implements: Node })
-export class Post extends CoreEntity {
+export class Post extends CoreEntity implements Node {
   @Column()
   @Field((type) => String)
   @IsString()
@@ -43,4 +43,9 @@ export class Post extends CoreEntity {
   @OneToMany((type) => Comment, (comment) => comment.post)
   @Field((type) => [Comment])
   comments: Comment[];
+
+  // Define isTypeOf function to specify concrete type
+  static isTypeOf(obj: any): obj is Post {
+    return obj instanceof Post;
+  }
 }

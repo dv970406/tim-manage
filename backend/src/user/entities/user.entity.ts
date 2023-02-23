@@ -42,7 +42,7 @@ import { Node } from 'src/core/dtos/node.dto';
 @InputType('UserInputType', { isAbstract: true })
 @Entity()
 @ObjectType({ implements: Node })
-export class User extends CoreEntity {
+export class User extends CoreEntity implements Node {
   @Column({ default: false })
   @Field((type) => Boolean, { defaultValue: false })
   @IsBoolean()
@@ -143,4 +143,9 @@ export class User extends CoreEntity {
   @OneToMany((type) => Answer, (answer) => answer.user)
   @Field((type) => [Answer])
   answers: Answer[];
+
+  // Define isTypeOf function to specify concrete type
+  static isTypeOf(obj: any): obj is User {
+    return obj instanceof User;
+  }
 }

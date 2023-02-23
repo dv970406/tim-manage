@@ -238,6 +238,7 @@ export class UserService {
     loggedInUser: User,
     { keyword, first, after }: ConnectionInput,
   ): Promise<CommentsConnection> {
+    console.log('keywordzzz : ', keyword);
     const [findMyComments, totalCount] = await this.commentRepo.findAndCount({
       order: { createdAt: 'DESC' },
       where: {
@@ -266,6 +267,13 @@ export class UserService {
             },
             ...(after && { createdAt: LessThan(after) }),
           },
+          {
+            user: {
+              id: loggedInUser.id,
+            },
+            content: Like(`%${keyword}%`),
+            ...(after && { createdAt: LessThan(after) }),
+          },
         ],
       }),
       relations: {
@@ -282,6 +290,7 @@ export class UserService {
     }));
     const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
 
+    console.log('edges : ', edges);
     return {
       edges,
       pageInfo: {
@@ -289,6 +298,16 @@ export class UserService {
         hasNextPage: totalCount > first,
       },
     };
+  }
+
+  async isLeader({ id }: User): Promise<boolean> {
+    return this.teamRepo.exist({
+      where: {
+        leader: {
+          id,
+        },
+      },
+    });
   }
 
   async getUsers({
