@@ -56,7 +56,7 @@ const TeamManagement = ({ managerTeamsQueryReference }: ITeamManagement) => {
           />
         )}
       </Section>
-      <GapBox style={{ width: "40%", gap: theme.spacing.xl }}>
+      <GapBox style={{ width: "40%" }}>
         <Section>
           <Suspense fallback="hihihihi">
             <CreateTeamForm />

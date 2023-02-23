@@ -7,11 +7,18 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import {
   DateRangeInput,
   DateSelectArg,
+  EventApi,
   EventClickArg,
   EventDropArg,
   EventInput,
 } from "@fullcalendar/core";
-import React, { Dispatch, SetStateAction, useContext, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import {
   filteringSchedulesButtons,
   renderEventContent,
@@ -23,7 +30,6 @@ import {
   MODAL,
   SCHEDULES,
 } from "../../../../utils/constants/schedule.constant";
-import { ModalContext } from "../../../../utils/contexts/modal.context";
 import "./FullCalendarStyles.css";
 import {
   ampmFormat,
@@ -51,7 +57,9 @@ export default function VacationCalendar({
 }: IVacationCalendar) {
   // const [modalState, setModalState] = useRecoilState(modalStateRecoil);
   // const { currentModal, setCurrentModal } = useContext(ModalContext);
+  const [events, setEvents] = useState(schedules);
 
+  console.log(schedules);
   const [selectedDate, setSelectedDate] = useState<DateRangeInput>({
     start: "",
     end: "",
@@ -99,6 +107,23 @@ export default function VacationCalendar({
     const scheduleId = eventResizeInfo.event.id;
     if (!isMine || start < now || !scheduleId) return;
 
+    const isReally = window.confirm(
+      "수정 시 모든 승인이 해제됩니다. 진행하시겠습니까?"
+    );
+    if (!isReally) {
+      // 이 로직 진짜 중요함
+      // 단순히 setEvents(schedules)로 하면 리액트가 변화를 감지하지 못해서 취소 전 원래 상태로 안돌려보냄
+      console.log("resize");
+      setEvents((prev) => {
+        const copied = [...prev];
+        const targetIndex = copied.findIndex((data) => data.id === scheduleId);
+        const target = copied.find((data) => data.id === scheduleId);
+        copied.splice(targetIndex, 1);
+        return [...copied, { ...target }];
+      });
+      return;
+    }
+
     if (type === SCHEDULES.VACATION) {
       if (updateVacationLoading || !start || !end) return;
 
@@ -124,6 +149,7 @@ export default function VacationCalendar({
     const { type, isMine, isHalf } = eventDropInfo.event.extendedProps;
     const scheduleId = eventDropInfo.event.id;
     const { start, end } = eventDropInfo.event._instance?.range!;
+
     if (!isMine || !scheduleId) return;
 
     if (start < new Date()) {
@@ -131,8 +157,41 @@ export default function VacationCalendar({
         "과거시점으로 이동하게 되면 더이상 수정할 수 없습니다. 진행하시겠습니까?"
       );
 
-      if (!isOk) return;
+      if (!isOk) {
+        // 이 로직 진짜 중요함
+        // 단순히 setEvents(schedules)로 하면 리액트가 변화를 감지하지 못해서 취소 전 원래 상태로 안돌려보냄
+        console.log("resize");
+        setEvents((prev) => {
+          const copied = [...prev];
+          const targetIndex = copied.findIndex(
+            (data) => data.id === scheduleId
+          );
+          const target = copied.find((data) => data.id === scheduleId);
+          copied.splice(targetIndex, 1);
+          return [...copied, { ...target }];
+        });
+        return;
+      }
     }
+
+    const isReally = window.confirm(
+      "수정 시 모든 승인이 해제됩니다. 진행하시겠습니까?"
+    );
+    if (!isReally) {
+      // 이 로직 진짜 중요함
+      // 단순히 setEvents(schedules)로 하면 리액트가 변화를 감지하지 못해서 취소 전 원래 상태로 안돌려보냄
+      console.log("update");
+
+      setEvents((prev) => {
+        const copied = [...prev];
+        const targetIndex = copied.findIndex((data) => data.id === scheduleId);
+        const target = copied.find((data) => data.id === scheduleId);
+        copied.splice(targetIndex, 1);
+        return [...copied, { ...target }];
+      });
+      return;
+    }
+
     if (type === SCHEDULES.VACATION) {
       if (updateVacationLoading || !start || !end) return;
 
@@ -154,6 +213,9 @@ export default function VacationCalendar({
     }
   };
 
+  useEffect(() => {
+    setEvents(schedules);
+  }, [schedules]);
   return (
     <>
       <FullCalendar
@@ -185,7 +247,7 @@ export default function VacationCalendar({
         slotDuration={"00:20"}
         // select, dateClick 역할은 비슷한데 select는 start,end를 제공해주고 dateClick은 클릭한 그 date만 제공해줌
         select={handleDateSelect}
-        events={schedules}
+        events={events}
         eventContent={renderEventContent} // custom render function
         eventClick={handleEventClick}
         eventResize={handleEventResize}

@@ -1,7 +1,11 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { PreloadedQuery, useQueryLoader } from "react-relay";
 import { GetManagerSurveysQuery } from "../../client/manager/__generated__/GetManagerSurveysQuery.graphql";
-import { GapBox } from "../../components/atomics/boxes/Boxes";
+import {
+  ColumnBox,
+  GapBox,
+  RowBox,
+} from "../../components/atomics/boxes/Boxes";
 import { Section } from "../../components/atomics/sections/sections";
 import ManagerSurveysTable from "../../components/templates/content/manager/ManagerSurveysTable";
 import ShowShortAnswers from "../../components/templates/content/manager/ShowShortAnswers";
@@ -63,7 +67,7 @@ const SurveyManagement = ({
         </Suspense>
       </Section>
 
-      <GapBox style={{ width: "30%", gap: theme.spacing.xl }}>
+      <GapBox style={{ width: "30%" }}>
         <Section style={{ height: "50%" }}>
           <ManagerSurveysTable
             surveys={surveys}

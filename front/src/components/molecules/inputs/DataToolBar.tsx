@@ -67,16 +67,15 @@ const DataToolBar = ({ onChange, dataTableName }: IDataToolBar) => {
         />
       </div>
 
-      {myInfo?.isManager &&
-        dataTableName &&
-        dataTableName !== DB_TABLE.POST && (
-          <ButtonIcon
-            onClick={handleModal}
-            color={theme.bgColors.blue}
-            icon={faCirclePlus}
-            size="2xl"
-          />
-        )}
+      {(dataTableName === "create-post" ||
+        (myInfo?.isManager && dataTableName)) && (
+        <ButtonIcon
+          onClick={handleModal}
+          color={theme.bgColors.blue}
+          icon={faCirclePlus}
+          size="2xl"
+        />
+      )}
     </RowBox>
   );
 };

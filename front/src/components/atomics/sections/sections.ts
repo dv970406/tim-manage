@@ -1,9 +1,7 @@
 import { keyframes, Theme } from "@emotion/react";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
-import { theme } from "../../../css/theme";
-// [576, 768, 992, 1200]
-// const mq = (size: string) => `@media (min-width: ${theme.breakpoints[size]}px)`;
+import { maxMq, minMq } from "../../../utils/css/media-query";
 
 export const BodySection = styled.div(({ theme }) => ({
   backgroundImage: `url("/background.png")`,
@@ -14,33 +12,34 @@ export const BodySection = styled.div(({ theme }) => ({
   gap: theme.spacing.lg,
 }));
 
-export const SideBarSection = styled.aside(({ theme }) => ({
-  display: "none",
+export const SideBarSection = styled.aside`
+  display: none;
+  ${minMq[3]} {
+    display: flex;
+    width: 275;
+    .sidebar_close {
+      display: none;
+    }
+    position: static;
+  }
 
-  "@media (min-width: 1200px)": {
-    display: "flex",
-    width: 275,
-    "& .sidebar_close": {
-      display: "none",
-    },
-    position: "static",
-  },
-  "@media (max-width: 1200px)": {
-    "&.open": {
-      display: "flex",
-      width: 275,
-      position: "absolute",
-      overflow: "auto",
-      zIndex: 5,
-    },
-  },
-
-  background: theme.bgColors.sectionGradient,
-  flexDirection: "column",
-  alignItems: "center",
-  padding: theme.spacing.md,
-  borderRadius: theme.borderRadius.lg,
-}));
+  ${maxMq[3]} {
+    &.open {
+      display: flex;
+      width: 275;
+      position: absolute;
+      overflow: auto;
+      z-index: 5;
+    }
+  }
+  ${({ theme }) => ({
+    background: theme.bgColors.sectionGradient,
+    flexDirection: "column",
+    alignItems: "center",
+    padding: theme.spacing.md,
+    borderRadius: theme.borderRadius.lg,
+  })}
+`;
 
 export const MainSection = styled.main(({ theme }) => ({
   width: "100%",
@@ -49,26 +48,27 @@ export const MainSection = styled.main(({ theme }) => ({
   gap: theme.spacing.lg,
 }));
 
-export const HeaderSection = styled.header(({ theme }) => ({
-  "@media (min-width: 1200px)": {
-    "& .hamburger_menu": {
-      display: "none",
-    },
-  },
-  "@media (max-width: 1200px)": {
-    "& .hamburger_menu": {
-      display: "none",
-      "&.open_menu": {
-        display: "block",
-      },
-    },
-  },
+export const HeaderSection = styled.header`
+  ${minMq[3]} {
+    .hamburger_menu {
+      display: none;
+    }
+  }
 
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  width: "100%",
-}));
+  ${maxMq[3]} {
+    .hamburger_menu {
+      display: none;
+    }
+    .open_menu {
+      display: block;
+    }
+  }
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`;
 
 export const ContentSection = styled.article(({ theme }) => ({
   display: "flex",

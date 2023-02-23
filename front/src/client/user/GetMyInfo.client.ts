@@ -15,6 +15,7 @@ export const getMyInfoQuery = graphql`
         name
         email
         isManager
+        isLeader
         team {
           id
           team

@@ -6,7 +6,7 @@ import UserTableContent from "../../../organisms/content/user/UserTableContent";
 import { UsersTable_user$key } from "./__generated__/UsersTable_user.graphql";
 import OrderUsers from "../../../organisms/content/user/OrderUsers";
 import { UsersTablePaginationQuery } from "./__generated__/UsersTablePaginationQuery.graphql";
-import { ColumnBox } from "../../../atomics/boxes/Boxes";
+import { ColumnBox, GapBox } from "../../../atomics/boxes/Boxes";
 interface IUsersTable {
   users: UsersTable_user$key;
 }
@@ -55,7 +55,7 @@ const UsersTable = ({ users }: IUsersTable) => {
   );
 
   return (
-    <>
+    <GapBox>
       <OrderUsers refetch={refetch} />
       <ManageDataList
         dataTableName="create-user"
@@ -75,7 +75,7 @@ const UsersTable = ({ users }: IUsersTable) => {
             )
         )}
       </ManageDataList>
-    </>
+    </GapBox>
   );
 };
 

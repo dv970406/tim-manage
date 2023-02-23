@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetMyInfo } from "../client/user/GetMyInfo.client";
+import CenterBox from "../components/molecules/boxes/CenterBox";
 import LoginForm from "../components/organisms/login/LoginForm";
 import Body from "../components/templates/Body";
 

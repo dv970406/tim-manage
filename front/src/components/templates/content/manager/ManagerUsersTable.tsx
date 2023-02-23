@@ -6,6 +6,7 @@ import Table from "../../../molecules/tables/Table";
 import ManagerUserTableContent from "../../../organisms/content/manager/ManagerUserTableContent";
 import { GetManagerUsersPaginationQuery } from "./__generated__/GetManagerUsersPaginationQuery.graphql";
 import { ManagerUsersTable_user$key } from "./__generated__/ManagerUsersTable_user.graphql";
+import { ScrollBox } from "../../../atomics/boxes/Boxes";
 
 interface IManagerUsersTable {
   clickedUserId: string;
@@ -56,7 +57,7 @@ const ManagerUsersTable = ({
   >(getManagerUsersFragment, users);
 
   return (
-    <>
+    <ScrollBox>
       <ManageDataTable
         headers={["이름", "직책", "팀"]}
         loadNext={loadNext}
@@ -76,7 +77,7 @@ const ManagerUsersTable = ({
             )
         )}
       </ManageDataTable>
-    </>
+    </ScrollBox>
   );
 };
 

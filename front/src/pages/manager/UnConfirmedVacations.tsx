@@ -7,6 +7,7 @@ import {
 } from "../../client/manager/GetUnConfirmedByMeVacations.client";
 import { GetUnConfirmedByMeVacationsQuery } from "../../client/manager/__generated__/GetUnConfirmedByMeVacationsQuery.graphql";
 import { Section } from "../../components/atomics/sections/sections";
+import CenterBox from "../../components/molecules/boxes/CenterBox";
 import { EndSubmitButton } from "../../components/molecules/buttons/Buttons";
 import UnConfirmedVacationsTable from "../../components/templates/content/manager/UnConfirmedVacationsTable";
 
@@ -48,16 +49,8 @@ const UnConfirmedVacations = ({
   if (!unConfirmedByMeVacations) return <></>;
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        height: "100%",
-      }}
-    >
-      <Section style={{ width: "60%", height: "60%" }}>
+    <CenterBox>
+      <Section>
         {unConfirmedByMeVacations && (
           <UnConfirmedVacationsTable
             unConfirmedVacations={unConfirmedByMeVacations}
@@ -66,7 +59,7 @@ const UnConfirmedVacations = ({
           />
         )}
       </Section>
-    </div>
+    </CenterBox>
   );
 };
 

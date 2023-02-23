@@ -10,18 +10,37 @@ import {
   faUser,
 } from "@fortawesome/pro-solid-svg-icons";
 
-import { useState } from "react";
-import { GapList, HorizontalDivider, RowBox } from "../atomics/boxes/Boxes";
+import { useEffect, useState } from "react";
+import {
+  GapBox,
+  GapList,
+  HorizontalDivider,
+  RowBox,
+} from "../atomics/boxes/Boxes";
 import { SideBarContext } from "../../utils/contexts/sidebar.context";
 import { ButtonIcon } from "../molecules/buttons/Buttons";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { MainText } from "../atomics/typographys/texts";
 import { theme } from "../../css/theme";
+import { useGetMyInfo } from "../../client/user/GetMyInfo.client";
 
-interface ISideBar {
-  isManager?: boolean;
-}
-const SideBar = ({ isManager }: ISideBar) => {
+interface ISideBar {}
+const SideBar = ({}: ISideBar) => {
+  const { myInfo } = useGetMyInfo();
+
+  const navigate = useNavigate();
+
+  // manager 페이지일 경우 manager가 아니면 되돌려보내기
+  const { pathname } = useLocation();
+  const isManagerOnly = pathname.includes("manager");
+
+  useEffect(() => {
+    if (isManagerOnly && !myInfo?.isManager) {
+      alert("관리자만 접근할 수 있습니다.");
+      navigate("/");
+    }
+  }, []);
+
   const [clickedTabs, setClickedTabs] = useState<string[]>([]);
 
   const handleMenuClose = () => {
@@ -31,6 +50,7 @@ const SideBar = ({ isManager }: ISideBar) => {
     const hamburgerMenu = document.querySelector(".hamburger_menu");
     hamburgerMenu?.classList.add("open");
   };
+  console.log(myInfo);
   return (
     <SideBarContext.Provider value={{ clickedTabs, setClickedTabs }}>
       <SideBarSection className="sidebar">
@@ -42,19 +62,20 @@ const SideBar = ({ isManager }: ISideBar) => {
               padding: theme.spacing.md,
             }}
           >
-            <div>
+            <GapBox style={{ alignItems: "center" }}>
               <NavLink to="/" end>
                 {/* 이 부분 추후 이미지로 변경 */}
-                <img src="/logo.png" width={190} height={30} />
+                <img src="/logo.png" width={170} height={30} />
               </NavLink>
-            </div>
+            </GapBox>
+            {/* sidebar_close class는 media query로 화면 크기에 따라 나타나거나 사라짐 */}
             <div className="sidebar_close">
               <ButtonIcon onClick={handleMenuClose} icon={faClose} />
             </div>
           </RowBox>
           <HorizontalDivider />
           <GapList>
-            {isManager && (
+            {myInfo?.isManager && (
               <NavTabButton
                 tabName="관리자"
                 icon={faQ}
@@ -68,6 +89,13 @@ const SideBar = ({ isManager }: ISideBar) => {
                   { name: "팀 관리", path: "/manager/team" },
                   { name: "식단 추가", path: "/manager/meal/create" },
                 ]}
+              />
+            )}
+            {myInfo?.isLeader && (
+              <NavTabButton
+                tabName="리더"
+                icon={faQ}
+                lists={[{ name: "미승인 휴가", path: "/manager/vacation" }]}
               />
             )}
             <NavTabButton

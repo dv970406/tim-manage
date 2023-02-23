@@ -93,6 +93,7 @@ const Home = ({
         <Section
           style={{
             height: "50%",
+            maxHeight: "50%",
             overflow: "auto",
           }}
         >
@@ -101,6 +102,7 @@ const Home = ({
         <Section
           style={{
             height: "50%",
+            maxHeight: "50%",
             overflow: "auto",
           }}
         >

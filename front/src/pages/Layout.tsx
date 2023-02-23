@@ -18,24 +18,9 @@ export default function Layout() {
 }
 
 function TemplatesLayout() {
-  const { myInfo } = useGetMyInfo();
-
-  const navigate = useNavigate();
-
-  // manager 페이지일 경우 manager가 아니면 되돌려보내기
-  const { pathname } = useLocation();
-  const isManagerOnly = pathname.includes("manager");
-
-  useEffect(() => {
-    if (isManagerOnly && !myInfo?.isManager) {
-      alert("관리자만 접근할 수 있습니다.");
-      navigate("/");
-    }
-  }, []);
-
   return (
     <Body>
-      <SideBar isManager={myInfo?.isManager} />
+      <SideBar />
       <Main>
         <Header />
 

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d50e01a93b3e7bc611e72ec71509f163>>
+ * @generated SignedSource<<53fa30fb19d0b10e2ef168db37237ca6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,7 @@ export type GetMyInfoQuery$data = {
     readonly user: {
       readonly email: string;
       readonly id: string;
+      readonly isLeader: boolean;
       readonly isManager: boolean;
       readonly name: string;
       readonly position: {
@@ -113,6 +114,13 @@ v2 = [
               {
                 "alias": null,
                 "args": null,
+                "kind": "ScalarField",
+                "name": "isLeader",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
                 "concreteType": "Team",
                 "kind": "LinkedField",
                 "name": "team",
@@ -175,16 +183,16 @@ return {
     "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "2fdb86d0dbc6941e78623bed2f9578bb",
+    "cacheID": "85156f3562342c90b3655aed15be046f",
     "id": null,
     "metadata": {},
     "name": "GetMyInfoQuery",
     "operationKind": "query",
-    "text": "query GetMyInfoQuery(\n  $skip: Boolean!\n) {\n  getMyInfo @skip(if: $skip) {\n    ok\n    error\n    user {\n      id\n      name\n      email\n      isManager\n      team {\n        id\n        team\n      }\n      position {\n        id\n        position\n      }\n    }\n  }\n}\n"
+    "text": "query GetMyInfoQuery(\n  $skip: Boolean!\n) {\n  getMyInfo @skip(if: $skip) {\n    ok\n    error\n    user {\n      id\n      name\n      email\n      isManager\n      isLeader\n      team {\n        id\n        team\n      }\n      position {\n        id\n        position\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "4e2d6550ef96edc3f62539c64c3d4925";
+(node as any).hash = "a51158f7b31941e8b838a0b1116003d8";
 
 export default node;

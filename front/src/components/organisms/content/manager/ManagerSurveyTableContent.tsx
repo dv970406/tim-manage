@@ -31,16 +31,16 @@ const ManagerSurveyTableContent = ({
     survey
   );
 
-  const clickedSurvey = clickedSurveyId === tableContentData.id;
+  const clickedSurvey = clickedSurveyId === tableContentData?.id;
   return (
     <Tr
-      onClick={() => setClickedSurveyId(tableContentData.id)}
+      onClick={() => setClickedSurveyId(tableContentData?.id)}
       style={{
         ...(clickedSurvey && { backgroundColor: theme.bgColors.purple }),
       }}
     >
       <Td role="gridcell">
-        <MainText>{tableContentData.surveyTitle}</MainText>
+        <MainText>{tableContentData?.surveyTitle}</MainText>
       </Td>
     </Tr>
   );

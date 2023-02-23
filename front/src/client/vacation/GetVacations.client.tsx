@@ -71,7 +71,9 @@ export const useGetVacations = (
 
         // fullCalendar 라이브러리의 형식을 맞춰주기 위해 9시간을 더해줌
         const start = new Date(vacation.startDate);
-        const end = +new Date(vacation.endDate) + NINE_HOURS_TO_MILLISEC;
+        const end = new Date(
+          +new Date(vacation.endDate) + NINE_HOURS_TO_MILLISEC
+        );
         const now = new Date();
 
         let backgroundColor;

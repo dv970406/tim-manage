@@ -37,3 +37,13 @@ th[role="presentation"] {
     rgba(10, 14, 35, 0.49) 76.65%
   );
 }
+
+/* calendar header 미디어 쿼리 */
+.fc-toolbar-chunk:not(:nth-child(2)) {
+  display: none;
+}
+@media (min-width: 992px) {
+  .fc-toolbar-chunk:not(:nth-child(2)) {
+    display: block;
+  }
+}

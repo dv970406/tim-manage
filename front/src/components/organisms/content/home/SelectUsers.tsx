@@ -12,6 +12,7 @@ import { usePaginationFragment } from "react-relay";
 import { SelectUsersPaginationQuery } from "./__generated__/SelectUsersPaginationQuery.graphql";
 import { SelectUsers_user$key } from "./__generated__/SelectUsers_user.graphql";
 import { PAGINATION_LOAD_COUNT } from "../../../../utils/constants/share.constant";
+import { userSelectStyles } from "../../../../utils/css/select";
 
 export interface IAttendee {
   readonly id: string;
@@ -120,7 +121,7 @@ const SelectUsers = ({ prevAttendees, setAttendeesId }: ISelectUsers) => {
         placeholder="참석할 인원을 골라주세요."
         name="attendees"
         options={selectableUsers}
-        styles={selectStyles}
+        styles={userSelectStyles}
         onChange={handleChangeSelect}
         // infinite scroll에 활용
         onMenuScrollToBottom={getMoreData}
@@ -130,59 +131,3 @@ const SelectUsers = ({ prevAttendees, setAttendeesId }: ISelectUsers) => {
 };
 
 export default SelectUsers;
-
-export const selectStyles: StylesConfig<unknown, true, GroupBase<unknown>> = {
-  input: (styles) => ({
-    ...styles,
-    color: theme.colors.white,
-  }),
-  control: (styles, { isFocused, menuIsOpen }) => ({
-    ...styles,
-    backgroundColor: "none",
-    borderColor:
-      isFocused || menuIsOpen ? theme.colors.purple : theme.colors.white,
-    padding: theme.spacing.sm,
-    borderRadius: theme.borderRadius.md,
-    transition: "all 0.2s",
-
-    ":focus": {
-      borderColor: theme.colors.purple,
-    },
-  }),
-
-  option: (styles) => {
-    return {
-      ...styles,
-      backgroundColor: theme.bgColors.section,
-      ":hover": {
-        backgroundColor: theme.bgColors.gray,
-      },
-      ":focus": {
-        borderColor: theme.bgColors.purple,
-      },
-    };
-  },
-  menuList: (styles) => {
-    return {
-      ...styles,
-      backgroundColor: theme.bgColors.section,
-    };
-  },
-  multiValue: (styles) => {
-    return {
-      ...styles,
-      backgroundColor: theme.bgColors.purple,
-    };
-  },
-  multiValueLabel: (styles) => ({
-    ...styles,
-    color: theme.colors.white,
-  }),
-  multiValueRemove: (styles) => ({
-    ...styles,
-    color: theme.colors.white,
-    ":hover": {
-      backgroundColor: theme.hoverColors.purple,
-    },
-  }),
-};

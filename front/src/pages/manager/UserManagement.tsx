@@ -6,6 +6,7 @@ import {
 } from "../../client/manager/GetManagerUsers.client";
 import { GetManagerUsersQuery } from "../../client/manager/__generated__/GetManagerUsersQuery.graphql";
 import { useGetMyInfo } from "../../client/user/GetMyInfo.client";
+import { ScrollBox } from "../../components/atomics/boxes/Boxes";
 import { Section } from "../../components/atomics/sections/sections";
 import CenterBox from "../../components/molecules/boxes/CenterBox";
 import ManagerUsersTable from "../../components/templates/content/manager/ManagerUsersTable";
@@ -45,13 +46,7 @@ const UserManagement = ({ managerUsersQueryReference }: IUserManagement) => {
 
   return (
     <CenterBox>
-      <Section
-        style={{
-          width: "60%",
-          overflow: "auto",
-          gap: theme.spacing.xl,
-        }}
-      >
+      <Section style={{ width: "60%" }}>
         <Suspense fallback="qweewq">
           <ManagerUsersTable
             users={users}
@@ -61,7 +56,6 @@ const UserManagement = ({ managerUsersQueryReference }: IUserManagement) => {
           />
         </Suspense>
       </Section>
-
       <Section style={{ width: "40%" }}>
         <Suspense fallback="hihihihi">
           <MutateUserForm

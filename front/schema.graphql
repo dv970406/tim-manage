@@ -509,6 +509,7 @@ type Mutation {
 
 interface Node {
   id: ID!
+  users(keyword: String!): [User!]!
 }
 
 input Orders {
@@ -536,6 +537,7 @@ type Post implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
+  users(keyword: String!): [User!]!
   title: String!
   content: String!
   user: User!
@@ -594,6 +596,7 @@ type Survey implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
+  users(keyword: String!): [User!]!
   surveyTitle: String!
   isAnonymous: Boolean!
   paragraphs: [SurveyForm!]!
@@ -732,6 +735,7 @@ type User implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
+  users(keyword: String!): [User!]!
   isManager: Boolean!
   email: String!
   password: String!
@@ -753,6 +757,7 @@ type User implements Node {
   myPostsConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): PostsConnection!
   myLikesConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): LikesConnection!
   myCommentsConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): CommentsConnection!
+  isLeader: Boolean!
 }
 
 type UserEdge {

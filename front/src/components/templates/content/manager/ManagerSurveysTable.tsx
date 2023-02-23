@@ -67,7 +67,7 @@ const ManagerSurveysTable = ({
   >(getManagerSurveysFragment, surveys);
   return (
     <>
-      <ScrollBox height="90%">
+      <ScrollBox>
         <ManageDataTable
           headers={["내 설문"]}
           loadNext={loadNext}
@@ -76,7 +76,7 @@ const ManagerSurveysTable = ({
         >
           {edges.map(
             (survey) =>
-              survey && (
+              survey.node && (
                 <ManagerSurveyTableContent
                   key={survey.cursor}
                   survey={survey.node}

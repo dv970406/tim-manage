@@ -3,11 +3,13 @@ import { RefetchFnDynamic } from "react-relay";
 import ReactSelect from "react-select";
 import { useGetPositions } from "../../../../client/position/GetPositions.client";
 import { useGetTeams } from "../../../../client/team/GetTeams.client";
-import { ISelectFormat, selectStyles } from "../home/SelectUsers";
+import { ISelectFormat } from "../home/SelectUsers";
 import { Options } from "react-relay/relay-hooks/useRefetchableFragmentNode";
 import { UsersTable_user$key } from "../../../templates/content/user/__generated__/UsersTable_user.graphql";
 import { UsersTablePaginationQuery } from "../../../templates/content/user/__generated__/UsersTablePaginationQuery.graphql";
-import { RowBox } from "../../../atomics/boxes/Boxes";
+import { GapBox, RowBox } from "../../../atomics/boxes/Boxes";
+import { orderSelectStyles } from "../../../../utils/css/select";
+import { theme } from "../../../../css/theme";
 
 interface IOrderUsers {
   refetch: RefetchFnDynamic<
@@ -45,6 +47,7 @@ const OrderUsers = ({ refetch }: IOrderUsers) => {
 
   const [orders, setOrders] = useState<IOrders | null>(null);
 
+  // order1 : positions
   const handleChangePositions = (selectedPositions: any) => {
     setSelectedPositions(selectedPositions);
     const selectedPositionsId = selectedPositions.map(
@@ -55,6 +58,8 @@ const OrderUsers = ({ refetch }: IOrderUsers) => {
       order1: selectedPositionsId,
     }));
   };
+
+  // order2 : teams
   const handleChangeTeams = (selectedTeams: any) => {
     setSelectedTeams(selectedTeams);
     const selectedTeamsId = selectedTeams.map(
@@ -66,38 +71,39 @@ const OrderUsers = ({ refetch }: IOrderUsers) => {
     }));
   };
 
-  // order1 : positions
-  // order2 : teams
   useEffect(() => {
     if (!orders) return;
     refetch({ orders });
   }, [orders]);
   return (
-    <RowBox>
-      <ReactSelect
-        value={selectedPositions}
-        maxMenuHeight={200}
-        isMulti
-        loadingMessage={() => "직책 정보를 불러오는 중입니다."}
-        noOptionsMessage={() => "존재하지 않는 직책입니다."}
-        placeholder="직책을 골라주세요."
-        name="positions"
-        options={selectablePositions}
-        styles={selectStyles}
-        onChange={handleChangePositions}
-      />
-      <ReactSelect
-        value={selectedTeams}
-        maxMenuHeight={200}
-        isMulti
-        loadingMessage={() => "팀 정보를 불러오는 중입니다."}
-        noOptionsMessage={() => "존재하지 않는 팀입니다."}
-        placeholder="팀을 골라주세요."
-        name="teams"
-        options={selectableTeams}
-        styles={selectStyles}
-        onChange={handleChangeTeams}
-      />
+    <RowBox style={{ justifyContent: "space-between" }}>
+      <div></div>
+      <div style={{ display: "flex", gap: theme.spacing.xl }}>
+        <ReactSelect
+          value={selectedPositions}
+          maxMenuHeight={200}
+          isMulti
+          loadingMessage={() => "직책 정보를 불러오는 중입니다."}
+          noOptionsMessage={() => "존재하지 않는 직책입니다."}
+          placeholder="직책 정렬"
+          name="positions"
+          options={selectablePositions}
+          styles={orderSelectStyles}
+          onChange={handleChangePositions}
+        />
+        <ReactSelect
+          value={selectedTeams}
+          maxMenuHeight={200}
+          isMulti
+          loadingMessage={() => "팀 정보를 불러오는 중입니다."}
+          noOptionsMessage={() => "존재하지 않는 팀입니다."}
+          placeholder="팀 정렬"
+          name="teams"
+          options={selectableTeams}
+          styles={orderSelectStyles}
+          onChange={handleChangeTeams}
+        />
+      </div>
     </RowBox>
   );
 };
