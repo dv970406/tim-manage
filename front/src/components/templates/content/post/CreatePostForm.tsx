@@ -4,6 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useCreatePost } from "../../../../client/post/CreatePost.client";
+import { theme } from "../../../../css/theme";
 import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
 import { closeModal } from "../../../../utils/modal/controlModal";
 import { formats, modules } from "../../../../utils/quill/props";
@@ -77,7 +78,7 @@ const CreatePostForm = () => {
             value={content}
             onChange={handleChange}
             style={{
-              borderRadius: 20,
+              borderRadius: theme.borderRadius.lg,
             }}
             formats={formats}
             modules={modules}

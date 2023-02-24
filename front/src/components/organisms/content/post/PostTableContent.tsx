@@ -49,7 +49,6 @@ const PostTableContent = ({ post, comment }: IPostTableContent) => {
 
   const postCreatedAt = getElaspedDay(tableContentData?.createdAt);
 
-  console.log("tableContentData : ", tableContentData);
   return (
     <ItemBox
       onClick={() => navigate(`/post/${tableContentData?.id}`)}

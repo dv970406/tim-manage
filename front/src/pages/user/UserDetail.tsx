@@ -14,6 +14,7 @@ import { GetUserQuery } from "../../client/user/__generated__/GetUserQuery.graph
 import { RowBox, GapBox } from "../../components/atomics/boxes/Boxes";
 import { Section } from "../../components/atomics/sections/sections";
 import { MainText } from "../../components/atomics/typographys/texts";
+import { CenterFixBox } from "../../components/molecules/boxes/CenterBox";
 import { ButtonIcon } from "../../components/molecules/buttons/Buttons";
 import NavIconButton from "../../components/organisms/header/NavIconButton";
 import { theme } from "../../css/theme";
@@ -58,20 +59,12 @@ const UserDetail = ({ getUserQueryReference }: IUserDetail) => {
           <NavIconButton path="vacation" icon={faV} />
         </RowBox>
       </Section>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-
-          width: "100%",
-          height: "100%",
-        }}
-      >
+      <CenterFixBox>
         <Section style={{ width: "50%" }}>
           <Outlet context={user} />
           {/* ShowUserVacations */}
         </Section>
-      </div>
+      </CenterFixBox>
     </GapBox>
   );
 };

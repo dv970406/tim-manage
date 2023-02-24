@@ -16,22 +16,22 @@ import { RowBox } from "../../atomics/boxes/Boxes";
 import { ButtonIcon } from "../buttons/Buttons";
 import { BoxIcon } from "../icons/Icons";
 import Select from "./Select";
-
 interface IDataToolBar {
   onChange: ChangeEventHandler<HTMLInputElement>;
-  dataTableName?: string;
+  mutateName?: string;
 }
 
-const DataToolBar = ({ onChange, dataTableName }: IDataToolBar) => {
+const DataToolBar = ({ onChange, mutateName }: IDataToolBar) => {
   const [isFocusingSearch, setIsFocusingSearch] = useState(false);
 
   const handleModal: MouseEventHandler<HTMLButtonElement> = (event) => {
-    if (!dataTableName) return;
-    openModal(dataTableName);
+    if (!mutateName) return;
+    openModal(mutateName);
   };
 
   const { myInfo } = useGetMyInfo();
 
+  console.log("mutateName : ", mutateName);
   return (
     <RowBox
       style={{
@@ -67,8 +67,7 @@ const DataToolBar = ({ onChange, dataTableName }: IDataToolBar) => {
         />
       </div>
 
-      {(dataTableName === "create-post" ||
-        (myInfo?.isManager && dataTableName)) && (
+      {(mutateName === "create-post" || myInfo?.isManager) && (
         <ButtonIcon
           onClick={handleModal}
           color={theme.bgColors.blue}

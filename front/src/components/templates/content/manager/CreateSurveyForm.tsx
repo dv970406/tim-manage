@@ -15,7 +15,7 @@ import { useCreateSurvey } from "../../../../client/manager/CreateSurvey.client"
 import { theme } from "../../../../css/theme";
 import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
 import { closeModal } from "../../../../utils/modal/controlModal";
-import { GapBox, RowBox } from "../../../atomics/boxes/Boxes";
+import { GapBox, RowBox, ScrollBox } from "../../../atomics/boxes/Boxes";
 import { Form } from "../../../atomics/form/Form";
 import { ChoiceInput } from "../../../atomics/inputs/inputs";
 import { Section } from "../../../atomics/sections/sections";
@@ -225,50 +225,53 @@ const CreateSurveyForm = ({}: ICreateSurveyForm) => {
           <ButtonIcon onClick={addParagraphs} icon={faPlus} />
           <MainText>추가</MainText>
         </RowBox>
-        {paragraphs?.map((count, paragraphIndex) => (
-          <Section key={paragraphIndex}>
-            <TextInput
-              label={`주제${paragraphIndex + 1}`}
-              placeholder="주제"
-              icon={faTable}
-              onChange={(event) => handleParagraphTitle(event, paragraphIndex)}
-            />
-            <TextInput
-              label={`설명${paragraphIndex + 1}`}
-              placeholder="설명"
-              icon={faRuler}
-              onChange={(event) =>
-                handleParagraphDescription(event, paragraphIndex)
-              }
-            />
-            <RowBox style={{ gap: theme.spacing.sm }}>
-              <ButtonIcon
-                onClick={() => addChoices(paragraphIndex)}
-                icon={faPlus}
+        <ScrollBox height="100%">
+          {paragraphs?.map((count, paragraphIndex) => (
+            <Section key={paragraphIndex}>
+              <TextInput
+                label={`주제${paragraphIndex + 1}`}
+                placeholder="주제"
+                icon={faTable}
+                onChange={(event) =>
+                  handleParagraphTitle(event, paragraphIndex)
+                }
               />
-              <MainText>지문 추가</MainText>
-            </RowBox>
-            <Section
-              style={{
-                display: "flex",
-                gap: theme.spacing.md,
-                justifyContent: "center",
-              }}
-            >
-              {paragraphs[paragraphIndex].multipleChoice.map(
-                (count, choiceIndex) => (
-                  <ChoiceInput
-                    key={choiceIndex}
-                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                      handleChoicesValue(event, choiceIndex, paragraphIndex)
-                    }
-                  />
-                )
-              )}
+              <TextInput
+                label={`설명${paragraphIndex + 1}`}
+                placeholder="설명"
+                icon={faRuler}
+                onChange={(event) =>
+                  handleParagraphDescription(event, paragraphIndex)
+                }
+              />
+              <RowBox style={{ gap: theme.spacing.sm }}>
+                <ButtonIcon
+                  onClick={() => addChoices(paragraphIndex)}
+                  icon={faPlus}
+                />
+                <MainText>지문 추가</MainText>
+              </RowBox>
+              <Section
+                style={{
+                  display: "flex",
+                  gap: theme.spacing.md,
+                  justifyContent: "center",
+                }}
+              >
+                {paragraphs[paragraphIndex].multipleChoice.map(
+                  (count, choiceIndex) => (
+                    <ChoiceInput
+                      key={choiceIndex}
+                      onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                        handleChoicesValue(event, choiceIndex, paragraphIndex)
+                      }
+                    />
+                  )
+                )}
+              </Section>
             </Section>
-          </Section>
-        ))}
-
+          ))}
+        </ScrollBox>
         <EndSubmitButton
           onClick={handleSubmit(onSubmit)}
           disabled={createSurveyLoading || isSubmitDisabled}

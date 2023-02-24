@@ -146,6 +146,7 @@ export class User extends CoreEntity implements Node {
 
   // Define isTypeOf function to specify concrete type
   static isTypeOf(obj: any): obj is User {
+    console.log('userobj :', obj);
     return obj instanceof User;
   }
 }

@@ -49,21 +49,19 @@ const SurveyManagement = ({
 
   const [clickedSurveyId, setClickedSurveyId] = useState("");
 
-  const { multipleChoiceFormat, shortAnswerFormat, responseRate } =
-    useGetAnswersOfSurvey(clickedSurveyId); // useLazyLoadQuery
+  const { answers } = useGetAnswersOfSurvey(clickedSurveyId); // useLazyLoadQuery
+  console.log("answers : ", answers);
 
   return (
     <CenterBox>
       <Section style={{ width: "35%" }}>
         <Suspense fallback="wait">
-          <ShowMultipleChoiceAnswers
-            multipleChoiceFormat={multipleChoiceFormat}
-          />
+          {answers && <ShowMultipleChoiceAnswers answers={answers} />}
         </Suspense>
       </Section>
       <Section style={{ width: "35%" }}>
         <Suspense fallback="wait">
-          <ShowShortAnswers shortAnswerFormat={shortAnswerFormat} />
+          {answers && <ShowShortAnswers answers={answers} />}
         </Suspense>
       </Section>
 
@@ -76,7 +74,7 @@ const SurveyManagement = ({
           />
         </Section>
         <Section style={{ height: "50%" }}>
-          <SurveyResponseRate responseRate={responseRate} />
+          {answers && <SurveyResponseRate answers={answers} />}
         </Section>
       </GapBox>
     </CenterBox>

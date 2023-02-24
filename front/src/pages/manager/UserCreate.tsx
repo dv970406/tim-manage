@@ -1,22 +1,15 @@
 import React from "react";
 import { Section } from "../../components/atomics/sections/sections";
+import { CenterFixBox } from "../../components/molecules/boxes/CenterBox";
 import CreateUserForm from "../../components/templates/content/manager/CreateUserForm";
 
 const UserCreatePage = () => {
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        height: "100%",
-      }}
-    >
+    <CenterFixBox>
       <Section style={{ width: "40%" }}>
         <CreateUserForm />
       </Section>
-    </div>
+    </CenterFixBox>
   );
 };
 

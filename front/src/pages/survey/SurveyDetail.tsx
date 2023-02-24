@@ -6,6 +6,7 @@ import {
   useGetSurvey,
 } from "../../client/survey/GetSurvey.client";
 import { GetSurveyQuery } from "../../client/survey/__generated__/GetSurveyQuery.graphql";
+import { ColumnBox } from "../../components/atomics/boxes/Boxes";
 import { Section } from "../../components/atomics/sections/sections";
 import AnswerSheet from "../../components/templates/content/survey/AnswerSheet";
 import { theme } from "../../css/theme";
@@ -41,17 +42,14 @@ const SurveyDetail = ({ getSurveyQueryReference }: ISurveyDetail) => {
       <Section style={{ width: "40%" }}>
         {survey && <AnswerSheet survey={survey} />}
       </Section>
-      <div
+      <ColumnBox
         style={{
           width: "60%",
-          display: "flex",
-          flexDirection: "column",
-          gap: theme.spacing.xl,
         }}
       >
         <Section style={{ height: "50%" }}></Section>
         <Section style={{ height: "50%" }}></Section>
-      </div>
+      </ColumnBox>
     </>
   );
 };

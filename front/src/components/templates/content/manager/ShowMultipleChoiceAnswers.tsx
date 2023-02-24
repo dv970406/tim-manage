@@ -1,40 +1,45 @@
 import { ApexOptions } from "apexcharts";
+import { graphql } from "babel-plugin-relay/macro";
 import ReactApexChart from "react-apexcharts";
+import { useFragment } from "react-relay";
 import { pieChartOptions } from "../../../../utils/chart/options";
-import { GapBox, GapList } from "../../../atomics/boxes/Boxes";
+import {
+  ColumnBox,
+  GapBox,
+  GapList,
+  ScrollBox,
+} from "../../../atomics/boxes/Boxes";
 import { SectionText } from "../../../atomics/typographys/texts";
 import { SubTitle, SectionTitle } from "../../../atomics/typographys/titles";
+import { ShowMultipleChoiceAnswers_answer$key } from "./__generated__/ShowMultipleChoiceAnswers_answer.graphql";
 
-// const showMultipleChoiceAnswerFragment = graphql`
-//   fragment ShowMultipleChoiceAnswer_answer on Answer {
-//     multipleChoiceFormat {
-//          paragraphTitle
-//          description
-//          chartFormatResults {
-//            labels
-//            series
-//          }
-//        }
-//   }
-// `;
+const showMultipleChoiceAnswersFragment = graphql`
+  fragment ShowMultipleChoiceAnswers_answer on Survey {
+    multipleChoiceFormat {
+      paragraphTitle
+      description
+      chartFormatResults {
+        labels
+        series
+      }
+    }
+  }
+`;
 interface IShowMultipleChoiceAnswers {
-  readonly multipleChoiceFormat?: ReadonlyArray<{
-    readonly chartFormatResults: {
-      readonly labels: ReadonlyArray<string>;
-      readonly series: ReadonlyArray<number>;
-    };
-    readonly description: string;
-    readonly paragraphTitle: string;
-  }> | null;
+  answers: ShowMultipleChoiceAnswers_answer$key;
 }
 
-const ShowMultipleChoiceAnswers = ({
-  multipleChoiceFormat,
-}: IShowMultipleChoiceAnswers) => {
+const ShowMultipleChoiceAnswers = ({ answers }: IShowMultipleChoiceAnswers) => {
+  const { multipleChoiceFormat } =
+    useFragment<ShowMultipleChoiceAnswers_answer$key>(
+      showMultipleChoiceAnswersFragment,
+      answers
+    );
+
   return (
-    <GapBox>
+    <ColumnBox>
       <SectionTitle>객관식 답변</SectionTitle>
-      <GapList>
+      <ScrollBox height="100%">
         {multipleChoiceFormat?.map((result, index) => (
           <li key={index}>
             <GapBox>
@@ -51,8 +56,8 @@ const ShowMultipleChoiceAnswers = ({
             </GapBox>
           </li>
         ))}
-      </GapList>
-    </GapBox>
+      </ScrollBox>
+    </ColumnBox>
   );
 };
 

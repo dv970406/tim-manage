@@ -47,7 +47,7 @@ const ShowUserComments = () => {
       {" "}
       <SectionTitle>댓글 목록</SectionTitle>
       <ManageDataList
-        dataTableName=""
+        mutateName=""
         loadNext={loadNext}
         hasNext={hasNext}
         isLoadingNext={isLoadingNext}

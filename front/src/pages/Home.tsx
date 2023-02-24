@@ -13,12 +13,11 @@ import {
 } from "../client/vacation/GetVacations.client";
 import { GetVacationsQuery } from "../client/vacation/__generated__/GetVacationsQuery.graphql";
 import { Section } from "../components/atomics/sections/sections";
-
-import { theme } from "../css/theme";
 import { SCHEDULES } from "../utils/constants/schedule.constant";
 import MyTeamVacations from "../components/templates/content/home/MyTeamVacations";
 import TodayMeetings from "../components/templates/content/home/TodayMeetings";
 import VacationCalendar from "../components/templates/content/home/VacationCalendar";
+import { ColumnBox, RowBox } from "../components/atomics/boxes/Boxes";
 
 const HomePage = () => {
   const [getVacationsQueryReference, loadGetVacationsQuery] =
@@ -62,6 +61,7 @@ const Home = ({
 
   // 일정 필터링
   const [filteringSchedules, setFilteringSchedules] = useState("");
+
   let schedules: EventInput[] = [];
 
   if (filteringSchedules === SCHEDULES.VACATION) {
@@ -73,8 +73,8 @@ const Home = ({
   }
 
   return (
-    <>
-      <Section style={{ width: "70%" }}>
+    <RowBox style={{ height: "92vh" }}>
+      <Section style={{ width: "75%" }}>
         <Suspense fallback="dsadasdsadsaeqwqeqweqw">
           <VacationCalendar
             schedules={schedules}
@@ -82,19 +82,14 @@ const Home = ({
           />
         </Suspense>
       </Section>
-      <div
+      <ColumnBox
         style={{
-          width: "30%",
-          display: "flex",
-          flexDirection: "column",
-          gap: theme.spacing.xl,
+          width: "25%",
         }}
       >
         <Section
           style={{
             height: "50%",
-            maxHeight: "50%",
-            overflow: "auto",
           }}
         >
           <TodayMeetings todayMeetings={todayMeetings} />
@@ -102,8 +97,6 @@ const Home = ({
         <Section
           style={{
             height: "50%",
-            maxHeight: "50%",
-            overflow: "auto",
           }}
         >
           <MyTeamVacations
@@ -111,8 +104,8 @@ const Home = ({
             myTeamVacations={myTeamVacations}
           />
         </Section>
-      </div>
-    </>
+      </ColumnBox>
+    </RowBox>
   );
 };
 

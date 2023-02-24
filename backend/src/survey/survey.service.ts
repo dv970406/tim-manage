@@ -19,13 +19,148 @@ import {
 import { Survey, SurveyForm } from './entities/survey.entity';
 import { SurveyRepository } from './repositories/survey.repository';
 import { ConnectionInput } from 'src/core/dtos/pagination.dto';
+import { GetAnswersOfsurveyInput } from './dtos/answer/get-answersOfSurvey.dto';
+import {
+  MultipleChoiceFormat,
+  ResponseRate,
+  ShortAnswerFormat,
+} from './dtos/survey/resolve-field.dto';
+import { AnswerRepository } from './repositories/answer.repository';
+import { UserRepository } from 'src/user/user.repository';
 
 @Injectable()
 export class SurveyService {
   constructor(
     @InjectRepository(SurveyRepository)
     private readonly surveyRepo: SurveyRepository,
+    @InjectRepository(AnswerRepository)
+    private readonly answerRepo: AnswerRepository,
+    @InjectRepository(UserRepository)
+    private readonly userRepo: UserRepository,
   ) {}
+
+  async responseRate({ id: surveyId }: Survey): Promise<ResponseRate> {
+    const answeredEmployeeCount = await this.answerRepo.countBy({
+      survey: { id: surveyId },
+    });
+    const notAnsweredEmployeeCount =
+      (await this.userRepo.count()) - answeredEmployeeCount;
+
+    return {
+      answeredEmployeeCount,
+      notAnsweredEmployeeCount,
+    };
+  }
+  async multipleChoiceFormat({
+    id: surveyId,
+  }: Survey): Promise<MultipleChoiceFormat[]> {
+    const findSurvey = await this.surveyRepo.findSurvey({ surveyId });
+
+    const answers = await this.answerRepo.find({
+      where: {
+        survey: {
+          id: surveyId,
+        },
+      },
+      order: {
+        createdAt: 'DESC',
+      },
+      relations: {
+        user: true,
+      },
+    });
+
+    // 설문의 paragraph에서 지정한 객관식 지문들만 모은다.
+    const choicesOfParagraphs = findSurvey?.paragraphs.map(
+      (paragraph) => paragraph.multipleChoice,
+    );
+
+    // 그 설문에 대한 답변들 모은다.
+    const resultsOfAnswers = answers?.map((answer) => ({
+      results: answer.results,
+      user: answer.user,
+    }));
+
+    // 객관식 지문에 대한 답변이 몇 개인지 센다.
+    const chartFormatResults = choicesOfParagraphs?.map(
+      (targetChoices, choiceIndex) => {
+        const countResultMatchWithChoice = targetChoices.map(
+          (targetChoice, targetIndex) => {
+            let count = 0;
+
+            resultsOfAnswers?.map((answer) => {
+              const answerValue = answer.results[choiceIndex];
+              if (targetChoice === answerValue) count += 1;
+            });
+            return count;
+          },
+        );
+
+        return {
+          labels: targetChoices,
+          series: countResultMatchWithChoice,
+        };
+      },
+    );
+
+    // 차트 라이브러리 포맷에 맞게 변경한다.
+    let multipleChoiceFormat = [];
+    findSurvey.paragraphs.forEach((paragraph, index) => {
+      if (paragraph.multipleChoice.length > 0) {
+        // 객관식은 차트 포맷
+        multipleChoiceFormat.push({
+          paragraphTitle: paragraph.paragraphTitle,
+          description: paragraph.description,
+          chartFormatResults: chartFormatResults[index],
+        });
+      }
+    });
+
+    return multipleChoiceFormat;
+  }
+  async shortAnswerFormat({
+    id: surveyId,
+  }: Survey): Promise<ShortAnswerFormat[]> {
+    const findSurvey = await this.surveyRepo.findSurvey({ surveyId });
+
+    const answers = await this.answerRepo.find({
+      where: {
+        survey: {
+          id: surveyId,
+        },
+      },
+      order: {
+        createdAt: 'DESC',
+      },
+      relations: {
+        user: true,
+      },
+    });
+
+    // 설문에 대한 답변들 모은다.
+    const resultsOfAnswers = answers?.map((answer) => ({
+      results: answer.results,
+      user: answer.user,
+    }));
+
+    // 차트 라이브러리 포맷에 맞게 변경한다.
+    let shortAnswerFormat = [];
+    findSurvey.paragraphs.forEach((paragraph, index) => {
+      if (paragraph.multipleChoice.length === 0) {
+        // 주관식은 차트 포맷 아님
+        shortAnswerFormat.push({
+          paragraphTitle: paragraph.paragraphTitle,
+          description: paragraph.description,
+          shortAnswers: resultsOfAnswers.map((answer) => ({
+            result: answer.results[index],
+            user: answer.user,
+          })),
+        });
+      }
+    });
+
+    return shortAnswerFormat;
+  }
   async isMySurvey(loggedInUser: User, survey: Survey): Promise<boolean> {
     return loggedInUser.id === survey.user.id;
   }

@@ -50,7 +50,6 @@ const SideBar = ({}: ISideBar) => {
     const hamburgerMenu = document.querySelector(".hamburger_menu");
     hamburgerMenu?.classList.add("open");
   };
-  console.log(myInfo);
   return (
     <SideBarContext.Provider value={{ clickedTabs, setClickedTabs }}>
       <SideBarSection className="sidebar">

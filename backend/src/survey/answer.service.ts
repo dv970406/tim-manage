@@ -16,8 +16,15 @@ import {
 } from './dtos/answer/delete-answer.dto';
 import {
   GetAnswersOfsurveyInput,
-  GetAnswersOfsurveyOutput,
+  GetAnswersOfSurveyOutput,
+  // GetAnswersOfSurveyOutput,
 } from './dtos/answer/get-answersOfSurvey.dto';
+import {
+  MultipleChoiceFormat,
+  ResponseRate,
+  ShortAnswerFormat,
+} from './dtos/survey/resolve-field.dto';
+import { Answer } from './entities/answer.entity';
 import { AnswerRepository } from './repositories/answer.repository';
 import { SurveyRepository } from './repositories/survey.repository';
 
@@ -62,99 +69,15 @@ export class AnswerService {
     };
   }
 
-  async getAnswersOfSurvey(
-    loggedInUser: User,
-    { surveyId }: GetAnswersOfsurveyInput,
-  ): Promise<GetAnswersOfsurveyOutput> {
+  async getAnswersOfSurvey({
+    surveyId,
+  }: GetAnswersOfsurveyInput): Promise<GetAnswersOfSurveyOutput> {
     try {
       const findSurvey = await this.surveyRepo.findSurvey({ surveyId });
 
-      if (loggedInUser.id !== findSurvey.user.id) {
-        throw new Error('설문의 소유자가 아닙니다.');
-      }
-
-      const answers = await this.answerRepo.find({
-        where: {
-          survey: {
-            id: surveyId,
-          },
-        },
-        order: {
-          createdAt: 'DESC',
-        },
-        relations: {
-          // 익명 설문인 경우 user정보 반환 못하게 하기
-          user: !findSurvey.isAnonymous,
-        },
-      });
-
-      // 설문의 paragraph에서 지정한 객관식 지문들만 모은다.
-      const choicesOfParagraphs = findSurvey?.paragraphs.map(
-        (paragraph) => paragraph.multipleChoice,
-      );
-
-      // 그 설문에 대한 답변들 모은다.
-      const resultsOfAnswers = answers?.map((answer) => answer.results);
-
-      // 객관식 지문에 대한 답변이 몇 개인지 센다.
-      const chartFormatResults = choicesOfParagraphs?.map(
-        (targetChoices, choiceIndex) => {
-          const countResultMatchWithChoice = targetChoices.map(
-            (targetChoice, targetIndex) => {
-              let count = 0;
-
-              resultsOfAnswers?.map((results) => {
-                const answerValue = results[choiceIndex];
-                if (targetChoice === answerValue) count += 1;
-              });
-              return count;
-            },
-          );
-
-          return {
-            labels: targetChoices,
-            series: countResultMatchWithChoice,
-          };
-        },
-      );
-
-      // 차트 라이브러리 포맷에 맞게 변경한다.
-      let shortAnswerFormat = [];
-      let multipleChoiceFormat = [];
-      findSurvey.paragraphs.forEach((paragraph, index) => {
-        if (paragraph.multipleChoice.length > 0) {
-          // 객관식은 차트 포맷
-          multipleChoiceFormat.push({
-            paragraphTitle: paragraph.paragraphTitle,
-            description: paragraph.description,
-            chartFormatResults: chartFormatResults[index],
-          });
-        } else {
-          // 주관식은 차트 포맷 아님
-          shortAnswerFormat.push({
-            paragraphTitle: paragraph.paragraphTitle,
-            description: paragraph.description,
-            shortAnswers: resultsOfAnswers.map(
-              (shortAnswer) => shortAnswer[index],
-            ),
-          });
-        }
-      });
-
-      const answeredEmployeeCount = await this.answerRepo.countBy({
-        survey: { id: surveyId },
-      });
-      const notAnsweredEmployeeCount =
-        (await this.userRepo.count()) - answeredEmployeeCount;
-
       return {
         ok: true,
-        shortAnswerFormat,
-        multipleChoiceFormat,
-        responseRate: {
-          notAnsweredEmployeeCount,
-          answeredEmployeeCount,
-        },
+        survey: findSurvey,
       };
     } catch (error) {
       return {

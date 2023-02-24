@@ -277,16 +277,10 @@ type DeleteVacationOutput {
   deletedVacationId: ID
 }
 
-input GetAnswersOfsurveyInput {
-  surveyId: ID!
-}
-
-type GetAnswersOfsurveyOutput {
+type GetAnswersOfSurveyOutput {
   ok: Boolean!
   error: String
-  shortAnswerFormat: [ShortAnswerFormat!]
-  multipleChoiceFormat: [MultipleChoiceFormat!]
-  responseRate: ResponseRate
+  survey: Survey
 }
 
 input GetMeetingInput {
@@ -509,7 +503,6 @@ type Mutation {
 
 interface Node {
   id: ID!
-  users(keyword: String!): [User!]!
 }
 
 input Orders {
@@ -537,7 +530,6 @@ type Post implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  users(keyword: String!): [User!]!
   title: String!
   content: String!
   user: User!
@@ -573,7 +565,7 @@ type Query {
   getVacation(input: GetVacationInput!): GetVacationOutput!
   getSurveys(onlyMine: Boolean, keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): GetSurveysOutput!
   getSurvey(input: GetSurveyInput!): GetSurveyOutput!
-  getAnswersOfSurvey(input: GetAnswersOfsurveyInput!): GetAnswersOfsurveyOutput!
+  getAnswersOfSurvey(surveyId: ID!): GetAnswersOfSurveyOutput!
   getPosts(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): GetPostsOutput!
   getPost(input: GetPostInput!): GetPostOutput!
   getMeetings: GetMeetingsOutput!
@@ -589,19 +581,26 @@ type ResponseRate {
 type ShortAnswerFormat {
   paragraphTitle: String!
   description: String!
-  shortAnswers: [String!]!
+  shortAnswers: [ShortAnswersFormat!]!
+}
+
+type ShortAnswersFormat {
+  result: String!
+  user: User!
 }
 
 type Survey implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  users(keyword: String!): [User!]!
   surveyTitle: String!
   isAnonymous: Boolean!
   paragraphs: [SurveyForm!]!
   answers: [Answer!]!
   user: User!
+  responseRate: ResponseRate!
+  multipleChoiceFormat: [MultipleChoiceFormat!]!
+  shortAnswerFormat: [ShortAnswerFormat!]!
   isMySurvey: Boolean!
   isAnswered: Boolean!
 }
@@ -735,7 +734,6 @@ type User implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  users(keyword: String!): [User!]!
   isManager: Boolean!
   email: String!
   password: String!

@@ -9,6 +9,7 @@ import CommentsZone from "../../components/templates/content/post/CommentsZone";
 import ContentZone from "../../components/templates/content/post/ContentZone";
 import { theme } from "../../css/theme";
 import { GapBox } from "../../components/atomics/boxes/Boxes";
+import { CenterFixBox } from "../../components/molecules/boxes/CenterBox";
 
 const PostDetailPage = () => {
   const { postId } = useParams();
@@ -34,15 +35,7 @@ const PostDetail = ({ getPostQueryReference }: IPostDetail) => {
   const { post } = useGetPost(getPostQueryReference);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        height: "100%",
-      }}
-    >
+    <CenterFixBox>
       <GapBox
         style={{
           flexDirection: "row",
@@ -62,7 +55,7 @@ const PostDetail = ({ getPostQueryReference }: IPostDetail) => {
           {post && <CommentsZone post={post} />}{" "}
         </Section>
       </GapBox>
-    </div>
+    </CenterFixBox>
   );
 };
 export default PostDetailPage;

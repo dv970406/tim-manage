@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1222f4ab2617b986e1f72cc90080ca6b>>
+ * @generated SignedSource<<1fbe070dfbec8b85e286b2a73f84e823>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type GetAnswersOfSurveyQuery$variables = {
   skip: boolean;
   surveyId: string;
@@ -16,24 +17,10 @@ export type GetAnswersOfSurveyQuery$variables = {
 export type GetAnswersOfSurveyQuery$data = {
   readonly getAnswersOfSurvey?: {
     readonly error: string | null;
-    readonly multipleChoiceFormat: ReadonlyArray<{
-      readonly chartFormatResults: {
-        readonly labels: ReadonlyArray<string>;
-        readonly series: ReadonlyArray<number>;
-      };
-      readonly description: string;
-      readonly paragraphTitle: string;
-    }> | null;
     readonly ok: boolean;
-    readonly responseRate: {
-      readonly answeredEmployeeCount: number;
-      readonly notAnsweredEmployeeCount: number;
+    readonly survey: {
+      readonly " $fragmentSpreads": FragmentRefs<"ShowMultipleChoiceAnswers_answer" | "ShowShortAnswers_answer" | "SurveyResponseRate_answer">;
     } | null;
-    readonly shortAnswerFormat: ReadonlyArray<{
-      readonly description: string;
-      readonly paragraphTitle: string;
-      readonly shortAnswers: ReadonlyArray<string>;
-    }> | null;
   };
 };
 export type GetAnswersOfSurveyQuery = {
@@ -52,149 +39,48 @@ v1 = {
   "kind": "LocalArgument",
   "name": "surveyId"
 },
-v2 = {
+v2 = [
+  {
+    "kind": "Variable",
+    "name": "surveyId",
+    "variableName": "surveyId"
+  }
+],
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "ok",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "error",
+  "storageKey": null
+},
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "paragraphTitle",
   "storageKey": null
 },
-v3 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "description",
   "storageKey": null
 },
-v4 = [
-  {
-    "condition": "skip",
-    "kind": "Condition",
-    "passingValue": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": [
-          {
-            "fields": [
-              {
-                "kind": "Variable",
-                "name": "surveyId",
-                "variableName": "surveyId"
-              }
-            ],
-            "kind": "ObjectValue",
-            "name": "input"
-          }
-        ],
-        "concreteType": "GetAnswersOfsurveyOutput",
-        "kind": "LinkedField",
-        "name": "getAnswersOfSurvey",
-        "plural": false,
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "ok",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "error",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "ShortAnswerFormat",
-            "kind": "LinkedField",
-            "name": "shortAnswerFormat",
-            "plural": true,
-            "selections": [
-              (v2/*: any*/),
-              (v3/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "shortAnswers",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "MultipleChoiceFormat",
-            "kind": "LinkedField",
-            "name": "multipleChoiceFormat",
-            "plural": true,
-            "selections": [
-              (v2/*: any*/),
-              (v3/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "ChartFormatResult",
-                "kind": "LinkedField",
-                "name": "chartFormatResults",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "labels",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "series",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "ResponseRate",
-            "kind": "LinkedField",
-            "name": "responseRate",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "notAnsweredEmployeeCount",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "answeredEmployeeCount",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
-      }
-    ]
-  }
-];
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": [
@@ -204,7 +90,54 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "GetAnswersOfSurveyQuery",
-    "selections": (v4/*: any*/),
+    "selections": [
+      {
+        "condition": "skip",
+        "kind": "Condition",
+        "passingValue": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": (v2/*: any*/),
+            "concreteType": "GetAnswersOfSurveyOutput",
+            "kind": "LinkedField",
+            "name": "getAnswersOfSurvey",
+            "plural": false,
+            "selections": [
+              (v3/*: any*/),
+              (v4/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Survey",
+                "kind": "LinkedField",
+                "name": "survey",
+                "plural": false,
+                "selections": [
+                  {
+                    "args": null,
+                    "kind": "FragmentSpread",
+                    "name": "ShowShortAnswers_answer"
+                  },
+                  {
+                    "args": null,
+                    "kind": "FragmentSpread",
+                    "name": "ShowMultipleChoiceAnswers_answer"
+                  },
+                  {
+                    "args": null,
+                    "kind": "FragmentSpread",
+                    "name": "SurveyResponseRate_answer"
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ]
+      }
+    ],
     "type": "Query",
     "abstractKey": null
   },
@@ -216,19 +149,172 @@ return {
     ],
     "kind": "Operation",
     "name": "GetAnswersOfSurveyQuery",
-    "selections": (v4/*: any*/)
+    "selections": [
+      {
+        "condition": "skip",
+        "kind": "Condition",
+        "passingValue": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": (v2/*: any*/),
+            "concreteType": "GetAnswersOfSurveyOutput",
+            "kind": "LinkedField",
+            "name": "getAnswersOfSurvey",
+            "plural": false,
+            "selections": [
+              (v3/*: any*/),
+              (v4/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Survey",
+                "kind": "LinkedField",
+                "name": "survey",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "isAnonymous",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "ShortAnswerFormat",
+                    "kind": "LinkedField",
+                    "name": "shortAnswerFormat",
+                    "plural": true,
+                    "selections": [
+                      (v5/*: any*/),
+                      (v6/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "ShortAnswersFormat",
+                        "kind": "LinkedField",
+                        "name": "shortAnswers",
+                        "plural": true,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "result",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "User",
+                            "kind": "LinkedField",
+                            "name": "user",
+                            "plural": false,
+                            "selections": [
+                              (v7/*: any*/),
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "name",
+                                "storageKey": null
+                              }
+                            ],
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "MultipleChoiceFormat",
+                    "kind": "LinkedField",
+                    "name": "multipleChoiceFormat",
+                    "plural": true,
+                    "selections": [
+                      (v5/*: any*/),
+                      (v6/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "ChartFormatResult",
+                        "kind": "LinkedField",
+                        "name": "chartFormatResults",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "labels",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "series",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "ResponseRate",
+                    "kind": "LinkedField",
+                    "name": "responseRate",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "notAnsweredEmployeeCount",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "answeredEmployeeCount",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  (v7/*: any*/)
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ]
+      }
+    ]
   },
   "params": {
-    "cacheID": "5e8e19589dab70c6c006caa8598c4d65",
+    "cacheID": "f300acfbc0eaad1e4e706d6c04d828d2",
     "id": null,
     "metadata": {},
     "name": "GetAnswersOfSurveyQuery",
     "operationKind": "query",
-    "text": "query GetAnswersOfSurveyQuery(\n  $surveyId: ID!\n  $skip: Boolean!\n) {\n  getAnswersOfSurvey(input: {surveyId: $surveyId}) @skip(if: $skip) {\n    ok\n    error\n    shortAnswerFormat {\n      paragraphTitle\n      description\n      shortAnswers\n    }\n    multipleChoiceFormat {\n      paragraphTitle\n      description\n      chartFormatResults {\n        labels\n        series\n      }\n    }\n    responseRate {\n      notAnsweredEmployeeCount\n      answeredEmployeeCount\n    }\n  }\n}\n"
+    "text": "query GetAnswersOfSurveyQuery(\n  $surveyId: ID!\n  $skip: Boolean!\n) {\n  getAnswersOfSurvey(surveyId: $surveyId) @skip(if: $skip) {\n    ok\n    error\n    survey {\n      ...ShowShortAnswers_answer\n      ...ShowMultipleChoiceAnswers_answer\n      ...SurveyResponseRate_answer\n      id\n    }\n  }\n}\n\nfragment ShowMultipleChoiceAnswers_answer on Survey {\n  multipleChoiceFormat {\n    paragraphTitle\n    description\n    chartFormatResults {\n      labels\n      series\n    }\n  }\n}\n\nfragment ShowShortAnswers_answer on Survey {\n  isAnonymous\n  shortAnswerFormat {\n    paragraphTitle\n    description\n    shortAnswers {\n      result\n      user {\n        id\n        name\n      }\n    }\n  }\n}\n\nfragment SurveyResponseRate_answer on Survey {\n  responseRate {\n    notAnsweredEmployeeCount\n    answeredEmployeeCount\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "e8fd4f9910d29ab2ca9dd52f06cc9aa0";
+(node as any).hash = "065a789f9235164a0d87564ab866cda3";
 
 export default node;

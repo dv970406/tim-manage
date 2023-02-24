@@ -23,8 +23,17 @@ import {
 } from './dtos/answer/delete-answer.dto';
 import {
   GetAnswersOfsurveyInput,
-  GetAnswersOfsurveyOutput,
+  GetAnswersOfSurveyOutput,
 } from './dtos/answer/get-answersOfSurvey.dto';
+// import {
+//   GetAnswersOfsurveyInput,
+//   GetAnswersOfSurveyOutput,
+// } from './dtos/answer/get-answersOfSurvey.dto';
+import {
+  MultipleChoiceFormat,
+  ResponseRate,
+  ShortAnswerFormat,
+} from './dtos/survey/resolve-field.dto';
 import { Answer } from './entities/answer.entity';
 
 @Resolver((of) => Answer)
@@ -39,16 +48,12 @@ export class AnswerResolver {
     return this.answerService.answersConnection(user, answersConnectionInput);
   }
 
-  @Query((type) => GetAnswersOfsurveyOutput)
+  @Query((type) => GetAnswersOfSurveyOutput)
   @UseGuards(ManagerGuard)
   getAnswersOfSurvey(
-    @LoggedInUser() loggedInUser: User,
-    @Args('input') getAnswersOfSurvey: GetAnswersOfsurveyInput,
-  ): Promise<GetAnswersOfsurveyOutput> {
-    return this.answerService.getAnswersOfSurvey(
-      loggedInUser,
-      getAnswersOfSurvey,
-    );
+    @Args() getAnswersOfsurveyInput: GetAnswersOfsurveyInput,
+  ): Promise<GetAnswersOfSurveyOutput> {
+    return this.answerService.getAnswersOfSurvey(getAnswersOfsurveyInput);
   }
 
   @Mutation((type) => CreateAnswerOutput)

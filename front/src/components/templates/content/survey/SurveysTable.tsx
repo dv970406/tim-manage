@@ -62,7 +62,7 @@ const SurveysTable = ({ surveys }: ISurveysTable) => {
   return (
     <>
       <ManageDataList
-        dataTableName={MODAL_NAME.CREATE_SURVEY}
+        mutateName={MODAL_NAME.CREATE_SURVEY}
         refetch={refetch}
         isLoadingNext={isLoadingNext}
         hasNext={hasNext}

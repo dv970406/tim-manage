@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import React from "react";
 
-export const SCenterBox = styled.div(({ theme }) => ({
+export const CenterFixBox = styled.div(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -21,9 +21,9 @@ interface ICenterBox {
 }
 const CenterBox = ({ children }: ICenterBox) => {
   return (
-    <SCenterBox>
+    <CenterFixBox>
       <SizingBox>{children}</SizingBox>
-    </SCenterBox>
+    </CenterFixBox>
   );
 };
 

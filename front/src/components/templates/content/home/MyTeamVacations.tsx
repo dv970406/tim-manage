@@ -1,6 +1,5 @@
 import { EventInput } from "@fullcalendar/core";
-import React from "react";
-import { GapBox } from "../../../atomics/boxes/Boxes";
+import { ScrollBox } from "../../../atomics/boxes/Boxes";
 import { SectionTitle } from "../../../atomics/typographys/titles";
 import TeamMateVacation from "../../../organisms/content/home/TeamMateVacation";
 
@@ -10,9 +9,9 @@ interface IMyTeamVacations {
 }
 const MyTeamVacations = ({ myTeamVacations, myTeam }: IMyTeamVacations) => {
   return (
-    <GapBox>
+    <>
       <SectionTitle>{myTeam} 휴가 계획</SectionTitle>
-      <GapBox>
+      <ScrollBox height="100%">
         {myTeamVacations.map((vacation) => (
           <TeamMateVacation
             key={vacation.id}
@@ -23,8 +22,8 @@ const MyTeamVacations = ({ myTeamVacations, myTeam }: IMyTeamVacations) => {
             isHalf={vacation.isHalf}
           />
         ))}
-      </GapBox>
-    </GapBox>
+      </ScrollBox>
+    </>
   );
 };
 

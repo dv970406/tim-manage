@@ -12,6 +12,12 @@ import { LoginGuard, ManagerGuard } from 'src/auth/auth.guard';
 import { ConnectionInput } from 'src/core/dtos/pagination.dto';
 import { User } from 'src/user/entities/user.entity';
 import { UserService } from 'src/user/user.service';
+import { GetAnswersOfsurveyInput } from './dtos/answer/get-answersOfSurvey.dto';
+import {
+  MultipleChoiceFormat,
+  ResponseRate,
+  ShortAnswerFormat,
+} from './dtos/survey/resolve-field.dto';
 import {
   CreateSurveyInput,
   CreateSurveyOutput,
@@ -31,7 +37,22 @@ import { SurveyService } from './survey.service';
 @Resolver((of) => Survey)
 export class SurveyResolver {
   constructor(private readonly surveyService: SurveyService) {}
+  @ResolveField((type) => ResponseRate)
+  responseRate(@Parent() survey: Survey): Promise<ResponseRate> {
+    return this.surveyService.responseRate(survey);
+  }
 
+  @ResolveField((type) => [MultipleChoiceFormat])
+  multipleChoiceFormat(
+    @Parent() survey: Survey,
+  ): Promise<MultipleChoiceFormat[]> {
+    return this.surveyService.multipleChoiceFormat(survey);
+  }
+
+  @ResolveField((type) => [ShortAnswerFormat])
+  shortAnswerFormat(@Parent() survey: Survey): Promise<ShortAnswerFormat[]> {
+    return this.surveyService.shortAnswerFormat(survey);
+  }
   @ResolveField((type) => Boolean)
   isMySurvey(
     @LoggedInUser() loggedInUser: User,

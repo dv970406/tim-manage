@@ -45,7 +45,7 @@ export class Post extends CoreEntity implements Node {
   comments: Comment[];
 
   // Define isTypeOf function to specify concrete type
-  static isTypeOf(obj: any): obj is Post {
-    return obj instanceof Post;
-  }
+  // static isTypeOf(obj: any): obj is Post {
+  //   return obj instanceof Post;
+  // }
 }

@@ -1,41 +1,64 @@
 import { SubTitle, SectionTitle } from "../../../atomics/typographys/titles";
-import { GapBox, GapList } from "../../../atomics/boxes/Boxes";
+import {
+  ColumnBox,
+  GapBox,
+  GapList,
+  ScrollBox,
+} from "../../../atomics/boxes/Boxes";
 import { SectionText, MainText } from "../../../atomics/typographys/texts";
+import { graphql } from "babel-plugin-relay/macro";
+import { useFragment } from "react-relay";
+import { ShowShortAnswers_answer$key } from "./__generated__/ShowShortAnswers_answer.graphql";
 
-// const showShortAnswersFragment = graphql`
-//   fragment ShowShortAnswers_answer on Answer {
-//     shortAnswerFormat {
-//       paragraphTitle
-//       description
-//       shortAnswers
-//     }
-//   }
-// `;
+const showShortAnswersFragment = graphql`
+  fragment ShowShortAnswers_answer on Survey {
+    isAnonymous
+    shortAnswerFormat {
+      paragraphTitle
+      description
+      shortAnswers {
+        result
+        user {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
 interface IShowShortAnswers {
-  readonly shortAnswerFormat?: ReadonlyArray<{
-    readonly description: string;
-    readonly paragraphTitle: string;
-    readonly shortAnswers: ReadonlyArray<string>;
-  }> | null;
+  answers: ShowShortAnswers_answer$key;
 }
-const ShowShortAnswers = ({ shortAnswerFormat }: IShowShortAnswers) => {
+const ShowShortAnswers = ({ answers }: IShowShortAnswers) => {
+  const { shortAnswerFormat, isAnonymous } =
+    useFragment<ShowShortAnswers_answer$key>(showShortAnswersFragment, answers);
+
   return (
-    <GapBox>
+    <ColumnBox>
       <SectionTitle>주관식 답변</SectionTitle>
-      {shortAnswerFormat?.map((result, index) => (
-        <GapBox key={index}>
-          <SubTitle>{result.paragraphTitle}</SubTitle>
-          <SectionText>{result.description}</SectionText>
-          <GapList>
-            {result.shortAnswers.map((shortAnswer, index) => (
-              <li key={index}>
-                <MainText>{shortAnswer}</MainText>
-              </li>
-            ))}
-          </GapList>
-        </GapBox>
-      ))}
-    </GapBox>
+      <ScrollBox height="100%">
+        {shortAnswerFormat?.map((result, index) => (
+          <GapBox key={index}>
+            <SubTitle>
+              제목{index + 1}: {result.paragraphTitle}
+            </SubTitle>
+            <SectionText>
+              설명{index + 1}: {result.description}
+            </SectionText>
+            <ScrollBox>
+              {result.shortAnswers.map((shortAnswer, index) => (
+                <li key={index}>
+                  {!isAnonymous && (
+                    <SubTitle>{shortAnswer?.user?.name}</SubTitle>
+                  )}
+                  <MainText>{shortAnswer.result}</MainText>
+                </li>
+              ))}
+            </ScrollBox>
+          </GapBox>
+        ))}
+      </ScrollBox>
+    </ColumnBox>
   );
 };
 

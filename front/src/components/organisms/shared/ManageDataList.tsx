@@ -27,7 +27,7 @@ interface IInfiniteScroll {
 
 interface IManageDataList extends IInfiniteScroll {
   refetch: RefetchFnDynamic<any, any, Options>;
-  dataTableName?: string;
+  mutateName?: string;
 }
 
 // Search, Pagination(Infinite Scroll) 구현하는 컴포넌트
@@ -37,7 +37,7 @@ export const ManageDataList = ({
   isLoadingNext,
   loadNext,
   refetch,
-  dataTableName,
+  mutateName,
 }: IManageDataList) => {
   // 스크롤이 바닥에 닿았는지 감지해서 relay의 loadNext를 실행시키는 훅
   const ref = useInfiniteScroll(async (entry, observer) => {
@@ -68,7 +68,7 @@ export const ManageDataList = ({
     <>
       <GapBox>
         <Section>
-          <DataToolBar onChange={handleChange} dataTableName={dataTableName} />
+          <DataToolBar onChange={handleChange} mutateName={mutateName} />
         </Section>
         <ListBox>{children}</ListBox>
         {(isLoadingNext || isPending) && <p>기다려바</p>}

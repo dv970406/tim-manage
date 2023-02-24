@@ -238,7 +238,6 @@ export class UserService {
     loggedInUser: User,
     { keyword, first, after }: ConnectionInput,
   ): Promise<CommentsConnection> {
-    console.log('keywordzzz : ', keyword);
     const [findMyComments, totalCount] = await this.commentRepo.findAndCount({
       order: { createdAt: 'DESC' },
       where: {
@@ -290,7 +289,6 @@ export class UserService {
     }));
     const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
 
-    console.log('edges : ', edges);
     return {
       edges,
       pageInfo: {

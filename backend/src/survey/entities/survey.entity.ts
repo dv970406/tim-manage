@@ -31,9 +31,9 @@ export class Survey extends CoreEntity implements Node {
   user: User;
 
   // Define isTypeOf function to specify concrete type
-  static isTypeOf(obj: any): obj is Survey {
-    return obj instanceof Survey;
-  }
+  // static isTypeOf(obj: any): obj is Survey {
+  //   return obj instanceof Survey;
+  // }
 }
 
 // DB 저장용도 아님

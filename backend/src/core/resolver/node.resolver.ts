@@ -39,26 +39,13 @@ export class NodeResolver {
       return user as User;
     }
 
-    const post = await this.postRepo.findPost({ postId: id });
-    if (Post.isTypeOf(post)) {
-      return post as Post;
-    }
-    const survey = await this.surveyRepo.findSurvey({ surveyId: id });
-    if (Survey.isTypeOf(survey)) {
-      return survey as Survey;
-    }
-  }
-
-  @ResolveField(() => [User])
-  users(
-    @Parent() node, // Resolved object that implements Character
-    @Info() { nodeType }, // Type of the object that implements Character
-    @Args('keyword', { type: () => String }) keyword: string,
-  ) {
-    console.log(nodeType);
-    console.log(node);
-    console.log(keyword);
-    console.log('please');
-    return node;
+    // const post = await this.postRepo.findPost({ postId: id });
+    // if (Post.isTypeOf(post)) {
+    //   return post as Post;
+    // }
+    // const survey = await this.surveyRepo.findSurvey({ surveyId: id });
+    // if (Survey.isTypeOf(survey)) {
+    //   return survey as Survey;
+    // }
   }
 }

@@ -49,6 +49,7 @@ export class VacationService {
         relations: {
           user: {
             team: true,
+            position: true,
           },
         },
         where: {

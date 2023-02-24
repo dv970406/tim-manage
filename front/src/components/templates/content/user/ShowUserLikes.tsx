@@ -47,7 +47,7 @@ const ShowUserLikes = () => {
       {" "}
       <SectionTitle>좋아요 목록</SectionTitle>
       <ManageDataList
-        dataTableName=""
+        mutateName=""
         loadNext={loadNext}
         hasNext={hasNext}
         isLoadingNext={isLoadingNext}

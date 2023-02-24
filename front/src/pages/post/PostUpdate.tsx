@@ -6,6 +6,7 @@ import { GetPostQuery } from "../../client/post/__generated__/GetPostQuery.graph
 import { useGetUser } from "../../client/user/GetUser.client";
 import { GetUserQuery } from "../../client/user/__generated__/GetUserQuery.graphql";
 import { Section } from "../../components/atomics/sections/sections";
+import { CenterFixBox } from "../../components/molecules/boxes/CenterBox";
 import MutatePostForm from "../../components/templates/content/post/MutatePostForm";
 
 const PostUpdatePage = () => {
@@ -33,19 +34,11 @@ interface IPostUpdate {
 const PostUpdate = ({ getPostQueryReference }: IPostUpdate) => {
   const { post } = useGetPost(getPostQueryReference);
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        height: "100%",
-      }}
-    >
+    <CenterFixBox>
       <Section style={{ width: "40%" }}>
         {post && <MutatePostForm post={post} />}
       </Section>
-    </div>
+    </CenterFixBox>
   );
 };
 

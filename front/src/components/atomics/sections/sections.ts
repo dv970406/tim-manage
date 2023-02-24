@@ -123,12 +123,14 @@ export const Article = styled.article(({ theme }) => ({
 //   animation: `${modalBgShow} 0.3s`,
 // }));
 
-export const ModalDialog = styled.dialog(({ theme }) => ({
+export const ModalDialog = styled(motion.dialog)(({ theme }) => ({
   "::backdrop": {
     backgroundColor: theme.bgColors.translucent,
   },
   animation: `${modalShow} 0.5s`,
   width: 700,
+  height: "80%",
+  maxHeight: "80%",
   background: theme.bgColors.gray,
   borderRadius: theme.borderRadius.lg,
   padding: theme.spacing.xl,

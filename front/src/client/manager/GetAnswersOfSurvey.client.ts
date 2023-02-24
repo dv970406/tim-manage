@@ -8,25 +8,13 @@ import { GetAnswersOfSurveyQuery } from "./__generated__/GetAnswersOfSurveyQuery
 
 export const getAnswersOfSurveyQuery = graphql`
   query GetAnswersOfSurveyQuery($surveyId: ID!, $skip: Boolean!) {
-    getAnswersOfSurvey(input: { surveyId: $surveyId }) @skip(if: $skip) {
+    getAnswersOfSurvey(surveyId: $surveyId) @skip(if: $skip) {
       ok
       error
-      shortAnswerFormat {
-        paragraphTitle
-        description
-        shortAnswers
-      }
-      multipleChoiceFormat {
-        paragraphTitle
-        description
-        chartFormatResults {
-          labels
-          series
-        }
-      }
-      responseRate {
-        notAnsweredEmployeeCount
-        answeredEmployeeCount
+      survey {
+        ...ShowShortAnswers_answer
+        ...ShowMultipleChoiceAnswers_answer
+        ...SurveyResponseRate_answer
       }
     }
   }
@@ -45,8 +33,6 @@ export const useGetAnswersOfSurvey = (surveyId: string) => {
     alert(getAnswersOfSurvey?.error);
   }
   return {
-    multipleChoiceFormat: getAnswersOfSurvey?.multipleChoiceFormat,
-    shortAnswerFormat: getAnswersOfSurvey?.shortAnswerFormat,
-    responseRate: getAnswersOfSurvey?.responseRate,
+    answers: getAnswersOfSurvey?.survey,
   };
 };

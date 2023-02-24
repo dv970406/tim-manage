@@ -58,7 +58,7 @@ const UsersTable = ({ users }: IUsersTable) => {
     <GapBox>
       <OrderUsers refetch={refetch} />
       <ManageDataList
-        dataTableName="create-user"
+        mutateName="create-user"
         refetch={refetch}
         isLoadingNext={isLoadingNext}
         loadNext={loadNext}

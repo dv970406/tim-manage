@@ -18,6 +18,7 @@ import { cardAnimation } from "../../css/animations";
 import { theme } from "../../css/theme";
 import { getDayOfNow } from "../../utils/time/time";
 import { useControlTodayMeal } from "../../utils/hooks/meal/meal.hook";
+import { CenterFixBox } from "../../components/molecules/boxes/CenterBox";
 
 const MealWeeklyPlannerPage = () => {
   const [getWeeklyMealQueryReference, loadGetWeeklyMealQuery] =
@@ -62,13 +63,9 @@ const MealWeeklyPlanner = ({
   return (
     <GapBox>
       <SectionTitle>이번주 식단</SectionTitle>
-      <GapBox
+      <CenterFixBox
         style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
           position: "relative",
-          height: "100%",
         }}
       >
         <AnimatePresence custom={isBack}>
@@ -105,7 +102,7 @@ const MealWeeklyPlanner = ({
             <ButtonIcon onClick={getYesterday} icon={faYen} />
           </RowBox>
         </AnimatePresence>
-      </GapBox>
+      </CenterFixBox>
     </GapBox>
   );
 };

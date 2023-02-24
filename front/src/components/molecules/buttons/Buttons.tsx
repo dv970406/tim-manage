@@ -6,15 +6,16 @@ import { theme } from "../../../css/theme";
 import { SubmitButton } from "../../atomics/buttons/buttons";
 import { Icon, IIcon } from "../../atomics/icons/icons";
 import { MainText } from "../../atomics/typographys/texts";
+import { motion } from "framer-motion";
 
 interface IButtonIcon extends IIcon {
   onClick: MouseEventHandler<HTMLButtonElement>;
 }
 export const ButtonIcon = ({ color, icon, size, onClick }: IButtonIcon) => {
   return (
-    <button onClick={onClick} type="button">
+    <motion.button onClick={onClick} type="button">
       <Icon icon={icon} color={color} size={size} />
-    </button>
+    </motion.button>
   );
 };
 

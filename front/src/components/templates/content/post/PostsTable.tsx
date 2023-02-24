@@ -54,7 +54,7 @@ const PostsTable = ({ posts }: IPostsTable) => {
   return (
     <>
       <ManageDataList
-        dataTableName={MODAL_NAME.CREATE_POST}
+        mutateName={MODAL_NAME.CREATE_POST}
         refetch={refetch}
         loadNext={loadNext}
         hasNext={hasNext}
