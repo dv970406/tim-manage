@@ -120,6 +120,23 @@ type Meeting {
   host: User!
 }
 
+type Room {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  users: [User!]!
+  messages: [Message!]!
+}
+
+type Message {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  message: String!
+  user: User!
+  room: Room!
+}
+
 type User implements Node {
   id: ID!
   createdAt: DateTime!
@@ -140,6 +157,8 @@ type User implements Node {
   comments: [Comment!]!
   surveys: [Survey!]!
   answers: [Answer!]!
+  messages: [Message!]!
+  rooms: [Room!]!
   myAnswersConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): AnswersConnection!
   myVacationsConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): VacationsConnection!
   myPostsConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): PostsConnection!
@@ -548,6 +567,30 @@ type GetWeeklyMealOutput {
   weeklyMeal: Meal
 }
 
+type SendMessageOutput {
+  ok: Boolean!
+  error: String
+  message: Message
+}
+
+type ExitRoomOutput {
+  ok: Boolean!
+  error: String
+  deletedRoomId: ID
+}
+
+type GetRoomOutput {
+  ok: Boolean!
+  error: String
+  room: Room
+}
+
+type GetRoomsOutput {
+  ok: Boolean!
+  error: String
+  rooms: [Room!]
+}
+
 type Query {
   getUsers(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): GetUsersOutput!
   getUser(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10, userId: ID!): GetUserOutput!
@@ -568,6 +611,8 @@ type Query {
   getMeetings: GetMeetingsOutput!
   getMeeting(input: GetMeetingInput!): GetMeetingOutput!
   getWeeklyMeal: GetWeeklyMealOutput!
+  getRooms: GetRoomsOutput!
+  getRoom(roomId: ID!): GetRoomOutput!
 }
 
 input GetPositionInput {
@@ -624,6 +669,8 @@ type Mutation {
   updateMeeting(input: UpdateMeetingInput!): UpdateMeetingOutput!
   deleteMeeting(input: DeleteMeetingInput!): DeleteMeetingOutput!
   createWeeklyMeal(input: CreateWeeklyMealInput!): CreateWeeklyMealOutput!
+  sendMessage(input: SendMessageInput!): SendMessageOutput!
+  exitRoom(roomId: ID!): ExitRoomOutput!
 }
 
 input LoginInput {
@@ -781,4 +828,14 @@ input DeleteMeetingInput {
 
 input CreateWeeklyMealInput {
   excelToJson: String!
+}
+
+input SendMessageInput {
+  message: String!
+  roomId: String
+  listenerId: String
+}
+
+type Subscription {
+  subscriptionRoom(roomId: ID!): Message!
 }

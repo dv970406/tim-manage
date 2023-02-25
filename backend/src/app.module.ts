@@ -34,6 +34,9 @@ import { Meeting } from './meeting/entities/meeting.entity';
 import { MealModule } from './meal/meal.module';
 import { Meal } from './meal/entities/meal.entity';
 import { Node } from './core/dtos/node.dto';
+import { MessageModule } from './message/message.module';
+import { Message } from './message/entity/message.entity';
+import { Room } from './message/entity/room.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -54,6 +57,7 @@ import { Node } from './core/dtos/node.dto';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       context: ({ req }) => ({ user: req['user'] }),
+      installSubscriptionHandlers: true,
       cors: {
         origin: [
           process.env.AUTHORIZED_ORIGIN1,
@@ -89,6 +93,8 @@ import { Node } from './core/dtos/node.dto';
         Meeting,
         Meal,
         Node,
+        Message,
+        Room,
       ],
     }),
     UserModule,
@@ -104,6 +110,7 @@ import { Node } from './core/dtos/node.dto';
     PostModule,
     MeetingModule,
     MealModule,
+    MessageModule,
   ],
   controllers: [],
   providers: [],

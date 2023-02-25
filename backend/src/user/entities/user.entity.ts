@@ -39,6 +39,8 @@ import { Survey } from 'src/survey/entities/survey.entity';
 import { Meeting } from 'src/meeting/entities/meeting.entity';
 import { DB_TABLE } from 'src/core/variables/constants';
 import { Node } from 'src/core/dtos/node.dto';
+import { Message } from 'src/message/entity/message.entity';
+import { Room } from 'src/message/entity/room.entity';
 @InputType('UserInputType', { isAbstract: true })
 @Entity()
 @ObjectType({ implements: Node })
@@ -143,6 +145,14 @@ export class User extends CoreEntity implements Node {
   @OneToMany((type) => Answer, (answer) => answer.user)
   @Field((type) => [Answer])
   answers: Answer[];
+
+  @OneToMany((type) => Message, (message) => message.user)
+  @Field((type) => [Message])
+  messages: Message[];
+
+  @ManyToMany((type) => Room, (room) => room.users)
+  @Field((type) => [Room])
+  rooms: Room[];
 
   // Define isTypeOf function to specify concrete type
   static isTypeOf(obj: any): obj is User {
