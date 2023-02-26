@@ -6,11 +6,13 @@ import {
   Query,
   ResolveField,
   Resolver,
+  Subscription,
 } from '@nestjs/graphql';
 import { LoggedInUser } from 'src/auth/auth-user.decorator';
 import { LoginGuard, ManagerGuard } from 'src/auth/auth.guard';
 import { ConnectionInput } from 'src/core/dtos/pagination.dto';
 import { User } from 'src/user/entities/user.entity';
+import { pubsub, TRIGGER_CONFIRM_VACATION } from 'src/utils/subscription';
 import {
   ConfirmVacationInput,
   ConfirmVacationOutput,
@@ -26,17 +28,33 @@ import {
 import { GetUnConfirmedByMeVacationsOutput } from './dtos/get-unConfirmedByMeVacations.dto';
 import { GetVacationInput, GetVacationOutput } from './dtos/get-vacation.dto';
 import { GetVacationsOutput } from './dtos/get-vacations.dto';
+import { SubscriptionConfirmVacationInput } from './dtos/subscription-confirmVacation.dto';
 import {
   UpdateVacationInput,
   UpdateVacationOutput,
 } from './dtos/update-vacation.dto';
-import { VacationsConnection } from './dtos/vacation-pagination.dto';
 import { Vacation } from './entities/vacation.entity';
 import { VacationService } from './vacation.service';
 
 @Resolver((of) => Vacation)
 export class VacationResolver {
   constructor(private readonly vacationService: VacationService) {}
+
+  @Subscription((type) => Vacation, {
+    filter: ({ subscriptionConfirmVacation }, { userId }, context) => {
+      return subscriptionConfirmVacation.user.id === userId;
+    },
+
+    resolve: ({ subscriptionConfirmVacation }) => {
+      return subscriptionConfirmVacation;
+    },
+  })
+  @UseGuards(LoginGuard)
+  subscriptionConfirmVacation(
+    @Args() subscriptionConfirmVacationInput: SubscriptionConfirmVacationInput,
+  ) {
+    return pubsub.asyncIterator(TRIGGER_CONFIRM_VACATION);
+  }
 
   @Query((type) => GetVacationsOutput)
   getVacations(): Promise<GetVacationsOutput> {

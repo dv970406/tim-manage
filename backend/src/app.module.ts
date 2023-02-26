@@ -37,6 +37,7 @@ import { Node } from './core/dtos/node.dto';
 import { MessageModule } from './message/message.module';
 import { Message } from './message/entity/message.entity';
 import { Room } from './message/entity/room.entity';
+import { CustomTypeOrmModule } from './core/repository/custom-typeorm.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -56,7 +57,27 @@ import { Room } from './message/entity/room.entity';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-      context: ({ req }) => ({ user: req['user'] }),
+      subscriptions: {
+        // graphql-ws로 대체함
+        // 'subscriptions-transport-ws': {
+        //   onConnect: ({ token }) => {
+        //     console.log('token : ', token);
+        //     return { token };
+        //   },
+        // },
+        'graphql-ws': {
+          onConnect: ({ connectionParams }) => ({
+            token: connectionParams.token,
+          }),
+        },
+      },
+      context: ({ req, connectionParams }) => {
+        if (connectionParams) {
+          return { token: connectionParams.token };
+        } else if (req) {
+          return { token: req.headers.token };
+        }
+      },
       installSubscriptionHandlers: true,
       cors: {
         origin: [
@@ -66,6 +87,7 @@ import { Room } from './message/entity/room.entity';
         ],
         credentials: true,
       },
+
       // 소수점 써야하는 것도 있는데 전부 정수로 만들어버려서 일단 주석
       // buildSchemaOptions: {
       //   numberScalarMode: 'integer',
@@ -111,15 +133,17 @@ import { Room } from './message/entity/room.entity';
     MeetingModule,
     MealModule,
     MessageModule,
+    CustomTypeOrmModule,
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(JwtMiddleware).forRoutes({
-      path: '/graphql',
-      method: RequestMethod.ALL,
-    });
-  }
+export class AppModule /* implements NestModule  */ {
+  // Subscription을 추가하면서 아래 미들웨어는 HTTP에서만 동작하기에 WS에서도 사용하기 위해 JWT 미들웨어 로직을 Guard로 옮길것임
+  // configure(consumer: MiddlewareConsumer) {
+  //   consumer.apply(JwtMiddleware).forRoutes({
+  //     path: '/graphql',
+  //     method: RequestMethod.ALL,
+  //   });
+  // }
 }

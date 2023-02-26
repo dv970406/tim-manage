@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CustomTypeOrmModule } from 'src/core/repository/custom-typeorm.module';
+import { UserModule } from 'src/user/user.module';
 import { UserRepository } from 'src/user/user.repository';
 import { Team } from './entities/team.entity';
 import { TeamRepository } from './team.repository';
@@ -10,6 +11,7 @@ import { TeamService } from './Team.service';
 @Module({
   imports: [
     CustomTypeOrmModule.forCustomRepository([TeamRepository, UserRepository]),
+    UserModule,
   ],
   providers: [TeamService, TeamResolver],
 })

@@ -35,8 +35,8 @@ import { UserRepository } from './user.repository';
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(UserRepository) private readonly userRepo: UserRepository,
     private readonly jwtService: JwtService,
+    @InjectRepository(UserRepository) private readonly userRepo: UserRepository,
     @InjectRepository(PositionRepository)
     private readonly positionRepo: PositionRepository,
     @InjectRepository(TeamRepository) private readonly teamRepo: TeamRepository,

@@ -5,6 +5,7 @@ import { DB_TABLE } from 'src/core/variables/constants';
 import { POSITION_CEO } from 'src/core/variables/position';
 import { User } from 'src/user/entities/user.entity';
 import { UserRepository } from 'src/user/user.repository';
+import { pubsub, TRIGGER_CONFIRM_VACATION } from 'src/utils/subscription';
 import { LessThan, MoreThan } from 'typeorm';
 import {
   ConfirmVacationInput,
@@ -256,11 +257,15 @@ export class VacationService {
         findVacation.confirmed.byManager = true;
       }
 
-      const confirmedVacation = await this.vacationRepo.save(findVacation);
+      // const confirmedVacation = await this.vacationRepo.save(findVacation);
+
+      pubsub.publish(TRIGGER_CONFIRM_VACATION, {
+        subscriptionConfirmVacation: findVacation, //confirmedVacation,
+      });
 
       return {
         ok: true,
-        vacation: confirmedVacation,
+        vacation: findVacation,
       };
     } catch (error) {
       return {

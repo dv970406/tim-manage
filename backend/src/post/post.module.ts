@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CustomTypeOrmModule } from 'src/core/repository/custom-typeorm.module';
+import { UserModule } from 'src/user/user.module';
 import { CommentResolver } from './comment.resolver';
 import { CommentService } from './comment.service';
 import { LikeResolver } from './like.resolver';
@@ -17,6 +18,7 @@ import { PostRepository } from './repositories/post.repository';
       LikeRepository,
       CommentRepository,
     ]),
+    UserModule,
   ],
   providers: [
     PostResolver,

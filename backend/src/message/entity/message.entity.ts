@@ -31,4 +31,8 @@ export class Message extends CoreEntity {
   room: Room;
   @RelationId((message: Message) => message.room)
   roomId: string;
+
+  @Column({ default: false })
+  @Field((type) => Boolean, { defaultValue: false })
+  isRead: boolean;
 }

@@ -1,7 +1,7 @@
 import { ArgsType, Field, ID, InputType, ObjectType } from '@nestjs/graphql';
 import { CoreOutput } from 'src/core/dtos/core.dto';
 
-@ArgsType()
+@InputType()
 export class ExitRoomInput {
   @Field((type) => ID)
   roomId: string;

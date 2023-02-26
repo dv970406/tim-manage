@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CustomTypeOrmModule } from 'src/core/repository/custom-typeorm.module';
+import { UserModule } from 'src/user/user.module';
 import { UserRepository } from 'src/user/user.repository';
 import { MessageResolver } from './message.resolver';
 import { MessageService } from './message.service';
@@ -15,6 +16,7 @@ import { RoomService } from './room.service';
       RoomRepository,
       MessageRepository,
     ]),
+    UserModule,
   ],
   providers: [MessageResolver, MessageService, RoomResolver, RoomService],
 })

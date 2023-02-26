@@ -1,18 +1,12 @@
-import {
-  ArgsType,
-  Field,
-  InputType,
-  ObjectType,
-  PickType,
-} from '@nestjs/graphql';
+import { Field, ID, InputType, ObjectType, PickType } from '@nestjs/graphql';
 import { CoreOutput } from 'src/core/dtos/core.dto';
 import { Message } from 'src/message/entity/message.entity';
 
 @InputType()
 export class SendMessageInput extends PickType(Message, ['message']) {
-  @Field((type) => String, { nullable: true })
+  @Field((type) => ID, { nullable: true })
   roomId?: string;
-  @Field((type) => String, { nullable: true })
+  @Field((type) => ID, { nullable: true })
   listenerId?: string;
 }
 

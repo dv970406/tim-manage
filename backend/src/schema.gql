@@ -126,6 +126,8 @@ type Room {
   updatedAt: DateTime!
   users: [User!]!
   messages: [Message!]!
+  unreadCount: Int!
+  messagesOfRoomConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): MessagesConnection!
 }
 
 type Message {
@@ -135,6 +137,7 @@ type Message {
   message: String!
   user: User!
   room: Room!
+  isRead: Boolean!
 }
 
 type User implements Node {
@@ -573,6 +576,16 @@ type SendMessageOutput {
   message: Message
 }
 
+type MessagesConnection {
+  edges: [MessageEdge!]!
+  pageInfo: PageInfo!
+}
+
+type MessageEdge {
+  cursor: DateTime!
+  node: Message!
+}
+
 type ExitRoomOutput {
   ok: Boolean!
   error: String
@@ -585,10 +598,16 @@ type GetRoomOutput {
   room: Room
 }
 
+type RoomEdge {
+  cursor: DateTime
+  node: Room!
+}
+
 type GetRoomsOutput {
   ok: Boolean!
   error: String
-  rooms: [Room!]
+  edges: [RoomEdge!]
+  pageInfo: PageInfo
 }
 
 type Query {
@@ -611,7 +630,7 @@ type Query {
   getMeetings: GetMeetingsOutput!
   getMeeting(input: GetMeetingInput!): GetMeetingOutput!
   getWeeklyMeal: GetWeeklyMealOutput!
-  getRooms: GetRoomsOutput!
+  getRooms(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): GetRoomsOutput!
   getRoom(roomId: ID!): GetRoomOutput!
 }
 
@@ -670,7 +689,7 @@ type Mutation {
   deleteMeeting(input: DeleteMeetingInput!): DeleteMeetingOutput!
   createWeeklyMeal(input: CreateWeeklyMealInput!): CreateWeeklyMealOutput!
   sendMessage(input: SendMessageInput!): SendMessageOutput!
-  exitRoom(roomId: ID!): ExitRoomOutput!
+  exitRoom(input: ExitRoomInput!): ExitRoomOutput!
 }
 
 input LoginInput {
@@ -832,10 +851,15 @@ input CreateWeeklyMealInput {
 
 input SendMessageInput {
   message: String!
-  roomId: String
-  listenerId: String
+  roomId: ID
+  listenerId: ID
+}
+
+input ExitRoomInput {
+  roomId: ID!
 }
 
 type Subscription {
+  subscriptionConfirmVacation(userId: ID!): Vacation!
   subscriptionRoom(roomId: ID!): Message!
 }

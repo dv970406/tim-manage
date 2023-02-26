@@ -5,17 +5,31 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
+import { JwtService } from 'src/jwt/jwt.service';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class LoginGuard implements CanActivate {
-  //
-  canActivate(context: ExecutionContext): any {
+  constructor(
+    private readonly jwtService: JwtService,
+    private readonly userService: UserService,
+  ) {}
+  async canActivate(context: ExecutionContext): Promise<any> {
     try {
       const gqlContext = GqlExecutionContext.create(context).getContext();
-      const user = gqlContext['user'];
+
+      const { token } = gqlContext;
+
+      if (!token) return false;
+
+      const userId = this.jwtService.verify(token).toString();
+
+      const { user } = await this.userService.getUser({ userId });
+
       if (!user) {
         throw new Error('로그인이 필요합니다.');
       }
+      gqlContext['user'] = user;
       return true;
     } catch (error) {
       return {
@@ -28,20 +42,32 @@ export class LoginGuard implements CanActivate {
 
 @Injectable()
 export class ManagerGuard implements CanActivate {
-  canActivate(context: ExecutionContext): any {
-    const gqlContext = GqlExecutionContext.create(context).getContext();
-    const user = gqlContext['user'];
-    if (!user || !user.isManager) {
-      throw new UnauthorizedException('관리자 권한이 없습니다');
-    }
-    return true;
+  constructor(
+    private readonly jwtService: JwtService,
+    private readonly userService: UserService,
+  ) {}
+  async canActivate(context: ExecutionContext): Promise<any> {
+    try {
+      const gqlContext = GqlExecutionContext.create(context).getContext();
+      const { token } = gqlContext;
 
-    // } catch (error) {
-    //   console.log('errr :', error);
-    //   return {
-    //     ok: false,
-    //     error: error.message || '관리자 권한이 없습니다.',
-    //   };
-    // }
+      if (!token) return false;
+
+      const userId = this.jwtService.verify(token).toString();
+
+      const { user } = await this.userService.getUser({ userId });
+
+      if (!user || !user.isManager) {
+        throw new UnauthorizedException('관리자 권한이 없습니다');
+      }
+      gqlContext['user'] = user;
+
+      return true;
+    } catch (error) {
+      return {
+        ok: false,
+        error: error.message || '관리자 권한이 없습니다.',
+      };
+    }
   }
 }

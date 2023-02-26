@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
 import { UserRepository } from 'src/user/user.repository';
+import { pubsub, TRIGGER_SEND_MESSAGE } from 'src/utils/subscription';
 import {
   SendMessageInput,
   SendMessageOutput,
 } from './dtos/messages/send-message.dto';
 import { MessageRepository } from './repositories/message.repository';
 import { RoomRepository } from './repositories/room.repository';
-import { pubsub, TRIGGER_SEND_MESSAGE } from './room-subscription';
 
 @Injectable()
 export class MessageService {
@@ -52,7 +52,6 @@ export class MessageService {
         subscriptionRoom: newMessage,
       });
 
-      // console.log('new MEssage : ', newMessage);
       return {
         ok: true,
         message: newMessage,
