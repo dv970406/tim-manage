@@ -6,7 +6,10 @@ import {
   faOutdent,
   faUser,
 } from "@fortawesome/pro-solid-svg-icons";
+import { useEffect, useState } from "react";
 import { TOKEN } from "../../client/client";
+import { useGetMyInfo } from "../../client/user/GetMyInfo.client";
+import { subscriptionConfirmVacation } from "../../client/vacation/SubscriptionConfirmVacation.client";
 import { theme } from "../../css/theme";
 import { GapList } from "../atomics/boxes/Boxes";
 import { HeaderSection } from "../atomics/sections/sections";
@@ -26,6 +29,22 @@ const Header = () => {
     const hamburgerMenu = document.querySelector(".hamburger_menu");
     hamburgerMenu?.classList.remove("open");
   };
+
+  const { myInfo } = useGetMyInfo();
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    const { dispose } = subscriptionConfirmVacation({
+      userId: myInfo?.id!,
+      setData,
+    });
+    return () => {
+      dispose();
+    };
+  }, []);
+
+  console.log("new Data :", data);
+
   return (
     <HeaderSection>
       <nav

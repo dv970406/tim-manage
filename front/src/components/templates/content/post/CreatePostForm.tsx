@@ -8,7 +8,7 @@ import { theme } from "../../../../css/theme";
 import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
 import { closeModal } from "../../../../utils/modal/controlModal";
 import { formats, modules } from "../../../../utils/quill/props";
-import { GapBox } from "../../../atomics/boxes/Boxes";
+import { GapBox, ScrollBox } from "../../../atomics/boxes/Boxes";
 import { SubmitButton } from "../../../atomics/buttons/buttons";
 import { Form } from "../../../atomics/form/Form";
 import { SubTitle } from "../../../atomics/typographys/titles";
@@ -51,7 +51,7 @@ const CreatePostForm = () => {
 
   return (
     <Form>
-      <GapBox>
+      <ScrollBox height="100%">
         <TextInput
           register={register("title", {
             required: { value: true, message: "제목은 필수입니다." },
@@ -86,7 +86,7 @@ const CreatePostForm = () => {
             className={"text-editor"}
           />
         </GapBox>
-      </GapBox>
+      </ScrollBox>
       <EndSubmitButton
         onClick={handleSubmit(onSubmit)}
         disabled={createPostLoading || isSubmitDisabled}

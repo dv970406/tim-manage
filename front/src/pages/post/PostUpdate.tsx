@@ -5,6 +5,7 @@ import { getPostQuery, useGetPost } from "../../client/post/GetPost.client";
 import { GetPostQuery } from "../../client/post/__generated__/GetPostQuery.graphql";
 import { useGetUser } from "../../client/user/GetUser.client";
 import { GetUserQuery } from "../../client/user/__generated__/GetUserQuery.graphql";
+import Loading from "../../components/atomics/boxes/Loading";
 import { Section } from "../../components/atomics/sections/sections";
 import { CenterFixBox } from "../../components/molecules/boxes/CenterBox";
 import MutatePostForm from "../../components/templates/content/post/MutatePostForm";
@@ -20,7 +21,7 @@ const PostUpdatePage = () => {
     loadGetPostQuery({ id: postId });
   }, []);
   return (
-    <Suspense fallback="qweewqqweewqqweewqqweewqqweewq">
+    <Suspense fallback={<Loading />}>
       {getPostQueryReference && (
         <PostUpdate getPostQueryReference={getPostQueryReference} />
       )}

@@ -4,7 +4,7 @@ import { useOutletContext } from "react-router-dom";
 import { RowBox, ListBox } from "../../../atomics/boxes/Boxes";
 import { SectionTitle } from "../../../atomics/typographys/titles";
 import PostTableContent from "../../../organisms/content/post/PostTableContent";
-import { ManageDataList } from "../../../organisms/shared/ManageDataList";
+import { SearchAndInfiniteScrollDataList } from "../../../organisms/shared/InfiniteScrolls";
 import { ShowUserComments_comment$key } from "./__generated__/ShowUserComments_comment.graphql";
 
 // 여기도 connection으로
@@ -46,7 +46,7 @@ const ShowUserComments = () => {
     <>
       {" "}
       <SectionTitle>댓글 목록</SectionTitle>
-      <ManageDataList
+      <SearchAndInfiniteScrollDataList
         mutateName=""
         loadNext={loadNext}
         hasNext={hasNext}
@@ -63,7 +63,7 @@ const ShowUserComments = () => {
               />
             )
         )}
-      </ManageDataList>
+      </SearchAndInfiniteScrollDataList>
     </>
   );
 };

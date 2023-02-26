@@ -9,7 +9,7 @@ import { LoadMoreFn, RefetchFnDynamic } from "react-relay";
 import { PAGINATION_LOAD_COUNT } from "../../../utils/constants/share.constant";
 import { useInfiniteScroll } from "../../../utils/hooks/scroll/infiniteScroll.hook";
 import Table from "../../molecules/tables/Table";
-import { GapBox, ListBox } from "../../atomics/boxes/Boxes";
+import { GapBox, ListBox, ScrollBox } from "../../atomics/boxes/Boxes";
 import { Options } from "react-relay/relay-hooks/useRefetchableFragmentNode";
 import { Section } from "../../atomics/sections/sections";
 import DataToolBar from "../../molecules/inputs/DataToolBar";
@@ -25,20 +25,20 @@ interface IInfiniteScroll {
   loadNext: LoadMoreFn<any>;
 }
 
-interface IManageDataList extends IInfiniteScroll {
+interface ISearchAndInfiniteScrollDataList extends IInfiniteScroll {
   refetch: RefetchFnDynamic<any, any, Options>;
   mutateName?: string;
 }
 
 // Search, Pagination(Infinite Scroll) 구현하는 컴포넌트
-export const ManageDataList = ({
+export const SearchAndInfiniteScrollDataList = ({
   children,
   hasNext,
   isLoadingNext,
   loadNext,
   refetch,
   mutateName,
-}: IManageDataList) => {
+}: ISearchAndInfiniteScrollDataList) => {
   // 스크롤이 바닥에 닿았는지 감지해서 relay의 loadNext를 실행시키는 훅
   const ref = useInfiniteScroll(async (entry, observer) => {
     observer.unobserve(entry.target);
@@ -78,16 +78,16 @@ export const ManageDataList = ({
   );
 };
 
-interface IManageDataTable extends IInfiniteScroll {
+interface IInfiniteScrollDataTable extends IInfiniteScroll {
   headers: string[];
 }
-export const ManageDataTable = ({
+export const InfiniteScrollDataTable = ({
   children,
   hasNext,
   isLoadingNext,
   loadNext,
   headers,
-}: IManageDataTable) => {
+}: IInfiniteScrollDataTable) => {
   const ref = useInfiniteScroll(async (entry, observer) => {
     observer.unobserve(entry.target);
     console.log(hasNext, isLoadingNext);
@@ -99,6 +99,31 @@ export const ManageDataTable = ({
   return (
     <>
       <Table headers={headers}>{children}</Table>
+      {isLoadingNext && <p>기다려바</p>}
+
+      <ObserveBox ref={ref} />
+    </>
+  );
+};
+
+interface IScrollList extends IInfiniteScroll {}
+export const InfiniteScrollList = ({
+  children,
+  hasNext,
+  isLoadingNext,
+  loadNext,
+}: IScrollList) => {
+  const ref = useInfiniteScroll(async (entry, observer) => {
+    observer.unobserve(entry.target);
+    console.log(hasNext, isLoadingNext);
+    if (hasNext && !isLoadingNext) {
+      loadNext(PAGINATION_LOAD_COUNT);
+    }
+  });
+
+  return (
+    <>
+      <ScrollBox height="100%">{children}</ScrollBox>
       {isLoadingNext && <p>기다려바</p>}
 
       <ObserveBox ref={ref} />

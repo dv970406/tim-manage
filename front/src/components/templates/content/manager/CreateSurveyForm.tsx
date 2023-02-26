@@ -1,4 +1,5 @@
 import {
+  faCirclePlus,
   faPlus,
   faRuler,
   faTable,
@@ -22,6 +23,7 @@ import { Section } from "../../../atomics/sections/sections";
 import { MainText } from "../../../atomics/typographys/texts";
 import {
   ButtonIcon,
+  ButtonTextIcon,
   EndSubmitButton,
 } from "../../../molecules/buttons/Buttons";
 import FormTitle from "../../../molecules/form/FormTitle";
@@ -222,54 +224,59 @@ const CreateSurveyForm = ({}: ICreateSurveyForm) => {
           onClick={() => setIsAnonymous((prev) => !prev)}
         />
         <RowBox style={{ gap: theme.spacing.sm }}>
-          <ButtonIcon onClick={addParagraphs} icon={faPlus} />
-          <MainText>추가</MainText>
+          <ButtonTextIcon
+            onClick={addParagraphs}
+            icon={faCirclePlus}
+            text="추가"
+          />
         </RowBox>
         <ScrollBox height="100%">
           {paragraphs?.map((count, paragraphIndex) => (
-            <Section key={paragraphIndex}>
-              <TextInput
-                label={`주제${paragraphIndex + 1}`}
-                placeholder="주제"
-                icon={faTable}
-                onChange={(event) =>
-                  handleParagraphTitle(event, paragraphIndex)
-                }
-              />
-              <TextInput
-                label={`설명${paragraphIndex + 1}`}
-                placeholder="설명"
-                icon={faRuler}
-                onChange={(event) =>
-                  handleParagraphDescription(event, paragraphIndex)
-                }
-              />
-              <RowBox style={{ gap: theme.spacing.sm }}>
-                <ButtonIcon
-                  onClick={() => addChoices(paragraphIndex)}
-                  icon={faPlus}
+            <li>
+              <Section key={paragraphIndex}>
+                <TextInput
+                  label={`주제${paragraphIndex + 1}`}
+                  placeholder="주제"
+                  icon={faTable}
+                  onChange={(event) =>
+                    handleParagraphTitle(event, paragraphIndex)
+                  }
                 />
-                <MainText>지문 추가</MainText>
-              </RowBox>
-              <Section
-                style={{
-                  display: "flex",
-                  gap: theme.spacing.md,
-                  justifyContent: "center",
-                }}
-              >
-                {paragraphs[paragraphIndex].multipleChoice.map(
-                  (count, choiceIndex) => (
-                    <ChoiceInput
-                      key={choiceIndex}
-                      onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                        handleChoicesValue(event, choiceIndex, paragraphIndex)
-                      }
-                    />
-                  )
-                )}
+                <TextInput
+                  label={`설명${paragraphIndex + 1}`}
+                  placeholder="설명"
+                  icon={faRuler}
+                  onChange={(event) =>
+                    handleParagraphDescription(event, paragraphIndex)
+                  }
+                />
+                <RowBox style={{ gap: theme.spacing.sm }}>
+                  <ButtonTextIcon
+                    text="지문 추가"
+                    onClick={() => addChoices(paragraphIndex)}
+                    icon={faCirclePlus}
+                  />
+                </RowBox>
+                <Section
+                  style={{
+                    display: "flex",
+                    gap: theme.spacing.md,
+                    justifyContent: "center",
+                  }}
+                >
+                  {paragraphs[paragraphIndex].multipleChoice.map(
+                    (count, choiceIndex) => (
+                      <ChoiceInput
+                        key={choiceIndex}
+                        onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                          handleChoicesValue(event, choiceIndex, paragraphIndex)
+                        }
+                      />
+                    )
+                  )}
+                </Section>
               </Section>
-            </Section>
+            </li>
           ))}
         </ScrollBox>
         <EndSubmitButton

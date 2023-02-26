@@ -1,67 +1,31 @@
-import { Theme } from "@emotion/react";
-import styled, { StyledComponent } from "@emotion/styled";
-import { faGear } from "@fortawesome/pro-solid-svg-icons";
 import { MouseEventHandler, useState } from "react";
 import { theme } from "../../../css/theme";
-import { SubmitButton } from "../../atomics/buttons/buttons";
+import { HoverButton, SubmitButton } from "../../atomics/buttons/buttons";
 import { Icon, IIcon } from "../../atomics/icons/icons";
 import { MainText } from "../../atomics/typographys/texts";
-import { motion } from "framer-motion";
 
 interface IButtonIcon extends IIcon {
   onClick: MouseEventHandler<HTMLButtonElement>;
 }
 export const ButtonIcon = ({ color, icon, size, onClick }: IButtonIcon) => {
   return (
-    <motion.button onClick={onClick} type="button">
+    <button onClick={onClick} type="button">
       <Icon icon={icon} color={color} size={size} />
-    </motion.button>
+    </button>
   );
 };
 
-interface ITextIcon extends IIcon {
+interface IButtonTextIcon extends IIcon {
   text: string;
   onClick: MouseEventHandler<HTMLButtonElement>;
 }
 
-export const TextIcon = ({ icon, text, onClick }: ITextIcon) => {
+export const ButtonTextIcon = ({ icon, text, onClick }: IButtonTextIcon) => {
   return (
-    <button
-      onClick={onClick}
-      type="button"
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: theme.spacing.md,
-      }}
-    >
+    <HoverButton onClick={onClick} type="button">
       <Icon icon={icon} />
       <MainText>{text}</MainText>
-    </button>
-  );
-};
-
-interface IManagerButton {
-  onClick: () => void;
-}
-export const ManagerButton = ({ onClick }: IManagerButton) => {
-  const [isHovering, setIsHovering] = useState(false);
-  return (
-    <button
-      onClick={onClick}
-      style={{
-        padding: theme.spacing.lg,
-        backgroundColor: isHovering
-          ? theme.hoverColors.purple
-          : theme.bgColors.purple,
-        borderRadius: "50%",
-        transition: "all 0.2s",
-      }}
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
-    >
-      <Icon icon={faGear} size="xl" />
-    </button>
+    </HoverButton>
   );
 };
 
@@ -75,7 +39,6 @@ export const EndSubmitButton = ({ onClick, disabled, text }: ISubmitButton) => {
     <div
       style={{
         width: "100%",
-
         marginTop: "auto",
       }}
     >
@@ -83,5 +46,30 @@ export const EndSubmitButton = ({ onClick, disabled, text }: ISubmitButton) => {
         {text}
       </SubmitButton>
     </div>
+  );
+};
+
+interface ICircleButton extends IButtonIcon {
+  bgColor: string;
+}
+export const CircleButton = ({
+  onClick,
+  icon,
+  bgColor,
+  color,
+  size,
+}: ICircleButton) => {
+  return (
+    <button
+      onClick={onClick}
+      type="button"
+      style={{
+        backgroundColor: bgColor,
+        padding: theme.spacing.xl,
+        borderRadius: "50%",
+      }}
+    >
+      <Icon icon={icon} color={color} size={size} />
+    </button>
   );
 };

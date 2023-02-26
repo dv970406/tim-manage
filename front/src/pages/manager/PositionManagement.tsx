@@ -6,6 +6,7 @@ import {
 } from "../../client/manager/GetManagerPositions.client";
 import { GetManagerPositionsQuery } from "../../client/manager/__generated__/GetManagerPositionsQuery.graphql";
 import { GapBox } from "../../components/atomics/boxes/Boxes";
+import Loading from "../../components/atomics/boxes/Loading";
 import { Section } from "../../components/atomics/sections/sections";
 import CenterBox from "../../components/molecules/boxes/CenterBox";
 import CreatePositionForm from "../../components/templates/content/manager/CreatePositionForm";
@@ -21,7 +22,7 @@ const PositionManagementPage = () => {
     loadManagerPositionsQuery({});
   }, []);
   return (
-    <Suspense fallback="qweewqqweewqqweewqqweewqqweewq">
+    <Suspense fallback={<Loading />}>
       {managerPositionsQueryReference && (
         <PositionManagement
           managerPositionsQueryReference={managerPositionsQueryReference}
@@ -56,12 +57,12 @@ const PositionManagement = ({
       </Section>
       <GapBox style={{ width: "40%" }}>
         <Section>
-          <Suspense fallback="hihihihi">
+          <Suspense fallback={<Loading />}>
             <CreatePositionForm />
           </Suspense>
         </Section>
         <Section>
-          <Suspense fallback="hihihihi">
+          <Suspense fallback={<Loading />}>
             <MutatePositionForm
               clickedPositionId={clickedPositionId}
               setClickedPositionId={setClickedPositionId}

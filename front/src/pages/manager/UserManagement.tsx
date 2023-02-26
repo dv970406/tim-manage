@@ -7,6 +7,7 @@ import {
 import { GetManagerUsersQuery } from "../../client/manager/__generated__/GetManagerUsersQuery.graphql";
 import { useGetMyInfo } from "../../client/user/GetMyInfo.client";
 import { ScrollBox } from "../../components/atomics/boxes/Boxes";
+import Loading from "../../components/atomics/boxes/Loading";
 import { Section } from "../../components/atomics/sections/sections";
 import CenterBox from "../../components/molecules/boxes/CenterBox";
 import ManagerUsersTable from "../../components/templates/content/manager/ManagerUsersTable";
@@ -22,7 +23,7 @@ const UserManagementPage = () => {
     loadManagerUsersQuery({ first: PAGINATION_LOAD_COUNT });
   }, []);
   return (
-    <Suspense fallback="qweewqqweewqqweewqqweewqqweewq">
+    <Suspense fallback={<Loading />}>
       {managerUsersQueryReference && (
         <UserManagement
           managerUsersQueryReference={managerUsersQueryReference}
@@ -47,7 +48,7 @@ const UserManagement = ({ managerUsersQueryReference }: IUserManagement) => {
   return (
     <CenterBox>
       <Section style={{ width: "60%" }}>
-        <Suspense fallback="qweewq">
+        <Suspense fallback={<Loading />}>
           <ManagerUsersTable
             users={users}
             clickedUserId={clickedUserId}
@@ -57,7 +58,7 @@ const UserManagement = ({ managerUsersQueryReference }: IUserManagement) => {
         </Suspense>
       </Section>
       <Section style={{ width: "40%" }}>
-        <Suspense fallback="hihihihi">
+        <Suspense fallback={<Loading />}>
           <MutateUserForm
             clickedUserId={clickedUserId}
             setClickedUserId={setClickedUserId}

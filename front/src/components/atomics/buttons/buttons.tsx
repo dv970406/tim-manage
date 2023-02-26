@@ -29,3 +29,17 @@ export const SubmitButton = styled("button")(({ theme }) => ({
     opacity: theme.disabled.opacity,
   },
 }));
+
+export const HoverButton = styled("button")`
+  display: flex;
+  align-items: center;
+
+  ${({ theme }) => ({
+    gap: theme.spacing.sm,
+    // "&:hover": {
+    //   "svg, p": {
+    //     color: theme.hoverColors.purple,
+    //   },
+    // },
+  })}
+`;

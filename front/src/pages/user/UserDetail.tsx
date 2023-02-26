@@ -12,6 +12,7 @@ import { useGetMyInfo } from "../../client/user/GetMyInfo.client";
 import { getUserQuery, useGetUser } from "../../client/user/GetUser.client";
 import { GetUserQuery } from "../../client/user/__generated__/GetUserQuery.graphql";
 import { RowBox, GapBox } from "../../components/atomics/boxes/Boxes";
+import Loading from "../../components/atomics/boxes/Loading";
 import { Section } from "../../components/atomics/sections/sections";
 import { MainText } from "../../components/atomics/typographys/texts";
 import { CenterFixBox } from "../../components/molecules/boxes/CenterBox";
@@ -31,7 +32,7 @@ const UserDetailPage = () => {
     loadUserQuery({ userId, first: PAGINATION_LOAD_COUNT });
   }, []);
   return (
-    <Suspense fallback="Loading...">
+    <Suspense fallback={<Loading />}>
       {getUserQueryReference && (
         <UserDetail getUserQueryReference={getUserQueryReference} />
       )}

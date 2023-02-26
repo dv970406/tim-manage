@@ -7,6 +7,7 @@ import {
 } from "../../client/survey/GetSurvey.client";
 import { GetSurveyQuery } from "../../client/survey/__generated__/GetSurveyQuery.graphql";
 import { ColumnBox } from "../../components/atomics/boxes/Boxes";
+import Loading from "../../components/atomics/boxes/Loading";
 import { Section } from "../../components/atomics/sections/sections";
 import AnswerSheet from "../../components/templates/content/survey/AnswerSheet";
 import { theme } from "../../css/theme";
@@ -22,7 +23,7 @@ const SurveyDetailPage = () => {
     loadGetSurveyQuery({ id: surveyId });
   }, []);
   return (
-    <Suspense fallback="Loading...">
+    <Suspense fallback={<Loading />}>
       {getSurveyQueryReference && (
         <SurveyDetail getSurveyQueryReference={getSurveyQueryReference} />
       )}

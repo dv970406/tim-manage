@@ -38,7 +38,7 @@ const Comment = ({ comment }: IComment) => {
     });
   };
   return (
-    <div>
+    <li>
       <RowBox style={{ justifyContent: "space-between" }}>
         <SubTitle>{commentData.user.name}</SubTitle>
         {commentData.isMyComment && (
@@ -53,7 +53,7 @@ const Comment = ({ comment }: IComment) => {
       <div>
         <SectionText>{getElaspedDay(commentData.createdAt)}</SectionText>
       </div>
-    </div>
+    </li>
   );
 };
 

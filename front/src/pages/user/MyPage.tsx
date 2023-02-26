@@ -22,6 +22,7 @@ import { GetMyAllInfoQuery } from "../../client/user/__generated__/GetMyAllInfoQ
 import { GetMyInfoQuery } from "../../client/user/__generated__/GetMyInfoQuery.graphql";
 import { GetUserQuery } from "../../client/user/__generated__/GetUserQuery.graphql";
 import { RowBox, GapBox } from "../../components/atomics/boxes/Boxes";
+import Loading from "../../components/atomics/boxes/Loading";
 import { Section } from "../../components/atomics/sections/sections";
 import { MainText } from "../../components/atomics/typographys/texts";
 import { ButtonIcon } from "../../components/molecules/buttons/Buttons";
@@ -37,7 +38,7 @@ const MyPage = () => {
     loadUserQuery({ first: PAGINATION_LOAD_COUNT });
   }, []);
   return (
-    <Suspense fallback="Loading...">
+    <Suspense fallback={<Loading />}>
       {getMyAllInfoQueryReference && (
         <My getMyAllInfoQueryReference={getMyAllInfoQueryReference} />
       )}

@@ -1,7 +1,7 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { usePaginationFragment } from "react-relay";
 import { useGetMyInfo } from "../../../../client/user/GetMyInfo.client";
-import { ManageDataList } from "../../../organisms/shared/ManageDataList";
+import { SearchAndInfiniteScrollDataList } from "../../../organisms/shared/InfiniteScrolls";
 import UserTableContent from "../../../organisms/content/user/UserTableContent";
 import { UsersTable_user$key } from "./__generated__/UsersTable_user.graphql";
 import OrderUsers from "../../../organisms/content/user/OrderUsers";
@@ -57,7 +57,7 @@ const UsersTable = ({ users }: IUsersTable) => {
   return (
     <GapBox>
       <OrderUsers refetch={refetch} />
-      <ManageDataList
+      <SearchAndInfiniteScrollDataList
         mutateName="create-user"
         refetch={refetch}
         isLoadingNext={isLoadingNext}
@@ -74,7 +74,7 @@ const UsersTable = ({ users }: IUsersTable) => {
               />
             )
         )}
-      </ManageDataList>
+      </SearchAndInfiniteScrollDataList>
     </GapBox>
   );
 };

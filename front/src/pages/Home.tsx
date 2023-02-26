@@ -18,6 +18,7 @@ import MyTeamVacations from "../components/templates/content/home/MyTeamVacation
 import TodayMeetings from "../components/templates/content/home/TodayMeetings";
 import VacationCalendar from "../components/templates/content/home/VacationCalendar";
 import { ColumnBox, RowBox } from "../components/atomics/boxes/Boxes";
+import Loading from "../components/atomics/boxes/Loading";
 
 const HomePage = () => {
   const [getVacationsQueryReference, loadGetVacationsQuery] =
@@ -31,7 +32,7 @@ const HomePage = () => {
     loadGetMeetingsQuery({});
   }, []);
   return (
-    <Suspense fallback={"Home Loading..."}>
+    <Suspense fallback={<Loading />}>
       {getVacationsQueryReference && getMeetingsQueryReference && (
         <Home
           getVacationsQueryReference={getVacationsQueryReference}
@@ -75,7 +76,7 @@ const Home = ({
   return (
     <RowBox style={{ height: "92vh" }}>
       <Section style={{ width: "75%" }}>
-        <Suspense fallback="dsadasdsadsaeqwqeqweqw">
+        <Suspense fallback={<Loading />}>
           <VacationCalendar
             schedules={schedules}
             setFilteringSchedules={setFilteringSchedules}

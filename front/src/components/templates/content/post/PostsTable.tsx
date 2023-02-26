@@ -1,11 +1,12 @@
 import { graphql } from "babel-plugin-relay/macro";
 import React from "react";
 import { usePaginationFragment } from "react-relay";
-import { ManageDataList } from "../../../organisms/shared/ManageDataList";
+import { SearchAndInfiniteScrollDataList } from "../../../organisms/shared/InfiniteScrolls";
 import PostTableContent from "../../../organisms/content/post/PostTableContent";
 import { GetPostsPaginationQuery } from "../../../organisms/content/post/__generated__/GetPostsPaginationQuery.graphql";
 import { PostsTable_post$key } from "./__generated__/PostsTable_post.graphql";
 import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
+import { PostsTablePaginationQuery } from "./__generated__/PostsTablePaginationQuery.graphql";
 
 interface IPostsTable {
   posts: PostsTable_post$key;
@@ -46,14 +47,14 @@ const PostsTable = ({ posts }: IPostsTable) => {
     isLoadingNext,
     refetch,
     hasNext,
-  } = usePaginationFragment<GetPostsPaginationQuery, PostsTable_post$key>(
+  } = usePaginationFragment<PostsTablePaginationQuery, PostsTable_post$key>(
     getPostsFragment,
     posts
   );
 
   return (
     <>
-      <ManageDataList
+      <SearchAndInfiniteScrollDataList
         mutateName={MODAL_NAME.CREATE_POST}
         refetch={refetch}
         loadNext={loadNext}
@@ -64,7 +65,7 @@ const PostsTable = ({ posts }: IPostsTable) => {
           (post) =>
             post.node && <PostTableContent key={post.cursor} post={post.node} />
         )}
-      </ManageDataList>
+      </SearchAndInfiniteScrollDataList>
     </>
   );
 };

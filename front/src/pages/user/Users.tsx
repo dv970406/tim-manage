@@ -2,6 +2,7 @@ import React, { Suspense, useEffect } from "react";
 import { PreloadedQuery, usePreloadedQuery, useQueryLoader } from "react-relay";
 import { getUsersQuery, useGetUsers } from "../../client/user/GetUsers.client";
 import { GetUsersQuery } from "../../client/user/__generated__/GetUsersQuery.graphql";
+import Loading from "../../components/atomics/boxes/Loading";
 import { Section } from "../../components/atomics/sections/sections";
 import CreateUserModal from "../../components/templates/content/user/CreateUserModal";
 import UsersTable from "../../components/templates/content/user/UsersTable";
@@ -15,7 +16,7 @@ const UsersPage = () => {
     loadUsersQuery({ first: PAGINATION_LOAD_COUNT });
   }, []);
   return (
-    <Suspense fallback="Users loading">
+    <Suspense fallback={<Loading />}>
       {getUsersQueryReference && (
         <Users getUsersQueryReference={getUsersQueryReference} />
       )}

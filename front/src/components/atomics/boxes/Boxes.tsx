@@ -12,7 +12,7 @@ export const ColumnBox = styled.div(({ theme }) => ({
 
 export const RowBox = styled.div(({ theme }) => ({
   display: "flex",
-  gap: theme.spacing.xl,
+  gap: theme.spacing.md,
   width: "100%",
 }));
 
@@ -27,7 +27,7 @@ interface IScrollBox {
   height?: string;
   gap?: string;
 }
-export const ScrollBox = styled.div(({ theme, height, gap }: IScrollBox) => ({
+export const ScrollBox = styled.ul(({ theme, height, gap }: IScrollBox) => ({
   overflow: "auto",
   display: "flex",
   flexDirection: "column",

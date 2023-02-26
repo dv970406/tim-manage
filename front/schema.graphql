@@ -277,6 +277,16 @@ type DeleteVacationOutput {
   deletedVacationId: ID
 }
 
+input ExitRoomInput {
+  roomId: ID!
+}
+
+type ExitRoomOutput {
+  ok: Boolean!
+  error: String
+  deletedRoomId: ID
+}
+
 type GetAnswersOfSurveyOutput {
   ok: Boolean!
   error: String
@@ -336,6 +346,19 @@ type GetPostsOutput {
   error: String
   edges: [PostEdge!]!
   pageInfo: PageInfo!
+}
+
+type GetRoomOutput {
+  ok: Boolean!
+  error: String
+  room: Room
+}
+
+type GetRoomsOutput {
+  ok: Boolean!
+  error: String
+  edges: [RoomEdge!]
+  pageInfo: PageInfo
 }
 
 input GetSurveyInput {
@@ -463,6 +486,26 @@ type Meeting {
   host: User!
 }
 
+type Message {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  message: String!
+  user: User!
+  room: Room!
+  isRead: Boolean!
+}
+
+type MessageEdge {
+  cursor: DateTime!
+  node: Message!
+}
+
+type MessagesConnection {
+  edges: [MessageEdge!]!
+  pageInfo: PageInfo!
+}
+
 type MultipleChoiceFormat {
   paragraphTitle: String!
   description: String!
@@ -499,6 +542,8 @@ type Mutation {
   updateMeeting(input: UpdateMeetingInput!): UpdateMeetingOutput!
   deleteMeeting(input: DeleteMeetingInput!): DeleteMeetingOutput!
   createWeeklyMeal(input: CreateWeeklyMealInput!): CreateWeeklyMealOutput!
+  sendMessage(input: SendMessageInput!): SendMessageOutput!
+  exitRoom(input: ExitRoomInput!): ExitRoomOutput!
 }
 
 interface Node {
@@ -571,11 +616,40 @@ type Query {
   getMeetings: GetMeetingsOutput!
   getMeeting(input: GetMeetingInput!): GetMeetingOutput!
   getWeeklyMeal: GetWeeklyMealOutput!
+  getRooms(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): GetRoomsOutput!
+  getRoom(roomId: ID!): GetRoomOutput!
 }
 
 type ResponseRate {
   notAnsweredEmployeeCount: Float!
   answeredEmployeeCount: Float!
+}
+
+type Room {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  users: [User!]!
+  messages: [Message!]!
+  unreadCount: Int!
+  messagesOfRoomConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): MessagesConnection!
+}
+
+type RoomEdge {
+  cursor: DateTime
+  node: Room!
+}
+
+input SendMessageInput {
+  message: String!
+  roomId: ID
+  listenerId: ID
+}
+
+type SendMessageOutput {
+  ok: Boolean!
+  error: String
+  message: Message
 }
 
 type ShortAnswerFormat {
@@ -587,6 +661,11 @@ type ShortAnswerFormat {
 type ShortAnswersFormat {
   result: String!
   user: User!
+}
+
+type Subscription {
+  subscriptionConfirmVacation(userId: ID!): Vacation!
+  subscriptionRoom(roomId: ID!): Message!
 }
 
 type Survey implements Node {
@@ -750,6 +829,8 @@ type User implements Node {
   comments: [Comment!]!
   surveys: [Survey!]!
   answers: [Answer!]!
+  messages: [Message!]!
+  rooms: [Room!]!
   myAnswersConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): AnswersConnection!
   myVacationsConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): VacationsConnection!
   myPostsConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): PostsConnection!

@@ -6,6 +6,7 @@ import {
   useGetUnConfirmedByMeVacations,
 } from "../../client/manager/GetUnConfirmedByMeVacations.client";
 import { GetUnConfirmedByMeVacationsQuery } from "../../client/manager/__generated__/GetUnConfirmedByMeVacationsQuery.graphql";
+import Loading from "../../components/atomics/boxes/Loading";
 import { Section } from "../../components/atomics/sections/sections";
 import CenterBox from "../../components/molecules/boxes/CenterBox";
 import { EndSubmitButton } from "../../components/molecules/buttons/Buttons";
@@ -23,7 +24,7 @@ const UnConfirmedVacationsPage = () => {
     loadGetUnConfirmedByMeVacationsQuery({});
   }, []);
   return (
-    <Suspense fallback={"UnConfirmedVacations Loading..."}>
+    <Suspense fallback={<Loading />}>
       {getUnConfirmedByMeVacationsQueryReference && (
         <UnConfirmedVacations
           getUnConfirmedByMeVacationsQueryReference={

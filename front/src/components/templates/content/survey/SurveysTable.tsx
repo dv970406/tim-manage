@@ -1,6 +1,6 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { usePaginationFragment } from "react-relay";
-import { ManageDataList } from "../../../organisms/shared/ManageDataList";
+import { SearchAndInfiniteScrollDataList } from "../../../organisms/shared/InfiniteScrolls";
 import SurveyTableContent from "../../../organisms/content/survey/SurveyTableContent";
 import { GetSurveysPaginationQuery } from "./__generated__/GetSurveysPaginationQuery.graphql";
 import { SurveysTable_survey$key } from "./__generated__/SurveysTable_survey.graphql";
@@ -10,6 +10,7 @@ import Modal from "../../Modal";
 import CreateScheduleModal from "../home/CreateScheduleModal";
 import MutateMeetingModal from "../home/MutateMeetingModal";
 import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
+import { SurveysTablePaginationQuery } from "./__generated__/SurveysTablePaginationQuery.graphql";
 
 interface ISurveysTable {
   surveys: SurveysTable_survey$key;
@@ -54,14 +55,14 @@ const SurveysTable = ({ surveys }: ISurveysTable) => {
     isLoadingNext,
     hasNext,
     loadNext,
-  } = usePaginationFragment<GetSurveysPaginationQuery, SurveysTable_survey$key>(
-    getSurveysFragment,
-    surveys
-  );
+  } = usePaginationFragment<
+    SurveysTablePaginationQuery,
+    SurveysTable_survey$key
+  >(getSurveysFragment, surveys);
 
   return (
     <>
-      <ManageDataList
+      <SearchAndInfiniteScrollDataList
         mutateName={MODAL_NAME.CREATE_SURVEY}
         refetch={refetch}
         isLoadingNext={isLoadingNext}
@@ -74,7 +75,7 @@ const SurveysTable = ({ surveys }: ISurveysTable) => {
               <SurveyTableContent key={survey.cursor} survey={survey.node} />
             )
         )}
-      </ManageDataList>
+      </SearchAndInfiniteScrollDataList>
     </>
   );
 };

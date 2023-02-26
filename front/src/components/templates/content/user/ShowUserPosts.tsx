@@ -5,7 +5,7 @@ import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
 import { RowBox, ListBox } from "../../../atomics/boxes/Boxes";
 import { SectionTitle } from "../../../atomics/typographys/titles";
 import PostTableContent from "../../../organisms/content/post/PostTableContent";
-import { ManageDataList } from "../../../organisms/shared/ManageDataList";
+import { SearchAndInfiniteScrollDataList } from "../../../organisms/shared/InfiniteScrolls";
 import { ShowUserPosts_post$key } from "./__generated__/ShowUserPosts_post.graphql";
 
 // 여기도 connection으로
@@ -42,7 +42,7 @@ const ShowUserPosts = () => {
     <>
       {" "}
       <SectionTitle>게시글 목록</SectionTitle>
-      <ManageDataList
+      <SearchAndInfiniteScrollDataList
         loadNext={loadNext}
         hasNext={hasNext}
         isLoadingNext={isLoadingNext}
@@ -54,7 +54,7 @@ const ShowUserPosts = () => {
               <PostTableContent key={post.cursor} post={post.node} />
             )
         )}
-      </ManageDataList>
+      </SearchAndInfiniteScrollDataList>
     </>
   );
 };

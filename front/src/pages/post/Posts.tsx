@@ -2,6 +2,7 @@ import React, { Suspense, useEffect } from "react";
 import { PreloadedQuery, useQueryLoader } from "react-relay";
 import { getPostsQuery, useGetPosts } from "../../client/post/GetPosts.client";
 import { GetPostsQuery } from "../../client/post/__generated__/GetPostsQuery.graphql";
+import Loading from "../../components/atomics/boxes/Loading";
 import { Section } from "../../components/atomics/sections/sections";
 import CreatePostModal from "../../components/templates/content/post/CreatePostModal";
 import PostsTable from "../../components/templates/content/post/PostsTable";
@@ -15,7 +16,7 @@ const PostsPage = () => {
     loadGetPostsQuery({ first: PAGINATION_LOAD_COUNT });
   }, []);
   return (
-    <Suspense fallback="Posts loading">
+    <Suspense fallback={<Loading />}>
       {getPostsQueryReference && (
         <Posts getPostsQueryReference={getPostsQueryReference} />
       )}

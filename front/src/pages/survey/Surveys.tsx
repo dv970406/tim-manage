@@ -5,6 +5,7 @@ import {
   useGetSurveys,
 } from "../../client/survey/GetSurveys.client";
 import { GetSurveysQuery } from "../../client/survey/__generated__/GetSurveysQuery.graphql";
+import Loading from "../../components/atomics/boxes/Loading";
 import { Section } from "../../components/atomics/sections/sections";
 import CreateSurveyModal from "../../components/templates/content/survey/CreateSurveyModal";
 import SurveysTable from "../../components/templates/content/survey/SurveysTable";
@@ -18,7 +19,7 @@ const SurveysPage = () => {
     loadGetSurveysQuery({ onlyMine: false, first: PAGINATION_LOAD_COUNT });
   }, []);
   return (
-    <Suspense fallback="Surveys loading">
+    <Suspense fallback={<Loading />}>
       {getSurveysQueryReference && (
         <Surveys getSurveysQueryReference={getSurveysQueryReference} />
       )}

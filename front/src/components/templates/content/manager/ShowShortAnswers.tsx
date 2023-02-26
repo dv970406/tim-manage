@@ -9,6 +9,7 @@ import { SectionText, MainText } from "../../../atomics/typographys/texts";
 import { graphql } from "babel-plugin-relay/macro";
 import { useFragment } from "react-relay";
 import { ShowShortAnswers_answer$key } from "./__generated__/ShowShortAnswers_answer.graphql";
+import { theme } from "../../../../css/theme";
 
 const showShortAnswersFragment = graphql`
   fragment ShowShortAnswers_answer on Survey {
@@ -38,24 +39,31 @@ const ShowShortAnswers = ({ answers }: IShowShortAnswers) => {
       <SectionTitle>주관식 답변</SectionTitle>
       <ScrollBox height="100%">
         {shortAnswerFormat?.map((result, index) => (
-          <GapBox key={index}>
-            <SubTitle>
-              제목{index + 1}: {result.paragraphTitle}
-            </SubTitle>
-            <SectionText>
-              설명{index + 1}: {result.description}
-            </SectionText>
-            <ScrollBox>
-              {result.shortAnswers.map((shortAnswer, index) => (
-                <li key={index}>
-                  {!isAnonymous && (
-                    <SubTitle>{shortAnswer?.user?.name}</SubTitle>
-                  )}
-                  <MainText>{shortAnswer.result}</MainText>
-                </li>
-              ))}
-            </ScrollBox>
-          </GapBox>
+          <li>
+            <GapBox key={index}>
+              <SubTitle>
+                제목{index + 1}: {result.paragraphTitle}
+              </SubTitle>
+              <SectionText>
+                설명{index + 1}: {result.description}
+              </SectionText>
+              <ColumnBox
+                style={{
+                  padding: theme.spacing.md,
+                  borderBottom: `1px solid ${theme.colors.white}`,
+                }}
+              >
+                {result.shortAnswers.map((shortAnswer, index) => (
+                  <li key={index}>
+                    {!isAnonymous && (
+                      <SubTitle>{shortAnswer?.user?.name}</SubTitle>
+                    )}
+                    <MainText>{shortAnswer.result}</MainText>
+                  </li>
+                ))}
+              </ColumnBox>
+            </GapBox>
+          </li>
         ))}
       </ScrollBox>
     </ColumnBox>

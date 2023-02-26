@@ -78,6 +78,18 @@ export const ContentSection = styled.article(({ theme }) => ({
   gap: theme.spacing.xl,
 }));
 
+export const MessageSection = styled.ul(({ theme }) => ({
+  backdropFilter: theme.bgColors.backdropFilter,
+  background: theme.bgColors.sectionGradient,
+  width: 300,
+  height: 400,
+  position: "fixed",
+  right: 20,
+  bottom: 80,
+  borderRadius: theme.borderRadius.lg,
+  borderBottomRightRadius: 0,
+  padding: theme.spacing.lg,
+}));
 interface ISection {
   theme?: Theme;
   noneBg?: boolean;
@@ -109,6 +121,13 @@ export const Article = styled.article(({ theme }) => ({
   borderRadius: theme.borderRadius.lg,
 }));
 
+export const ListItem = styled.li(({ theme }) => ({
+  background: theme.bgColors.sectionGradient,
+  padding: theme.spacing.xl,
+  width: "100%",
+  borderRadius: theme.borderRadius.lg,
+}));
+
 // export const ModalBackground = styled.div(({ theme }) => ({
 //   display: "flex",
 //   justifyContent: "center",
@@ -129,7 +148,7 @@ export const ModalDialog = styled(motion.dialog)(({ theme }) => ({
   },
   animation: `${modalShow} 0.5s`,
   width: 700,
-  height: "80%",
+  height: 700,
   maxHeight: "80%",
   background: theme.bgColors.gray,
   borderRadius: theme.borderRadius.lg,

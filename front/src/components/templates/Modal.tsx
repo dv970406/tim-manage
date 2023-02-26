@@ -37,9 +37,6 @@ const Modal = ({ children, modalName }: IModal) => {
       >
         {children}
       </ModalDialog>
-      {/* <ModalBackground onClick={closeModal}>
-        <ModalSection onClick={preventEventBubbling}>{children}</ModalSection>
-      </ModalBackground> */}
     </PortalModal>
   );
 };

@@ -3,7 +3,7 @@ import { DateInput } from "@fullcalendar/core";
 import React from "react";
 import { theme } from "../../../../css/theme";
 import { ampmFormat, meetingTimeFormat } from "../../../../utils/time/time";
-import { Article, Section } from "../../../atomics/sections/sections";
+import { Article, ListItem, Section } from "../../../atomics/sections/sections";
 import {
   AccentText,
   DateText,
@@ -11,7 +11,7 @@ import {
   MainText,
 } from "../../../atomics/typographys/texts";
 import { SubTitle } from "../../../atomics/typographys/titles";
-import { GapBox } from "../../../atomics/boxes/Boxes";
+import { GapBox, RowBox } from "../../../atomics/boxes/Boxes";
 import { BoxIcon } from "../../../molecules/icons/Icons";
 import { IAttendee } from "./SelectUsers";
 
@@ -30,11 +30,9 @@ const TodayMeeting = ({
   end,
 }: ITodayMeeting) => {
   return (
-    <Article>
-      <div
+    <ListItem>
+      <RowBox
         style={{
-          display: "flex",
-          gap: theme.spacing.lg,
           justifyContent: "space-between",
         }}
       >
@@ -59,8 +57,8 @@ const TodayMeeting = ({
             ))}
           </div>
         </GapBox>
-      </div>
-    </Article>
+      </RowBox>
+    </ListItem>
   );
 };
 

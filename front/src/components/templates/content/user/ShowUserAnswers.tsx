@@ -5,7 +5,7 @@ import { useOutletContext } from "react-router-dom";
 import { GapBox, ListBox } from "../../../atomics/boxes/Boxes";
 import { SectionTitle } from "../../../atomics/typographys/titles";
 import SurveyTableContent from "../../../organisms/content/survey/SurveyTableContent";
-import { ManageDataList } from "../../../organisms/shared/ManageDataList";
+import { SearchAndInfiniteScrollDataList } from "../../../organisms/shared/InfiniteScrolls";
 import { ShowUserAnswers_answer$key } from "./__generated__/ShowUserAnswers_answer.graphql";
 
 const showUserAnswersFragment = graphql`
@@ -47,7 +47,7 @@ const ShowUserAnswers = () => {
     <>
       <SectionTitle>답변 목록</SectionTitle>
 
-      <ManageDataList
+      <SearchAndInfiniteScrollDataList
         hasNext={hasNext}
         isLoadingNext={isLoadingNext}
         loadNext={loadNext}
@@ -62,7 +62,7 @@ const ShowUserAnswers = () => {
               />
             )
         )}
-      </ManageDataList>
+      </SearchAndInfiniteScrollDataList>
     </>
   );
 };

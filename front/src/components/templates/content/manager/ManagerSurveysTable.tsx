@@ -7,9 +7,10 @@ import { ColumnBox, GapBox, ScrollBox } from "../../../atomics/boxes/Boxes";
 import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
 import Table from "../../../molecules/tables/Table";
 import ManagerSurveyTableContent from "../../../organisms/content/manager/ManagerSurveyTableContent";
-import { ManageDataTable } from "../../../organisms/shared/ManageDataList";
+import { InfiniteScrollDataTable } from "../../../organisms/shared/InfiniteScrolls";
 import { SurveysTable_survey$key } from "../survey/__generated__/SurveysTable_survey.graphql";
 import { GetManagerSurveysPaginationQuery } from "./__generated__/GetManagerSurveysPaginationQuery.graphql";
+import { ManagerSurveysTablePaginationQuery } from "./__generated__/ManagerSurveysTablePaginationQuery.graphql";
 import { ManagerSurveysTable_survey$key } from "./__generated__/ManagerSurveysTable_survey.graphql";
 
 interface IManagerSurveysTable {
@@ -62,13 +63,14 @@ const ManagerSurveysTable = ({
     isLoadingNext,
     loadNext,
   } = usePaginationFragment<
-    GetManagerSurveysPaginationQuery,
+    ManagerSurveysTablePaginationQuery,
     ManagerSurveysTable_survey$key
   >(getManagerSurveysFragment, surveys);
+
   return (
     <>
       <ScrollBox>
-        <ManageDataTable
+        <InfiniteScrollDataTable
           headers={["내 설문"]}
           loadNext={loadNext}
           hasNext={hasNext}
@@ -85,7 +87,7 @@ const ManagerSurveysTable = ({
                 />
               )
           )}
-        </ManageDataTable>
+        </InfiniteScrollDataTable>
       </ScrollBox>
 
       <EndSubmitButton

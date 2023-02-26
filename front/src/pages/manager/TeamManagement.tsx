@@ -7,6 +7,7 @@ import {
 import { GetManagerTeamsQuery } from "../../client/manager/__generated__/GetManagerTeamsQuery.graphql";
 import { useGetMyInfo } from "../../client/user/GetMyInfo.client";
 import { GapBox } from "../../components/atomics/boxes/Boxes";
+import Loading from "../../components/atomics/boxes/Loading";
 import { Section } from "../../components/atomics/sections/sections";
 import CenterBox from "../../components/molecules/boxes/CenterBox";
 import Table from "../../components/molecules/tables/Table";
@@ -25,7 +26,7 @@ const TeamManagementPage = () => {
     loadManagerTeamsQuery({});
   }, []);
   return (
-    <Suspense fallback="qweewqqweewqqweewqqweewqqweewq">
+    <Suspense fallback={<Loading />}>
       {managerTeamsQueryReference && (
         <TeamManagement
           managerTeamsQueryReference={managerTeamsQueryReference}
@@ -58,12 +59,12 @@ const TeamManagement = ({ managerTeamsQueryReference }: ITeamManagement) => {
       </Section>
       <GapBox style={{ width: "40%" }}>
         <Section>
-          <Suspense fallback="hihihihi">
+          <Suspense fallback={<Loading />}>
             <CreateTeamForm />
           </Suspense>
         </Section>
         <Section>
-          <Suspense fallback="hihihihi">
+          <Suspense fallback={<Loading />}>
             <MutateTeamForm
               clickedTeamId={clickedTeamId}
               setClickedTeamId={setClickedTeamId}

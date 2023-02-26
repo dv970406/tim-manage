@@ -1,5 +1,4 @@
 import { graphql } from "babel-plugin-relay/macro";
-import { Dispatch, SetStateAction } from "react";
 import ReactApexChart from "react-apexcharts";
 import { useFragment } from "react-relay";
 import { pieChartOptions } from "../../../../utils/chart/options";
@@ -25,7 +24,7 @@ const SurveyResponseRate = ({ answers }: ISurveyResponseRate) => {
     answers
   );
   return (
-    <GapBox>
+    <>
       <GapBox>
         <SectionTitle>응답률</SectionTitle>
         <SubTitle>
@@ -48,7 +47,7 @@ const SurveyResponseRate = ({ answers }: ISurveyResponseRate) => {
           ]}
         />
       )}
-    </GapBox>
+    </>
   );
 };
 

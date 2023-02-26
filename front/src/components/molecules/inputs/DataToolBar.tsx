@@ -31,7 +31,6 @@ const DataToolBar = ({ onChange, mutateName }: IDataToolBar) => {
 
   const { myInfo } = useGetMyInfo();
 
-  console.log("mutateName : ", mutateName);
   return (
     <RowBox
       style={{

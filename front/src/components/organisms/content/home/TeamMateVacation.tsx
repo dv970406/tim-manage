@@ -6,7 +6,7 @@ import {
   meetingTimeFormat,
   vacationDateFormat,
 } from "../../../../utils/time/time";
-import { Article } from "../../../atomics/sections/sections";
+import { Article, ListItem } from "../../../atomics/sections/sections";
 import {
   AccentText,
   DateText,
@@ -31,7 +31,7 @@ const TeamMateVacation = ({
   duration,
 }: ITeamMateVacation) => {
   return (
-    <Article>
+    <ListItem>
       <div
         style={{
           display: "flex",
@@ -55,7 +55,7 @@ const TeamMateVacation = ({
           </div>
         </GapBox>
       </div>
-    </Article>
+    </ListItem>
   );
 };
 

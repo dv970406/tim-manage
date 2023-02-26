@@ -19,6 +19,7 @@ import { theme } from "../../css/theme";
 import { getDayOfNow } from "../../utils/time/time";
 import { useControlTodayMeal } from "../../utils/hooks/meal/meal.hook";
 import { CenterFixBox } from "../../components/molecules/boxes/CenterBox";
+import Loading from "../../components/atomics/boxes/Loading";
 
 const MealWeeklyPlannerPage = () => {
   const [getWeeklyMealQueryReference, loadGetWeeklyMealQuery] =
@@ -28,7 +29,7 @@ const MealWeeklyPlannerPage = () => {
     loadGetWeeklyMealQuery({});
   }, []);
   return (
-    <Suspense fallback="qweewqqweewqqweewqqweewqqweewq">
+    <Suspense fallback={<Loading />}>
       {getWeeklyMealQueryReference && (
         <MealWeeklyPlanner
           getWeeklyMealQueryReference={getWeeklyMealQueryReference}

@@ -6,7 +6,7 @@ import { RowBox } from "../../../atomics/boxes/Boxes";
 import { MainText } from "../../../atomics/typographys/texts";
 import Table from "../../../molecules/tables/Table";
 import UserVacationTableContent from "../../../organisms/content/user/UserVacationTableContent";
-import { ManageDataTable } from "../../../organisms/shared/ManageDataList";
+import { InfiniteScrollDataTable } from "../../../organisms/shared/InfiniteScrolls";
 import { ShowUserVacationsPaginationQuery } from "./__generated__/ShowUserVacationsPaginationQuery.graphql";
 import { ShowUserVacations_vacation$key } from "./__generated__/ShowUserVacations_vacation.graphql";
 
@@ -51,7 +51,7 @@ const ShowUserVacations = () => {
         <MainText>사용 연차 목록</MainText>
         <MainText>남은 휴가 : {availableVacation}</MainText>
       </RowBox>
-      <ManageDataTable
+      <InfiniteScrollDataTable
         hasNext={hasNext}
         loadNext={loadNext}
         isLoadingNext={isLoadingNext}
@@ -66,7 +66,7 @@ const ShowUserVacations = () => {
               />
             )
         )}
-      </ManageDataTable>
+      </InfiniteScrollDataTable>
     </>
   );
 };

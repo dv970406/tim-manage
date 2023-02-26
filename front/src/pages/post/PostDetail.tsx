@@ -10,6 +10,7 @@ import ContentZone from "../../components/templates/content/post/ContentZone";
 import { theme } from "../../css/theme";
 import { GapBox } from "../../components/atomics/boxes/Boxes";
 import { CenterFixBox } from "../../components/molecules/boxes/CenterBox";
+import Loading from "../../components/atomics/boxes/Loading";
 
 const PostDetailPage = () => {
   const { postId } = useParams();
@@ -21,7 +22,7 @@ const PostDetailPage = () => {
     loadGetPostDetailQuery({ id: postId });
   }, []);
   return (
-    <Suspense fallback="Post loading">
+    <Suspense fallback={<Loading />}>
       {getPostQueryReference && (
         <PostDetail getPostQueryReference={getPostQueryReference} />
       )}
