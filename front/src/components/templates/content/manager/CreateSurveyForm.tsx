@@ -232,8 +232,8 @@ const CreateSurveyForm = ({}: ICreateSurveyForm) => {
         </RowBox>
         <ScrollBox height="100%">
           {paragraphs?.map((count, paragraphIndex) => (
-            <li>
-              <Section key={paragraphIndex}>
+            <li key={paragraphIndex}>
+              <Section>
                 <TextInput
                   label={`주제${paragraphIndex + 1}`}
                   placeholder="주제"

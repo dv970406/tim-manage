@@ -77,11 +77,11 @@ export const useUpdateUser = () => {
 
         if (!updateUserPayload) return;
 
-        const rootGetUser = proxyStore.get(
+        const userRecord = proxyStore.get(
           `client:root:getUser(input:{"id":"${user?.id}"})`
         );
 
-        rootGetUser?.setLinkedRecord(updateUserPayload, "user");
+        userRecord?.setLinkedRecord(updateUserPayload, "user");
       },
     });
   };

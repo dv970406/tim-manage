@@ -65,7 +65,7 @@ export const CircleButton = ({
       type="button"
       style={{
         backgroundColor: bgColor,
-        padding: theme.spacing.xl,
+        padding: theme.spacing.lg,
         borderRadius: "50%",
       }}
     >

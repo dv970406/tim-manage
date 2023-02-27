@@ -217,6 +217,16 @@ type DeleteMeetingOutput {
   deletedMeetingId: ID
 }
 
+input DeleteNotificationInput {
+  notificationId: ID
+}
+
+type DeleteNotificationOutput {
+  ok: Boolean!
+  error: String
+  deletedNotificationId: ID
+}
+
 input DeletePositionInput {
   id: ID!
 }
@@ -313,6 +323,13 @@ type GetMyInfoOutput {
   ok: Boolean!
   error: String
   user: User
+}
+
+type GetNotificationsOutput {
+  ok: Boolean!
+  error: String
+  edges: [NotificationEdge!]!
+  pageInfo: PageInfo!
 }
 
 input GetPositionInput {
@@ -544,10 +561,33 @@ type Mutation {
   createWeeklyMeal(input: CreateWeeklyMealInput!): CreateWeeklyMealOutput!
   sendMessage(input: SendMessageInput!): SendMessageOutput!
   exitRoom(input: ExitRoomInput!): ExitRoomOutput!
+  readNotification(input: ReadNotificationInput!): ReadNotificationOutput!
+  deleteNotification(input: DeleteNotificationInput!): DeleteNotificationOutput!
 }
 
 interface Node {
   id: ID!
+}
+
+type Notification {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  confirmedVacation: Vacation!
+  confirmedByWho: User!
+  user: User!
+  isRead: Boolean!
+}
+
+type NotificationEdge {
+  cursor: DateTime!
+  node: Notification!
+}
+
+type NotificationOutput {
+  ok: Boolean!
+  error: String
+  edge: NotificationEdge!
 }
 
 input Orders {
@@ -618,6 +658,17 @@ type Query {
   getWeeklyMeal: GetWeeklyMealOutput!
   getRooms(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): GetRoomsOutput!
   getRoom(roomId: ID!): GetRoomOutput!
+  getNotifications(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): GetNotificationsOutput!
+}
+
+input ReadNotificationInput {
+  notificationId: ID
+}
+
+type ReadNotificationOutput {
+  ok: Boolean!
+  error: String
+  notification: Notification
 }
 
 type ResponseRate {
@@ -664,7 +715,7 @@ type ShortAnswersFormat {
 }
 
 type Subscription {
-  subscriptionConfirmVacation(userId: ID!): Vacation!
+  subscriptionConfirmVacation: NotificationOutput!
   subscriptionRoom(roomId: ID!): Message!
 }
 
@@ -831,6 +882,8 @@ type User implements Node {
   answers: [Answer!]!
   messages: [Message!]!
   rooms: [Room!]!
+  notifications: [Notification!]!
+  unreadNotificationCount: Float!
   myAnswersConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): AnswersConnection!
   myVacationsConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): VacationsConnection!
   myPostsConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): PostsConnection!

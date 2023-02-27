@@ -24,10 +24,11 @@ import { MainText } from "../atomics/typographys/texts";
 import { theme } from "../../css/theme";
 import { useGetMyInfo } from "../../client/user/GetMyInfo.client";
 
-interface ISideBar {}
-const SideBar = ({}: ISideBar) => {
-  const { myInfo } = useGetMyInfo();
-
+interface ISideBar {
+  isManager?: boolean;
+  isLeader?: boolean;
+}
+const SideBar = ({ isManager, isLeader }: ISideBar) => {
   const navigate = useNavigate();
 
   // manager 페이지일 경우 manager가 아니면 되돌려보내기
@@ -35,7 +36,7 @@ const SideBar = ({}: ISideBar) => {
   const isManagerOnly = pathname.includes("manager");
 
   useEffect(() => {
-    if (isManagerOnly && !myInfo?.isManager) {
+    if (isManagerOnly && isManager) {
       alert("관리자만 접근할 수 있습니다.");
       navigate("/");
     }
@@ -74,7 +75,7 @@ const SideBar = ({}: ISideBar) => {
           </RowBox>
           <HorizontalDivider />
           <GapList>
-            {myInfo?.isManager && (
+            {isManager && (
               <NavTabButton
                 tabName="관리자"
                 icon={faQ}
@@ -90,7 +91,7 @@ const SideBar = ({}: ISideBar) => {
                 ]}
               />
             )}
-            {myInfo?.isLeader && (
+            {isLeader && (
               <NavTabButton
                 tabName="리더"
                 icon={faQ}

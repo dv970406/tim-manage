@@ -24,6 +24,7 @@ export const getMyInfoQuery = graphql`
           id
           position
         }
+        unreadNotificationCount
       }
     }
   }

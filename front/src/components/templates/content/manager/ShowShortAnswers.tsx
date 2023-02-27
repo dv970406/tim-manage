@@ -1,10 +1,5 @@
 import { SubTitle, SectionTitle } from "../../../atomics/typographys/titles";
-import {
-  ColumnBox,
-  GapBox,
-  GapList,
-  ScrollBox,
-} from "../../../atomics/boxes/Boxes";
+import { ColumnBox, GapBox, ScrollBox } from "../../../atomics/boxes/Boxes";
 import { SectionText, MainText } from "../../../atomics/typographys/texts";
 import { graphql } from "babel-plugin-relay/macro";
 import { useFragment } from "react-relay";
@@ -39,31 +34,29 @@ const ShowShortAnswers = ({ answers }: IShowShortAnswers) => {
       <SectionTitle>주관식 답변</SectionTitle>
       <ScrollBox height="100%">
         {shortAnswerFormat?.map((result, index) => (
-          <li>
-            <GapBox key={index}>
-              <SubTitle>
-                제목{index + 1}: {result.paragraphTitle}
-              </SubTitle>
-              <SectionText>
-                설명{index + 1}: {result.description}
-              </SectionText>
-              <ColumnBox
-                style={{
-                  padding: theme.spacing.md,
-                  borderBottom: `1px solid ${theme.colors.white}`,
-                }}
-              >
-                {result.shortAnswers.map((shortAnswer, index) => (
-                  <li key={index}>
-                    {!isAnonymous && (
-                      <SubTitle>{shortAnswer?.user?.name}</SubTitle>
-                    )}
-                    <MainText>{shortAnswer.result}</MainText>
-                  </li>
-                ))}
-              </ColumnBox>
-            </GapBox>
-          </li>
+          <GapBox key={index}>
+            <SubTitle>
+              제목{index + 1}: {result.paragraphTitle}
+            </SubTitle>
+            <SectionText>
+              설명{index + 1}: {result.description}
+            </SectionText>
+            <ColumnBox
+              style={{
+                padding: theme.spacing.md,
+                borderBottom: `1px solid ${theme.colors.white}`,
+              }}
+            >
+              {result.shortAnswers.map((shortAnswer, index) => (
+                <li key={index}>
+                  {!isAnonymous && (
+                    <SubTitle>{shortAnswer?.user?.name}</SubTitle>
+                  )}
+                  <MainText>{shortAnswer.result}</MainText>
+                </li>
+              ))}
+            </ColumnBox>
+          </GapBox>
         ))}
       </ScrollBox>
     </ColumnBox>

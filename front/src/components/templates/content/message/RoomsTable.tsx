@@ -49,7 +49,6 @@ const RoomsTable = ({ rooms, setClickedRoomId }: IRoomsTable) => {
     rooms
   );
 
-  console.log("Ewqewq :", getRooms?.edges);
   return (
     <InfiniteScrollList
       loadNext={loadNext}

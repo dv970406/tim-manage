@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<603c0900f1c08ef29f85992f5b310ecc>>
+ * @generated SignedSource<<1f8f0f39f565342f18a5c135030d55fa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,30 +9,45 @@
 // @ts-nocheck
 
 import { ConcreteRequest, GraphQLSubscription } from 'relay-runtime';
-export type SubscriptionConfirmVacationSubscription$variables = {
-  userId: string;
-};
+export type SubscriptionConfirmVacationSubscription$variables = {};
 export type SubscriptionConfirmVacationSubscription$data = {
   readonly subscriptionConfirmVacation: {
-    readonly confirmed: {
-      readonly byCeo: boolean;
-      readonly byLeader: boolean;
-      readonly byManager: boolean;
-    };
-    readonly duration: number;
-    readonly endDate: any;
-    readonly id: string;
-    readonly startDate: any;
-    readonly user: {
-      readonly id: string;
-      readonly name: string;
-      readonly team: {
-        readonly leader: {
+    readonly edge: {
+      readonly cursor: any;
+      readonly node: {
+        readonly confirmedByWho: {
           readonly id: string;
           readonly name: string;
-        } | null;
+          readonly position: {
+            readonly id: string;
+            readonly position: string;
+          };
+        };
+        readonly confirmedVacation: {
+          readonly confirmed: {
+            readonly byCeo: boolean;
+            readonly byLeader: boolean;
+            readonly byManager: boolean;
+          };
+          readonly duration: number;
+          readonly endDate: any;
+          readonly id: string;
+          readonly startDate: any;
+          readonly user: {
+            readonly id: string;
+            readonly name: string;
+            readonly team: {
+              readonly leader: {
+                readonly id: string;
+                readonly name: string;
+              } | null;
+            };
+          };
+        };
       };
     };
+    readonly error: string | null;
+    readonly ok: boolean;
   };
 };
 export type SubscriptionConfirmVacationSubscription = {
@@ -41,49 +56,56 @@ export type SubscriptionConfirmVacationSubscription = {
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "userId"
-  }
-],
-v1 = [
-  {
-    "kind": "Variable",
-    "name": "userId",
-    "variableName": "userId"
-  }
-],
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "ok",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "error",
+  "storageKey": null
+},
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "cursor",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "startDate",
+  "name": "id",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "endDate",
+  "name": "startDate",
   "storageKey": null
 },
 v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "duration",
+  "name": "endDate",
   "storageKey": null
 },
 v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "duration",
+  "storageKey": null
+},
+v7 = {
   "alias": null,
   "args": null,
   "concreteType": "Confirm",
@@ -115,14 +137,14 @@ v6 = {
   ],
   "storageKey": null
 },
-v7 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v8 = {
+v9 = {
   "alias": null,
   "args": null,
   "concreteType": "User",
@@ -130,50 +152,119 @@ v8 = {
   "name": "leader",
   "plural": false,
   "selections": [
-    (v2/*: any*/),
-    (v7/*: any*/)
+    (v3/*: any*/),
+    (v8/*: any*/)
+  ],
+  "storageKey": null
+},
+v10 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "User",
+  "kind": "LinkedField",
+  "name": "confirmedByWho",
+  "plural": false,
+  "selections": [
+    (v3/*: any*/),
+    (v8/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Position",
+      "kind": "LinkedField",
+      "name": "position",
+      "plural": false,
+      "selections": [
+        (v3/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "position",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    }
   ],
   "storageKey": null
 };
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
     "name": "SubscriptionConfirmVacationSubscription",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
-        "concreteType": "Vacation",
+        "args": null,
+        "concreteType": "NotificationOutput",
         "kind": "LinkedField",
         "name": "subscriptionConfirmVacation",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
-          (v3/*: any*/),
-          (v4/*: any*/),
-          (v5/*: any*/),
-          (v6/*: any*/),
+          (v0/*: any*/),
+          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
-            "concreteType": "User",
+            "concreteType": "NotificationEdge",
             "kind": "LinkedField",
-            "name": "user",
+            "name": "edge",
             "plural": false,
             "selections": [
               (v2/*: any*/),
-              (v7/*: any*/),
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "Team",
+                "concreteType": "Notification",
                 "kind": "LinkedField",
-                "name": "team",
+                "name": "node",
                 "plural": false,
                 "selections": [
-                  (v8/*: any*/)
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Vacation",
+                    "kind": "LinkedField",
+                    "name": "confirmedVacation",
+                    "plural": false,
+                    "selections": [
+                      (v3/*: any*/),
+                      (v4/*: any*/),
+                      (v5/*: any*/),
+                      (v6/*: any*/),
+                      (v7/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "User",
+                        "kind": "LinkedField",
+                        "name": "user",
+                        "plural": false,
+                        "selections": [
+                          (v3/*: any*/),
+                          (v8/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "Team",
+                            "kind": "LinkedField",
+                            "name": "team",
+                            "plural": false,
+                            "selections": [
+                              (v9/*: any*/)
+                            ],
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  (v10/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -189,43 +280,81 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "SubscriptionConfirmVacationSubscription",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
-        "concreteType": "Vacation",
+        "args": null,
+        "concreteType": "NotificationOutput",
         "kind": "LinkedField",
         "name": "subscriptionConfirmVacation",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
-          (v3/*: any*/),
-          (v4/*: any*/),
-          (v5/*: any*/),
-          (v6/*: any*/),
+          (v0/*: any*/),
+          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
-            "concreteType": "User",
+            "concreteType": "NotificationEdge",
             "kind": "LinkedField",
-            "name": "user",
+            "name": "edge",
             "plural": false,
             "selections": [
               (v2/*: any*/),
-              (v7/*: any*/),
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "Team",
+                "concreteType": "Notification",
                 "kind": "LinkedField",
-                "name": "team",
+                "name": "node",
                 "plural": false,
                 "selections": [
-                  (v8/*: any*/),
-                  (v2/*: any*/)
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Vacation",
+                    "kind": "LinkedField",
+                    "name": "confirmedVacation",
+                    "plural": false,
+                    "selections": [
+                      (v3/*: any*/),
+                      (v4/*: any*/),
+                      (v5/*: any*/),
+                      (v6/*: any*/),
+                      (v7/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "User",
+                        "kind": "LinkedField",
+                        "name": "user",
+                        "plural": false,
+                        "selections": [
+                          (v3/*: any*/),
+                          (v8/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "Team",
+                            "kind": "LinkedField",
+                            "name": "team",
+                            "plural": false,
+                            "selections": [
+                              (v9/*: any*/),
+                              (v3/*: any*/)
+                            ],
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  (v10/*: any*/),
+                  (v3/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -238,16 +367,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "097429b991ee1c9fc981a12220ca53e1",
+    "cacheID": "01b0ac10a0f9ffaf495504eb72e91392",
     "id": null,
     "metadata": {},
     "name": "SubscriptionConfirmVacationSubscription",
     "operationKind": "subscription",
-    "text": "subscription SubscriptionConfirmVacationSubscription(\n  $userId: ID!\n) {\n  subscriptionConfirmVacation(userId: $userId) {\n    id\n    startDate\n    endDate\n    duration\n    confirmed {\n      byCeo\n      byManager\n      byLeader\n    }\n    user {\n      id\n      name\n      team {\n        leader {\n          id\n          name\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "subscription SubscriptionConfirmVacationSubscription {\n  subscriptionConfirmVacation {\n    ok\n    error\n    edge {\n      cursor\n      node {\n        confirmedVacation {\n          id\n          startDate\n          endDate\n          duration\n          confirmed {\n            byCeo\n            byManager\n            byLeader\n          }\n          user {\n            id\n            name\n            team {\n              leader {\n                id\n                name\n              }\n              id\n            }\n          }\n        }\n        confirmedByWho {\n          id\n          name\n          position {\n            id\n            position\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "40acd4b3fe5727e75b8b0f51bdb19504";
+(node as any).hash = "6af8b6775c25b1d688f95b1db3ef50e5";
 
 export default node;

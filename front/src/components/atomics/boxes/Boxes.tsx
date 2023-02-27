@@ -31,7 +31,7 @@ export const ScrollBox = styled.ul(({ theme, height, gap }: IScrollBox) => ({
   overflow: "auto",
   display: "flex",
   flexDirection: "column",
-  gap: gap || theme?.spacing.xl,
+  gap: gap || theme?.spacing.md,
   width: "100%",
   height: height ? height : "90%",
 }));

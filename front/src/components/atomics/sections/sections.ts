@@ -80,16 +80,32 @@ export const ContentSection = styled.article(({ theme }) => ({
 
 export const MessageSection = styled.ul(({ theme }) => ({
   backdropFilter: theme.bgColors.backdropFilter,
-  background: theme.bgColors.sectionGradient,
+  background: theme.bgColors.lightgray,
   width: 300,
   height: 400,
   position: "fixed",
-  right: 20,
-  bottom: 80,
+  right: 40,
+  bottom: 45,
   borderRadius: theme.borderRadius.lg,
   borderBottomRightRadius: 0,
   padding: theme.spacing.lg,
+  zIndex: 5,
 }));
+
+export const NotificationSection = styled.ul(({ theme }) => ({
+  backdropFilter: theme.bgColors.backdropFilter,
+  background: theme.bgColors.lightgray,
+  width: 300,
+  height: 300,
+  borderRadius: theme.borderRadius.lg,
+  borderTopRightRadius: 0,
+  padding: theme.spacing.lg,
+  position: "absolute",
+  top: 15,
+  right: 10,
+  zIndex: 5,
+}));
+
 interface ISection {
   theme?: Theme;
   noneBg?: boolean;
@@ -123,7 +139,7 @@ export const Article = styled.article(({ theme }) => ({
 
 export const ListItem = styled.li(({ theme }) => ({
   background: theme.bgColors.sectionGradient,
-  padding: theme.spacing.xl,
+  padding: theme.spacing.lg,
   width: "100%",
   borderRadius: theme.borderRadius.lg,
 }));

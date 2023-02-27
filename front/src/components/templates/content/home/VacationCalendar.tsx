@@ -59,7 +59,6 @@ export default function VacationCalendar({
   // const { currentModal, setCurrentModal } = useContext(ModalContext);
   const [events, setEvents] = useState(schedules);
 
-  console.log(schedules);
   const [selectedDate, setSelectedDate] = useState<DateRangeInput>({
     start: "",
     end: "",
@@ -113,7 +112,6 @@ export default function VacationCalendar({
     if (!isReally) {
       // 이 로직 진짜 중요함
       // 단순히 setEvents(schedules)로 하면 schedules값이 참조타입이므로 이전과 비교해도 값이 같다고 판단하여 리액트가 변화를 감지하지 못해서 취소 전 원래 상태로 안돌려보냄
-      console.log("resize");
       setEvents((prev) => {
         const copied = [...prev];
         const targetIndex = copied.findIndex((data) => data.id === scheduleId);
@@ -160,7 +158,6 @@ export default function VacationCalendar({
       if (!isOk) {
         // 이 로직 진짜 중요함
         // 단순히 setEvents(schedules)로 하면 schedules값이 참조타입이므로 이전과 비교해도 값이 같다고 판단하여 리액트가 변화를 감지하지 못해서 취소 전 원래 상태로 안돌려보냄
-        console.log("resize");
         setEvents((prev) => {
           const copied = [...prev];
           const targetIndex = copied.findIndex(
@@ -180,8 +177,6 @@ export default function VacationCalendar({
     if (!isReally) {
       // 이 로직 진짜 중요함
       // 단순히 setEvents(schedules)로 하면 schedules값이 참조타입이므로 이전과 비교해도 값이 같다고 판단하여 리액트가 변화를 감지하지 못해서 취소 전 원래 상태로 안돌려보냄
-      console.log("update");
-
       setEvents((prev) => {
         const copied = [...prev];
         const targetIndex = copied.findIndex((data) => data.id === scheduleId);

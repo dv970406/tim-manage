@@ -30,6 +30,7 @@ const MessageTool = () => {
       )}
       <div
         style={{
+          cursor: "pointer",
           position: "fixed",
           right: 20,
           bottom: 20,
