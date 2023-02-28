@@ -29,6 +29,14 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Position {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  position: String!
+  users: [User!]!
+}
+
 type Team {
   id: ID!
   createdAt: DateTime!
@@ -162,6 +170,8 @@ type User implements Node {
   answers: [Answer!]!
   messages: [Message!]!
   rooms: [Room!]!
+  notifications: [Notification!]!
+  unreadNotificationCount: Float!
   myAnswersConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): AnswersConnection!
   myVacationsConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): VacationsConnection!
   myPostsConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): PostsConnection!
@@ -170,12 +180,14 @@ type User implements Node {
   isLeader: Boolean!
 }
 
-type Position {
+type Notification {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  position: String!
-  users: [User!]!
+  confirmedVacation: Vacation!
+  confirmedByWho: User!
+  user: User!
+  isRead: Boolean!
 }
 
 type PageInfo {
@@ -384,10 +396,22 @@ type GetVacationsOutput {
   vacations: [Vacation!]
 }
 
+type NotificationEdge {
+  cursor: DateTime!
+  node: Notification!
+}
+
+type NotificationOutput {
+  ok: Boolean!
+  error: String
+  edge: NotificationEdge!
+}
+
 type UpdateVacationOutput {
   ok: Boolean!
   error: String
   vacation: Vacation
+  notificationsIdOfVacation: [String!]
 }
 
 type CreateAnswerOutput {
@@ -610,6 +634,25 @@ type GetRoomsOutput {
   pageInfo: PageInfo
 }
 
+type DeleteNotificationOutput {
+  ok: Boolean!
+  error: String
+  deletedNotificationId: ID
+}
+
+type GetNotificationsOutput {
+  ok: Boolean!
+  error: String
+  edges: [NotificationEdge!]!
+  pageInfo: PageInfo!
+}
+
+type ReadNotificationOutput {
+  ok: Boolean!
+  error: String
+  notification: Notification
+}
+
 type Query {
   getUsers(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): GetUsersOutput!
   getUser(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10, userId: ID!): GetUserOutput!
@@ -632,6 +675,7 @@ type Query {
   getWeeklyMeal: GetWeeklyMealOutput!
   getRooms(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): GetRoomsOutput!
   getRoom(roomId: ID!): GetRoomOutput!
+  getNotifications(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): GetNotificationsOutput!
 }
 
 input GetPositionInput {
@@ -690,6 +734,8 @@ type Mutation {
   createWeeklyMeal(input: CreateWeeklyMealInput!): CreateWeeklyMealOutput!
   sendMessage(input: SendMessageInput!): SendMessageOutput!
   exitRoom(input: ExitRoomInput!): ExitRoomOutput!
+  readNotification(input: ReadNotificationInput!): ReadNotificationOutput!
+  deleteNotification(input: DeleteNotificationInput!): DeleteNotificationOutput!
 }
 
 input LoginInput {
@@ -859,7 +905,15 @@ input ExitRoomInput {
   roomId: ID!
 }
 
+input ReadNotificationInput {
+  notificationId: ID
+}
+
+input DeleteNotificationInput {
+  notificationId: ID
+}
+
 type Subscription {
-  subscriptionConfirmVacation(userId: ID!): Vacation!
+  subscriptionConfirmVacation: NotificationOutput!
   subscriptionRoom(roomId: ID!): Message!
 }

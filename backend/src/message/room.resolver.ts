@@ -32,7 +32,6 @@ export class RoomResolver {
   @Subscription((type) => Message, {
     // subscription이 감지중인 room의 id와 유저가 보낸 메시지가 속한 room의 id가 같은지 체크하는 filter
     filter: ({ subscriptionRoom }, { roomId }, context) => {
-      console.log('plz here');
       const isRoomMember = subscriptionRoom.room.users.find(
         (member) => member.id === subscriptionRoom.userId,
       );

@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ConnectionInput } from 'src/core/dtos/pagination.dto';
 import { DB_TABLE } from 'src/core/variables/constants';
 import { POSITION_CEO } from 'src/core/variables/position';
+import { NotificationRepository } from 'src/notification/notification.repository';
 import { User } from 'src/user/entities/user.entity';
 import { UserRepository } from 'src/user/user.repository';
 import { pubsub, TRIGGER_CONFIRM_VACATION } from 'src/utils/subscription';
@@ -36,6 +37,8 @@ export class VacationService {
     private readonly vacationRepo: VacationRepository,
     @InjectRepository(UserRepository)
     private readonly userRepo: UserRepository,
+    @InjectRepository(NotificationRepository)
+    private readonly notificationRepo: NotificationRepository,
   ) {}
 
   async getVacations(): Promise<GetVacationsOutput> {
@@ -257,15 +260,28 @@ export class VacationService {
         findVacation.confirmed.byManager = true;
       }
 
-      // const confirmedVacation = await this.vacationRepo.save(findVacation);
+      const confirmedVacation = await this.vacationRepo.save(findVacation);
 
+      const newNotification = await this.notificationRepo.save({
+        user: confirmedVacation.user,
+        confirmedByWho: loggedInUser,
+        confirmedVacation: confirmedVacation,
+      });
       pubsub.publish(TRIGGER_CONFIRM_VACATION, {
-        subscriptionConfirmVacation: findVacation, //confirmedVacation,
+        subscriptionConfirmVacation: {
+          ok: true,
+          edge: {
+            node: {
+              ...newNotification,
+            },
+            cursor: confirmedVacation.createdAt,
+          },
+        }, //confirmedVacation,
       });
 
       return {
         ok: true,
-        vacation: findVacation,
+        vacation: confirmedVacation,
       };
     } catch (error) {
       return {
@@ -335,9 +351,27 @@ export class VacationService {
 
       const updatedVacation = await this.vacationRepo.save(findVacation);
 
+      const notificationsIdOfVacation = await this.notificationRepo.find({
+        where: {
+          confirmedVacation: {
+            id: updatedVacation.id,
+          },
+        },
+        select: {
+          id: true,
+        },
+      });
+
+      // 수정 시 그 휴가와 얽혀있는 모든 Notifications 삭제
+      await this.notificationRepo.delete({
+        confirmedVacation: { id: updatedVacation.id },
+      });
       return {
         ok: true,
         vacation: updatedVacation,
+        notificationsIdOfVacation: notificationsIdOfVacation.map(
+          (notification) => notification.id,
+        ),
       };
     } catch (error) {
       return {

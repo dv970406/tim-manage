@@ -1,10 +1,5 @@
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import {
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-  RequestMethod,
-} from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { UserModule } from './user/user.module';
 import { CoreModule } from './core/core.module';
@@ -14,7 +9,6 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { JwtModule } from './jwt/jwt.module';
 import * as Joi from 'joi';
-import { JwtMiddleware } from './jwt/jwt.middleware';
 import { PositionModule } from './position/position.module';
 import { TeamModule } from './team/team.module';
 import { VacationModule } from './vacation/vacation.module';
@@ -38,6 +32,8 @@ import { MessageModule } from './message/message.module';
 import { Message } from './message/entity/message.entity';
 import { Room } from './message/entity/room.entity';
 import { CustomTypeOrmModule } from './core/repository/custom-typeorm.module';
+import { NotificationModule } from './notification/notification.module';
+import { Notification } from './notification/entities/notification.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -72,6 +68,7 @@ import { CustomTypeOrmModule } from './core/repository/custom-typeorm.module';
         },
       },
       context: ({ req, connectionParams }) => {
+        console.log(req, connectionParams);
         if (connectionParams) {
           return { token: connectionParams.token };
         } else if (req) {
@@ -117,6 +114,7 @@ import { CustomTypeOrmModule } from './core/repository/custom-typeorm.module';
         Node,
         Message,
         Room,
+        Notification,
       ],
     }),
     UserModule,
@@ -134,6 +132,7 @@ import { CustomTypeOrmModule } from './core/repository/custom-typeorm.module';
     MealModule,
     MessageModule,
     CustomTypeOrmModule,
+    NotificationModule,
   ],
   controllers: [],
   providers: [],

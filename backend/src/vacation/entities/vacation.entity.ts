@@ -2,6 +2,7 @@ import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { IsBoolean, IsDate, IsNumber } from 'class-validator';
 import { CoreEntity } from 'src/core/entities/core.entity';
 import { DB_TABLE } from 'src/core/variables/constants';
+import { Notification } from 'src/notification/entities/notification.entity';
 import { User } from 'src/user/entities/user.entity';
 import {
   BeforeInsert,
@@ -9,6 +10,7 @@ import {
   Double,
   Entity,
   ManyToOne,
+  OneToMany,
   RelationId,
 } from 'typeorm';
 

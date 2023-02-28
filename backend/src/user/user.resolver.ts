@@ -34,6 +34,10 @@ import { UserService } from './user.service';
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
+  @ResolveField((type) => Number)
+  unreadNotificationCount(@Parent() loggedInUser: User): Promise<number> {
+    return this.userService.unreadNotificationCount(loggedInUser);
+  }
   @ResolveField((type) => AnswersConnection)
   myAnswersConnection(
     @Parent() loggedInUser: User,
@@ -122,7 +126,7 @@ export class UserResolver {
   }
 
   @Mutation((returns) => CreateUserOutput)
-  // @UseGuards(ManagerGuard)
+  @UseGuards(ManagerGuard)
   async createUser(
     @Args('input') createUserInput: CreateUserInput,
   ): Promise<CreateUserOutput> {

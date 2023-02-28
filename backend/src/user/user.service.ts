@@ -5,6 +5,7 @@ import { find } from 'rxjs';
 import { ConnectionInput } from 'src/core/dtos/pagination.dto';
 import { POSITION_CEO } from 'src/core/variables/position';
 import { JwtService } from 'src/jwt/jwt.service';
+import { NotificationRepository } from 'src/notification/notification.repository';
 import { PositionRepository } from 'src/position/position.repository';
 import { CommentsConnection } from 'src/post/dtos/comment/comment-pagination.dto';
 import { LikesConnection } from 'src/post/dtos/like/like-pagination.dto';
@@ -49,8 +50,20 @@ export class UserService {
     private readonly commentRepo: CommentRepository,
     @InjectRepository(LikeRepository)
     private readonly likeRepo: LikeRepository,
+    @InjectRepository(NotificationRepository)
+    private readonly notificationRepo: NotificationRepository,
   ) {}
 
+  async unreadNotificationCount({ id }: User): Promise<number> {
+    return this.notificationRepo.count({
+      where: {
+        user: {
+          id,
+        },
+        isRead: false,
+      },
+    });
+  }
   async myAnswersConnection(
     loggedInUser: User,
     { keyword, first, after }: ConnectionInput,

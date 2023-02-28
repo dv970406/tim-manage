@@ -23,4 +23,7 @@ export class UpdateVacationInput extends PickType(PartialType(Vacation), [
 export class UpdateVacationOutput extends CoreOutput {
   @Field((type) => Vacation, { nullable: true })
   vacation?: Vacation;
+
+  @Field((type) => [String], { nullable: true })
+  notificationsIdOfVacation?: string[];
 }

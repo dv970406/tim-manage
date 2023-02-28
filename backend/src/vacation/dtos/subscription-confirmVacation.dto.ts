@@ -1,9 +1,9 @@
 import { ArgsType, Field, ID, ObjectType } from '@nestjs/graphql';
-import { User } from 'src/user/entities/user.entity';
-import { Vacation } from '../entities/vacation.entity';
+import { CoreOutput } from 'src/core/dtos/core.dto';
+import { NotificationEdge } from 'src/notification/dtos/nofication-pagination.dto';
 
-@ArgsType()
-export class SubscriptionConfirmVacationInput {
-  @Field((type) => ID)
-  userId: string;
+@ObjectType()
+export class NotificationOutput extends CoreOutput {
+  @Field((type) => NotificationEdge)
+  edge?: NotificationEdge;
 }

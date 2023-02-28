@@ -41,6 +41,7 @@ import { DB_TABLE } from 'src/core/variables/constants';
 import { Node } from 'src/core/dtos/node.dto';
 import { Message } from 'src/message/entity/message.entity';
 import { Room } from 'src/message/entity/room.entity';
+import { Notification } from 'src/notification/entities/notification.entity';
 @InputType('UserInputType', { isAbstract: true })
 @Entity()
 @ObjectType({ implements: Node })
@@ -153,6 +154,10 @@ export class User extends CoreEntity implements Node {
   @ManyToMany((type) => Room, (room) => room.users)
   @Field((type) => [Room])
   rooms: Room[];
+
+  @OneToMany((type) => Notification, (notification) => notification.user)
+  @Field((type) => [Notification])
+  notifications: Notification[];
 
   // Define isTypeOf function to specify concrete type
   static isTypeOf(obj: any): obj is User {
