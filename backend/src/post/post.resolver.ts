@@ -55,11 +55,13 @@ export class PostResolver {
   }
 
   @Query((type) => GetPostsOutput)
+  @UseGuards(LoginGuard)
   getPosts(@Args() getPostsInput: GetPostsInput): Promise<GetPostsOutput> {
     return this.postService.getPosts(getPostsInput);
   }
 
   @Query((type) => GetPostOutput)
+  @UseGuards(LoginGuard)
   getPost(@Args('input') getPostInput: GetPostInput): Promise<GetPostOutput> {
     return this.postService.getPost(getPostInput);
   }

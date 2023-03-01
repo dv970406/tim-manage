@@ -68,7 +68,6 @@ import { Notification } from './notification/entities/notification.entity';
         },
       },
       context: ({ req, connectionParams }) => {
-        console.log(req, connectionParams);
         if (connectionParams) {
           return { token: connectionParams.token };
         } else if (req) {

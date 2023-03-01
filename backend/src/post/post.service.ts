@@ -53,6 +53,7 @@ export class PostService {
         cursor: user.createdAt,
         node: user,
       }));
+
       const endCursor = totalCount > 0 ? edges[edges.length - 1].cursor : null;
 
       return {

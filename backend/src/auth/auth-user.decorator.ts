@@ -6,6 +6,7 @@ export const LoggedInUser = createParamDecorator(
     try {
       const gqlContext = GqlExecutionContext.create(context).getContext();
       const user = gqlContext['user'];
+
       if (!user) {
         throw new Error('로그인이 필요합니다.');
       }
