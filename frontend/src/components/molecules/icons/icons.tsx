@@ -32,11 +32,11 @@ export const ButtonIcon = ({ color, icon }: IIcon) => {
   );
 };
 
-interface ITextIcon extends IIcon {
+interface IButtonTextIcon extends IIcon {
   text: string;
 }
 
-export const TextIcon = ({ icon, text }: ITextIcon) => {
+export const ButtonTextIcon = ({ icon, text }: IButtonTextIcon) => {
   return (
     <button
       style={{

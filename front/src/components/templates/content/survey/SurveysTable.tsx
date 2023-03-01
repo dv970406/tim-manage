@@ -6,7 +6,6 @@ import { GetSurveysPaginationQuery } from "./__generated__/GetSurveysPaginationQ
 import { SurveysTable_survey$key } from "./__generated__/SurveysTable_survey.graphql";
 import DataToolBar from "../../../molecules/inputs/DataToolBar";
 import { ChangeEventHandler, useEffect, useState } from "react";
-import Modal from "../../Modal";
 import CreateScheduleModal from "../home/CreateScheduleModal";
 import MutateMeetingModal from "../home/MutateMeetingModal";
 import { MODAL_NAME } from "../../../../utils/constants/modal.constant";

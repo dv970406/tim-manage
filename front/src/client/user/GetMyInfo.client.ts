@@ -46,6 +46,7 @@ export const useGetMyInfo = () => {
   });
 
   const navigate = useNavigate();
+
   useEffect(() => {
     if (!getMyInfo?.ok) {
       localStorage.removeItem(TOKEN);

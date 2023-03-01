@@ -46,7 +46,6 @@ const NotificationsTable = ({ notifications }: INotificationsTable) => {
     NotificationsTable_notification$key
   >(getNotificationsFragment, notifications);
 
-  console.log(getNotifications);
   const { readNotificationMutation, readNotificationLoading } =
     useReadNotification();
 
@@ -58,7 +57,7 @@ const NotificationsTable = ({ notifications }: INotificationsTable) => {
     >
       {getNotifications?.edges?.map(
         (notification) =>
-          notification && (
+          notification.node && (
             <NotificationTableContent
               key={notification.cursor}
               notification={notification.node}

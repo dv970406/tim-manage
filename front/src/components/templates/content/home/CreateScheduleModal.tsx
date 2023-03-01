@@ -6,19 +6,15 @@ import { useCreateMeeting } from "../../../../client/meeting/CreateMeeting.clien
 import { useCreateVacation } from "../../../../client/vacation/CreateVacation.client";
 import { theme } from "../../../../css/theme";
 import { SCHEDULES } from "../../../../utils/constants/schedule.constant";
-import { ModalContext } from "../../../../utils/contexts/modal.context";
-import { endDateFormatForDb } from "../../../../utils/time/time";
-import { SubmitButton } from "../../../atomics/buttons/buttons";
 import { Form } from "../../../atomics/form/Form";
 import { GapBox } from "../../../atomics/boxes/Boxes";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 import { Radio } from "../../../molecules/inputs/Radio";
-import Modal from "../../../templates/Modal";
 import SelectUsers from "../../../organisms/content/home/SelectUsers";
 import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
 import { closeModal } from "../../../../utils/modal/controlModal";
 import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
-import { useSelectUsers } from "../../../../client/user/SelectUsers.client";
+import PortalModal from "../../../../utils/modal/PortalModal";
 
 interface ICreateScheduleModal {
   selectedDate: DateRangeInput;
@@ -70,7 +66,7 @@ const CreateScheduleModal = ({
   };
 
   return (
-    <Modal modalName={MODAL_NAME.CREATE_SCHEDULE}>
+    <PortalModal modalName={MODAL_NAME.CREATE_SCHEDULE}>
       <Form
         onSubmit={handleSubmit(onSubmit)}
         style={{
@@ -135,7 +131,7 @@ const CreateScheduleModal = ({
 
         <EndSubmitButton onClick={handleSubmit(onSubmit)} text="신청" />
       </Form>
-    </Modal>
+    </PortalModal>
   );
 };
 

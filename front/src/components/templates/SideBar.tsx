@@ -23,6 +23,7 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { MainText } from "../atomics/typographys/texts";
 import { theme } from "../../css/theme";
 import { useGetMyInfo } from "../../client/user/GetMyInfo.client";
+import { TOKEN } from "../../client/client";
 
 interface ISideBar {
   isManager?: boolean;
@@ -31,13 +32,25 @@ interface ISideBar {
 const SideBar = ({ isManager, isLeader }: ISideBar) => {
   const navigate = useNavigate();
 
-  // manager 페이지일 경우 manager가 아니면 되돌려보내기
   const { pathname } = useLocation();
-  const isManagerOnly = pathname.includes("manager");
 
   useEffect(() => {
-    if (isManagerOnly && isManager) {
+    const token = localStorage.getItem(TOKEN);
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    // manager페이지인데 manager아닌 사람이 접근하려고 할 때 접근 제한
+    const isManagerOnlyPage = pathname.includes("manager");
+    // 단, manager/vacation은 leader는 접근 가능
+    const isManagerVacationPage = pathname.includes("/manager/vacation");
+
+    if (isManagerOnlyPage) {
+      if (isManager) return;
+      if (isManagerVacationPage && isLeader) return;
       alert("관리자만 접근할 수 있습니다.");
+
       navigate("/");
     }
   }, []);

@@ -48,7 +48,7 @@ export const useReadNotification = () => {
         const unreadNotificationCount = userRecord?.getValue(
           "unreadNotificationCount"
         );
-        if (!unreadNotificationCount) return;
+        if (!unreadNotificationCount && unreadNotificationCount !== 0) return;
         userRecord?.setValue(
           +unreadNotificationCount - 1,
           "unreadNotificationCount"

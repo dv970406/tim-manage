@@ -8,13 +8,13 @@ import { theme } from "../../../../css/theme";
 import { Form } from "../../../atomics/form/Form";
 import { GapBox } from "../../../atomics/boxes/Boxes";
 import { TextInput } from "../../../molecules/inputs/TextInput";
-import Modal from "../../Modal";
 import { IMeetingFormValue } from "./CreateScheduleModal";
 import SelectUsers from "../../../organisms/content/home/SelectUsers";
 import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
 import { closeModal } from "../../../../utils/modal/controlModal";
 import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
 import { useSelectUsers } from "../../../../client/user/SelectUsers.client";
+import PortalModal from "../../../../utils/modal/PortalModal";
 
 interface IMutateMeetingModal {
   scheduleId: string;
@@ -64,7 +64,7 @@ const MutateMeetingModal = ({ scheduleId }: IMutateMeetingModal) => {
   };
 
   return (
-    <Modal modalName={MODAL_NAME.MUTATE_MEETING}>
+    <PortalModal modalName={MODAL_NAME.MUTATE_MEETING}>
       <Form
         onSubmit={handleSubmit(onSubmit)}
         style={{
@@ -118,7 +118,7 @@ const MutateMeetingModal = ({ scheduleId }: IMutateMeetingModal) => {
           />
         </div>
       </Form>
-    </Modal>
+    </PortalModal>
   );
 };
 

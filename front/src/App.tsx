@@ -1,5 +1,5 @@
 import { Global, ThemeProvider } from "@emotion/react";
-import { useState } from "react";
+import { lazy, useState } from "react";
 import { RelayEnvironmentProvider } from "react-relay";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { environment } from "./client/client";
@@ -8,7 +8,6 @@ import SurveyManagementPage from "./pages/manager/SurveyManagement";
 import UserManagementPage from "./pages/manager/UserManagement";
 import ErrorPage from "./pages/Error";
 import HomePage from "./pages/Home";
-import Layout from "./pages/Layout";
 import LoginPage from "./pages/Login";
 import PostDetailPage from "./pages/post/PostDetail";
 import PostsPage from "./pages/post/Posts";
@@ -35,6 +34,9 @@ import ShowUserAnswers from "./components/templates/content/user/ShowUserAnswers
 import ShowUserComments from "./components/templates/content/user/ShowUserComments";
 import ShowUserLikes from "./components/templates/content/user/ShowUserLikes";
 import "./styles.css";
+import Layout from "./pages/Layout";
+
+// const Layout = lazy(() => import("./pages/Layout"));
 
 // 접근제한 라우터는 나중에 고민
 const router = createBrowserRouter([

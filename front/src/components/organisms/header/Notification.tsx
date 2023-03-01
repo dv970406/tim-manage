@@ -26,7 +26,6 @@ const Notification = ({ unreadNotificationCount }: INotification) => {
 
   const { notifications } = useGetNotifications();
 
-  console.log(unreadNotificationCount);
   return (
     <div
       style={{

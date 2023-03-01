@@ -7,11 +7,9 @@ import {
   faOutdent,
   faUser,
 } from "@fortawesome/pro-solid-svg-icons";
-import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { TOKEN } from "../../client/client";
-import { subscriptionConfirmVacation } from "../../client/vacation/SubscriptionConfirmVacation.client";
 import { theme } from "../../css/theme";
-import { ColumnBox, GapBox, GapList, RowBox } from "../atomics/boxes/Boxes";
 import { HeaderSection } from "../atomics/sections/sections";
 import { ButtonIcon } from "../molecules/buttons/Buttons";
 import NavIconButton from "../organisms/header/NavIconButton";
@@ -21,8 +19,11 @@ interface IHeader {
   unreadNotificationCount?: number;
 }
 const Header = ({ unreadNotificationCount }: IHeader) => {
+  const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem(TOKEN);
+    navigate("/login");
+    // 로그아웃 시 cache(store) 초기화 목적의 새로고침
     window.location.reload();
   };
 

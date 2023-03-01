@@ -858,6 +858,7 @@ type UpdateVacationOutput {
   ok: Boolean!
   error: String
   vacation: Vacation
+  notificationsIdOfVacation: [String!]
 }
 
 type User implements Node {

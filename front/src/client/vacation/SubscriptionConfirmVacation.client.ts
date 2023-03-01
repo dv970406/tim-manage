@@ -97,6 +97,19 @@ export const subscriptionConfirmVacation = ({
           .getLinkedRecord("confirmed");
 
         targetVacation?.setLinkedRecord(newConfirmedStatus, "confirmed");
+
+        // unreadNotificationCount를 +1
+        const userRecord = proxyStore
+          .get("client:root:getMyInfo")
+          ?.getLinkedRecord("user");
+        const unreadNotificationCount = userRecord?.getValue(
+          "unreadNotificationCount"
+        );
+        if (!unreadNotificationCount && unreadNotificationCount !== 0) return;
+        userRecord?.setValue(
+          +unreadNotificationCount + 1,
+          "unreadNotificationCount"
+        );
       },
     }
   );

@@ -30,13 +30,14 @@ export const useLogin = () => {
 
       onCompleted: ({ login: { ok, error, token } }) => {
         setIsLoading(false);
-        if (!ok || !token) {
+        if (!token) {
           alert(error);
           return;
+        } else {
+          localStorage.setItem(TOKEN, token);
+          // 홈으로 푸시
+          navigate("/");
         }
-        localStorage.setItem(TOKEN, token);
-        // 홈으로 푸시
-        navigate("/");
       },
     });
   };

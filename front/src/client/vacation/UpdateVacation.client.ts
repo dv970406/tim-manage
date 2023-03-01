@@ -41,6 +41,7 @@ const updateVacationQuery = graphql`
           availableVacation
         }
       }
+      notificationsIdOfVacation
     }
   }
 `;
@@ -70,6 +71,10 @@ export const useUpdateVacation = () => {
           .getLinkedRecord("user");
 
         myInfoRecord?.setLinkedRecord(updatedAvailableVacationRecord, "user");
+
+        updateVacation.notificationsIdOfVacation?.map((notificationId) =>
+          proxyStore.delete(notificationId)
+        );
       },
     });
   };

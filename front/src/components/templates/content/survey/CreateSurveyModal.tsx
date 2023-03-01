@@ -10,19 +10,19 @@ import { SubmitButton } from "../../../atomics/buttons/buttons";
 import { Form } from "../../../atomics/form/Form";
 import { GapBox } from "../../../atomics/boxes/Boxes";
 import { TextInput } from "../../../molecules/inputs/TextInput";
-import Modal from "../../Modal";
 import SelectUsers from "../../../organisms/content/home/SelectUsers";
 import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
 import CreateSurveyForm from "../manager/CreateSurveyForm";
 import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
+import PortalModal from "../../../../utils/modal/PortalModal";
 
 interface ICreateSurveyModal {}
 
 const CreateSurveyModal = ({}: ICreateSurveyModal) => {
   return (
-    <Modal modalName={MODAL_NAME.CREATE_SURVEY}>
+    <PortalModal modalName={MODAL_NAME.CREATE_SURVEY}>
       <CreateSurveyForm />
-    </Modal>
+    </PortalModal>
   );
 };
 

@@ -1,7 +1,6 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useState } from "react";
 import { commitMutation, ConnectionHandler } from "react-relay";
-import { useAlert } from "../../utils/hooks/alert/alert.hook";
 import { deleteEdgeOfData } from "../../utils/store/connection";
 import { environment } from "../client";
 import {
@@ -21,7 +20,6 @@ const deleteSurveyQuery = graphql`
 
 export const useDeleteSurvey = () => {
   const [deleteSurveyLoading, setIsLoading] = useState(false);
-  const { enqueueAlert } = useAlert();
 
   const deleteSurveyMutation = (variables: DeleteSurveyMutation$variables) => {
     setIsLoading(true);

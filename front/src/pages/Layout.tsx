@@ -19,6 +19,7 @@ export default function Layout() {
 
 function TemplatesLayout() {
   const { myInfo } = useGetMyInfo();
+
   return (
     <Body>
       <SideBar isManager={myInfo?.isManager} isLeader={myInfo?.isLeader} />
