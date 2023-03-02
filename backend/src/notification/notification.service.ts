@@ -4,7 +4,7 @@ import { User } from 'src/user/entities/user.entity';
 import { LessThan } from 'typeorm';
 import {
   DeleteNotificationInput,
-  DeleteNotificationOutput,
+  DeleteReceiveNotificationOutput,
 } from './dtos/delete-notification.dto';
 import {
   GetNotificationInput,
@@ -12,7 +12,7 @@ import {
 } from './dtos/get-notifications.dto';
 import {
   ReadNotificationInput,
-  ReadNotificationOutput,
+  ReadReceiveNotificationOutput,
 } from './dtos/read-notification.dto';
 import { NotificationRepository } from './notification.repository';
 
@@ -62,7 +62,7 @@ export class NotificationService {
 
   async readNotification({
     notificationId,
-  }: ReadNotificationInput): Promise<ReadNotificationOutput> {
+  }: ReadNotificationInput): Promise<ReadReceiveNotificationOutput> {
     try {
       const findNotification = await this.notificationRepo.findOneBy({
         id: notificationId,
@@ -87,7 +87,7 @@ export class NotificationService {
   }
   async deleteNotification({
     notificationId,
-  }: DeleteNotificationInput): Promise<DeleteNotificationOutput> {
+  }: DeleteNotificationInput): Promise<DeleteReceiveNotificationOutput> {
     try {
       const findNotification = await this.notificationRepo.findOneBy({
         id: notificationId,

@@ -6,7 +6,7 @@ import { POSITION_CEO } from 'src/core/variables/position';
 import { NotificationRepository } from 'src/notification/notification.repository';
 import { User } from 'src/user/entities/user.entity';
 import { UserRepository } from 'src/user/user.repository';
-import { pubsub, TRIGGER_CONFIRM_VACATION } from 'src/utils/subscription';
+import { pubsub, TRIGGER_RECEIVE_NOTIFICATION } from 'src/utils/subscription';
 import { LessThan, MoreThan } from 'typeorm';
 import {
   ConfirmVacationInput,
@@ -267,8 +267,8 @@ export class VacationService {
         confirmedByWho: loggedInUser,
         confirmedVacation: confirmedVacation,
       });
-      pubsub.publish(TRIGGER_CONFIRM_VACATION, {
-        subscriptionConfirmVacation: {
+      pubsub.publish(TRIGGER_RECEIVE_NOTIFICATION, {
+        receiveNotification: {
           ok: true,
           edge: {
             node: {

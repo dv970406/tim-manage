@@ -9,7 +9,7 @@ export class DeleteNotificationInput {
 }
 
 @ObjectType()
-export class DeleteNotificationOutput extends CoreOutput {
+export class DeleteReceiveNotificationOutput extends CoreOutput {
   @Field((type) => ID, { nullable: true })
   deletedNotificationId?: string;
 }

@@ -9,7 +9,7 @@ export class ReadNotificationInput {
 }
 
 @ObjectType()
-export class ReadNotificationOutput extends CoreOutput {
+export class ReadReceiveNotificationOutput extends CoreOutput {
   @Field((type) => Notification, { nullable: true })
   notification?: Notification;
 }

@@ -35,6 +35,10 @@ export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
   @ResolveField((type) => Number)
+  unreadMessageCount(@Parent() loggedInUser: User): Promise<number> {
+    return this.userService.unreadMessageCount(loggedInUser);
+  }
+  @ResolveField((type) => Number)
   unreadNotificationCount(@Parent() loggedInUser: User): Promise<number> {
     return this.userService.unreadNotificationCount(loggedInUser);
   }

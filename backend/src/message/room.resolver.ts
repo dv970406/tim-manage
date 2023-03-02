@@ -14,13 +14,16 @@ import { LoggedInUser } from 'src/auth/auth-user.decorator';
 import { LoginGuard } from 'src/auth/auth.guard';
 import { ConnectionInput } from 'src/core/dtos/pagination.dto';
 import { User } from 'src/user/entities/user.entity';
-import { pubsub, TRIGGER_SEND_MESSAGE } from 'src/utils/subscription';
+import { pubsub, TRIGGER_RECEIVE_IN_ROOM } from 'src/utils/subscription';
 import { MessagesConnection } from './dtos/messages/message-pagination.dto';
 import { ExitRoomInput, ExitRoomOutput } from './dtos/rooms/delete-room.dto';
 import { GetRoomInput, GetRoomOutput } from './dtos/rooms/get-room.dto';
 import { GetRoomsInput, GetRoomsOutput } from './dtos/rooms/get-rooms.dto';
 import { RoomsConnection } from './dtos/rooms/room-pagination.dto';
-import { SubscriptionRoomInput } from './dtos/rooms/subscription-room.dto';
+import {
+  ReceiveInRoomInput,
+  ReceiveInRoomOutput,
+} from './dtos/rooms/receive-inRoom.dto';
 import { Message } from './entity/message.entity';
 import { Room } from './entity/room.entity';
 import { RoomService } from './room.service';
@@ -29,33 +32,36 @@ import { RoomService } from './room.service';
 export class RoomResolver {
   constructor(private readonly roomService: RoomService) {}
 
-  @Subscription((type) => Message, {
+  @Subscription((type) => ReceiveInRoomOutput, {
     // subscription이 감지중인 room의 id와 유저가 보낸 메시지가 속한 room의 id가 같은지 체크하는 filter
-    filter: ({ subscriptionRoom }, { roomId }, context) => {
-      const isRoomMember = subscriptionRoom.room.users.find(
-        (member) => member.id === subscriptionRoom.userId,
+    filter: ({ receiveInRoom }, { roomId }, { user: loggedInUser }) => {
+      const isRoomMember = receiveInRoom.edge.node.room.users.find(
+        (member) => member.id === loggedInUser.id,
       );
+
       if (!isRoomMember) return false;
 
-      return subscriptionRoom.roomId === roomId;
+      return receiveInRoom.edge.node.room.id === roomId;
     },
 
     // subscription에 나타낼 데이터의 모양은 resolve가 정한다.
-    resolve: ({ subscriptionRoom }) => {
-      return subscriptionRoom;
+    resolve: ({ receiveInRoom }) => {
+      return receiveInRoom;
     },
   })
   @UseGuards(LoginGuard)
-  subscriptionRoom(@Args() subscriptionRoomInput: SubscriptionRoomInput) {
-    return pubsub.asyncIterator(TRIGGER_SEND_MESSAGE);
+  receiveInRoom(@Args() receiveInRoomInput: ReceiveInRoomInput) {
+    return pubsub.asyncIterator(TRIGGER_RECEIVE_IN_ROOM);
   }
 
   @ResolveField((type) => Int)
-  unreadCount(@Parent() room: Room) {
-    return this.roomService.unreadCount(room);
+  @UseGuards(LoginGuard)
+  unreadMessageCount(@LoggedInUser() loggedInUser: User, @Parent() room: Room) {
+    return this.roomService.unreadMessageCount(loggedInUser, room);
   }
 
   @ResolveField((type) => MessagesConnection)
+  @UseGuards(LoginGuard)
   messagesOfRoomConnection(
     @Parent() room: Room,
     @Args() roomConnectionInput: ConnectionInput,

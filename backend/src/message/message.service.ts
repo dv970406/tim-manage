@@ -2,11 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
 import { UserRepository } from 'src/user/user.repository';
-import { pubsub, TRIGGER_SEND_MESSAGE } from 'src/utils/subscription';
+import {
+  pubsub,
+  TRIGGER_RECEIVE_MESSAGE,
+  TRIGGER_RECEIVE_IN_ROOM,
+} from 'src/utils/subscription';
 import {
   SendMessageInput,
   SendMessageOutput,
 } from './dtos/messages/send-message.dto';
+import { Message } from './entity/message.entity';
 import { MessageRepository } from './repositories/message.repository';
 import { RoomRepository } from './repositories/room.repository';
 
@@ -21,6 +26,9 @@ export class MessageService {
     private readonly roomRepo: RoomRepository,
   ) {}
 
+  isMine({ id }: User, message: Message) {
+    return message.user.id === id;
+  }
   async sendMessage(
     loggedInUser: User,
     { message, roomId, listenerId }: SendMessageInput,
@@ -30,6 +38,7 @@ export class MessageService {
       if (listenerId) {
         listener = await this.userRepo.findUser({ userId: listenerId });
       }
+
       const findRoom = await this.roomRepo.findOrCreateRoom({
         roomId,
         listener,
@@ -48,13 +57,28 @@ export class MessageService {
         user: loggedInUser,
       });
 
-      pubsub.publish(TRIGGER_SEND_MESSAGE, {
-        subscriptionRoom: newMessage,
+      const edge = {
+        node: newMessage,
+        cursor: newMessage.createdAt,
+      };
+      // room에 있을 때의 대화
+      pubsub.publish(TRIGGER_RECEIVE_IN_ROOM, {
+        receiveInRoom: {
+          ok: true,
+          edge,
+        },
+      });
+      // room에 없을 때 메시지가 온 것을 감지
+      pubsub.publish(TRIGGER_RECEIVE_MESSAGE, {
+        receiveMessage: {
+          ok: true,
+          room: findRoom,
+        },
       });
 
       return {
         ok: true,
-        message: newMessage,
+        edge,
       };
     } catch (error) {
       return {

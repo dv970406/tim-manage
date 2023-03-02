@@ -3,7 +3,7 @@ import { CoreOutput } from 'src/core/dtos/core.dto';
 import { NotificationEdge } from 'src/notification/dtos/nofication-pagination.dto';
 
 @ObjectType()
-export class NotificationOutput extends CoreOutput {
+export class ReceiveNotificationOutput extends CoreOutput {
   @Field((type) => NotificationEdge)
   edge?: NotificationEdge;
 }

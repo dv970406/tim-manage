@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CustomTypeOrmModule } from 'src/core/repository/custom-typeorm.module';
+import { MessageRepository } from 'src/message/repositories/message.repository';
 import { NotificationRepository } from 'src/notification/notification.repository';
 import { PositionRepository } from 'src/position/position.repository';
 import { CommentRepository } from 'src/post/repositories/comment.repository';
@@ -26,6 +27,7 @@ import { UserService } from './user.service';
       AnswerRepository,
       VacationRepository,
       NotificationRepository,
+      MessageRepository,
     ]),
   ],
   providers: [UserResolver, UserService],

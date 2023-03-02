@@ -12,7 +12,7 @@ import { LoggedInUser } from 'src/auth/auth-user.decorator';
 import { LoginGuard, ManagerGuard } from 'src/auth/auth.guard';
 import { ConnectionInput } from 'src/core/dtos/pagination.dto';
 import { User } from 'src/user/entities/user.entity';
-import { pubsub, TRIGGER_CONFIRM_VACATION } from 'src/utils/subscription';
+import { pubsub, TRIGGER_RECEIVE_NOTIFICATION } from 'src/utils/subscription';
 import {
   ConfirmVacationInput,
   ConfirmVacationOutput,
@@ -28,7 +28,6 @@ import {
 import { GetUnConfirmedByMeVacationsOutput } from './dtos/get-unConfirmedByMeVacations.dto';
 import { GetVacationInput, GetVacationOutput } from './dtos/get-vacation.dto';
 import { GetVacationsOutput } from './dtos/get-vacations.dto';
-import { NotificationOutput } from './dtos/subscription-confirmVacation.dto';
 import {
   UpdateVacationInput,
   UpdateVacationOutput,
@@ -39,24 +38,6 @@ import { VacationService } from './vacation.service';
 @Resolver((of) => Vacation)
 export class VacationResolver {
   constructor(private readonly vacationService: VacationService) {}
-
-  @Subscription((type) => NotificationOutput, {
-    filter: ({ subscriptionConfirmVacation }, _, { user: loggedInUser }) => {
-      // 로그인한 유저가 휴가의 소유자일 때에만 알람을 받을 수 있게 허락
-      return (
-        subscriptionConfirmVacation.edge.node.confirmedVacation.user.id ===
-        loggedInUser.id
-      );
-    },
-
-    resolve: ({ subscriptionConfirmVacation }) => {
-      return subscriptionConfirmVacation;
-    },
-  })
-  @UseGuards(LoginGuard)
-  subscriptionConfirmVacation() {
-    return pubsub.asyncIterator(TRIGGER_CONFIRM_VACATION);
-  }
 
   @Query((type) => GetVacationsOutput)
   getVacations(): Promise<GetVacationsOutput> {

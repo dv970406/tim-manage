@@ -2,5 +2,6 @@ import { PubSub } from 'graphql-subscriptions';
 
 export const pubsub = new PubSub();
 
-export const TRIGGER_CONFIRM_VACATION = 'TRIGGER_CONFIRM_VACATION';
-export const TRIGGER_SEND_MESSAGE = 'TRIGGER_SEND_MESSAGE';
+export const TRIGGER_RECEIVE_NOTIFICATION = 'TRIGGER_RECEIVE_NOTIFICATION';
+export const TRIGGER_RECEIVE_IN_ROOM = 'TRIGGER_RECEIVE_IN_ROOM';
+export const TRIGGER_RECEIVE_MESSAGE = 'TRIGGER_RECEIVE_MESSAGE';

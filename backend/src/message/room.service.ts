@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ConnectionInput } from 'src/core/dtos/pagination.dto';
 import { User } from 'src/user/entities/user.entity';
-import { LessThan } from 'typeorm';
+import { In, LessThan, Not } from 'typeorm';
 import { MessagesConnection } from './dtos/messages/message-pagination.dto';
 import { ExitRoomInput, ExitRoomOutput } from './dtos/rooms/delete-room.dto';
 import { GetRoomInput, GetRoomOutput } from './dtos/rooms/get-room.dto';
@@ -20,13 +20,16 @@ export class RoomService {
     private readonly messageRepo: MessageRepository,
   ) {}
 
-  async unreadCount(room: Room): Promise<number> {
+  async unreadMessageCount(loggedInUser: User, room: Room): Promise<number> {
     return this.messageRepo.count({
       where: {
         room: {
           id: room.id,
         },
         isRead: false,
+        user: {
+          id: Not(loggedInUser.id),
+        },
       },
     });
   }
@@ -76,7 +79,7 @@ export class RoomService {
   ): Promise<GetRoomsOutput> {
     try {
       // find Method로는 room테이블의 users칼럼 배열값 안에 특정 id가 포함된 값만을 가져올 수 없었다.
-      const [findRooms, totalCount] = await this.roomRepo.findAndCount({
+      const [findMyRooms, totalCount] = await this.roomRepo.findAndCount({
         where: {
           ...(after && { createdAt: LessThan(after) }),
         },
@@ -92,7 +95,7 @@ export class RoomService {
       });
 
       // 전체 rooms배열에서 내가 속한 room들만 들고옴
-      const filterMyRooms = findRooms?.filter((room) =>
+      const filterMyRooms = findMyRooms?.filter((room) =>
         room.users.find((user) => user.id === loggedInUser.id),
       );
 
@@ -131,6 +134,9 @@ export class RoomService {
       const room = await this.roomRepo.findOne({
         where: {
           id: roomId,
+          users: {
+            id: Not(loggedInUser.id),
+          },
         },
         order: {
           createdAt: 'DESC',
@@ -143,13 +149,6 @@ export class RoomService {
 
       if (!room) {
         throw new Error('존재하지 않는 방입니다.');
-      }
-
-      const isRoomMember = room.users.find(
-        (member) => member.id === loggedInUser.id,
-      );
-      if (!isRoomMember) {
-        throw new Error('방의 멤버가 아닙니다.');
       }
 
       return {

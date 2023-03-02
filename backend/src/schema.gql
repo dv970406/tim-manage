@@ -128,23 +128,23 @@ type Meeting {
   host: User!
 }
 
-type Room {
+type Room implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
   users: [User!]!
   messages: [Message!]!
-  unreadCount: Int!
+  unreadMessageCount: Int!
   messagesOfRoomConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): MessagesConnection!
 }
 
-type Message {
+type Notification {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  message: String!
+  confirmedVacation: Vacation!
+  confirmedByWho: User!
   user: User!
-  room: Room!
   isRead: Boolean!
 }
 
@@ -171,6 +171,7 @@ type User implements Node {
   messages: [Message!]!
   rooms: [Room!]!
   notifications: [Notification!]!
+  unreadMessageCount: Float!
   unreadNotificationCount: Float!
   myAnswersConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): AnswersConnection!
   myVacationsConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): VacationsConnection!
@@ -180,14 +181,15 @@ type User implements Node {
   isLeader: Boolean!
 }
 
-type Notification {
+type Message {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  confirmedVacation: Vacation!
-  confirmedByWho: User!
+  message: String!
   user: User!
+  room: Room!
   isRead: Boolean!
+  isMine: Boolean!
 }
 
 type PageInfo {
@@ -396,17 +398,6 @@ type GetVacationsOutput {
   vacations: [Vacation!]
 }
 
-type NotificationEdge {
-  cursor: DateTime!
-  node: Notification!
-}
-
-type NotificationOutput {
-  ok: Boolean!
-  error: String
-  edge: NotificationEdge!
-}
-
 type UpdateVacationOutput {
   ok: Boolean!
   error: String
@@ -513,7 +504,7 @@ type ToggleLikeOutput {
 type CreatePostOutput {
   ok: Boolean!
   error: String
-  edge: PostEdge!
+  edge: PostEdge
 }
 
 type DeletePostOutput {
@@ -594,10 +585,10 @@ type GetWeeklyMealOutput {
   weeklyMeal: Meal
 }
 
-type SendMessageOutput {
+type ReceiveMessageOutput {
   ok: Boolean!
   error: String
-  message: Message
+  room: Room
 }
 
 type MessagesConnection {
@@ -608,6 +599,12 @@ type MessagesConnection {
 type MessageEdge {
   cursor: DateTime!
   node: Message!
+}
+
+type SendMessageOutput {
+  ok: Boolean!
+  error: String
+  edge: MessageEdge
 }
 
 type ExitRoomOutput {
@@ -634,10 +631,21 @@ type GetRoomsOutput {
   pageInfo: PageInfo
 }
 
-type DeleteNotificationOutput {
+type ReceiveInRoomOutput {
+  ok: Boolean!
+  error: String
+  edge: MessageEdge!
+}
+
+type DeleteReceiveNotificationOutput {
   ok: Boolean!
   error: String
   deletedNotificationId: ID
+}
+
+type NotificationEdge {
+  cursor: DateTime!
+  node: Notification!
 }
 
 type GetNotificationsOutput {
@@ -647,10 +655,16 @@ type GetNotificationsOutput {
   pageInfo: PageInfo!
 }
 
-type ReadNotificationOutput {
+type ReadReceiveNotificationOutput {
   ok: Boolean!
   error: String
   notification: Notification
+}
+
+type ReceiveNotificationOutput {
+  ok: Boolean!
+  error: String
+  edge: NotificationEdge!
 }
 
 type Query {
@@ -734,8 +748,8 @@ type Mutation {
   createWeeklyMeal(input: CreateWeeklyMealInput!): CreateWeeklyMealOutput!
   sendMessage(input: SendMessageInput!): SendMessageOutput!
   exitRoom(input: ExitRoomInput!): ExitRoomOutput!
-  readNotification(input: ReadNotificationInput!): ReadNotificationOutput!
-  deleteNotification(input: DeleteNotificationInput!): DeleteNotificationOutput!
+  readNotification(input: ReadNotificationInput!): ReadReceiveNotificationOutput!
+  deleteNotification(input: DeleteNotificationInput!): DeleteReceiveNotificationOutput!
 }
 
 input LoginInput {
@@ -914,6 +928,7 @@ input DeleteNotificationInput {
 }
 
 type Subscription {
-  subscriptionConfirmVacation: NotificationOutput!
-  subscriptionRoom(roomId: ID!): Message!
+  receiveMessage: ReceiveMessageOutput!
+  receiveInRoom(roomId: ID!): ReceiveInRoomOutput!
+  receiveNotification: ReceiveNotificationOutput!
 }

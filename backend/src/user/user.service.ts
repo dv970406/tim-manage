@@ -5,6 +5,7 @@ import { find } from 'rxjs';
 import { ConnectionInput } from 'src/core/dtos/pagination.dto';
 import { POSITION_CEO } from 'src/core/variables/position';
 import { JwtService } from 'src/jwt/jwt.service';
+import { MessageRepository } from 'src/message/repositories/message.repository';
 import { NotificationRepository } from 'src/notification/notification.repository';
 import { PositionRepository } from 'src/position/position.repository';
 import { CommentsConnection } from 'src/post/dtos/comment/comment-pagination.dto';
@@ -18,7 +19,7 @@ import { AnswerRepository } from 'src/survey/repositories/answer.repository';
 import { TeamRepository } from 'src/team/team.repository';
 import { VacationsConnection } from 'src/vacation/dtos/vacation-pagination.dto';
 import { VacationRepository } from 'src/vacation/vacation.repository';
-import { In, LessThan, Like, Like as LikeSearch } from 'typeorm';
+import { In, LessThan, Like, Like as LikeSearch, Not } from 'typeorm';
 import { CreateUserInput, CreateUserOutput } from './dtos/create-user.dto';
 import { DeleteUserInput, DeleteUserOutput } from './dtos/delete-user.dto';
 import { GetMyInfoInput, GetMyInfoOutput } from './dtos/get-myInfo.dto';
@@ -52,8 +53,24 @@ export class UserService {
     private readonly likeRepo: LikeRepository,
     @InjectRepository(NotificationRepository)
     private readonly notificationRepo: NotificationRepository,
+    @InjectRepository(MessageRepository)
+    private readonly messageRepo: MessageRepository,
   ) {}
-
+  async unreadMessageCount({ id }: User): Promise<number> {
+    return this.messageRepo.count({
+      where: {
+        room: {
+          users: {
+            id: In([id]),
+          },
+        },
+        isRead: false,
+        user: {
+          id: Not(id),
+        },
+      },
+    });
+  }
   async unreadNotificationCount({ id }: User): Promise<number> {
     return this.notificationRepo.count({
       where: {

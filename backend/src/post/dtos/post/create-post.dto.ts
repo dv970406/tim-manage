@@ -8,6 +8,6 @@ export class CreatePostInput extends PickType(Post, ['title', 'content']) {}
 
 @ObjectType()
 export class CreatePostOutput extends CoreOutput {
-  @Field((type) => PostEdge)
+  @Field((type) => PostEdge, { nullable: true })
   edge?: PostEdge;
 }
