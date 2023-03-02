@@ -81,8 +81,8 @@ export const ContentSection = styled.article(({ theme }) => ({
 export const MessageSection = styled.ul(({ theme }) => ({
   backdropFilter: theme.bgColors.backdropFilter,
   background: theme.bgColors.lightgray,
-  width: 300,
-  height: 400,
+  width: 350,
+  height: 600,
   position: "fixed",
   right: 40,
   bottom: 45,

@@ -76,7 +76,9 @@ export const TextInput = ({
           {...(onChange && { onChange })}
         />
       </div>
-      <ErrorText style={{ height: 15 }}>{errorMessage}</ErrorText>
+      {errorMessage && (
+        <ErrorText style={{ height: 15 }}>{errorMessage}</ErrorText>
+      )}
     </GapBox>
   );
 };

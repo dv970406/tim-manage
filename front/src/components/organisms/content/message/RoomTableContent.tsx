@@ -11,7 +11,7 @@ import { useFragment, usePaginationFragment } from "react-relay";
 import { useNavigate } from "react-router-dom";
 import { theme } from "../../../../css/theme";
 import { getElaspedDay } from "../../../../utils/time/time";
-import { RowBox } from "../../../atomics/boxes/Boxes";
+import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
 import { ListItem } from "../../../atomics/sections/sections";
 import { SubTitle } from "../../../atomics/typographys/titles";
 import { BoxIcon } from "../../../molecules/icons/Icons";
@@ -28,12 +28,12 @@ const roomTableContentFragment = graphql`
       id
       name
     }
-    unreadCount
+    unreadMessageCount
   }
 `;
 
 const RoomTableContent = ({ room, setClickedRoomId }: IRoomTableContent) => {
-  const { users, id, unreadCount } = useFragment(
+  const { users, id, unreadMessageCount } = useFragment(
     roomTableContentFragment,
     room
   );
@@ -48,9 +48,31 @@ const RoomTableContent = ({ room, setClickedRoomId }: IRoomTableContent) => {
       <RowBox>
         <BoxIcon icon={faRocket} size="lg" bgColor={theme.bgColors.purple} />
 
-        {users.map((user) => (
-          <SubTitle key={user.id}>{user.name}</SubTitle>
-        ))}
+        <RowBox
+          style={{ justifyContent: "space-between", alignItems: "center" }}
+        >
+          <ColumnBox>
+            {users.map((user) => (
+              <SubTitle key={user.id}>{user.name}</SubTitle>
+            ))}
+          </ColumnBox>
+          {unreadMessageCount && (
+            <div
+              style={{
+                backgroundColor: theme.bgColors.red,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: "50%",
+                width: 20,
+                height: 20,
+                zIndex: 5,
+              }}
+            >
+              {unreadMessageCount}
+            </div>
+          )}
+        </RowBox>
       </RowBox>
     </ListItem>
   );

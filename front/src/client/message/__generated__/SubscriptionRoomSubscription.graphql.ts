@@ -8,12 +8,12 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, GraphQLSubscription } from 'relay-runtime';
-export type SubscriptionRoomSubscription$variables = {
+import { ConcreteRequest, GraphQLSubscription } from "relay-runtime";
+export type ReceiveInRoomSubscription$variables = {
   roomId: string;
 };
-export type SubscriptionRoomSubscription$data = {
-  readonly subscriptionRoom: {
+export type ReceiveInRoomSubscription$data = {
+  readonly receiveInRoom: {
     readonly id: string;
     readonly message: string;
     readonly user: {
@@ -22,98 +22,98 @@ export type SubscriptionRoomSubscription$data = {
     };
   };
 };
-export type SubscriptionRoomSubscription = {
-  response: SubscriptionRoomSubscription$data;
-  variables: SubscriptionRoomSubscription$variables;
+export type ReceiveInRoomSubscription = {
+  response: ReceiveInRoomSubscription$data;
+  variables: ReceiveInRoomSubscription$variables;
 };
 
-const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "roomId"
-  }
-],
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v2 = [
-  {
-    "alias": null,
-    "args": [
+const node: ConcreteRequest = (function () {
+  var v0 = [
       {
-        "kind": "Variable",
-        "name": "roomId",
-        "variableName": "roomId"
-      }
-    ],
-    "concreteType": "Message",
-    "kind": "LinkedField",
-    "name": "subscriptionRoom",
-    "plural": false,
-    "selections": [
-      (v1/*: any*/),
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "message",
-        "storageKey": null
+        defaultValue: null,
+        kind: "LocalArgument",
+        name: "roomId",
       },
-      {
-        "alias": null,
-        "args": null,
-        "concreteType": "User",
-        "kind": "LinkedField",
-        "name": "user",
-        "plural": false,
-        "selections": [
-          (v1/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "name",
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
-      }
     ],
-    "storageKey": null
-  }
-];
-return {
-  "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
-    "kind": "Fragment",
-    "metadata": null,
-    "name": "SubscriptionRoomSubscription",
-    "selections": (v2/*: any*/),
-    "type": "Subscription",
-    "abstractKey": null
-  },
-  "kind": "Request",
-  "operation": {
-    "argumentDefinitions": (v0/*: any*/),
-    "kind": "Operation",
-    "name": "SubscriptionRoomSubscription",
-    "selections": (v2/*: any*/)
-  },
-  "params": {
-    "cacheID": "2e7e0ec64df77efc4c814e712898d70d",
-    "id": null,
-    "metadata": {},
-    "name": "SubscriptionRoomSubscription",
-    "operationKind": "subscription",
-    "text": "subscription SubscriptionRoomSubscription(\n  $roomId: ID!\n) {\n  subscriptionRoom(roomId: $roomId) {\n    id\n    message\n    user {\n      id\n      name\n    }\n  }\n}\n"
-  }
-};
+    v1 = {
+      alias: null,
+      args: null,
+      kind: "ScalarField",
+      name: "id",
+      storageKey: null,
+    },
+    v2 = [
+      {
+        alias: null,
+        args: [
+          {
+            kind: "Variable",
+            name: "roomId",
+            variableName: "roomId",
+          },
+        ],
+        concreteType: "Message",
+        kind: "LinkedField",
+        name: "receiveInRoom",
+        plural: false,
+        selections: [
+          v1 /*: any*/,
+          {
+            alias: null,
+            args: null,
+            kind: "ScalarField",
+            name: "message",
+            storageKey: null,
+          },
+          {
+            alias: null,
+            args: null,
+            concreteType: "User",
+            kind: "LinkedField",
+            name: "user",
+            plural: false,
+            selections: [
+              v1 /*: any*/,
+              {
+                alias: null,
+                args: null,
+                kind: "ScalarField",
+                name: "name",
+                storageKey: null,
+              },
+            ],
+            storageKey: null,
+          },
+        ],
+        storageKey: null,
+      },
+    ];
+  return {
+    fragment: {
+      argumentDefinitions: v0 /*: any*/,
+      kind: "Fragment",
+      metadata: null,
+      name: "ReceiveInRoomSubscription",
+      selections: v2 /*: any*/,
+      type: "Subscription",
+      abstractKey: null,
+    },
+    kind: "Request",
+    operation: {
+      argumentDefinitions: v0 /*: any*/,
+      kind: "Operation",
+      name: "ReceiveInRoomSubscription",
+      selections: v2 /*: any*/,
+    },
+    params: {
+      cacheID: "2e7e0ec64df77efc4c814e712898d70d",
+      id: null,
+      metadata: {},
+      name: "ReceiveInRoomSubscription",
+      operationKind: "subscription",
+      text: "subscription ReceiveInRoomSubscription(\n  $roomId: ID!\n) {\n  receiveInRoom(roomId: $roomId) {\n    id\n    message\n    user {\n      id\n      name\n    }\n  }\n}\n",
+    },
+  };
 })();
 
 (node as any).hash = "3dc782bc76ec8c491635f6adbe4d0d75";

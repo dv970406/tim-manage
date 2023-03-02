@@ -120,7 +120,7 @@ input CreatePostInput {
 type CreatePostOutput {
   ok: Boolean!
   error: String
-  edge: PostEdge!
+  edge: PostEdge
 }
 
 input CreateSurveyInput {
@@ -221,12 +221,6 @@ input DeleteNotificationInput {
   notificationId: ID
 }
 
-type DeleteNotificationOutput {
-  ok: Boolean!
-  error: String
-  deletedNotificationId: ID
-}
-
 input DeletePositionInput {
   id: ID!
 }
@@ -245,6 +239,12 @@ type DeletePostOutput {
   ok: Boolean!
   error: String
   deletedPostId: ID
+}
+
+type DeleteReceiveNotificationOutput {
+  ok: Boolean!
+  error: String
+  deletedNotificationId: ID
 }
 
 input DeleteSurveyInput {
@@ -511,6 +511,7 @@ type Message {
   user: User!
   room: Room!
   isRead: Boolean!
+  isMine: Boolean!
 }
 
 type MessageEdge {
@@ -561,8 +562,8 @@ type Mutation {
   createWeeklyMeal(input: CreateWeeklyMealInput!): CreateWeeklyMealOutput!
   sendMessage(input: SendMessageInput!): SendMessageOutput!
   exitRoom(input: ExitRoomInput!): ExitRoomOutput!
-  readNotification(input: ReadNotificationInput!): ReadNotificationOutput!
-  deleteNotification(input: DeleteNotificationInput!): DeleteNotificationOutput!
+  readNotification(input: ReadNotificationInput!): ReadReceiveNotificationOutput!
+  deleteNotification(input: DeleteNotificationInput!): DeleteReceiveNotificationOutput!
 }
 
 interface Node {
@@ -582,12 +583,6 @@ type Notification {
 type NotificationEdge {
   cursor: DateTime!
   node: Notification!
-}
-
-type NotificationOutput {
-  ok: Boolean!
-  error: String
-  edge: NotificationEdge!
 }
 
 input Orders {
@@ -665,10 +660,28 @@ input ReadNotificationInput {
   notificationId: ID
 }
 
-type ReadNotificationOutput {
+type ReadReceiveNotificationOutput {
   ok: Boolean!
   error: String
   notification: Notification
+}
+
+type ReceiveInRoomOutput {
+  ok: Boolean!
+  error: String
+  edge: MessageEdge!
+}
+
+type ReceiveMessageOutput {
+  ok: Boolean!
+  error: String
+  room: Room
+}
+
+type ReceiveNotificationOutput {
+  ok: Boolean!
+  error: String
+  edge: NotificationEdge!
 }
 
 type ResponseRate {
@@ -676,13 +689,13 @@ type ResponseRate {
   answeredEmployeeCount: Float!
 }
 
-type Room {
+type Room implements Node {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
   users: [User!]!
   messages: [Message!]!
-  unreadCount: Int!
+  unreadMessageCount: Int!
   messagesOfRoomConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): MessagesConnection!
 }
 
@@ -700,7 +713,7 @@ input SendMessageInput {
 type SendMessageOutput {
   ok: Boolean!
   error: String
-  message: Message
+  edge: MessageEdge
 }
 
 type ShortAnswerFormat {
@@ -715,8 +728,9 @@ type ShortAnswersFormat {
 }
 
 type Subscription {
-  subscriptionConfirmVacation: NotificationOutput!
-  subscriptionRoom(roomId: ID!): Message!
+  receiveMessage: ReceiveMessageOutput!
+  receiveInRoom(roomId: ID!): ReceiveInRoomOutput!
+  receiveNotification: ReceiveNotificationOutput!
 }
 
 type Survey implements Node {
@@ -884,6 +898,7 @@ type User implements Node {
   messages: [Message!]!
   rooms: [Room!]!
   notifications: [Notification!]!
+  unreadMessageCount: Float!
   unreadNotificationCount: Float!
   myAnswersConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): AnswersConnection!
   myVacationsConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): VacationsConnection!

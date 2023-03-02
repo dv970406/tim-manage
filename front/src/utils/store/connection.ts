@@ -31,6 +31,5 @@ export const insertEdgeToData = ({
 }: IInsertEdgeToData) => {
   if (!record) return;
   const connection = ConnectionHandler.getConnection(record, key, options);
-
   if (connection) ConnectionHandler.insertEdgeBefore(connection, newEdge);
 };

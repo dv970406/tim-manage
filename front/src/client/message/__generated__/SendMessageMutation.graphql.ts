@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6f388d9fb461d902b9f8992010b88d91>>
+ * @generated SignedSource<<f0b90761bfb9109b7ff37873e1bba068>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,18 +16,23 @@ export type SendMessageMutation$variables = {
 };
 export type SendMessageMutation$data = {
   readonly sendMessage: {
-    readonly error: string | null;
-    readonly message: {
-      readonly id: string;
-      readonly message: string;
-      readonly room: {
+    readonly edge: {
+      readonly cursor: any;
+      readonly node: {
+        readonly createdAt: any;
         readonly id: string;
-      };
-      readonly user: {
-        readonly id: string;
-        readonly name: string;
+        readonly isMine: boolean;
+        readonly message: string;
+        readonly room: {
+          readonly id: string;
+        };
+        readonly user: {
+          readonly id: string;
+          readonly name: string;
+        };
       };
     } | null;
+    readonly error: string | null;
     readonly ok: boolean;
   };
 };
@@ -107,25 +112,24 @@ v4 = [
       {
         "alias": null,
         "args": null,
-        "concreteType": "Message",
+        "concreteType": "MessageEdge",
         "kind": "LinkedField",
-        "name": "message",
+        "name": "edge",
         "plural": false,
         "selections": [
-          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "message",
+            "name": "cursor",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
-            "concreteType": "User",
+            "concreteType": "Message",
             "kind": "LinkedField",
-            "name": "user",
+            "name": "node",
             "plural": false,
             "selections": [
               (v3/*: any*/),
@@ -133,21 +137,54 @@ v4 = [
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "name",
+                "name": "isMine",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "message",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "User",
+                "kind": "LinkedField",
+                "name": "user",
+                "plural": false,
+                "selections": [
+                  (v3/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "name",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Room",
+                "kind": "LinkedField",
+                "name": "room",
+                "plural": false,
+                "selections": [
+                  (v3/*: any*/)
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "createdAt",
                 "storageKey": null
               }
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Room",
-            "kind": "LinkedField",
-            "name": "room",
-            "plural": false,
-            "selections": [
-              (v3/*: any*/)
             ],
             "storageKey": null
           }
@@ -184,16 +221,16 @@ return {
     "selections": (v4/*: any*/)
   },
   "params": {
-    "cacheID": "9f21dea34b7b4f770c3378930a910915",
+    "cacheID": "e2acb4537a675717f46c91ba7e65d1c7",
     "id": null,
     "metadata": {},
     "name": "SendMessageMutation",
     "operationKind": "mutation",
-    "text": "mutation SendMessageMutation(\n  $message: String!\n  $roomId: ID\n  $listenerId: ID\n) {\n  sendMessage(input: {message: $message, roomId: $roomId, listenerId: $listenerId}) {\n    ok\n    error\n    message {\n      id\n      message\n      user {\n        id\n        name\n      }\n      room {\n        id\n      }\n    }\n  }\n}\n"
+    "text": "mutation SendMessageMutation(\n  $message: String!\n  $roomId: ID\n  $listenerId: ID\n) {\n  sendMessage(input: {message: $message, roomId: $roomId, listenerId: $listenerId}) {\n    ok\n    error\n    edge {\n      cursor\n      node {\n        id\n        isMine\n        message\n        user {\n          id\n          name\n        }\n        room {\n          id\n        }\n        createdAt\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "3d8912505ede8e564f22a8a34e6ce1a5";
+(node as any).hash = "40866d5d46cb90614f44a84288988e6f";
 
 export default node;

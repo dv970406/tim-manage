@@ -34,6 +34,7 @@ export const ScrollBox = styled.ul(({ theme, height, gap }: IScrollBox) => ({
   gap: gap || theme?.spacing.md,
   width: "100%",
   height: height ? height : "90%",
+  paddingBlock: theme?.spacing.lg,
 }));
 
 export const GapList = styled.ul(({ theme }) => ({

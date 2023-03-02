@@ -106,12 +106,15 @@ export const InfiniteScrollDataTable = ({
   );
 };
 
-interface IScrollList extends IInfiniteScroll {}
+interface IScrollList extends IInfiniteScroll {
+  direction?: string;
+}
 export const InfiniteScrollList = ({
   children,
   hasNext,
   isLoadingNext,
   loadNext,
+  direction = "column",
 }: IScrollList) => {
   const ref = useInfiniteScroll(async (entry, observer) => {
     observer.unobserve(entry.target);
@@ -123,10 +126,18 @@ export const InfiniteScrollList = ({
 
   return (
     <>
-      <ScrollBox height="100%">{children}</ScrollBox>
-      {isLoadingNext && <p>기다려바</p>}
+      {/* {direction === "reverse" && <ObserveBox ref={ref} />} */}
+      <ScrollBox
+        height="100%"
+        style={{
+          flexDirection: direction === "reverse" ? "column-reverse" : "column",
+        }}
+      >
+        {children}
+      </ScrollBox>
+      {direction !== "reverse" && <ObserveBox ref={ref} />}
 
-      <ObserveBox ref={ref} />
+      {isLoadingNext && <p>기다려바</p>}
     </>
   );
 };

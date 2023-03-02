@@ -104,3 +104,9 @@ export const getKoreanDateFormat = (time: Date | number) => {
     day: "numeric",
   });
 };
+
+export const getKoreanTimeFormat = (time: Date | number) => {
+  const date = new Date(time);
+
+  return date.toLocaleTimeString("ko", { hour: "2-digit", minute: "2-digit" });
+};

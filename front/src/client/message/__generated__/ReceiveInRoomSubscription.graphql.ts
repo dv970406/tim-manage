@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2d303a67bbe9a4918236ab4f7e10429b>>
+ * @generated SignedSource<<61d7a91f7ca94dcf24ea242141aa5e8e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,79 +8,62 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ConcreteRequest, Mutation } from 'relay-runtime';
-export type CreatePostMutation$variables = {
-  content: string;
-  title: string;
+import { ConcreteRequest, GraphQLSubscription } from 'relay-runtime';
+export type ReceiveInRoomSubscription$variables = {
+  roomId: string;
 };
-export type CreatePostMutation$data = {
-  readonly createPost: {
+export type ReceiveInRoomSubscription$data = {
+  readonly receiveInRoom: {
     readonly edge: {
       readonly cursor: any;
       readonly node: {
-        readonly countComments: number;
-        readonly countLikes: number;
         readonly createdAt: any;
         readonly id: string;
-        readonly isLiked: boolean;
-        readonly title: string;
+        readonly isMine: boolean;
+        readonly message: string;
         readonly user: {
           readonly id: string;
           readonly name: string;
         };
       };
-    } | null;
+    };
     readonly error: string | null;
     readonly ok: boolean;
   };
 };
-export type CreatePostMutation = {
-  response: CreatePostMutation$data;
-  variables: CreatePostMutation$variables;
+export type ReceiveInRoomSubscription = {
+  response: ReceiveInRoomSubscription$data;
+  variables: ReceiveInRoomSubscription$variables;
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "content"
-},
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "roomId"
+  }
+],
 v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "title"
-},
-v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v3 = [
+v2 = [
   {
     "alias": null,
     "args": [
       {
-        "fields": [
-          {
-            "kind": "Variable",
-            "name": "content",
-            "variableName": "content"
-          },
-          {
-            "kind": "Variable",
-            "name": "title",
-            "variableName": "title"
-          }
-        ],
-        "kind": "ObjectValue",
-        "name": "input"
+        "kind": "Variable",
+        "name": "roomId",
+        "variableName": "roomId"
       }
     ],
-    "concreteType": "CreatePostOutput",
+    "concreteType": "ReceiveInRoomOutput",
     "kind": "LinkedField",
-    "name": "createPost",
+    "name": "receiveInRoom",
     "plural": false,
     "selections": [
       {
@@ -100,7 +83,7 @@ v3 = [
       {
         "alias": null,
         "args": null,
-        "concreteType": "PostEdge",
+        "concreteType": "MessageEdge",
         "kind": "LinkedField",
         "name": "edge",
         "plural": false,
@@ -115,17 +98,17 @@ v3 = [
           {
             "alias": null,
             "args": null,
-            "concreteType": "Post",
+            "concreteType": "Message",
             "kind": "LinkedField",
             "name": "node",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
+              (v1/*: any*/),
               {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "title",
+                "name": "message",
                 "storageKey": null
               },
               {
@@ -136,7 +119,7 @@ v3 = [
                 "name": "user",
                 "plural": false,
                 "selections": [
-                  (v2/*: any*/),
+                  (v1/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -151,28 +134,14 @@ v3 = [
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "isLiked",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "countLikes",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "countComments",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
                 "name": "createdAt",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isMine",
                 "storageKey": null
               }
             ],
@@ -187,38 +156,32 @@ v3 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "CreatePostMutation",
-    "selections": (v3/*: any*/),
-    "type": "Mutation",
+    "name": "ReceiveInRoomSubscription",
+    "selections": (v2/*: any*/),
+    "type": "Subscription",
     "abstractKey": null
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v1/*: any*/),
-      (v0/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "CreatePostMutation",
-    "selections": (v3/*: any*/)
+    "name": "ReceiveInRoomSubscription",
+    "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "092be6c7367201a0d3f55253b724f7f4",
+    "cacheID": "1b0df3211f30c9d2724bb5f2ab4a3f8a",
     "id": null,
     "metadata": {},
-    "name": "CreatePostMutation",
-    "operationKind": "mutation",
-    "text": "mutation CreatePostMutation(\n  $title: String!\n  $content: String!\n) {\n  createPost(input: {title: $title, content: $content}) {\n    ok\n    error\n    edge {\n      cursor\n      node {\n        id\n        title\n        user {\n          id\n          name\n        }\n        isLiked\n        countLikes\n        countComments\n        createdAt\n      }\n    }\n  }\n}\n"
+    "name": "ReceiveInRoomSubscription",
+    "operationKind": "subscription",
+    "text": "subscription ReceiveInRoomSubscription(\n  $roomId: ID!\n) {\n  receiveInRoom(roomId: $roomId) {\n    ok\n    error\n    edge {\n      cursor\n      node {\n        id\n        message\n        user {\n          id\n          name\n        }\n        createdAt\n        isMine\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "532626d751b814a3f80e81bb632d3ff8";
+(node as any).hash = "c07ae7c68e65e0082f6ac0c88ecf0996";
 
 export default node;

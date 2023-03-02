@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1f8f0f39f565342f18a5c135030d55fa>>
+ * @generated SignedSource<<9f84990e25311eaf7e49e414610601fb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,9 +9,9 @@
 // @ts-nocheck
 
 import { ConcreteRequest, GraphQLSubscription } from 'relay-runtime';
-export type SubscriptionConfirmVacationSubscription$variables = {};
-export type SubscriptionConfirmVacationSubscription$data = {
-  readonly subscriptionConfirmVacation: {
+export type ReceiveNotificationSubscription$variables = {};
+export type ReceiveNotificationSubscription$data = {
+  readonly receiveNotification: {
     readonly edge: {
       readonly cursor: any;
       readonly node: {
@@ -50,9 +50,9 @@ export type SubscriptionConfirmVacationSubscription$data = {
     readonly ok: boolean;
   };
 };
-export type SubscriptionConfirmVacationSubscription = {
-  response: SubscriptionConfirmVacationSubscription$data;
-  variables: SubscriptionConfirmVacationSubscription$variables;
+export type ReceiveNotificationSubscription = {
+  response: ReceiveNotificationSubscription$data;
+  variables: ReceiveNotificationSubscription$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -194,14 +194,14 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "SubscriptionConfirmVacationSubscription",
+    "name": "ReceiveNotificationSubscription",
     "selections": [
       {
         "alias": null,
         "args": null,
-        "concreteType": "NotificationOutput",
+        "concreteType": "ReceiveNotificationOutput",
         "kind": "LinkedField",
-        "name": "subscriptionConfirmVacation",
+        "name": "receiveNotification",
         "plural": false,
         "selections": [
           (v0/*: any*/),
@@ -282,14 +282,14 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "SubscriptionConfirmVacationSubscription",
+    "name": "ReceiveNotificationSubscription",
     "selections": [
       {
         "alias": null,
         "args": null,
-        "concreteType": "NotificationOutput",
+        "concreteType": "ReceiveNotificationOutput",
         "kind": "LinkedField",
-        "name": "subscriptionConfirmVacation",
+        "name": "receiveNotification",
         "plural": false,
         "selections": [
           (v0/*: any*/),
@@ -367,16 +367,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "01b0ac10a0f9ffaf495504eb72e91392",
+    "cacheID": "d552491b021770c777bf759ea5fefbd9",
     "id": null,
     "metadata": {},
-    "name": "SubscriptionConfirmVacationSubscription",
+    "name": "ReceiveNotificationSubscription",
     "operationKind": "subscription",
-    "text": "subscription SubscriptionConfirmVacationSubscription {\n  subscriptionConfirmVacation {\n    ok\n    error\n    edge {\n      cursor\n      node {\n        confirmedVacation {\n          id\n          startDate\n          endDate\n          duration\n          confirmed {\n            byCeo\n            byManager\n            byLeader\n          }\n          user {\n            id\n            name\n            team {\n              leader {\n                id\n                name\n              }\n              id\n            }\n          }\n        }\n        confirmedByWho {\n          id\n          name\n          position {\n            id\n            position\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "subscription ReceiveNotificationSubscription {\n  receiveNotification {\n    ok\n    error\n    edge {\n      cursor\n      node {\n        confirmedVacation {\n          id\n          startDate\n          endDate\n          duration\n          confirmed {\n            byCeo\n            byManager\n            byLeader\n          }\n          user {\n            id\n            name\n            team {\n              leader {\n                id\n                name\n              }\n              id\n            }\n          }\n        }\n        confirmedByWho {\n          id\n          name\n          position {\n            id\n            position\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "6af8b6775c25b1d688f95b1db3ef50e5";
+(node as any).hash = "ac0cd15f7074d5fedb2cb6f4c6bdb4c8";
 
 export default node;

@@ -1,9 +1,8 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useState } from "react";
 import { commitMutation, useLazyLoadQuery } from "react-relay";
-import { POSITION } from "../../utils/constants/user.constant";
+
 import { environment } from "../client";
-import { GetRoomsQuery } from "./__generated__/GetRoomsQuery.graphql";
 import {
   SendMessageMutation,
   SendMessageMutation$variables,
@@ -20,15 +19,20 @@ const sendMessageQuery = graphql`
     ) {
       ok
       error
-      message {
-        id
-        message
-        user {
+      edge {
+        cursor
+        node {
           id
-          name
-        }
-        room {
-          id
+          isMine
+          message
+          user {
+            id
+            name
+          }
+          room {
+            id
+          }
+          createdAt
         }
       }
     }

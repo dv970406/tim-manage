@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<399da9e18a8815c6dfda17f54531c0a5>>
+ * @generated SignedSource<<92b2d1332430e5619fe5a8cdbe52da56>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -142,7 +142,7 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "unreadCount",
+                    "name": "unreadMessageCount",
                     "storageKey": null
                   },
                   {
@@ -205,12 +205,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "abb4b582fcb1574fab8766878b4ada78",
+    "cacheID": "8f2041bc26a2bef32056a017a87f8d6b",
     "id": null,
     "metadata": {},
     "name": "GetRoomsQuery",
     "operationKind": "query",
-    "text": "query GetRoomsQuery(\n  $first: Int!\n  $after: DateTime\n) {\n  ...RoomsTable_room_2HEEH6\n}\n\nfragment RoomTableContent_room on Room {\n  id\n  users {\n    id\n    name\n  }\n  unreadCount\n}\n\nfragment RoomsTable_room_2HEEH6 on Query {\n  getRooms(first: $first, after: $after) {\n    ok\n    error\n    edges {\n      node {\n        ...RoomTableContent_room\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query GetRoomsQuery(\n  $first: Int!\n  $after: DateTime\n) {\n  ...RoomsTable_room_2HEEH6\n}\n\nfragment RoomTableContent_room on Room {\n  id\n  users {\n    id\n    name\n  }\n  unreadMessageCount\n}\n\nfragment RoomsTable_room_2HEEH6 on Query {\n  getRooms(first: $first, after: $after) {\n    ok\n    error\n    edges {\n      node {\n        ...RoomTableContent_room\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

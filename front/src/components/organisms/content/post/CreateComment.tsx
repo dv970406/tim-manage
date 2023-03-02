@@ -44,11 +44,7 @@ const CreateComment = ({ postId }: ICreateComment) => {
         register={register("content", {
           required: {
             value: true,
-            message: "댓글은 필수입니다.",
-          },
-          minLength: {
-            value: 2,
-            message: "댓글은 2글자 이상입니다.",
+            message: "댓글을 입력해주세요.",
           },
           maxLength: {
             value: 100,

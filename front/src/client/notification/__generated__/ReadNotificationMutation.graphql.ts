@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e8d76eb1a9e98876250c644c49314b50>>
+ * @generated SignedSource<<bb9ae4388e5f286270bdb8d58fa34d7e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -50,7 +50,7 @@ v1 = [
         "name": "input"
       }
     ],
-    "concreteType": "ReadNotificationOutput",
+    "concreteType": "ReadReceiveNotificationOutput",
     "kind": "LinkedField",
     "name": "readNotification",
     "plural": false,

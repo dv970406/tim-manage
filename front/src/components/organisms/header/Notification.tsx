@@ -1,7 +1,7 @@
 import { faBell } from "@fortawesome/pro-solid-svg-icons";
 import React, { useEffect, useState } from "react";
 import { useGetNotifications } from "../../../client/notification/GetNotifications.client";
-import { subscriptionConfirmVacation } from "../../../client/vacation/SubscriptionConfirmVacation.client";
+import { receiveNotification } from "../../../client/notification/ReceiveNotification.client";
 import { theme } from "../../../css/theme";
 import { NotificationSection } from "../../atomics/sections/sections";
 import { SubTitle } from "../../atomics/typographys/titles";
@@ -15,7 +15,7 @@ interface INotification {
 const Notification = ({ unreadNotificationCount }: INotification) => {
   const [hasNews, setHasNews] = useState(false);
   useEffect(() => {
-    const { dispose } = subscriptionConfirmVacation({
+    const { dispose } = receiveNotification({
       setHasNews,
     });
     return () => {
