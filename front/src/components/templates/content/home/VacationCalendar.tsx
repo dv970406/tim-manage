@@ -106,24 +106,25 @@ export default function VacationCalendar({
     const scheduleId = eventResizeInfo.event.id;
     if (!isMine || start < now || !scheduleId) return;
 
-    const isReally = window.confirm(
-      "수정 시 모든 승인이 해제됩니다. 진행하시겠습니까?"
-    );
-    if (!isReally) {
-      // 이 로직 진짜 중요함
-      // 단순히 setEvents(schedules)로 하면 schedules값이 참조타입이므로 이전과 비교해도 값이 같다고 판단하여 리액트가 변화를 감지하지 못해서 취소 전 원래 상태로 안돌려보냄
-      setEvents((prev) => {
-        const copied = [...prev];
-        const targetIndex = copied.findIndex((data) => data.id === scheduleId);
-        const target = copied.find((data) => data.id === scheduleId);
-        copied.splice(targetIndex, 1);
-        return [...copied, { ...target }];
-      });
-      return;
-    }
-
     if (type === SCHEDULES.VACATION) {
       if (updateVacationLoading || !start || !end) return;
+      const isReally = window.confirm(
+        "수정 시 모든 승인이 해제됩니다. 진행하시겠습니까?"
+      );
+      if (!isReally) {
+        // 이 로직 진짜 중요함
+        // 단순히 setEvents(schedules)로 하면 schedules값이 참조타입이므로 이전과 비교해도 값이 같다고 판단하여 리액트가 변화를 감지하지 못해서 취소 전 원래 상태로 안돌려보냄
+        setEvents((prev) => {
+          const copied = [...prev];
+          const targetIndex = copied.findIndex(
+            (data) => data.id === scheduleId
+          );
+          const target = copied.find((data) => data.id === scheduleId);
+          copied.splice(targetIndex, 1);
+          return [...copied, { ...target }];
+        });
+        return;
+      }
 
       updateVacationMutation({
         vacationId: scheduleId,
@@ -171,24 +172,25 @@ export default function VacationCalendar({
       }
     }
 
-    const isReally = window.confirm(
-      "수정 시 모든 승인이 해제됩니다. 진행하시겠습니까?"
-    );
-    if (!isReally) {
-      // 이 로직 진짜 중요함
-      // 단순히 setEvents(schedules)로 하면 schedules값이 참조타입이므로 이전과 비교해도 값이 같다고 판단하여 리액트가 변화를 감지하지 못해서 취소 전 원래 상태로 안돌려보냄
-      setEvents((prev) => {
-        const copied = [...prev];
-        const targetIndex = copied.findIndex((data) => data.id === scheduleId);
-        const target = copied.find((data) => data.id === scheduleId);
-        copied.splice(targetIndex, 1);
-        return [...copied, { ...target }];
-      });
-      return;
-    }
-
     if (type === SCHEDULES.VACATION) {
       if (updateVacationLoading || !start || !end) return;
+      const isReally = window.confirm(
+        "수정 시 모든 승인이 해제됩니다. 진행하시겠습니까?"
+      );
+      if (!isReally) {
+        // 이 로직 진짜 중요함
+        // 단순히 setEvents(schedules)로 하면 schedules값이 참조타입이므로 이전과 비교해도 값이 같다고 판단하여 리액트가 변화를 감지하지 못해서 취소 전 원래 상태로 안돌려보냄
+        setEvents((prev) => {
+          const copied = [...prev];
+          const targetIndex = copied.findIndex(
+            (data) => data.id === scheduleId
+          );
+          const target = copied.find((data) => data.id === scheduleId);
+          copied.splice(targetIndex, 1);
+          return [...copied, { ...target }];
+        });
+        return;
+      }
 
       updateVacationMutation({
         vacationId: scheduleId,

@@ -49,7 +49,8 @@ const ShowUserVacations = () => {
     <>
       <RowBox style={{ justifyContent: "space-between" }}>
         <MainText>사용 연차 목록</MainText>
-        <MainText>남은 휴가 : {availableVacation}</MainText>
+
+        <MainText>남은 연차 : {availableVacation}</MainText>
       </RowBox>
       <InfiniteScrollDataTable
         hasNext={hasNext}

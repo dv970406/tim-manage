@@ -126,7 +126,9 @@ export const InfiniteScrollList = ({
 
   return (
     <>
-      {/* {direction === "reverse" && <ObserveBox ref={ref} />} */}
+      {direction === "reverse" && <ObserveBox ref={ref} />}
+      {direction === "reverse" && isLoadingNext && <p>기다려바</p>}
+
       <ScrollBox
         height="100%"
         style={{
@@ -137,7 +139,7 @@ export const InfiniteScrollList = ({
       </ScrollBox>
       {direction !== "reverse" && <ObserveBox ref={ref} />}
 
-      {isLoadingNext && <p>기다려바</p>}
+      {direction !== "reverse" && isLoadingNext && <p>기다려바</p>}
     </>
   );
 };

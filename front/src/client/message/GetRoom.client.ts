@@ -1,9 +1,5 @@
 import { graphql } from "babel-plugin-relay/macro";
-import {
-  PreloadedQuery,
-  useLazyLoadQuery,
-  usePreloadedQuery,
-} from "react-relay";
+import { useLazyLoadQuery } from "react-relay";
 import { PAGINATION_LOAD_COUNT } from "../../utils/constants/share.constant";
 import { GetRoomQuery } from "./__generated__/GetRoomQuery.graphql";
 
@@ -19,11 +15,11 @@ export const getRoomQuery = graphql`
       error
       room {
         id
+        ...MessagesTable_message
         users {
           id
           name
         }
-        ...MessagesTable_message
       }
     }
   }

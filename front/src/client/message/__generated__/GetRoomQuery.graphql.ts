@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<259217bf2d3b93edc31c64c6bddaef01>>
+ * @generated SignedSource<<b2cf5bf3b0788621f768812ccd9d15a9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -152,12 +152,12 @@ return {
                 "plural": false,
                 "selections": [
                   (v7/*: any*/),
-                  (v9/*: any*/),
                   {
                     "args": null,
                     "kind": "FragmentSpread",
                     "name": "MessagesTable_message"
-                  }
+                  },
+                  (v9/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -205,7 +205,6 @@ return {
                 "plural": false,
                 "selections": [
                   (v7/*: any*/),
-                  (v9/*: any*/),
                   {
                     "alias": null,
                     "args": (v10/*: any*/),
@@ -318,7 +317,8 @@ return {
                     "key": "MessagesTable_messagesOfRoomConnection",
                     "kind": "LinkedHandle",
                     "name": "messagesOfRoomConnection"
-                  }
+                  },
+                  (v9/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -330,16 +330,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "55de07d6fd2639e75578f26495500ffe",
+    "cacheID": "f5fa5c21b1fe40b88d1bcff1a683f8e9",
     "id": null,
     "metadata": {},
     "name": "GetRoomQuery",
     "operationKind": "query",
-    "text": "query GetRoomQuery(\n  $roomId: ID!\n  $skip: Boolean!\n  $first: Int!\n  $after: DateTime\n) {\n  getRoom(roomId: $roomId) @skip(if: $skip) {\n    ok\n    error\n    room {\n      id\n      users {\n        id\n        name\n      }\n      ...MessagesTable_message\n    }\n  }\n}\n\nfragment MessageTableContent_message on Message {\n  id\n  message\n  user {\n    id\n    name\n  }\n  createdAt\n  isMine\n}\n\nfragment MessagesTable_message on Room {\n  messagesOfRoomConnection(first: $first, after: $after) {\n    edges {\n      node {\n        ...MessageTableContent_message\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n"
+    "text": "query GetRoomQuery(\n  $roomId: ID!\n  $skip: Boolean!\n  $first: Int!\n  $after: DateTime\n) {\n  getRoom(roomId: $roomId) @skip(if: $skip) {\n    ok\n    error\n    room {\n      id\n      ...MessagesTable_message\n      users {\n        id\n        name\n      }\n    }\n  }\n}\n\nfragment MessageTableContent_message on Message {\n  id\n  message\n  user {\n    id\n    name\n  }\n  createdAt\n  isMine\n}\n\nfragment MessagesTable_message on Room {\n  messagesOfRoomConnection(first: $first, after: $after) {\n    edges {\n      node {\n        ...MessageTableContent_message\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f180b71ed8eedc86a0c013ec2b3bb070";
+(node as any).hash = "7e59a0b212d6971afa3fa57c174e3222";
 
 export default node;
