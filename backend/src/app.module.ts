@@ -51,6 +51,8 @@ import { Notification } from './notification/entities/notification.entity';
       }),
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
+      // @ResolveField에도 guard 적용 가능하게 함 - Guard에 있는 Auth로직을 ResolveField에도 적용가능
+      fieldResolverEnhancers: ['guards'],
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       subscriptions: {

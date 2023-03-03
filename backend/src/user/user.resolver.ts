@@ -35,14 +35,17 @@ export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
   @ResolveField((type) => Number)
+  @UseGuards(LoginGuard)
   unreadMessageCount(@Parent() loggedInUser: User): Promise<number> {
     return this.userService.unreadMessageCount(loggedInUser);
   }
   @ResolveField((type) => Number)
+  @UseGuards(LoginGuard)
   unreadNotificationCount(@Parent() loggedInUser: User): Promise<number> {
     return this.userService.unreadNotificationCount(loggedInUser);
   }
   @ResolveField((type) => AnswersConnection)
+  @UseGuards(LoginGuard)
   myAnswersConnection(
     @Parent() loggedInUser: User,
     @Args() answersConnectionInput: ConnectionInput,
@@ -53,6 +56,7 @@ export class UserResolver {
     );
   }
   @ResolveField((type) => VacationsConnection)
+  @UseGuards(LoginGuard)
   myVacationsConnection(
     @Parent() loggedInUser: User,
     @Args() vacationsConnectionInput: ConnectionInput,
@@ -63,6 +67,7 @@ export class UserResolver {
     );
   }
   @ResolveField((type) => PostsConnection)
+  @UseGuards(LoginGuard)
   myPostsConnection(
     @Parent() loggedInUser: User,
     @Args() postsConnectionInput: ConnectionInput,
@@ -73,6 +78,7 @@ export class UserResolver {
     );
   }
   @ResolveField((type) => LikesConnection)
+  @UseGuards(LoginGuard)
   myLikesConnection(
     @Parent() loggedInUser: User,
     @Args() likesConnectionInput: ConnectionInput,
@@ -83,6 +89,7 @@ export class UserResolver {
     );
   }
   @ResolveField((type) => CommentsConnection)
+  @UseGuards(LoginGuard)
   myCommentsConnection(
     @Parent() loggedInUser: User,
     @Args() commentsConnectionInput: ConnectionInput,
@@ -94,6 +101,7 @@ export class UserResolver {
   }
 
   @ResolveField((type) => Boolean)
+  @UseGuards(LoginGuard)
   isLeader(@Parent() loggedInUser: User): Promise<boolean> {
     return this.userService.isLeader(loggedInUser);
   }

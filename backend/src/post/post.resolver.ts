@@ -29,6 +29,7 @@ export class PostResolver {
   ) {}
 
   @ResolveField((type) => Boolean)
+  @UseGuards(LoginGuard)
   isMyPost(
     @LoggedInUser() loggedInUser: User,
     @Parent() post: Post,
@@ -42,6 +43,7 @@ export class PostResolver {
   }
 
   @ResolveField((type) => Boolean)
+  @UseGuards(LoginGuard)
   isLiked(
     @LoggedInUser() loggedInUser: User,
     @Parent() post: Post,

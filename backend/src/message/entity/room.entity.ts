@@ -17,4 +17,9 @@ export class Room extends CoreEntity implements Node {
   @OneToMany((type) => Message, (message) => message.room)
   @Field((type) => [Message])
   messages: Message[];
+
+  // Define isTypeOf function to specify concrete type
+  static isTypeOf(obj: any): obj is Room {
+    return obj instanceof Room;
+  }
 }

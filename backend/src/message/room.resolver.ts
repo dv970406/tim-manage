@@ -19,12 +19,10 @@ import { MessagesConnection } from './dtos/messages/message-pagination.dto';
 import { ExitRoomInput, ExitRoomOutput } from './dtos/rooms/delete-room.dto';
 import { GetRoomInput, GetRoomOutput } from './dtos/rooms/get-room.dto';
 import { GetRoomsInput, GetRoomsOutput } from './dtos/rooms/get-rooms.dto';
-import { RoomsConnection } from './dtos/rooms/room-pagination.dto';
 import {
   ReceiveInRoomInput,
   ReceiveInRoomOutput,
 } from './dtos/rooms/receive-inRoom.dto';
-import { Message } from './entity/message.entity';
 import { Room } from './entity/room.entity';
 import { RoomService } from './room.service';
 

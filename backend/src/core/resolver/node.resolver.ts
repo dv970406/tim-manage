@@ -9,6 +9,8 @@ import {
   ResolveReference,
 } from '@nestjs/graphql';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Room } from 'src/message/entity/room.entity';
+import { RoomRepository } from 'src/message/repositories/room.repository';
 import { Post } from 'src/post/entities/post.entity';
 import { PostService } from 'src/post/post.service';
 import { PostRepository } from 'src/post/repositories/post.repository';
@@ -29,14 +31,21 @@ export class NodeResolver {
     private readonly postRepo: PostRepository,
     @InjectRepository(SurveyRepository)
     private readonly surveyRepo: SurveyRepository,
+    @InjectRepository(RoomRepository)
+    private readonly roomRepo: RoomRepository,
   ) {}
 
   @Query((type) => Node)
   async node(@Args() { id }: NodeInput) {
     // Retrieve node from database (e.g., using TypeORM)
-    const user = await this.userRepo.findUser({ userId: id });
-    if (User.isTypeOf(user)) {
+
+    const user = await this.userRepo.findOneBy({ id });
+    if (user && User.isTypeOf(user)) {
       return user as User;
+    }
+    const room = await this.roomRepo.findOneBy({ id });
+    if (room && Room.isTypeOf(room)) {
+      return room as Room;
     }
 
     // const post = await this.postRepo.findPost({ postId: id });
