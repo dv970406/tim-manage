@@ -5,10 +5,8 @@ import { MessageEdge } from './message-pagination.dto';
 
 @InputType()
 export class SendMessageInput extends PickType(Message, ['message']) {
-  @Field((type) => ID, { nullable: true })
-  roomId?: string;
-  @Field((type) => ID, { nullable: true })
-  listenerId?: string;
+  @Field((type) => ID)
+  roomId: string;
 }
 
 @ObjectType()

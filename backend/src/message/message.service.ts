@@ -31,18 +31,11 @@ export class MessageService {
   }
   async sendMessage(
     loggedInUser: User,
-    { message, roomId, listenerId }: SendMessageInput,
+    { message, roomId }: SendMessageInput,
   ): Promise<SendMessageOutput> {
     try {
-      let listener: User;
-      if (listenerId) {
-        listener = await this.userRepo.findUser({ userId: listenerId });
-      }
-
-      const findRoom = await this.roomRepo.findOrCreateRoom({
+      const findRoom = await this.roomRepo.findRoom({
         roomId,
-        listener,
-        loggedInUser,
       });
 
       const isRoomMember = findRoom.users.find(
@@ -57,28 +50,47 @@ export class MessageService {
         user: loggedInUser,
       });
 
-      const edge = {
+      const newMessageEdge = {
         node: newMessage,
         cursor: newMessage.createdAt,
       };
+
       // room에 있을 때의 대화
       pubsub.publish(TRIGGER_RECEIVE_IN_ROOM, {
         receiveInRoom: {
           ok: true,
-          edge,
+          edge: newMessageEdge,
         },
       });
+
+      const unreadMessageCount = await this.messageRepo.count({
+        where: {
+          room: {
+            id: findRoom.id,
+          },
+        },
+      });
+
+      const newRoomEdge = {
+        node: {
+          ...findRoom,
+          recentMessage: newMessage,
+          unreadMessageCount,
+        },
+        cursor: findRoom.createdAt,
+      };
+
       // room에 없을 때 메시지가 온 것을 감지
       pubsub.publish(TRIGGER_RECEIVE_MESSAGE, {
         receiveMessage: {
           ok: true,
-          room: findRoom,
+          edge: newRoomEdge,
         },
       });
 
       return {
         ok: true,
-        edge,
+        edge: newMessageEdge,
       };
     } catch (error) {
       return {

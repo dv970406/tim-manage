@@ -2,11 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ConnectionInput } from 'src/core/dtos/pagination.dto';
 import { User } from 'src/user/entities/user.entity';
-import { In, LessThan, Not } from 'typeorm';
+import { UserRepository } from 'src/user/user.repository';
+import { LessThan, Not } from 'typeorm';
 import { MessagesConnection } from './dtos/messages/message-pagination.dto';
 import { ExitRoomInput, ExitRoomOutput } from './dtos/rooms/delete-room.dto';
-import { GetRoomInput, GetRoomOutput } from './dtos/rooms/get-room.dto';
+import {
+  GetOrCreateRoomInput,
+  GetOrCreateRoomOutput,
+} from './dtos/rooms/get-room.dto';
 import { GetRoomsInput, GetRoomsOutput } from './dtos/rooms/get-rooms.dto';
+import { Message } from './entity/message.entity';
 import { Room } from './entity/room.entity';
 import { MessageRepository } from './repositories/message.repository';
 import { RoomRepository } from './repositories/room.repository';
@@ -18,8 +23,26 @@ export class RoomService {
     private readonly roomRepo: RoomRepository,
     @InjectRepository(MessageRepository)
     private readonly messageRepo: MessageRepository,
+    @InjectRepository(UserRepository)
+    private readonly userRepo: UserRepository,
   ) {}
 
+  async recentMessage(loggedInUser: User, room: Room): Promise<Message> {
+    return this.messageRepo.findOne({
+      where: {
+        room: {
+          id: room.id,
+        },
+        user: {
+          id: Not(loggedInUser.id),
+        },
+        isRead: false,
+      },
+      order: {
+        createdAt: 'DESC',
+      },
+    });
+  }
   async unreadMessageCount(loggedInUser: User, room: Room): Promise<number> {
     return this.messageRepo.count({
       where: {
@@ -51,12 +74,6 @@ export class RoomService {
 
       take: first,
     });
-
-    findMessages.map((message) => ({
-      ...message,
-      isRead: true,
-    }));
-    await this.messageRepo.save(findMessages);
 
     const edges = findMessages.map((message) => ({
       node: message,
@@ -126,30 +143,54 @@ export class RoomService {
     }
   }
 
-  async getRoom(
+  async getOrCreateRoom(
     loggedInUser: User,
-    { roomId }: GetRoomInput,
-  ): Promise<GetRoomOutput> {
+    { roomId, userId }: GetOrCreateRoomInput,
+  ): Promise<GetOrCreateRoomOutput> {
     try {
-      const room = await this.roomRepo.findOne({
-        where: {
-          id: roomId,
-          users: {
-            id: Not(loggedInUser.id),
+      let room;
+      if (roomId) {
+        room = await this.roomRepo.findOne({
+          where: {
+            id: roomId,
           },
-        },
-        order: {
-          createdAt: 'DESC',
-        },
-        relations: {
-          messages: true,
-          users: true,
-        },
-      });
+          order: {
+            createdAt: 'DESC',
+          },
+          relations: {
+            messages: true,
+            users: true,
+          },
+        });
+      } else if (userId) {
+        // 로그인한 유저와 클릭한 유저가 속한 room이 있는지 확인
+        // find 메소드에는 ManyToMany 관계의 id필드를 두 가지 값을 가져야하는 것을 AND조건으로 작성할 수 없어서 createQueryBuilder사용
+        room = await this.roomRepo
+          .createQueryBuilder('room')
+          .leftJoinAndSelect('room.users', 'user')
+          .where('user.id = :userId1', { userId1: loggedInUser.id })
+          .andWhere('user.id = :userId2', { userId2: userId })
+          .getOne();
+
+        // room이 없다면 create
+        if (!room) {
+          const findUser = await this.userRepo.findUser({ userId });
+
+          room = await this.roomRepo.save({
+            users: [loggedInUser, findUser],
+          });
+        }
+      }
 
       if (!room) {
         throw new Error('존재하지 않는 방입니다.');
       }
+
+      // users명단에서 내 이름은 제거하기
+      room = {
+        ...room,
+        users: room.users?.filter((user) => user.id !== loggedInUser.id),
+      };
 
       return {
         ok: true,

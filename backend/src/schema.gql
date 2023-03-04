@@ -134,6 +134,7 @@ type Room implements Node {
   updatedAt: DateTime!
   users: [User!]!
   messages: [Message!]!
+  recentMessage: Message
   unreadMessageCount: Int!
   messagesOfRoomConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): MessagesConnection!
 }
@@ -585,10 +586,15 @@ type GetWeeklyMealOutput {
   weeklyMeal: Meal
 }
 
+type RoomEdge {
+  cursor: DateTime
+  node: Room!
+}
+
 type ReceiveMessageOutput {
   ok: Boolean!
   error: String
-  room: Room
+  edge: RoomEdge
 }
 
 type MessagesConnection {
@@ -613,15 +619,10 @@ type ExitRoomOutput {
   deletedRoomId: ID
 }
 
-type GetRoomOutput {
+type GetOrCreateRoomOutput {
   ok: Boolean!
   error: String
   room: Room
-}
-
-type RoomEdge {
-  cursor: DateTime
-  node: Room!
 }
 
 type GetRoomsOutput {
@@ -688,7 +689,7 @@ type Query {
   getMeeting(input: GetMeetingInput!): GetMeetingOutput!
   getWeeklyMeal: GetWeeklyMealOutput!
   getRooms(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): GetRoomsOutput!
-  getRoom(roomId: ID!): GetRoomOutput!
+  getOrCreateRoom(roomId: ID, userId: ID): GetOrCreateRoomOutput!
   getNotifications(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): GetNotificationsOutput!
 }
 
@@ -911,8 +912,7 @@ input CreateWeeklyMealInput {
 
 input SendMessageInput {
   message: String!
-  roomId: ID
-  listenerId: ID
+  roomId: ID!
 }
 
 input ExitRoomInput {

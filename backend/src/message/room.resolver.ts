@@ -17,12 +17,16 @@ import { User } from 'src/user/entities/user.entity';
 import { pubsub, TRIGGER_RECEIVE_IN_ROOM } from 'src/utils/subscription';
 import { MessagesConnection } from './dtos/messages/message-pagination.dto';
 import { ExitRoomInput, ExitRoomOutput } from './dtos/rooms/delete-room.dto';
-import { GetRoomInput, GetRoomOutput } from './dtos/rooms/get-room.dto';
+import {
+  GetOrCreateRoomInput,
+  GetOrCreateRoomOutput,
+} from './dtos/rooms/get-room.dto';
 import { GetRoomsInput, GetRoomsOutput } from './dtos/rooms/get-rooms.dto';
 import {
   ReceiveInRoomInput,
   ReceiveInRoomOutput,
 } from './dtos/rooms/receive-inRoom.dto';
+import { Message } from './entity/message.entity';
 import { Room } from './entity/room.entity';
 import { RoomService } from './room.service';
 
@@ -52,6 +56,12 @@ export class RoomResolver {
     return pubsub.asyncIterator(TRIGGER_RECEIVE_IN_ROOM);
   }
 
+  @ResolveField((type) => Message, { nullable: true })
+  @UseGuards(LoginGuard)
+  recentMessage(@LoggedInUser() loggedInUser: User, @Parent() room: Room) {
+    return this.roomService.recentMessage(loggedInUser, room);
+  }
+
   @ResolveField((type) => Int)
   @UseGuards(LoginGuard)
   unreadMessageCount(@LoggedInUser() loggedInUser: User, @Parent() room: Room) {
@@ -76,13 +86,13 @@ export class RoomResolver {
     return this.roomService.getRooms(loggedInUser, getRoomsInput);
   }
 
-  @Query((type) => GetRoomOutput)
+  @Query((type) => GetOrCreateRoomOutput)
   @UseGuards(LoginGuard)
-  getRoom(
+  getOrCreateRoom(
     @LoggedInUser() loggedInUser: User,
-    @Args() getRoomInput: GetRoomInput,
+    @Args() getRoomInput: GetOrCreateRoomInput,
   ): Promise<GetRoomsOutput> {
-    return this.roomService.getRoom(loggedInUser, getRoomInput);
+    return this.roomService.getOrCreateRoom(loggedInUser, getRoomInput);
   }
 
   @Mutation((type) => ExitRoomOutput)

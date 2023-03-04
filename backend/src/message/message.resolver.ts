@@ -27,7 +27,7 @@ export class MessageResolver {
 
   @Subscription((type) => ReceiveMessageOutput, {
     filter: ({ receiveMessage }, _, { user: loggedInUser }) => {
-      const isRoomMember = receiveMessage.room.users.find(
+      const isRoomMember = receiveMessage.edge.node.users.find(
         (member) => member.id === loggedInUser.id,
       );
 
