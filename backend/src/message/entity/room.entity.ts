@@ -2,7 +2,14 @@ import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { Node } from 'src/core/dtos/node.dto';
 import { CoreEntity } from 'src/core/entities/core.entity';
 import { User } from 'src/user/entities/user.entity';
-import { Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+} from 'typeorm';
 import { Message } from './message.entity';
 
 @InputType('RoomInputType', { isAbstract: true })

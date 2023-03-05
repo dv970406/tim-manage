@@ -172,7 +172,6 @@ type User implements Node {
   messages: [Message!]!
   rooms: [Room!]!
   notifications: [Notification!]!
-  unreadMessageCount: Float!
   unreadNotificationCount: Float!
   myAnswersConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): AnswersConnection!
   myVacationsConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): VacationsConnection!
@@ -595,6 +594,7 @@ type ReceiveMessageOutput {
   ok: Boolean!
   error: String
   edge: RoomEdge
+  isMyAlarm: Boolean
 }
 
 type MessagesConnection {

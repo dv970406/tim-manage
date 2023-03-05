@@ -58,8 +58,8 @@ export class RoomResolver {
 
   @ResolveField((type) => Message, { nullable: true })
   @UseGuards(LoginGuard)
-  recentMessage(@LoggedInUser() loggedInUser: User, @Parent() room: Room) {
-    return this.roomService.recentMessage(loggedInUser, room);
+  recentMessage(@Parent() room: Room) {
+    return this.roomService.recentMessage(room);
   }
 
   @ResolveField((type) => Int)
@@ -71,10 +71,15 @@ export class RoomResolver {
   @ResolveField((type) => MessagesConnection)
   @UseGuards(LoginGuard)
   messagesOfRoomConnection(
+    @LoggedInUser() loggedInUser: User,
     @Parent() room: Room,
     @Args() roomConnectionInput: ConnectionInput,
   ): Promise<MessagesConnection> {
-    return this.roomService.messagesOfRoomConnection(room, roomConnectionInput);
+    return this.roomService.messagesOfRoomConnection(
+      loggedInUser,
+      room,
+      roomConnectionInput,
+    );
   }
 
   @Query((type) => GetRoomsOutput)

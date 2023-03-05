@@ -41,7 +41,6 @@ export class MessageService {
       const isRoomMember = findRoom.users.find(
         (user) => user.id === loggedInUser.id,
       );
-
       if (!isRoomMember) throw new Error('방의 멤버가 아닙니다.');
 
       const newMessage = await this.messageRepo.save({
@@ -62,20 +61,19 @@ export class MessageService {
           edge: newMessageEdge,
         },
       });
-
-      const unreadMessageCount = await this.messageRepo.count({
-        where: {
-          room: {
-            id: findRoom.id,
-          },
-        },
+      pubsub.subscribe(TRIGGER_RECEIVE_IN_ROOM, async () => {
+        if (newMessage.userId !== loggedInUser.id) {
+          await this.messageRepo.save({
+            ...newMessage,
+            isRead: true,
+          });
+        }
       });
 
       const newRoomEdge = {
         node: {
           ...findRoom,
           recentMessage: newMessage,
-          unreadMessageCount,
         },
         cursor: findRoom.createdAt,
       };

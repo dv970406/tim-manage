@@ -27,14 +27,11 @@ export class RoomService {
     private readonly userRepo: UserRepository,
   ) {}
 
-  async recentMessage(loggedInUser: User, room: Room): Promise<Message> {
+  async recentMessage(room: Room): Promise<Message> {
     return this.messageRepo.findOne({
       where: {
         room: {
           id: room.id,
-        },
-        user: {
-          id: Not(loggedInUser.id),
         },
         isRead: false,
       },
@@ -57,6 +54,7 @@ export class RoomService {
     });
   }
   async messagesOfRoomConnection(
+    loggedInUser: User,
     room: Room,
     { first, after }: ConnectionInput,
   ): Promise<MessagesConnection> {
@@ -74,6 +72,15 @@ export class RoomService {
 
       take: first,
     });
+
+    // isRead를 false => true로 업데이트한 것을 DB에 반영하기 위함
+    // 아래 users 필터링 코드는 저장되면 안되므로 여기에 save문 작성
+    findMessages.forEach((message) => {
+      if (message.userId !== loggedInUser.id) {
+        return (message.isRead = true);
+      }
+    });
+    await this.messageRepo.save(findMessages);
 
     const edges = findMessages.map((message) => ({
       node: message,
@@ -148,14 +155,16 @@ export class RoomService {
     { roomId, userId }: GetOrCreateRoomInput,
   ): Promise<GetOrCreateRoomOutput> {
     try {
-      let room;
+      let room: Room;
       if (roomId) {
         room = await this.roomRepo.findOne({
           where: {
             id: roomId,
           },
           order: {
-            createdAt: 'DESC',
+            messages: {
+              createdAt: 'DESC',
+            },
           },
           relations: {
             messages: true,
@@ -168,6 +177,7 @@ export class RoomService {
         room = await this.roomRepo
           .createQueryBuilder('room')
           .leftJoinAndSelect('room.users', 'user')
+          .leftJoinAndSelect('room.messages', 'message')
           .where('user.id = :userId1', { userId1: loggedInUser.id })
           .andWhere('user.id = :userId2', { userId2: userId })
           .getOne();
@@ -176,9 +186,11 @@ export class RoomService {
         if (!room) {
           const findUser = await this.userRepo.findUser({ userId });
 
-          room = await this.roomRepo.save({
+          const newRoom = await this.roomRepo.save({
             users: [loggedInUser, findUser],
           });
+
+          room = await this.roomRepo.findRoom({ roomId: newRoom.id });
         }
       }
 

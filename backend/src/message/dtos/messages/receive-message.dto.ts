@@ -7,4 +7,7 @@ import { RoomEdge } from '../rooms/room-pagination.dto';
 export class ReceiveMessageOutput extends CoreOutput {
   @Field((type) => RoomEdge, { nullable: true })
   edge?: RoomEdge;
+
+  @Field((type) => Boolean, { nullable: true })
+  isMyAlarm?: boolean;
 }

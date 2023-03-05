@@ -12,9 +12,13 @@ export class RoomRepository extends Repository<Room> {
       },
       order: {
         createdAt: 'DESC',
+        messages: {
+          createdAt: 'DESC',
+        },
       },
       relations: {
         users: true,
+        messages: true,
       },
     });
     if (!room) throw new Error('찾을 수 없는 방입니다.');

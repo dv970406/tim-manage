@@ -56,21 +56,7 @@ export class UserService {
     @InjectRepository(MessageRepository)
     private readonly messageRepo: MessageRepository,
   ) {}
-  async unreadMessageCount({ id }: User): Promise<number> {
-    return this.messageRepo.count({
-      where: {
-        room: {
-          users: {
-            id: In([id]),
-          },
-        },
-        isRead: false,
-        user: {
-          id: Not(id),
-        },
-      },
-    });
-  }
+
   async unreadNotificationCount({ id }: User): Promise<number> {
     return this.notificationRepo.count({
       where: {

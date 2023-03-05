@@ -12,6 +12,7 @@ import { LoginGuard } from 'src/auth/auth.guard';
 import { ConnectionInput } from 'src/core/dtos/pagination.dto';
 import { User } from 'src/user/entities/user.entity';
 import { pubsub, TRIGGER_RECEIVE_MESSAGE } from 'src/utils/subscription';
+import { QueryBuilder } from 'typeorm';
 import { MessagesConnection } from './dtos/messages/message-pagination.dto';
 import { ReceiveMessageOutput } from './dtos/messages/receive-message.dto';
 import {
@@ -35,8 +36,39 @@ export class MessageResolver {
       return !!isRoomMember;
     },
 
-    resolve: ({ receiveMessage }) => {
-      return receiveMessage;
+    resolve: (
+      {
+        receiveMessage: {
+          edge: { node, cursor },
+        },
+      },
+      _,
+      { user: loggedInUser },
+    ) => {
+      // room.users에서 나 자신은 빼고 return
+      const filteringExceptMe = node.users.filter(
+        (user) => user.id !== loggedInUser.id,
+      );
+
+      // 내가 안읽은 message들을 count
+      const unreadMessageCount = node.messages.filter(
+        (message) =>
+          message.isRead === false && message.userId !== loggedInUser.id,
+      ).length;
+
+      const isMyAlarm = node.recentMessage.user.id !== loggedInUser.id;
+      return {
+        ok: true,
+        edge: {
+          node: {
+            ...node,
+            users: filteringExceptMe,
+            unreadMessageCount,
+          },
+          cursor,
+        },
+        isMyAlarm,
+      };
     },
   })
   @UseGuards(LoginGuard)

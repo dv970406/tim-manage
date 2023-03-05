@@ -36,11 +36,6 @@ export class UserResolver {
 
   @ResolveField((type) => Number)
   @UseGuards(LoginGuard)
-  unreadMessageCount(@Parent() loggedInUser: User): Promise<number> {
-    return this.userService.unreadMessageCount(loggedInUser);
-  }
-  @ResolveField((type) => Number)
-  @UseGuards(LoginGuard)
   unreadNotificationCount(@Parent() loggedInUser: User): Promise<number> {
     return this.userService.unreadNotificationCount(loggedInUser);
   }
