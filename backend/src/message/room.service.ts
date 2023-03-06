@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ConnectionInput } from 'src/core/dtos/pagination.dto';
 import { User } from 'src/user/entities/user.entity';
 import { UserRepository } from 'src/user/user.repository';
-import { LessThan, Not } from 'typeorm';
+import { And, In, LessThan, Not } from 'typeorm';
 import { MessagesConnection } from './dtos/messages/message-pagination.dto';
 import { ExitRoomInput, ExitRoomOutput } from './dtos/rooms/delete-room.dto';
 import {
@@ -33,7 +33,6 @@ export class RoomService {
         room: {
           id: room.id,
         },
-        isRead: false,
       },
       order: {
         createdAt: 'DESC',
@@ -175,11 +174,13 @@ export class RoomService {
         // 로그인한 유저와 클릭한 유저가 속한 room이 있는지 확인
         // find 메소드에는 ManyToMany 관계의 id필드를 두 가지 값을 가져야하는 것을 AND조건으로 작성할 수 없어서 createQueryBuilder사용
         room = await this.roomRepo
-          .createQueryBuilder('room')
+          .createQueryBuilder()
+          .select('room')
+          .from(Room, 'room')
           .leftJoinAndSelect('room.users', 'user')
-          .leftJoinAndSelect('room.messages', 'message')
-          .where('user.id = :userId1', { userId1: loggedInUser.id })
-          .andWhere('user.id = :userId2', { userId2: userId })
+          .where('user.id IN (:...userIds)', {
+            userIds: [loggedInUser.id, userId],
+          }) // 여러 개의 userId를 배열로 전달.
           .getOne();
 
         // room이 없다면 create
