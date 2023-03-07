@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8655e4f0fc8132599f34aa083e498902>>
+ * @generated SignedSource<<56fd7c4118441221d8ef1c96a783ff60>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,16 +10,17 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type RoomsTablePaginationQuery$variables = {
+export type SpeakableUsersPaginationQuery$variables = {
   after?: any | null;
   first: number;
+  keyword?: string | null;
 };
-export type RoomsTablePaginationQuery$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"RoomsTable_room">;
+export type SpeakableUsersPaginationQuery$data = {
+  readonly " $fragmentSpreads": FragmentRefs<"SpeakableUsersTable_user">;
 };
-export type RoomsTablePaginationQuery = {
-  response: RoomsTablePaginationQuery$data;
-  variables: RoomsTablePaginationQuery$variables;
+export type SpeakableUsersPaginationQuery = {
+  response: SpeakableUsersPaginationQuery$data;
+  variables: SpeakableUsersPaginationQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -33,6 +34,11 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "first"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "keyword"
   }
 ],
 v1 = [
@@ -45,26 +51,24 @@ v1 = [
     "kind": "Variable",
     "name": "first",
     "variableName": "first"
+  },
+  {
+    "kind": "Variable",
+    "name": "keyword",
+    "variableName": "keyword"
   }
-],
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "RoomsTablePaginationQuery",
+    "name": "SpeakableUsersPaginationQuery",
     "selections": [
       {
         "args": (v1/*: any*/),
         "kind": "FragmentSpread",
-        "name": "RoomsTable_room"
+        "name": "SpeakableUsersTable_user"
       }
     ],
     "type": "Query",
@@ -74,14 +78,14 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "RoomsTablePaginationQuery",
+    "name": "SpeakableUsersPaginationQuery",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "GetRoomsOutput",
+        "concreteType": "GetUsersOutput",
         "kind": "LinkedField",
-        "name": "getRooms",
+        "name": "getUsers",
         "plural": false,
         "selections": [
           {
@@ -101,7 +105,7 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "RoomEdge",
+            "concreteType": "UserEdge",
             "kind": "LinkedField",
             "name": "edges",
             "plural": true,
@@ -109,55 +113,23 @@ return {
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "Room",
+                "concreteType": "User",
                 "kind": "LinkedField",
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v2/*: any*/),
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "User",
-                    "kind": "LinkedField",
-                    "name": "users",
-                    "plural": true,
-                    "selections": [
-                      (v2/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "name",
-                        "storageKey": null
-                      }
-                    ],
+                    "kind": "ScalarField",
+                    "name": "id",
                     "storageKey": null
                   },
                   {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "unreadMessageCount",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Message",
-                    "kind": "LinkedField",
-                    "name": "recentMessage",
-                    "plural": false,
-                    "selections": [
-                      (v2/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "message",
-                        "storageKey": null
-                      }
-                    ],
+                    "name": "name",
                     "storageKey": null
                   },
                   {
@@ -211,25 +183,27 @@ return {
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "filters": null,
+        "filters": [
+          "keyword"
+        ],
         "handle": "connection",
-        "key": "RoomsTable_getRooms",
+        "key": "SpeakableUsers_getUsers",
         "kind": "LinkedHandle",
-        "name": "getRooms"
+        "name": "getUsers"
       }
     ]
   },
   "params": {
-    "cacheID": "05d5bb7db95831efafa93584bc4af670",
+    "cacheID": "364e8cf076b40636b28d5ed9bd7c184f",
     "id": null,
     "metadata": {},
-    "name": "RoomsTablePaginationQuery",
+    "name": "SpeakableUsersPaginationQuery",
     "operationKind": "query",
-    "text": "query RoomsTablePaginationQuery(\n  $after: DateTime\n  $first: Int!\n) {\n  ...RoomsTable_room_2HEEH6\n}\n\nfragment RoomTableContent_room on Room {\n  id\n  users {\n    id\n    name\n  }\n  unreadMessageCount\n  recentMessage {\n    id\n    message\n  }\n}\n\nfragment RoomsTable_room_2HEEH6 on Query {\n  getRooms(first: $first, after: $after) {\n    ok\n    error\n    edges {\n      node {\n        ...RoomTableContent_room\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query SpeakableUsersPaginationQuery(\n  $after: DateTime\n  $first: Int!\n  $keyword: String\n) {\n  ...SpeakableUsersTable_user_3aPcrv\n}\n\nfragment SpeakableUserTableContent_user on User {\n  id\n  name\n}\n\nfragment SpeakableUsersTable_user_3aPcrv on Query {\n  getUsers(keyword: $keyword, first: $first, after: $after) {\n    ok\n    error\n    edges {\n      node {\n        ...SpeakableUserTableContent_user\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "7d63522c33f39de45c5a8cd95a07ebd8";
+(node as any).hash = "d54e89e213761e5fff2bafdbd8949ea5";
 
 export default node;

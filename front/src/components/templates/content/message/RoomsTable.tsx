@@ -1,7 +1,6 @@
 import { graphql } from "babel-plugin-relay/macro";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect } from "react";
 import { usePaginationFragment } from "react-relay";
-import { SubTitle } from "../../../atomics/typographys/titles";
 import RoomTableContent from "../../../organisms/content/message/RoomTableContent";
 import { InfiniteScrollList } from "../../../organisms/shared/InfiniteScrolls";
 import { RoomsTablePaginationQuery } from "./__generated__/RoomsTablePaginationQuery.graphql";
@@ -48,8 +47,6 @@ const RoomsTable = ({ rooms, setClickedRoomId }: IRoomsTable) => {
 
   return (
     <>
-      <SubTitle>대화 목록</SubTitle>
-
       <InfiniteScrollList
         loadNext={loadNext}
         isLoadingNext={isLoadingNext}
