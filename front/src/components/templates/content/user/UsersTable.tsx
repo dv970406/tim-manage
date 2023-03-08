@@ -6,7 +6,7 @@ import UserTableContent from "../../../organisms/content/user/UserTableContent";
 import { UsersTable_user$key } from "./__generated__/UsersTable_user.graphql";
 import OrderUsers from "../../../organisms/content/user/OrderUsers";
 import { UsersTablePaginationQuery } from "./__generated__/UsersTablePaginationQuery.graphql";
-import { ColumnBox, GapBox } from "../../../atomics/boxes/Boxes";
+import { ColumnBox } from "../../../atomics/boxes/Boxes";
 interface IUsersTable {
   users: UsersTable_user$key;
 }
@@ -55,7 +55,7 @@ const UsersTable = ({ users }: IUsersTable) => {
   );
 
   return (
-    <GapBox>
+    <ColumnBox>
       <OrderUsers refetch={refetch} />
       <SearchAndInfiniteScrollDataList
         mutateName="create-user"
@@ -63,6 +63,7 @@ const UsersTable = ({ users }: IUsersTable) => {
         isLoadingNext={isLoadingNext}
         loadNext={loadNext}
         hasNext={hasNext}
+        hasAddButton={myInfo?.isManager!}
       >
         {edges.map(
           (user) =>
@@ -75,7 +76,7 @@ const UsersTable = ({ users }: IUsersTable) => {
             )
         )}
       </SearchAndInfiniteScrollDataList>
-    </GapBox>
+    </ColumnBox>
   );
 };
 

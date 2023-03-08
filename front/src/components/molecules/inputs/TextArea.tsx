@@ -4,7 +4,7 @@ import { UseFormRegister, UseFormRegisterReturn } from "react-hook-form";
 import { theme } from "../../../css/theme";
 import { ErrorText, MainText } from "../../atomics/typographys/texts";
 import { SubTitle } from "../../atomics/typographys/titles";
-import { GapBox } from "../../atomics/boxes/Boxes";
+import { ColumnBox } from "../../atomics/boxes/Boxes";
 import { BoxIcon } from "../icons/Icons";
 
 interface ITextArea {
@@ -27,7 +27,7 @@ export const TextArea = ({
 }: ITextArea) => {
   const [isFocusing, setIsFocusing] = useState(false);
   return (
-    <GapBox>
+    <ColumnBox>
       {label && (
         <label htmlFor={label} style={{ cursor: "pointer" }}>
           <SubTitle>{label}</SubTitle>
@@ -61,6 +61,6 @@ export const TextArea = ({
         onChange={onChange}
       />
       <ErrorText style={{ height: 15 }}>{errorMessage}</ErrorText>
-    </GapBox>
+    </ColumnBox>
   );
 };

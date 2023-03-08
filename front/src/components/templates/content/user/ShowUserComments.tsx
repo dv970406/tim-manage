@@ -53,6 +53,7 @@ const ShowUserComments = () => {
         hasNext={hasNext}
         isLoadingNext={isLoadingNext}
         refetch={refetch}
+        hasAddButton={false}
       >
         {edges?.map(
           (comment) =>

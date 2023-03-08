@@ -29,7 +29,7 @@ function TemplatesLayout() {
         <Content>
           <Outlet /* context={user} */ />
         </Content>
-        <MessageTool unreadMessageCount={myInfo?.unreadMessageCount} />
+        <MessageTool />
       </Main>
     </Body>
   );

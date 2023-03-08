@@ -13,7 +13,7 @@ import { getElaspedDay } from "../../../../utils/time/time";
 import {
   RowBox,
   HorizontalDivider,
-  GapBox,
+  ColumnBox,
   ItemBox,
 } from "../../../atomics/boxes/Boxes";
 import { MainText } from "../../../atomics/typographys/texts";
@@ -61,7 +61,7 @@ const PostTableContent = ({ post, comment }: IPostTableContent) => {
           icon={faBox}
           size={"2x"}
         />
-        <GapBox>
+        <ColumnBox gap={theme.spacing.sm}>
           <div
             style={{
               display: "flex",
@@ -78,7 +78,7 @@ const PostTableContent = ({ post, comment }: IPostTableContent) => {
               <MainText>{tableContentData?.user.name}</MainText>
             )}
           </div>
-        </GapBox>
+        </ColumnBox>
       </RowBox>
 
       <HorizontalDivider />

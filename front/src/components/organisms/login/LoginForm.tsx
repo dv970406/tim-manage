@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useLogin } from "../../../client/user/Login.client";
 import { theme } from "../../../css/theme";
-import { ColumnBox, GapBox } from "../../atomics/boxes/Boxes";
+import { ColumnBox } from "../../atomics/boxes/Boxes";
 import { SubmitButton } from "../../atomics/buttons/buttons";
 import { Form } from "../../atomics/form/Form";
 import { Section } from "../../atomics/sections/sections";
@@ -52,9 +52,9 @@ const LoginForm = () => {
       }}
     >
       <ColumnBox>
-        <GapBox style={{ alignItems: "center" }}>
+        <ColumnBox style={{ alignItems: "center" }}>
           <img src="/logo.png" width={170} height={30} />
-        </GapBox>
+        </ColumnBox>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <TextInput
             icon={faUser}

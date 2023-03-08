@@ -10,6 +10,7 @@ import CreateScheduleModal from "../home/CreateScheduleModal";
 import MutateMeetingModal from "../home/MutateMeetingModal";
 import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
 import { SurveysTablePaginationQuery } from "./__generated__/SurveysTablePaginationQuery.graphql";
+import { useGetMyInfo } from "../../../../client/user/GetMyInfo.client";
 
 interface ISurveysTable {
   surveys: SurveysTable_survey$key;
@@ -59,6 +60,7 @@ const SurveysTable = ({ surveys }: ISurveysTable) => {
     SurveysTable_survey$key
   >(getSurveysFragment, surveys);
 
+  const { myInfo } = useGetMyInfo();
   return (
     <>
       <SearchAndInfiniteScrollDataList
@@ -67,6 +69,7 @@ const SurveysTable = ({ surveys }: ISurveysTable) => {
         isLoadingNext={isLoadingNext}
         hasNext={hasNext}
         loadNext={loadNext}
+        hasAddButton={myInfo?.isManager!}
       >
         {edges.map(
           (survey) =>

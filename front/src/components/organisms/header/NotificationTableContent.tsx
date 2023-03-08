@@ -5,7 +5,7 @@ import {
   faRocket,
 } from "@fortawesome/pro-solid-svg-icons";
 import { graphql } from "babel-plugin-relay/macro";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useFragment, usePaginationFragment } from "react-relay";
 import { useNavigate } from "react-router-dom";
 import { ReadNotificationMutation$variables } from "../../../client/notification/__generated__/ReadNotificationMutation.graphql";
@@ -15,7 +15,7 @@ import {
   getKoreanDateFormat,
   vacationDateFormat,
 } from "../../../utils/time/time";
-import { GapBox, RowBox } from "../../atomics/boxes/Boxes";
+import { ColumnBox, RowBox } from "../../atomics/boxes/Boxes";
 
 import { ListItem } from "../../atomics/sections/sections";
 import {
@@ -78,6 +78,7 @@ const NotificationTableContent = ({
     });
   };
 
+  console.log(notificationId);
   return (
     <ListItem
       style={{
@@ -95,7 +96,7 @@ const NotificationTableContent = ({
       >
         <BoxIcon icon={faRocket} size="lg" bgColor={theme.bgColors.purple} />
 
-        <GapBox style={{ placeSelf: "flex-end" }}>
+        <ColumnBox style={{ placeSelf: "flex-end" }} gap={theme.spacing.sm}>
           <DateText style={{ textAlign: "right" }}>
             {vacationDateFormat(confirmedVacation?.startDate as Date)}
             {` ~ `}
@@ -134,10 +135,10 @@ const NotificationTableContent = ({
             )}
           </RowBox>
           <SubTitle style={{ textAlign: "right" }}>{confirmedDate}</SubTitle>
-        </GapBox>
+        </ColumnBox>
       </div>
     </ListItem>
   );
 };
 
-export default NotificationTableContent;
+export default React.memo(NotificationTableContent);

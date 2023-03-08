@@ -1,6 +1,6 @@
 import { EventInput } from "@fullcalendar/core";
 import React from "react";
-import { GapBox, ScrollBox } from "../../../atomics/boxes/Boxes";
+import { ColumnBox, ScrollBox } from "../../../atomics/boxes/Boxes";
 import { SectionTitle } from "../../../atomics/typographys/titles";
 import TodayMeeting from "../../../organisms/content/home/TodayMeeting";
 
@@ -11,7 +11,7 @@ const TodayMeetings = ({ todayMeetings }: ITodayMeetings) => {
   return (
     <>
       <SectionTitle>오늘의 회의</SectionTitle>
-      <ScrollBox height="100%">
+      <ScrollBox>
         {todayMeetings.map((meeting) => (
           <TodayMeeting
             key={meeting.id}

@@ -4,19 +4,19 @@ import { useGetNotifications } from "../../../client/notification/GetNotificatio
 import { receiveNotification } from "../../../client/notification/ReceiveNotification.client";
 import { theme } from "../../../css/theme";
 import { NotificationSection } from "../../atomics/sections/sections";
+import { SubText } from "../../atomics/typographys/texts";
 import { SubTitle } from "../../atomics/typographys/titles";
 import { ButtonIcon } from "../../molecules/buttons/Buttons";
-import RoomsTable from "../../templates/content/message/RoomsTable";
 import NotificationsTable from "./NotificationsTable";
 
 interface INotification {
   unreadNotificationCount?: number;
 }
 const Notification = ({ unreadNotificationCount }: INotification) => {
-  const [hasNews, setHasNews] = useState(false);
+  const [hasNotification, setHasNotification] = useState(false);
   useEffect(() => {
     const { dispose } = receiveNotification({
-      setHasNews,
+      setHasNotification,
     });
     return () => {
       dispose();
@@ -39,16 +39,15 @@ const Notification = ({ unreadNotificationCount }: INotification) => {
         size="lg"
         onClick={() => {
           setIsNotificationOpen((prev) => !prev);
-          setHasNews(false);
+          setHasNotification(false);
         }}
       />
-      {(hasNews || !!unreadNotificationCount) && (
+      {(hasNotification || !!unreadNotificationCount) && (
         <div
           style={{
             position: "absolute",
             top: -5,
             right: -10,
-
             backgroundColor: theme.bgColors.red,
             display: "flex",
             justifyContent: "center",
@@ -59,12 +58,13 @@ const Notification = ({ unreadNotificationCount }: INotification) => {
             zIndex: 5,
           }}
         >
-          {unreadNotificationCount}
+          <SubText style={{ fontSize: 10 }}>{unreadNotificationCount}</SubText>
         </div>
       )}
       {isNotificationOpen && (
         <NotificationSection>
           <SubTitle>알람 목록</SubTitle>
+
           <NotificationsTable notifications={notifications} />
         </NotificationSection>
       )}

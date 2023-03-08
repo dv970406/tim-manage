@@ -3,7 +3,7 @@ import React, { Dispatch, SetStateAction } from "react";
 import { usePaginationFragment } from "react-relay";
 import { useDeleteSurvey } from "../../../../client/manager/DeleteSurvey.client";
 import { getSurveysQuery } from "../../../../client/survey/GetSurveys.client";
-import { ColumnBox, GapBox, ScrollBox } from "../../../atomics/boxes/Boxes";
+import { ColumnBox, ScrollBox } from "../../../atomics/boxes/Boxes";
 import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
 import Table from "../../../molecules/tables/Table";
 import ManagerSurveyTableContent from "../../../organisms/content/manager/ManagerSurveyTableContent";

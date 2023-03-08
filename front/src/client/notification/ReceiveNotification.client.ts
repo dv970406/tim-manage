@@ -50,16 +50,16 @@ const receiveNotificationQuery = graphql`
 `;
 
 interface IUseReceiveNotification {
-  setHasNews: Dispatch<SetStateAction<boolean>>;
+  setHasNotification: Dispatch<SetStateAction<boolean>>;
 }
 export const receiveNotification = ({
-  setHasNews,
+  setHasNotification,
 }: IUseReceiveNotification) => {
   return requestSubscription<ReceiveNotificationSubscription>(environment, {
     subscription: receiveNotificationQuery,
     variables: {},
     onNext: (data) => {
-      setHasNews(true);
+      setHasNotification(true);
       // 오디오 파일로 알람 넣어보기
     },
     updater: (

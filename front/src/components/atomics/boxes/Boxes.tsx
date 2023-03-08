@@ -1,11 +1,16 @@
 import { Theme } from "@emotion/react";
 import styled from "@emotion/styled";
-import { minMq } from "../../../utils/css/media-query";
+import { breakpoints } from "../../../css/media-query/media-query";
 
-export const ColumnBox = styled.div(({ theme }) => ({
+interface IColumnBox {
+  theme?: Theme;
+  gap?: number;
+}
+export const ColumnBox = styled.div(({ theme, gap }: IColumnBox) => ({
   display: "flex",
   flexDirection: "column",
-  gap: theme.spacing.xl,
+  // 0값도 들어갈 수 있으므로 || 대신 ??
+  gap: gap ?? theme?.spacing.xl,
   width: "100%",
   height: "100%",
 }));
@@ -16,25 +21,13 @@ export const RowBox = styled.div(({ theme }) => ({
   width: "100%",
 }));
 
-export const GapBox = styled.div(({ theme }) => ({
-  display: "flex",
-  flexDirection: "column",
-  gap: theme.spacing.sm,
-  width: "100%",
-}));
-interface IScrollBox {
-  theme?: Theme;
-  height?: string;
-  gap?: string;
-}
-export const ScrollBox = styled.ul(({ theme, height, gap }: IScrollBox) => ({
+export const ScrollBox = styled.ul(({ theme }) => ({
   overflow: "auto",
   display: "flex",
   flexDirection: "column",
-  gap: gap || theme?.spacing.md,
   width: "100%",
-  height: height ? height : "90%",
-  paddingBlock: theme?.spacing.lg,
+  height: "100%",
+  gap: theme?.spacing.lg,
 }));
 
 export const GapList = styled.ul(({ theme }) => ({
@@ -47,14 +40,15 @@ export const ListBox = styled.ul`
   display: grid;
   width: 100%;
 
-  ${minMq[0]} {
-    grid-template-columns: 1fr 1fr;
-  }
-  ${minMq[2]} {
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  @media (max-width: ${breakpoints.tablet}) {
     grid-template-columns: 1fr 1fr 1fr;
   }
-  ${minMq[4]} {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+  @media (max-width: ${breakpoints.mobile}) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media (max-width: ${breakpoints.sm}) {
+    grid-template-columns: 1fr;
   }
 
   ${({ theme }) => ({

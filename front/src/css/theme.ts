@@ -77,10 +77,6 @@ export const theme: ITheme = {
     lg: 700,
     md: 600,
     sm: 500,
-    // title: 700,
-    // sectionTitle: 700,
-    // subTitle: 500,
-    // text: 500,
   },
 
   spacing: {
@@ -105,10 +101,15 @@ export const theme: ITheme = {
 };
 
 export const globalStyles = css`
+  @font-face {
+    font-family: NanumSquare-Regular;
+    src: url(/NanumSquareR.woff) format(woff);
+  }
   :root {
     --purple: rgb(42, 29, 163);
     --gray: rgb(26, 32, 54);
   }
+
   input {
     all: unset;
   }
@@ -117,7 +118,8 @@ export const globalStyles = css`
     padding: 0;
     margin: 0;
     /*스크롤이 부모로 번지는 것을 막는 css*/
-    overscroll-behavior: "contain";
+    overscroll-behavior: contain;
+    font-family: NanumSquare-Regular;
   }
   a {
     text-decoration: none;
@@ -125,7 +127,6 @@ export const globalStyles = css`
   }
   body {
     color: ${theme.colors.white};
-    //font-family: ;
   }
   button {
     border: none;

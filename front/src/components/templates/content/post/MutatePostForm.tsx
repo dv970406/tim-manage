@@ -9,7 +9,7 @@ import { useDeletePost } from "../../../../client/post/DeletePost.client";
 import { useUpdatePost } from "../../../../client/post/UpdatePost.client";
 import { theme } from "../../../../css/theme";
 import { formats, modules } from "../../../../utils/quill/props";
-import { GapBox } from "../../../atomics/boxes/Boxes";
+import { ColumnBox } from "../../../atomics/boxes/Boxes";
 import { SubmitButton } from "../../../atomics/buttons/buttons";
 import { Form } from "../../../atomics/form/Form";
 import { SubTitle } from "../../../atomics/typographys/titles";
@@ -109,7 +109,7 @@ const MutatePostForm = ({ post }: IMutatePostForm) => {
         icon={faTag}
       />
 
-      <GapBox>
+      <ColumnBox>
         <SubTitle>게시글 내용</SubTitle>
         <ReactQuill
           theme="snow"
@@ -123,7 +123,7 @@ const MutatePostForm = ({ post }: IMutatePostForm) => {
           placeholder="내용을 입력하세요."
           className={"text-editor"}
         />
-      </GapBox>
+      </ColumnBox>
       <div
         style={{ display: "flex", gap: theme.spacing.sm, marginTop: "auto" }}
       >

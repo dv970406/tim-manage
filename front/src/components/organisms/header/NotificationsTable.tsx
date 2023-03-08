@@ -2,6 +2,7 @@ import { graphql } from "babel-plugin-relay/macro";
 import React, { useState } from "react";
 import { usePaginationFragment } from "react-relay";
 import { useReadNotification } from "../../../client/notification/ReadNotification.client";
+import { ColumnBox } from "../../atomics/boxes/Boxes";
 import { InfiniteScrollList } from "../shared/InfiniteScrolls";
 import NotificationTableContent from "./NotificationTableContent";
 import { NotificationsTablePaginationQuery } from "./__generated__/NotificationsTablePaginationQuery.graphql";
@@ -48,25 +49,26 @@ const NotificationsTable = ({ notifications }: INotificationsTable) => {
 
   const { readNotificationMutation, readNotificationLoading } =
     useReadNotification();
-
   return (
-    <InfiniteScrollList
-      loadNext={loadNext}
-      isLoadingNext={isLoadingNext}
-      hasNext={hasNext}
-    >
-      {getNotifications?.edges?.map(
-        (notification) =>
-          notification.node && (
-            <NotificationTableContent
-              key={notification.cursor}
-              notification={notification.node}
-              readNotificationMutation={readNotificationMutation}
-              readNotificationLoading={readNotificationLoading}
-            />
-          )
-      )}
-    </InfiniteScrollList>
+    <>
+      <InfiniteScrollList
+        loadNext={loadNext}
+        isLoadingNext={isLoadingNext}
+        hasNext={hasNext}
+      >
+        {getNotifications?.edges?.map(
+          (notification) =>
+            notification.cursor && (
+              <NotificationTableContent
+                key={notification.cursor}
+                notification={notification.node}
+                readNotificationMutation={readNotificationMutation}
+                readNotificationLoading={readNotificationLoading}
+              />
+            )
+        )}
+      </InfiniteScrollList>
+    </>
   );
 };
 

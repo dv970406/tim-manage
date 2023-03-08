@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7dd1e93b5b336a6c2880408ce9c87dce>>
+ * @generated SignedSource<<7000dc74bbbde0342a4e8413ab2083dc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,7 +30,6 @@ export type GetMyInfoQuery$data = {
         readonly id: string;
         readonly team: string;
       };
-      readonly unreadMessageCount: number;
       readonly unreadNotificationCount: number;
     } | null;
   };
@@ -164,13 +163,6 @@ v2 = [
                 "kind": "ScalarField",
                 "name": "unreadNotificationCount",
                 "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "unreadMessageCount",
-                "storageKey": null
               }
             ],
             "storageKey": null
@@ -199,16 +191,16 @@ return {
     "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "667f370453ea4769e9ee0956b9875f7e",
+    "cacheID": "c0bb3abf11a804cc64fbe2755496cb0b",
     "id": null,
     "metadata": {},
     "name": "GetMyInfoQuery",
     "operationKind": "query",
-    "text": "query GetMyInfoQuery(\n  $skip: Boolean!\n) {\n  getMyInfo @skip(if: $skip) {\n    ok\n    error\n    user {\n      id\n      name\n      email\n      isManager\n      isLeader\n      team {\n        id\n        team\n      }\n      position {\n        id\n        position\n      }\n      unreadNotificationCount\n      unreadMessageCount\n    }\n  }\n}\n"
+    "text": "query GetMyInfoQuery(\n  $skip: Boolean!\n) {\n  getMyInfo @skip(if: $skip) {\n    ok\n    error\n    user {\n      id\n      name\n      email\n      isManager\n      isLeader\n      team {\n        id\n        team\n      }\n      position {\n        id\n        position\n      }\n      unreadNotificationCount\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "684367b5966c29cd6c1cf4cb60fe1c7e";
+(node as any).hash = "84d13ebcd6eccc8936e812f144e9f259";
 
 export default node;

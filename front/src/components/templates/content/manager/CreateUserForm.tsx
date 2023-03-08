@@ -1,6 +1,6 @@
 import { SubTitle } from "../../../atomics/typographys/titles";
 import { theme } from "../../../../css/theme";
-import { GapBox } from "../../../atomics/boxes/Boxes";
+import { ColumnBox } from "../../../atomics/boxes/Boxes";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {

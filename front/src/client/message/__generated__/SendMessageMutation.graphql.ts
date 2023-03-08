@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f0b90761bfb9109b7ff37873e1bba068>>
+ * @generated SignedSource<<a03d720470a9efc4a2b89a38a8d6d519>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,9 +10,8 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type SendMessageMutation$variables = {
-  listenerId?: string | null;
   message: string;
-  roomId?: string | null;
+  roomId: string;
 };
 export type SendMessageMutation$data = {
   readonly sendMessage: {
@@ -42,39 +41,31 @@ export type SendMessageMutation = {
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "listenerId"
-},
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "message"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "roomId"
+  }
+],
 v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "message"
-},
-v2 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "roomId"
-},
-v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v4 = [
+v2 = [
   {
     "alias": null,
     "args": [
       {
         "fields": [
-          {
-            "kind": "Variable",
-            "name": "listenerId",
-            "variableName": "listenerId"
-          },
           {
             "kind": "Variable",
             "name": "message",
@@ -132,7 +123,7 @@ v4 = [
             "name": "node",
             "plural": false,
             "selections": [
-              (v3/*: any*/),
+              (v1/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -155,7 +146,7 @@ v4 = [
                 "name": "user",
                 "plural": false,
                 "selections": [
-                  (v3/*: any*/),
+                  (v1/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -174,7 +165,7 @@ v4 = [
                 "name": "room",
                 "plural": false,
                 "selections": [
-                  (v3/*: any*/)
+                  (v1/*: any*/)
                 ],
                 "storageKey": null
               },
@@ -197,40 +188,32 @@ v4 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/),
-      (v2/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "SendMessageMutation",
-    "selections": (v4/*: any*/),
+    "selections": (v2/*: any*/),
     "type": "Mutation",
     "abstractKey": null
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v1/*: any*/),
-      (v2/*: any*/),
-      (v0/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "SendMessageMutation",
-    "selections": (v4/*: any*/)
+    "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "e2acb4537a675717f46c91ba7e65d1c7",
+    "cacheID": "7e9d12e477bbaef0b1d411878c9c9cd8",
     "id": null,
     "metadata": {},
     "name": "SendMessageMutation",
     "operationKind": "mutation",
-    "text": "mutation SendMessageMutation(\n  $message: String!\n  $roomId: ID\n  $listenerId: ID\n) {\n  sendMessage(input: {message: $message, roomId: $roomId, listenerId: $listenerId}) {\n    ok\n    error\n    edge {\n      cursor\n      node {\n        id\n        isMine\n        message\n        user {\n          id\n          name\n        }\n        room {\n          id\n        }\n        createdAt\n      }\n    }\n  }\n}\n"
+    "text": "mutation SendMessageMutation(\n  $message: String!\n  $roomId: ID!\n) {\n  sendMessage(input: {message: $message, roomId: $roomId}) {\n    ok\n    error\n    edge {\n      cursor\n      node {\n        id\n        isMine\n        message\n        user {\n          id\n          name\n        }\n        room {\n          id\n        }\n        createdAt\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "40866d5d46cb90614f44a84288988e6f";
+(node as any).hash = "df662560cc720cd547614cf9b1a94e3c";
 
 export default node;

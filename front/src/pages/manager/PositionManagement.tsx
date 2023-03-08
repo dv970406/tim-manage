@@ -5,7 +5,7 @@ import {
   useGetManagerPositions,
 } from "../../client/manager/GetManagerPositions.client";
 import { GetManagerPositionsQuery } from "../../client/manager/__generated__/GetManagerPositionsQuery.graphql";
-import { GapBox } from "../../components/atomics/boxes/Boxes";
+import { ColumnBox } from "../../components/atomics/boxes/Boxes";
 import Loading from "../../components/atomics/boxes/Loading";
 import { Section } from "../../components/atomics/sections/sections";
 import CenterBox from "../../components/molecules/boxes/CenterBox";
@@ -55,7 +55,7 @@ const PositionManagement = ({
           />
         )}
       </Section>
-      <GapBox style={{ width: "40%" }}>
+      <ColumnBox style={{ width: "40%" }}>
         <Section>
           <Suspense fallback={<Loading />}>
             <CreatePositionForm />
@@ -69,7 +69,7 @@ const PositionManagement = ({
             />
           </Suspense>
         </Section>
-      </GapBox>
+      </ColumnBox>
     </CenterBox>
   );
 };

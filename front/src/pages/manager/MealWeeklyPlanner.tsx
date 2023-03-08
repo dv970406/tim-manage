@@ -5,7 +5,7 @@ import {
   useGetWeeklyMeal,
 } from "../../client/meal/GetWeeklyMeal.client";
 import { GetWeeklyMealQuery } from "../../client/meal/__generated__/GetWeeklyMealQuery.graphql";
-import { RowBox, GapBox } from "../../components/atomics/boxes/Boxes";
+import { RowBox, ColumnBox } from "../../components/atomics/boxes/Boxes";
 import {
   AnimateSection,
   Section,
@@ -62,7 +62,7 @@ const MealWeeklyPlanner = ({
   const { isBack, today, getTomorrow, getYesterday } = useControlTodayMeal();
 
   return (
-    <GapBox>
+    <ColumnBox>
       <SectionTitle>이번주 식단</SectionTitle>
       <CenterFixBox
         style={{
@@ -104,7 +104,7 @@ const MealWeeklyPlanner = ({
           </RowBox>
         </AnimatePresence>
       </CenterFixBox>
-    </GapBox>
+    </ColumnBox>
   );
 };
 

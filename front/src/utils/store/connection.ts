@@ -31,5 +31,7 @@ export const insertEdgeToData = ({
 }: IInsertEdgeToData) => {
   if (!record) return;
   const connection = ConnectionHandler.getConnection(record, key, options);
+
+  // 메모이징 활용을 위해 배열 맨 뒤에 엣지를 붙여야함
   if (connection) ConnectionHandler.insertEdgeBefore(connection, newEdge);
 };

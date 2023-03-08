@@ -1,0 +1,24 @@
+:root {
+  --pc: 1200px;
+  --tablet: 1023px;
+  --mobile: 767px;
+  --sm: 576px;
+}
+
+.home-frame {
+  @media (max-width: 1200px) {
+  }
+  @media (max-width: 1023px) {
+    display: flex;
+    flex-direction: column;
+  }
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+  }
+}
+.calendar-zone {
+  width: 75%;
+}
+.recent-schedules-zone {
+  width: 25%;
+}

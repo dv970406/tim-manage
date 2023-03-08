@@ -10,7 +10,6 @@ import { MessageSection } from "../atomics/sections/sections";
 import { SubTitle } from "../atomics/typographys/titles";
 import { ButtonIcon, CircleButton } from "../molecules/buttons/Buttons";
 import MessagesTable from "./content/message/MessagesTable";
-import Room from "./content/message/MessagesTable";
 import RoomsTable from "./content/message/RoomsTable";
 import SpeakableUsersTable from "./content/message/SpeakableUsersTable";
 
@@ -75,7 +74,7 @@ const MessageTool = ({}: IMessageTool) => {
         )}
       </div>
       {isMessageToolOpen && (
-        <MessageSection>
+        <MessageSection isInRoom={Boolean(clickedRoomId || clickedUserId)}>
           {clickedRoomId || clickedUserId ? (
             <Suspense fallback={<Loading />}>
               <MessagesTable

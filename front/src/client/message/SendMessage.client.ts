@@ -9,14 +9,8 @@ import {
 } from "./__generated__/SendMessageMutation.graphql";
 
 const sendMessageQuery = graphql`
-  mutation SendMessageMutation(
-    $message: String!
-    $roomId: ID
-    $listenerId: ID
-  ) {
-    sendMessage(
-      input: { message: $message, roomId: $roomId, listenerId: $listenerId }
-    ) {
+  mutation SendMessageMutation($message: String!, $roomId: ID!) {
+    sendMessage(input: { message: $message, roomId: $roomId }) {
       ok
       error
       edge {
@@ -41,21 +35,26 @@ const sendMessageQuery = graphql`
 
 export const useSendMessage = () => {
   const [sendMessageLoading, setIsLoading] = useState(false);
+  const [sendMessageSuccess, setIsSuccess] = useState(false);
 
   const sendMessageMutation = (variables: SendMessageMutation$variables) => {
     setIsLoading(true);
+    setIsSuccess(false);
+
     commitMutation<SendMessageMutation>(environment, {
       mutation: sendMessageQuery,
       variables,
       onCompleted: ({ sendMessage: { ok, error } }) => {
         setIsLoading(false);
+
         if (!ok) {
           alert(error);
           return;
         }
+        setIsSuccess(true);
       },
     });
   };
 
-  return { sendMessageMutation, sendMessageLoading };
+  return { sendMessageMutation, sendMessageLoading, sendMessageSuccess };
 };

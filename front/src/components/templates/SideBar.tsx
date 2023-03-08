@@ -12,7 +12,7 @@ import {
 
 import { useEffect, useState } from "react";
 import {
-  GapBox,
+  ColumnBox,
   GapList,
   HorizontalDivider,
   RowBox,
@@ -75,12 +75,12 @@ const SideBar = ({ isManager, isLeader }: ISideBar) => {
               padding: theme.spacing.md,
             }}
           >
-            <GapBox style={{ alignItems: "center" }}>
+            <ColumnBox style={{ alignItems: "center" }}>
               <NavLink to="/" end>
                 {/* 이 부분 추후 이미지로 변경 */}
                 <img src="/logo.png" width={170} height={30} />
               </NavLink>
-            </GapBox>
+            </ColumnBox>
             {/* sidebar_close class는 media query로 화면 크기에 따라 나타나거나 사라짐 */}
             <div className="sidebar_close">
               <ButtonIcon onClick={handleMenuClose} icon={faClose} />

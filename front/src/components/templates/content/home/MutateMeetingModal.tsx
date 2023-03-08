@@ -6,7 +6,7 @@ import { useGetMeeting } from "../../../../client/meeting/GetMeeting.client";
 import { useUpdateMeeting } from "../../../../client/meeting/UpdateMeeting.client";
 import { theme } from "../../../../css/theme";
 import { Form } from "../../../atomics/form/Form";
-import { GapBox } from "../../../atomics/boxes/Boxes";
+import { ColumnBox } from "../../../atomics/boxes/Boxes";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 import { IMeetingFormValue } from "./CreateScheduleModal";
 import SelectUsers from "../../../organisms/content/home/SelectUsers";
@@ -73,7 +73,7 @@ const MutateMeetingModal = ({ scheduleId }: IMutateMeetingModal) => {
         }}
         method="dialog"
       >
-        <GapBox>
+        <ColumnBox>
           <div>
             <TextInput
               label="제목"
@@ -103,7 +103,7 @@ const MutateMeetingModal = ({ scheduleId }: IMutateMeetingModal) => {
             prevAttendees={meeting?.attendees as any}
             setAttendeesId={setAttendeesId}
           />
-        </GapBox>
+        </ColumnBox>
         <div style={{ display: "flex", gap: theme.spacing.sm }}>
           <EndSubmitButton
             onClick={handleSubmit(onSubmit)}

@@ -7,6 +7,7 @@ import { GetPostsPaginationQuery } from "../../../organisms/content/post/__gener
 import { PostsTable_post$key } from "./__generated__/PostsTable_post.graphql";
 import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
 import { PostsTablePaginationQuery } from "./__generated__/PostsTablePaginationQuery.graphql";
+import { useGetMyInfo } from "../../../../client/user/GetMyInfo.client";
 
 interface IPostsTable {
   posts: PostsTable_post$key;
@@ -60,6 +61,7 @@ const PostsTable = ({ posts }: IPostsTable) => {
         loadNext={loadNext}
         hasNext={hasNext}
         isLoadingNext={isLoadingNext}
+        hasAddButton={true}
       >
         {edges.map(
           (post) =>

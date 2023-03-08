@@ -7,7 +7,7 @@ import {
 } from "../../../../client/user/SelectUsers.client";
 import { theme } from "../../../../css/theme";
 import { SubTitle } from "../../../atomics/typographys/titles";
-import { GapBox } from "../../../atomics/boxes/Boxes";
+import { ColumnBox } from "../../../atomics/boxes/Boxes";
 import { usePaginationFragment } from "react-relay";
 import { SelectUsersPaginationQuery } from "./__generated__/SelectUsersPaginationQuery.graphql";
 import { SelectUsers_user$key } from "./__generated__/SelectUsers_user.graphql";
@@ -100,7 +100,7 @@ const SelectUsers = ({ prevAttendees, setAttendeesId }: ISelectUsers) => {
     loadNext(PAGINATION_LOAD_COUNT);
   };
   return (
-    <GapBox>
+    <ColumnBox>
       <label
         htmlFor="attendees"
         style={{ cursor: "pointer" }}
@@ -126,7 +126,7 @@ const SelectUsers = ({ prevAttendees, setAttendeesId }: ISelectUsers) => {
         // infinite scroll에 활용
         onMenuScrollToBottom={getMoreData}
       />
-    </GapBox>
+    </ColumnBox>
   );
 };
 

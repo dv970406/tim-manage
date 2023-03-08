@@ -332,6 +332,12 @@ type GetNotificationsOutput {
   pageInfo: PageInfo!
 }
 
+type GetOrCreateRoomOutput {
+  ok: Boolean!
+  error: String
+  room: Room
+}
+
 input GetPositionInput {
   id: ID!
 }
@@ -363,12 +369,6 @@ type GetPostsOutput {
   error: String
   edges: [PostEdge!]!
   pageInfo: PageInfo!
-}
-
-type GetRoomOutput {
-  ok: Boolean!
-  error: String
-  room: Room
 }
 
 type GetRoomsOutput {
@@ -652,7 +652,7 @@ type Query {
   getMeeting(input: GetMeetingInput!): GetMeetingOutput!
   getWeeklyMeal: GetWeeklyMealOutput!
   getRooms(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): GetRoomsOutput!
-  getRoom(roomId: ID!): GetRoomOutput!
+  getOrCreateRoom(roomId: ID, userId: ID): GetOrCreateRoomOutput!
   getNotifications(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): GetNotificationsOutput!
 }
 
@@ -675,7 +675,8 @@ type ReceiveInRoomOutput {
 type ReceiveMessageOutput {
   ok: Boolean!
   error: String
-  room: Room
+  edge: RoomEdge
+  isMyAlarm: Boolean
 }
 
 type ReceiveNotificationOutput {
@@ -695,6 +696,7 @@ type Room implements Node {
   updatedAt: DateTime!
   users: [User!]!
   messages: [Message!]!
+  recentMessage: Message
   unreadMessageCount: Int!
   messagesOfRoomConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): MessagesConnection!
 }
@@ -706,8 +708,7 @@ type RoomEdge {
 
 input SendMessageInput {
   message: String!
-  roomId: ID
-  listenerId: ID
+  roomId: ID!
 }
 
 type SendMessageOutput {
@@ -898,7 +899,6 @@ type User implements Node {
   messages: [Message!]!
   rooms: [Room!]!
   notifications: [Notification!]!
-  unreadMessageCount: Float!
   unreadNotificationCount: Float!
   myAnswersConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): AnswersConnection!
   myVacationsConnection(keyword: String, orders: Orders, after: DateTime, before: DateTime, first: Int! = 10, last: Int! = 10): VacationsConnection!

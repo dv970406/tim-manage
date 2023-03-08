@@ -11,7 +11,7 @@ import {
   MainText,
 } from "../../../atomics/typographys/texts";
 import { SubTitle } from "../../../atomics/typographys/titles";
-import { GapBox, RowBox } from "../../../atomics/boxes/Boxes";
+import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
 import { BoxIcon } from "../../../molecules/icons/Icons";
 import { IAttendee } from "./SelectUsers";
 
@@ -38,7 +38,7 @@ const TodayMeeting = ({
       >
         <BoxIcon icon={faRocket} size="lg" bgColor={theme.bgColors.purple} />
 
-        <GapBox style={{ placeSelf: "flex-end" }}>
+        <ColumnBox style={{ placeSelf: "flex-end" }}>
           <SubTitle style={{ textAlign: "right" }}>{subTitle}</SubTitle>
 
           <DateText style={{ textAlign: "right" }}>
@@ -56,7 +56,7 @@ const TodayMeeting = ({
               </SectionText>
             ))}
           </div>
-        </GapBox>
+        </ColumnBox>
       </RowBox>
     </ListItem>
   );

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<41bc2743838dd70d497511d9a50d4370>>
+ * @generated SignedSource<<c9b9f1589973829f4c7fe4c87332ecb6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,10 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type RoomTableContent_room$data = {
   readonly id: string;
+  readonly recentMessage: {
+    readonly id: string;
+    readonly message: string;
+  } | null;
   readonly unreadMessageCount: number;
   readonly users: ReadonlyArray<{
     readonly id: string;
@@ -64,6 +68,25 @@ return {
       "kind": "ScalarField",
       "name": "unreadMessageCount",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Message",
+      "kind": "LinkedField",
+      "name": "recentMessage",
+      "plural": false,
+      "selections": [
+        (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "message",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Room",
@@ -71,6 +94,6 @@ return {
 };
 })();
 
-(node as any).hash = "4d4d776c06f1563162863d11d234a6f1";
+(node as any).hash = "171617dedbc64361d259c4d4256ab00b";
 
 export default node;

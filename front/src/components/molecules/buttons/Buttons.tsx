@@ -1,3 +1,4 @@
+import { css } from "@emotion/react";
 import { MouseEventHandler, useState } from "react";
 import { theme } from "../../../css/theme";
 import { HoverButton, SubmitButton } from "../../atomics/buttons/buttons";
@@ -60,7 +61,7 @@ export const CircleButton = ({
   size,
 }: ICircleButton) => {
   return (
-    <button
+    <HoverButton
       onClick={onClick}
       type="button"
       style={{
@@ -70,6 +71,6 @@ export const CircleButton = ({
       }}
     >
       <Icon icon={icon} color={color} size={size} />
-    </button>
+    </HoverButton>
   );
 };

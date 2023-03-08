@@ -9,13 +9,15 @@ import { LoadMoreFn, RefetchFnDynamic } from "react-relay";
 import { PAGINATION_LOAD_COUNT } from "../../../utils/constants/share.constant";
 import { useInfiniteScroll } from "../../../utils/hooks/scroll/infiniteScroll.hook";
 import Table from "../../molecules/tables/Table";
-import { GapBox, ListBox, ScrollBox } from "../../atomics/boxes/Boxes";
+import { ColumnBox, ListBox, ScrollBox } from "../../atomics/boxes/Boxes";
 import { Options } from "react-relay/relay-hooks/useRefetchableFragmentNode";
 import { Section } from "../../atomics/sections/sections";
 import DataToolBar from "../../molecules/inputs/DataToolBar";
+import { theme } from "../../../css/theme";
+import Loading from "../../atomics/boxes/Loading";
 
 export const ObserveBox = styled.div`
-  height: 30px;
+  height: 5px;
 `;
 
 interface IInfiniteScroll {
@@ -28,6 +30,8 @@ interface IInfiniteScroll {
 interface ISearchAndInfiniteScrollDataList extends IInfiniteScroll {
   refetch: RefetchFnDynamic<any, any, Options>;
   mutateName?: string;
+  noGrid?: boolean;
+  hasAddButton: boolean;
 }
 
 // Search, Pagination(Infinite Scroll) 구현하는 컴포넌트
@@ -38,6 +42,8 @@ export const SearchAndInfiniteScrollDataList = ({
   loadNext,
   refetch,
   mutateName,
+  noGrid,
+  hasAddButton,
 }: ISearchAndInfiniteScrollDataList) => {
   // 스크롤이 바닥에 닿았는지 감지해서 relay의 loadNext를 실행시키는 훅
   const ref = useInfiniteScroll(async (entry, observer) => {
@@ -66,13 +72,25 @@ export const SearchAndInfiniteScrollDataList = ({
   }, [keyword]);
   return (
     <>
-      <GapBox>
-        <Section>
-          <DataToolBar onChange={handleChange} mutateName={mutateName} />
+      <ColumnBox
+        gap={theme.spacing.sm}
+        // style={{ paddingBlock: theme.spacing.md }}
+      >
+        <Section padding={theme.spacing.lg}>
+          <DataToolBar
+            onChange={handleChange}
+            mutateName={mutateName}
+            hasAddButton={hasAddButton}
+          />
         </Section>
-        <ListBox>{children}</ListBox>
-        {(isLoadingNext || isPending) && <p>기다려바</p>}
-      </GapBox>
+        {noGrid ? (
+          <ScrollBox>{children}</ScrollBox>
+        ) : (
+          <ListBox>{children}</ListBox>
+        )}
+
+        {(isLoadingNext || isPending) && <Loading />}
+      </ColumnBox>
       <ObserveBox ref={ref} />
     </>
   );
@@ -99,7 +117,7 @@ export const InfiniteScrollDataTable = ({
   return (
     <>
       <Table headers={headers}>{children}</Table>
-      {isLoadingNext && <p>기다려바</p>}
+      {isLoadingNext && <Loading />}
 
       <ObserveBox ref={ref} />
     </>
@@ -126,20 +144,16 @@ export const InfiniteScrollList = ({
 
   return (
     <>
-      {direction === "reverse" && <ObserveBox ref={ref} />}
-      {direction === "reverse" && isLoadingNext && <p>기다려바</p>}
-
       <ScrollBox
-        height="100%"
         style={{
           flexDirection: direction === "reverse" ? "column-reverse" : "column",
         }}
       >
+        {direction === "reverse" && isLoadingNext && <Loading />}
         {children}
+        {direction !== "reverse" && isLoadingNext && <Loading />}
+        <ObserveBox ref={ref} />
       </ScrollBox>
-      {direction !== "reverse" && <ObserveBox ref={ref} />}
-
-      {direction !== "reverse" && isLoadingNext && <p>기다려바</p>}
     </>
   );
 };

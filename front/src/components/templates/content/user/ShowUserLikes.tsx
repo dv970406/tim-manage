@@ -52,6 +52,7 @@ const ShowUserLikes = () => {
         hasNext={hasNext}
         isLoadingNext={isLoadingNext}
         refetch={refetch}
+        hasAddButton={false}
       >
         {edges?.map(
           (like) =>

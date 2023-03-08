@@ -2,7 +2,7 @@ import { graphql } from "babel-plugin-relay/macro";
 import ReactApexChart from "react-apexcharts";
 import { useFragment } from "react-relay";
 import { pieChartOptions } from "../../../../utils/chart/options";
-import { GapBox } from "../../../atomics/boxes/Boxes";
+import { ColumnBox } from "../../../atomics/boxes/Boxes";
 import { SectionTitle, SubTitle } from "../../../atomics/typographys/titles";
 import { SurveyResponseRate_answer$key } from "./__generated__/SurveyResponseRate_answer.graphql";
 
@@ -25,14 +25,14 @@ const SurveyResponseRate = ({ answers }: ISurveyResponseRate) => {
   );
   return (
     <>
-      <GapBox>
+      <ColumnBox>
         <SectionTitle>응답률</SectionTitle>
         <SubTitle>
           총원 :{" "}
           {responseRate?.answeredEmployeeCount! +
             responseRate?.notAnsweredEmployeeCount! || "대기중"}
         </SubTitle>
-      </GapBox>
+      </ColumnBox>
       {responseRate?.answeredEmployeeCount !== undefined && (
         <ReactApexChart
           type="pie"

@@ -2,7 +2,7 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import React, { useState } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 import { theme } from "../../../css/theme";
-import { GapBox } from "../../atomics/boxes/Boxes";
+import { ColumnBox } from "../../atomics/boxes/Boxes";
 import { ErrorText } from "../../atomics/typographys/texts";
 import { SubTitle } from "../../atomics/typographys/titles";
 import { BoxIcon } from "../icons/Icons";
@@ -28,7 +28,7 @@ const Select = ({
   const [isFocusing, setIsFocusing] = useState(false);
 
   return (
-    <GapBox>
+    <ColumnBox gap={theme.spacing.sm}>
       <label>
         <SubTitle>{label}</SubTitle>
       </label>
@@ -64,7 +64,7 @@ const Select = ({
         <datalist id={listName}>{list}</datalist>
       </div>
       <ErrorText style={{ height: 15 }}>{errorMessage}</ErrorText>
-    </GapBox>
+    </ColumnBox>
   );
 };
 

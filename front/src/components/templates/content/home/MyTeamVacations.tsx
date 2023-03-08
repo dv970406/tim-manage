@@ -11,7 +11,7 @@ const MyTeamVacations = ({ myTeamVacations, myTeam }: IMyTeamVacations) => {
   return (
     <>
       <SectionTitle>{myTeam} 휴가 계획</SectionTitle>
-      <ScrollBox height="100%">
+      <ScrollBox>
         {myTeamVacations.map((vacation) => (
           <TeamMateVacation
             key={vacation.id}

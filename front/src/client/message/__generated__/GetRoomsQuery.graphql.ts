@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<92b2d1332430e5619fe5a8cdbe52da56>>
+ * @generated SignedSource<<bb6b592dec6cde0e13e21fde65dd50bf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -148,6 +148,25 @@ return {
                   {
                     "alias": null,
                     "args": null,
+                    "concreteType": "Message",
+                    "kind": "LinkedField",
+                    "name": "recentMessage",
+                    "plural": false,
+                    "selections": [
+                      (v3/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "message",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
                     "kind": "ScalarField",
                     "name": "__typename",
                     "storageKey": null
@@ -205,12 +224,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8f2041bc26a2bef32056a017a87f8d6b",
+    "cacheID": "42a4778b69a6990fd7a0572049d1a039",
     "id": null,
     "metadata": {},
     "name": "GetRoomsQuery",
     "operationKind": "query",
-    "text": "query GetRoomsQuery(\n  $first: Int!\n  $after: DateTime\n) {\n  ...RoomsTable_room_2HEEH6\n}\n\nfragment RoomTableContent_room on Room {\n  id\n  users {\n    id\n    name\n  }\n  unreadMessageCount\n}\n\nfragment RoomsTable_room_2HEEH6 on Query {\n  getRooms(first: $first, after: $after) {\n    ok\n    error\n    edges {\n      node {\n        ...RoomTableContent_room\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query GetRoomsQuery(\n  $first: Int!\n  $after: DateTime\n) {\n  ...RoomsTable_room_2HEEH6\n}\n\nfragment RoomTableContent_room on Room {\n  id\n  users {\n    id\n    name\n  }\n  unreadMessageCount\n  recentMessage {\n    id\n    message\n  }\n}\n\nfragment RoomsTable_room_2HEEH6 on Query {\n  getRooms(first: $first, after: $after) {\n    ok\n    error\n    edges {\n      node {\n        ...RoomTableContent_room\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

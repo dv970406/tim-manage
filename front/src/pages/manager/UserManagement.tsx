@@ -6,13 +6,12 @@ import {
 } from "../../client/manager/GetManagerUsers.client";
 import { GetManagerUsersQuery } from "../../client/manager/__generated__/GetManagerUsersQuery.graphql";
 import { useGetMyInfo } from "../../client/user/GetMyInfo.client";
-import { ScrollBox } from "../../components/atomics/boxes/Boxes";
 import Loading from "../../components/atomics/boxes/Loading";
 import { Section } from "../../components/atomics/sections/sections";
 import CenterBox from "../../components/molecules/boxes/CenterBox";
 import ManagerUsersTable from "../../components/templates/content/manager/ManagerUsersTable";
 import MutateUserForm from "../../components/templates/content/manager/MutateUserForm";
-import { theme } from "../../css/theme";
+
 import { PAGINATION_LOAD_COUNT } from "../../utils/constants/share.constant";
 
 const UserManagementPage = () => {

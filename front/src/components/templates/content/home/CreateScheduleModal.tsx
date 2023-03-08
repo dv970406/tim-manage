@@ -7,7 +7,7 @@ import { useCreateVacation } from "../../../../client/vacation/CreateVacation.cl
 import { theme } from "../../../../css/theme";
 import { SCHEDULES } from "../../../../utils/constants/schedule.constant";
 import { Form } from "../../../atomics/form/Form";
-import { GapBox } from "../../../atomics/boxes/Boxes";
+import { ColumnBox } from "../../../atomics/boxes/Boxes";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 import { Radio } from "../../../molecules/inputs/Radio";
 import SelectUsers from "../../../organisms/content/home/SelectUsers";
@@ -75,7 +75,7 @@ const CreateScheduleModal = ({
         }}
         method="dialog"
       >
-        <GapBox>
+        <ColumnBox>
           <fieldset
             style={{
               display: "flex",
@@ -127,7 +127,7 @@ const CreateScheduleModal = ({
               <SelectUsers setAttendeesId={setAttendeesId} />
             </>
           )}
-        </GapBox>
+        </ColumnBox>
 
         <EndSubmitButton onClick={handleSubmit(onSubmit)} text="신청" />
       </Form>

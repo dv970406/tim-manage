@@ -7,7 +7,7 @@ import { Form } from "../../components/atomics/form/Form";
 import { Section } from "../../components/atomics/sections/sections";
 import { EndSubmitButton } from "../../components/molecules/buttons/Buttons";
 import { createWorker } from "tesseract.js";
-import { GapBox } from "../../components/atomics/boxes/Boxes";
+import { ColumnBox } from "../../components/atomics/boxes/Boxes";
 import CenterBox from "../../components/molecules/boxes/CenterBox";
 
 interface IMealWeeklyCreateForm {

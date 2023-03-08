@@ -7,7 +7,7 @@ import { ISelectFormat } from "../home/SelectUsers";
 import { Options } from "react-relay/relay-hooks/useRefetchableFragmentNode";
 import { UsersTable_user$key } from "../../../templates/content/user/__generated__/UsersTable_user.graphql";
 import { UsersTablePaginationQuery } from "../../../templates/content/user/__generated__/UsersTablePaginationQuery.graphql";
-import { GapBox, RowBox } from "../../../atomics/boxes/Boxes";
+import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
 import { orderSelectStyles } from "../../../../utils/css/select";
 import { theme } from "../../../../css/theme";
 

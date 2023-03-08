@@ -19,9 +19,10 @@ import Select from "./Select";
 interface IDataToolBar {
   onChange: ChangeEventHandler<HTMLInputElement>;
   mutateName?: string;
+  hasAddButton?: boolean;
 }
 
-const DataToolBar = ({ onChange, mutateName }: IDataToolBar) => {
+const DataToolBar = ({ onChange, mutateName, hasAddButton }: IDataToolBar) => {
   const [isFocusingSearch, setIsFocusingSearch] = useState(false);
 
   const handleModal: MouseEventHandler<HTMLButtonElement> = (event) => {
@@ -48,7 +49,7 @@ const DataToolBar = ({ onChange, mutateName }: IDataToolBar) => {
             : `1px solid ${theme.colors.gray}`,
 
           transition: "border 0.2s",
-          padding: theme.spacing.md,
+          padding: theme.spacing.sm,
           width: 300,
         }}
         onFocus={() => setIsFocusingSearch(true)}
@@ -66,10 +67,10 @@ const DataToolBar = ({ onChange, mutateName }: IDataToolBar) => {
         />
       </div>
 
-      {(mutateName === "create-post" || myInfo?.isManager) && (
+      {(mutateName === "create-post" || myInfo?.isManager) && hasAddButton && (
         <ButtonIcon
           onClick={handleModal}
-          color={theme.bgColors.blue}
+          color={theme.bgColors.green}
           icon={faCirclePlus}
           size="2xl"
         />

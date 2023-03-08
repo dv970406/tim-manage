@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a3f1c01efcdc9aeff4f2296faeb70175>>
+ * @generated SignedSource<<b7533304334af0cf9e56c459bb5504a1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,11 +12,24 @@ import { ConcreteRequest, GraphQLSubscription } from 'relay-runtime';
 export type ReceiveMessageSubscription$variables = {};
 export type ReceiveMessageSubscription$data = {
   readonly receiveMessage: {
-    readonly error: string | null;
-    readonly ok: boolean;
-    readonly room: {
-      readonly id: string;
+    readonly edge: {
+      readonly cursor: any | null;
+      readonly node: {
+        readonly id: string;
+        readonly recentMessage: {
+          readonly id: string;
+          readonly message: string;
+        } | null;
+        readonly unreadMessageCount: number;
+        readonly users: ReadonlyArray<{
+          readonly id: string;
+          readonly name: string;
+        }>;
+      };
     } | null;
+    readonly error: string | null;
+    readonly isMyAlarm: boolean | null;
+    readonly ok: boolean;
   };
 };
 export type ReceiveMessageSubscription = {
@@ -25,7 +38,14 @@ export type ReceiveMessageSubscription = {
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = [
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v1 = [
   {
     "alias": null,
     "args": null,
@@ -51,19 +71,83 @@ var v0 = [
       {
         "alias": null,
         "args": null,
-        "concreteType": "Room",
+        "concreteType": "RoomEdge",
         "kind": "LinkedField",
-        "name": "room",
+        "name": "edge",
         "plural": false,
         "selections": [
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "id",
+            "name": "cursor",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Room",
+            "kind": "LinkedField",
+            "name": "node",
+            "plural": false,
+            "selections": [
+              (v0/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "User",
+                "kind": "LinkedField",
+                "name": "users",
+                "plural": true,
+                "selections": [
+                  (v0/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "name",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "unreadMessageCount",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Message",
+                "kind": "LinkedField",
+                "name": "recentMessage",
+                "plural": false,
+                "selections": [
+                  (v0/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "message",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
             "storageKey": null
           }
         ],
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "isMyAlarm",
         "storageKey": null
       }
     ],
@@ -76,7 +160,7 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "ReceiveMessageSubscription",
-    "selections": (v0/*: any*/),
+    "selections": (v1/*: any*/),
     "type": "Subscription",
     "abstractKey": null
   },
@@ -85,19 +169,19 @@ return {
     "argumentDefinitions": [],
     "kind": "Operation",
     "name": "ReceiveMessageSubscription",
-    "selections": (v0/*: any*/)
+    "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "b6fb82b280143af152c7cf243fa3f38f",
+    "cacheID": "b0875550453e4b25378e56198d1ac34d",
     "id": null,
     "metadata": {},
     "name": "ReceiveMessageSubscription",
     "operationKind": "subscription",
-    "text": "subscription ReceiveMessageSubscription {\n  receiveMessage {\n    ok\n    error\n    room {\n      id\n    }\n  }\n}\n"
+    "text": "subscription ReceiveMessageSubscription {\n  receiveMessage {\n    ok\n    error\n    edge {\n      cursor\n      node {\n        id\n        users {\n          id\n          name\n        }\n        unreadMessageCount\n        recentMessage {\n          id\n          message\n        }\n      }\n    }\n    isMyAlarm\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "675cd012c7d677a0a6cef84a90195bc1";
+(node as any).hash = "e67af2d764a743e78bb37d054030d6fa";
 
 export default node;

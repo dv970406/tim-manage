@@ -16,7 +16,7 @@ import { useCreateSurvey } from "../../../../client/manager/CreateSurvey.client"
 import { theme } from "../../../../css/theme";
 import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
 import { closeModal } from "../../../../utils/modal/controlModal";
-import { GapBox, RowBox, ScrollBox } from "../../../atomics/boxes/Boxes";
+import { ColumnBox, RowBox, ScrollBox } from "../../../atomics/boxes/Boxes";
 import { Form } from "../../../atomics/form/Form";
 import { ChoiceInput } from "../../../atomics/inputs/inputs";
 import { Section } from "../../../atomics/sections/sections";
@@ -230,7 +230,7 @@ const CreateSurveyForm = ({}: ICreateSurveyForm) => {
             text="추가"
           />
         </RowBox>
-        <ScrollBox height="100%">
+        <ScrollBox>
           {paragraphs?.map((count, paragraphIndex) => (
             <li key={paragraphIndex}>
               <Section>

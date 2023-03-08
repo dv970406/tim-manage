@@ -19,6 +19,9 @@ import TodayMeetings from "../components/templates/content/home/TodayMeetings";
 import VacationCalendar from "../components/templates/content/home/VacationCalendar";
 import { ColumnBox, RowBox } from "../components/atomics/boxes/Boxes";
 import Loading from "../components/atomics/boxes/Loading";
+import "../css/media-query/Home.css";
+import styled from "@emotion/styled/macro";
+import { breakpoints } from "../css/media-query/media-query";
 
 const HomePage = () => {
   const [getVacationsQueryReference, loadGetVacationsQuery] =
@@ -43,6 +46,34 @@ const HomePage = () => {
   );
 };
 
+const HomeFrame = styled(RowBox)`
+  @media (max-width: ${breakpoints.pc}) {
+    display: grid;
+    grid-template-rows: 2fr 1fr;
+  }
+`;
+const CalendarZone = styled(Section)`
+  width: 75%;
+
+  @media (max-width: ${breakpoints.pc}) {
+    width: 100%;
+    height: 100%;
+  }
+`;
+const RecentSchedulesZone = styled(ColumnBox)`
+  width: 25%;
+  & > section {
+    height: 50%;
+  }
+  @media (max-width: ${breakpoints.pc}) {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    & > section {
+      height: 100%;
+    }
+  }
+`;
 interface IHome {
   getVacationsQueryReference: PreloadedQuery<GetVacationsQuery>;
   getMeetingsQueryReference: PreloadedQuery<GetMeetingsQuery>;
@@ -74,39 +105,27 @@ const Home = ({
   }
 
   return (
-    <RowBox style={{ height: "92vh" }}>
-      <Section style={{ width: "75%" }}>
+    <HomeFrame>
+      <CalendarZone>
         <Suspense fallback={<Loading />}>
           <VacationCalendar
             schedules={schedules}
             setFilteringSchedules={setFilteringSchedules}
           />
         </Suspense>
-      </Section>
-      <ColumnBox
-        style={{
-          width: "25%",
-        }}
-      >
-        <Section
-          style={{
-            height: "50%",
-          }}
-        >
+      </CalendarZone>
+      <RecentSchedulesZone>
+        <Section>
           <TodayMeetings todayMeetings={todayMeetings} />
         </Section>
-        <Section
-          style={{
-            height: "50%",
-          }}
-        >
+        <Section>
           <MyTeamVacations
             myTeam={myInfo?.team?.team}
             myTeamVacations={myTeamVacations}
           />
         </Section>
-      </ColumnBox>
-    </RowBox>
+      </RecentSchedulesZone>
+    </HomeFrame>
   );
 };
 

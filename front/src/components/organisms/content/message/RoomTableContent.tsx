@@ -13,10 +13,11 @@ import { theme } from "../../../../css/theme";
 import { getElaspedDay } from "../../../../utils/time/time";
 import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
 import { ListItem } from "../../../atomics/sections/sections";
+import { MainText, SubText } from "../../../atomics/typographys/texts";
 import { SubTitle } from "../../../atomics/typographys/titles";
 import { BoxIcon } from "../../../molecules/icons/Icons";
 import { RoomTableContent_room$key } from "./__generated__/RoomTableContent_room.graphql";
-
+import "./RoomTableContent.css";
 interface IRoomTableContent {
   room: RoomTableContent_room$key;
   setClickedRoomId: Dispatch<SetStateAction<string>>;
@@ -29,11 +30,15 @@ const roomTableContentFragment = graphql`
       name
     }
     unreadMessageCount
+    recentMessage {
+      id
+      message
+    }
   }
 `;
 
 const RoomTableContent = ({ room, setClickedRoomId }: IRoomTableContent) => {
-  const { users, id, unreadMessageCount } = useFragment(
+  const { users, id, unreadMessageCount, recentMessage } = useFragment(
     roomTableContentFragment,
     room
   );
@@ -51,12 +56,13 @@ const RoomTableContent = ({ room, setClickedRoomId }: IRoomTableContent) => {
         <RowBox
           style={{ justifyContent: "space-between", alignItems: "center" }}
         >
-          <ColumnBox>
+          <ColumnBox gap={theme.spacing.sm}>
             {users.map((user) => (
               <SubTitle key={user.id}>{user.name}</SubTitle>
             ))}
+            <MainText>{recentMessage?.message}</MainText>
           </ColumnBox>
-          {unreadMessageCount && (
+          {unreadMessageCount > 0 && (
             <div
               style={{
                 backgroundColor: theme.bgColors.red,
@@ -69,7 +75,7 @@ const RoomTableContent = ({ room, setClickedRoomId }: IRoomTableContent) => {
                 zIndex: 5,
               }}
             >
-              {unreadMessageCount}
+              <SubText style={{ fontSize: 10 }}>{unreadMessageCount}</SubText>
             </div>
           )}
         </RowBox>

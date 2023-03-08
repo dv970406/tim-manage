@@ -1,11 +1,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { PreloadedQuery, useQueryLoader } from "react-relay";
 import { GetManagerSurveysQuery } from "../../client/manager/__generated__/GetManagerSurveysQuery.graphql";
-import {
-  ColumnBox,
-  GapBox,
-  RowBox,
-} from "../../components/atomics/boxes/Boxes";
+import { ColumnBox, RowBox } from "../../components/atomics/boxes/Boxes";
 import { Section } from "../../components/atomics/sections/sections";
 import ManagerSurveysTable from "../../components/templates/content/manager/ManagerSurveysTable";
 import ShowShortAnswers from "../../components/templates/content/manager/ShowShortAnswers";
@@ -65,7 +61,7 @@ const SurveyManagement = ({
         </Suspense>
       </Section>
 
-      <GapBox style={{ width: "30%" }}>
+      <ColumnBox style={{ width: "30%" }}>
         <Section style={{ height: "70%" }}>
           <ManagerSurveysTable
             surveys={surveys}
@@ -76,7 +72,7 @@ const SurveyManagement = ({
         <Section style={{ height: "30%" }}>
           {answers && <SurveyResponseRate answers={answers} />}
         </Section>
-      </GapBox>
+      </ColumnBox>
     </CenterBox>
   );
 };

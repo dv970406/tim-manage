@@ -2,7 +2,7 @@ import { graphql } from "babel-plugin-relay/macro";
 import React from "react";
 import { useFragment, usePaginationFragment } from "react-relay";
 import { useOutletContext } from "react-router-dom";
-import { GapBox, ListBox } from "../../../atomics/boxes/Boxes";
+import { ColumnBox, ListBox } from "../../../atomics/boxes/Boxes";
 import { SectionTitle } from "../../../atomics/typographys/titles";
 import SurveyTableContent from "../../../organisms/content/survey/SurveyTableContent";
 import { SearchAndInfiniteScrollDataList } from "../../../organisms/shared/InfiniteScrolls";
@@ -52,6 +52,7 @@ const ShowUserAnswers = () => {
         isLoadingNext={isLoadingNext}
         loadNext={loadNext}
         refetch={refetch}
+        hasAddButton={false}
       >
         {edges.map(
           (answer) =>

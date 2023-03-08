@@ -4,7 +4,7 @@ import { UseFormRegister, UseFormRegisterReturn } from "react-hook-form";
 import { theme } from "../../../css/theme";
 import { ErrorText, MainText } from "../../atomics/typographys/texts";
 import { SubTitle } from "../../atomics/typographys/titles";
-import { GapBox } from "../../atomics/boxes/Boxes";
+import { ColumnBox } from "../../atomics/boxes/Boxes";
 import { BoxIcon } from "../icons/Icons";
 
 interface ITextInput {
@@ -12,6 +12,7 @@ interface ITextInput {
   icon: IconProp;
   placeholder?: string;
   type?: string;
+  noError?: boolean;
   step?: number;
   register?: UseFormRegisterReturn<string>;
   defaultValue?: string;
@@ -23,6 +24,8 @@ export const TextInput = ({
   icon,
   placeholder = "Placeholder",
   type = "text",
+  noError = false,
+
   step,
   register,
   defaultValue,
@@ -31,7 +34,7 @@ export const TextInput = ({
 }: ITextInput) => {
   const [isFocusing, setIsFocusing] = useState(false);
   return (
-    <GapBox>
+    <ColumnBox gap={theme.spacing.sm}>
       {label && (
         <label htmlFor={label} style={{ cursor: "pointer" }}>
           <SubTitle>{label}</SubTitle>
@@ -76,8 +79,7 @@ export const TextInput = ({
           {...(onChange && { onChange })}
         />
       </div>
-
-      <ErrorText style={{ height: 15 }}>{errorMessage}</ErrorText>
-    </GapBox>
+      {!noError && <ErrorText style={{ height: 15 }}>{errorMessage}</ErrorText>}
+    </ColumnBox>
   );
 };

@@ -1,5 +1,5 @@
 import { SubTitle, SectionTitle } from "../../../atomics/typographys/titles";
-import { ColumnBox, GapBox, ScrollBox } from "../../../atomics/boxes/Boxes";
+import { ColumnBox, ScrollBox } from "../../../atomics/boxes/Boxes";
 import { SectionText, MainText } from "../../../atomics/typographys/texts";
 import { graphql } from "babel-plugin-relay/macro";
 import { useFragment } from "react-relay";
@@ -32,9 +32,9 @@ const ShowShortAnswers = ({ answers }: IShowShortAnswers) => {
   return (
     <ColumnBox>
       <SectionTitle>주관식 답변</SectionTitle>
-      <ScrollBox height="100%">
+      <ScrollBox>
         {shortAnswerFormat?.map((result, index) => (
-          <GapBox key={index}>
+          <ColumnBox key={index}>
             <SubTitle>
               제목{index + 1}: {result.paragraphTitle}
             </SubTitle>
@@ -56,7 +56,7 @@ const ShowShortAnswers = ({ answers }: IShowShortAnswers) => {
                 </li>
               ))}
             </ColumnBox>
-          </GapBox>
+          </ColumnBox>
         ))}
       </ScrollBox>
     </ColumnBox>

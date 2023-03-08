@@ -2,6 +2,7 @@ import {
   faBackpack,
   faCrown,
   faEllipsisVertical,
+  faShield,
   faUser,
   faUsers,
 } from "@fortawesome/pro-solid-svg-icons";
@@ -16,7 +17,7 @@ import { getKoreanDateFormat } from "../../../../utils/time/time";
 import {
   RowBox,
   HorizontalDivider,
-  GapBox,
+  ColumnBox,
   ItemBox,
 } from "../../../atomics/boxes/Boxes";
 import { SectionText, MainText } from "../../../atomics/typographys/texts";
@@ -36,6 +37,7 @@ const userTableContentFragment = graphql`
     name
     email
     isManager
+    isLeader
     position {
       id
       position
@@ -69,20 +71,19 @@ const UserTableContent = ({ user, isManager }: IUserTableContent) => {
           icon={faUser}
           size={"2x"}
         />
-        <GapBox>
-          <div
+        <ColumnBox gap={theme.spacing.sm}>
+          <RowBox
             style={{
-              display: "flex",
               justifyContent: "space-between",
             }}
           >
             <SectionTitle>{tableContentData.name}</SectionTitle>
             <ButtonIcon onClick={() => null} icon={faEllipsisVertical} />
-          </div>
+          </RowBox>
           <div>
             <MainText>{tableContentData.email}</MainText>
           </div>
-        </GapBox>
+        </ColumnBox>
       </RowBox>
 
       <HorizontalDivider />
@@ -92,13 +93,21 @@ const UserTableContent = ({ user, isManager }: IUserTableContent) => {
           alignItems: "center",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            gap: theme.spacing.sm,
-            alignItems: "center",
-          }}
-        >
+        <RowBox>
+          {tableContentData.isLeader && (
+            <div
+              style={{
+                display: "flex",
+                gap: theme.spacing.sm,
+                alignItems: "center",
+              }}
+            >
+              <BoxIcon icon={faShield} color="gold" />
+              <MainText>리더</MainText>
+            </div>
+          )}
+        </RowBox>
+        <RowBox>
           <div
             style={{
               display: "flex",
@@ -114,7 +123,9 @@ const UserTableContent = ({ user, isManager }: IUserTableContent) => {
                   : undefined
               }
             />
-            <MainText>{tableContentData.position.position}</MainText>
+            <MainText style={{ whiteSpace: "nowrap" }}>
+              {tableContentData.position.position}
+            </MainText>
           </div>
 
           <div
@@ -125,11 +136,11 @@ const UserTableContent = ({ user, isManager }: IUserTableContent) => {
             }}
           >
             <BoxIcon icon={getTeamIcon(tableContentData.team.team)} />
-            <MainText>{tableContentData.team.team}</MainText>
+            <MainText style={{ whiteSpace: "nowrap" }}>
+              {tableContentData.team.team}
+            </MainText>
           </div>
-        </div>
-
-        <MainText>{joinDate}</MainText>
+        </RowBox>
       </RowBox>
     </ItemBox>
   );

@@ -3,12 +3,7 @@ import { graphql } from "babel-plugin-relay/macro";
 import ReactApexChart from "react-apexcharts";
 import { useFragment } from "react-relay";
 import { pieChartOptions } from "../../../../utils/chart/options";
-import {
-  ColumnBox,
-  GapBox,
-  GapList,
-  ScrollBox,
-} from "../../../atomics/boxes/Boxes";
+import { ColumnBox, ScrollBox } from "../../../atomics/boxes/Boxes";
 import { SectionText } from "../../../atomics/typographys/texts";
 import { SubTitle, SectionTitle } from "../../../atomics/typographys/titles";
 import { ShowMultipleChoiceAnswers_answer$key } from "./__generated__/ShowMultipleChoiceAnswers_answer.graphql";
@@ -39,10 +34,10 @@ const ShowMultipleChoiceAnswers = ({ answers }: IShowMultipleChoiceAnswers) => {
   return (
     <ColumnBox>
       <SectionTitle>객관식 답변</SectionTitle>
-      <ScrollBox height="100%">
+      <ScrollBox>
         {multipleChoiceFormat?.map((result, index) => (
           <li key={index}>
-            <GapBox>
+            <ColumnBox>
               <SubTitle>{result.paragraphTitle}</SubTitle>
               <SectionText>{result.description}</SectionText>
               <ReactApexChart
@@ -53,7 +48,7 @@ const ShowMultipleChoiceAnswers = ({ answers }: IShowMultipleChoiceAnswers) => {
                 series={result.chartFormatResults.series as number[]}
                 type="pie"
               />
-            </GapBox>
+            </ColumnBox>
           </li>
         ))}
       </ScrollBox>

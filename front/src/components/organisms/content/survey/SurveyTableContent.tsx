@@ -14,7 +14,7 @@ import { getElaspedDay } from "../../../../utils/time/time";
 import {
   RowBox,
   HorizontalDivider,
-  GapBox,
+  ColumnBox,
   ItemBox,
 } from "../../../atomics/boxes/Boxes";
 import { MainText } from "../../../atomics/typographys/texts";
@@ -59,7 +59,7 @@ const SurveyTableContent = ({ survey }: ISurveyTableContent) => {
           icon={tableContentData.isAnswered ? faBadgeCheck : faPenCircle}
           size={"2x"}
         />
-        <GapBox>
+        <ColumnBox gap={theme.spacing.sm}>
           <div
             style={{
               display: "flex",
@@ -72,7 +72,7 @@ const SurveyTableContent = ({ survey }: ISurveyTableContent) => {
           <div>
             <MainText>{tableContentData.user.name}</MainText>
           </div>
-        </GapBox>
+        </ColumnBox>
       </RowBox>
 
       <HorizontalDivider />

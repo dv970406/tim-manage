@@ -13,7 +13,7 @@ import {
   SectionText,
 } from "../../../atomics/typographys/texts";
 import { SubTitle } from "../../../atomics/typographys/titles";
-import { GapBox } from "../../../atomics/boxes/Boxes";
+import { ColumnBox } from "../../../atomics/boxes/Boxes";
 import { BoxIcon } from "../../../molecules/icons/Icons";
 
 interface ITeamMateVacation {
@@ -41,7 +41,7 @@ const TeamMateVacation = ({
       >
         <BoxIcon icon={faRocket} size="lg" bgColor={theme.bgColors.purple} />
 
-        <GapBox style={{ placeSelf: "flex-end" }}>
+        <ColumnBox style={{ placeSelf: "flex-end" }} gap={theme.spacing.sm}>
           <SubTitle style={{ textAlign: "right" }}>{name}</SubTitle>
           <DateText style={{ textAlign: "right" }}>
             {vacationDateFormat(start as Date)}
@@ -53,7 +53,7 @@ const TeamMateVacation = ({
           <div style={{ placeSelf: "flex-end" }}>
             <SectionText>{isHalf ? "반차" : "연차"}</SectionText>
           </div>
-        </GapBox>
+        </ColumnBox>
       </div>
     </ListItem>
   );

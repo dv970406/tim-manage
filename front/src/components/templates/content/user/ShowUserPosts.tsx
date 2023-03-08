@@ -47,6 +47,7 @@ const ShowUserPosts = () => {
         hasNext={hasNext}
         isLoadingNext={isLoadingNext}
         refetch={refetch}
+        hasAddButton={false}
       >
         {myPostsConnection?.edges?.map(
           (post) =>

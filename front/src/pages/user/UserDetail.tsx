@@ -11,7 +11,7 @@ import { Outlet, Route, Routes, useParams } from "react-router-dom";
 import { useGetMyInfo } from "../../client/user/GetMyInfo.client";
 import { getUserQuery, useGetUser } from "../../client/user/GetUser.client";
 import { GetUserQuery } from "../../client/user/__generated__/GetUserQuery.graphql";
-import { RowBox, GapBox } from "../../components/atomics/boxes/Boxes";
+import { RowBox, ColumnBox } from "../../components/atomics/boxes/Boxes";
 import Loading from "../../components/atomics/boxes/Loading";
 import { Section } from "../../components/atomics/sections/sections";
 import { MainText } from "../../components/atomics/typographys/texts";
@@ -47,7 +47,7 @@ const UserDetail = ({ getUserQueryReference }: IUserDetail) => {
   const { user } = useGetUser(getUserQueryReference);
 
   return (
-    <GapBox>
+    <ColumnBox>
       <Section>
         <RowBox
           style={{
@@ -66,7 +66,7 @@ const UserDetail = ({ getUserQueryReference }: IUserDetail) => {
           {/* ShowUserVacations */}
         </Section>
       </CenterFixBox>
-    </GapBox>
+    </ColumnBox>
   );
 };
 

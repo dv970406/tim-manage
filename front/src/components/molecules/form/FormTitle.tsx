@@ -1,5 +1,5 @@
 import React from "react";
-import { GapBox } from "../../atomics/boxes/Boxes";
+import { ColumnBox } from "../../atomics/boxes/Boxes";
 import { SectionTitle, SubTitle } from "../../atomics/typographys/titles";
 
 interface IFormTitle {
@@ -8,10 +8,10 @@ interface IFormTitle {
 }
 const FormTitle = ({ formTitle, formSubTitle }: IFormTitle) => {
   return (
-    <GapBox>
+    <ColumnBox>
       <SectionTitle>{formTitle}</SectionTitle>
       {formSubTitle && <SubTitle>{formSubTitle}</SubTitle>}
-    </GapBox>
+    </ColumnBox>
   );
 };
 

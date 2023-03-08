@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f37c5997cd5d4d2bd748bfae9c40f5ae>>
+ * @generated SignedSource<<61e550474a7e5e22100e0c38e629bcab>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,7 @@ export type UserTableContent_user$data = {
   readonly createdAt: any;
   readonly email: string;
   readonly id: string;
+  readonly isLeader: boolean;
   readonly isManager: boolean;
   readonly joinDate: any;
   readonly name: string;
@@ -66,6 +67,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "isManager",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isLeader",
       "storageKey": null
     },
     {
@@ -126,6 +134,6 @@ return {
 };
 })();
 
-(node as any).hash = "47bd2e00e37487d1cbd5da5a6c115293";
+(node as any).hash = "e6090c14137e09f0866621edf2f7448b";
 
 export default node;

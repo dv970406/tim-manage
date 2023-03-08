@@ -1,7 +1,7 @@
 import { keyframes, Theme } from "@emotion/react";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
-import { maxMq, minMq } from "../../../utils/css/media-query";
+import { breakpoints } from "../../../css/media-query/media-query";
 
 export const BodySection = styled.div(({ theme }) => ({
   backgroundImage: `url("/background.png")`,
@@ -14,24 +14,24 @@ export const BodySection = styled.div(({ theme }) => ({
 
 export const SideBarSection = styled.aside`
   display: none;
-  ${minMq[3]} {
+  @media (min-width: ${breakpoints.pc}) {
     display: flex;
-    width: 275;
+    width: 275px;
     .sidebar_close {
       display: none;
     }
     position: static;
   }
-
-  ${maxMq[3]} {
+  @media (max-width: ${breakpoints.pc}) {
     &.open {
       display: flex;
-      width: 275;
+      width: 275px;
       position: absolute;
       overflow: auto;
       z-index: 5;
     }
   }
+
   ${({ theme }) => ({
     background: theme.bgColors.sectionGradient,
     flexDirection: "column",
@@ -49,13 +49,12 @@ export const MainSection = styled.main(({ theme }) => ({
 }));
 
 export const HeaderSection = styled.header`
-  ${minMq[3]} {
+  @media (min-width: ${breakpoints.pc}) {
     .hamburger_menu {
       display: none;
     }
   }
-
-  ${maxMq[3]} {
+  @media (max-width: ${breakpoints.pc}) {
     .hamburger_menu {
       display: none;
     }
@@ -74,25 +73,33 @@ export const ContentSection = styled.article(({ theme }) => ({
   display: "flex",
   width: "100%",
   height: "100%",
-
   gap: theme.spacing.xl,
 }));
 
-export const MessageSection = styled.ul(({ theme }) => ({
-  backdropFilter: theme.bgColors.backdropFilter,
-  background: theme.bgColors.lightgray,
-  width: 350,
-  height: 600,
-  position: "fixed",
-  right: 40,
-  bottom: 45,
-  borderRadius: theme.borderRadius.lg,
-  borderBottomRightRadius: 0,
-  padding: theme.spacing.lg,
-  zIndex: 5,
-}));
+interface IMessageSection {
+  theme?: Theme;
+  isInRoom?: boolean;
+}
+export const MessageSection = styled.section(
+  ({ theme, isInRoom = false }: IMessageSection) => ({
+    backdropFilter: theme?.bgColors.backdropFilter,
+    backgroundColor: theme?.bgColors.lightgray,
+    width: 350,
+    height: 600,
+    position: "fixed",
+    right: 40,
+    bottom: 65,
+    borderRadius: theme?.borderRadius.lg,
+    borderBottomRightRadius: 0,
+    padding: theme?.spacing.lg,
+    zIndex: 5,
+    display: "grid",
+    gridTemplateRows: isInRoom ? "5% 85% 10%" : "5% 95%",
+    gap: theme?.spacing.sm,
+  })
+);
 
-export const NotificationSection = styled.ul(({ theme }) => ({
+export const NotificationSection = styled.section(({ theme }) => ({
   backdropFilter: theme.bgColors.backdropFilter,
   background: theme.bgColors.lightgray,
   width: 300,
@@ -101,7 +108,7 @@ export const NotificationSection = styled.ul(({ theme }) => ({
   borderTopRightRadius: 0,
   padding: theme.spacing.lg,
   position: "absolute",
-  top: 15,
+  top: 25,
   right: 10,
   zIndex: 5,
 }));
@@ -109,12 +116,13 @@ export const NotificationSection = styled.ul(({ theme }) => ({
 interface ISection {
   theme?: Theme;
   noneBg?: boolean;
+  padding?: number;
 }
 export const Section = styled.section(
-  ({ theme, noneBg = false }: ISection) => ({
+  ({ theme, noneBg = false, padding }: ISection) => ({
     background: noneBg ? undefined : theme?.bgColors.sectionGradient,
     backdropFilter: theme?.bgColors.backdropFilter,
-    padding: theme?.spacing.xl,
+    padding: padding || theme?.spacing.xl,
     width: "100%",
     borderRadius: theme?.borderRadius.lg,
   })

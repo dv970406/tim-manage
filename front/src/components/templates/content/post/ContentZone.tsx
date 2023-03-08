@@ -4,7 +4,7 @@ import { graphql } from "babel-plugin-relay/macro";
 import { SectionTitle } from "../../../atomics/typographys/titles";
 import { useFragment } from "react-relay";
 import { ContentZone_post$key } from "./__generated__/ContentZone_post.graphql";
-import { GapBox } from "../../../atomics/boxes/Boxes";
+import { ColumnBox } from "../../../atomics/boxes/Boxes";
 import { ButtonIcon } from "../../../molecules/buttons/Buttons";
 import {
   faComment,
@@ -43,7 +43,7 @@ const ContentZone = ({ post }: IContentZone) => {
   const navigate = useNavigate();
 
   return (
-    <GapBox style={{ height: "100%" }}>
+    <ColumnBox style={{ height: "100%" }}>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <SectionTitle>{contentZoneData?.title}</SectionTitle>
         {contentZoneData.isMyPost && (
@@ -69,7 +69,7 @@ const ContentZone = ({ post }: IContentZone) => {
         countLikes={contentZoneData?.countLikes}
         countComments={contentZoneData?.countComments}
       />
-    </GapBox>
+    </ColumnBox>
   );
 };
 

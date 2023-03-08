@@ -3,7 +3,7 @@ import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useUpdateUserPassword } from "../../../../client/user/UpdateUserPassword.client";
 import { theme } from "../../../../css/theme";
-import { GapBox, RowBox } from "../../../atomics/boxes/Boxes";
+import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
 import { Form } from "../../../atomics/form/Form";
 import { Section } from "../../../atomics/sections/sections";
 import { EndSubmitButton } from "../../../molecules/buttons/Buttons";

@@ -1,4 +1,6 @@
+import { Theme } from "@emotion/react";
 import styled from "@emotion/styled";
+import { CSSProperties } from "react";
 
 export const TabButton = styled("button")(({ theme, isClicked }: any) => ({
   padding: theme.spacing.lg,
@@ -30,16 +32,17 @@ export const SubmitButton = styled("button")(({ theme }) => ({
   },
 }));
 
-export const HoverButton = styled("button")`
-  display: flex;
-  align-items: center;
-
-  ${({ theme }) => ({
-    gap: theme.spacing.sm,
-    // "&:hover": {
-    //   "svg, p": {
-    //     color: theme.hoverColors.purple,
-    //   },
-    // },
-  })}
-`;
+interface IHoverButton {
+  theme?: Theme;
+  hover?: CSSProperties;
+}
+export const HoverButton = styled("button")(
+  ({ theme, hover }: IHoverButton) => ({
+    display: "flex",
+    alignItems: "center",
+    gap: theme?.spacing.sm,
+    "&:hover": {
+      ...hover,
+    },
+  })
+);

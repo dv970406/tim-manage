@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6a14bd5746a433b6ca7e6ec6ee0554ac>>
+ * @generated SignedSource<<ea47fe898149df87b88c303eeb01b3b4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -174,6 +174,13 @@ return {
                   {
                     "alias": null,
                     "args": null,
+                    "kind": "ScalarField",
+                    "name": "isLeader",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
                     "concreteType": "Position",
                     "kind": "LinkedField",
                     "name": "position",
@@ -286,12 +293,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a134c54aad414b493d677039f1216e82",
+    "cacheID": "ee3d2af2c129b1e71133027cf3e880f0",
     "id": null,
     "metadata": {},
     "name": "GetUsersQuery",
     "operationKind": "query",
-    "text": "query GetUsersQuery(\n  $keyword: String\n  $orders: Orders\n  $first: Int!\n  $after: DateTime\n) {\n  ...UsersTable_user_2FAYjm\n}\n\nfragment UserTableContent_user on User {\n  id\n  name\n  email\n  isManager\n  position {\n    id\n    position\n  }\n  team {\n    id\n    team\n  }\n  joinDate\n  createdAt\n}\n\nfragment UsersTable_user_2FAYjm on Query {\n  getUsers(keyword: $keyword, orders: $orders, first: $first, after: $after) {\n    ok\n    error\n    edges {\n      node {\n        ...UserTableContent_user\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query GetUsersQuery(\n  $keyword: String\n  $orders: Orders\n  $first: Int!\n  $after: DateTime\n) {\n  ...UsersTable_user_2FAYjm\n}\n\nfragment UserTableContent_user on User {\n  id\n  name\n  email\n  isManager\n  isLeader\n  position {\n    id\n    position\n  }\n  team {\n    id\n    team\n  }\n  joinDate\n  createdAt\n}\n\nfragment UsersTable_user_2FAYjm on Query {\n  getUsers(keyword: $keyword, orders: $orders, first: $first, after: $after) {\n    ok\n    error\n    edges {\n      node {\n        ...UserTableContent_user\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

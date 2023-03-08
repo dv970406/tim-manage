@@ -1,8 +1,9 @@
 import { graphql } from "babel-plugin-relay/macro";
+import { Dispatch, SetStateAction } from "react";
 import { requestSubscription } from "react-relay";
 import { insertEdgeToData } from "../../utils/store/connection";
 import { environment } from "../client";
-import { ReceiveInRoomSubscription } from "./__generated__/SubscriptionRoomSubscription.graphql";
+import { ReceiveInRoomSubscription } from "./__generated__/ReceiveInRoomSubscription.graphql";
 
 const receiveInRoomQuery = graphql`
   subscription ReceiveInRoomSubscription($roomId: ID!) {
@@ -26,14 +27,20 @@ const receiveInRoomQuery = graphql`
   }
 `;
 
-export const receiveInRoom = (roomId: string) => {
+interface IReceiveInRoom {
+  roomId: string;
+  setHasNewMessage: Dispatch<SetStateAction<boolean>>;
+}
+export const receiveInRoom = ({ roomId, setHasNewMessage }: IReceiveInRoom) => {
   return requestSubscription<ReceiveInRoomSubscription>(environment, {
     subscription: receiveInRoomQuery,
     variables: {
       roomId,
     },
-    onNext: (data) => {},
-    updater: (proxyStore) => {
+    onNext: (data) => {
+      setHasNewMessage(false);
+    },
+    updater: (proxyStore, { receiveInRoom }) => {
       // 메시지가 왔음을 알린다. (Subscription WS 통신이므로 승인하면 바로 유저에게 알람이 날아감)
 
       const newMessageEdge = proxyStore
@@ -42,9 +49,7 @@ export const receiveInRoom = (roomId: string) => {
 
       if (!newMessageEdge) return;
 
-      const getRoomRecord = proxyStore
-        .get(`client:root:getRoom(roomId:"${roomId}")`)
-        ?.getLinkedRecord("room");
+      const getRoomRecord = proxyStore.get(roomId);
 
       insertEdgeToData({
         record: getRoomRecord,

@@ -10,7 +10,7 @@ import { SectionText } from "../../../atomics/typographys/texts";
 import { SectionTitle, SubTitle } from "../../../atomics/typographys/titles";
 import { Radio } from "../../../molecules/inputs/Radio";
 import { TextArea } from "../../../molecules/inputs/TextArea";
-import { GapBox, GapList } from "../../../atomics/boxes/Boxes";
+import { ColumnBox, GapList } from "../../../atomics/boxes/Boxes";
 import { AnswerSheet_survey$key } from "./__generated__/AnswerSheet_survey.graphql";
 import FormTitle from "../../../molecules/form/FormTitle";
 import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
@@ -79,8 +79,8 @@ const AnswerSheet = ({ survey }: IAnswerSheet) => {
           }),
         }}
       >
-        <FormTitle formTitle={answerSheetData.surveyTitle} />
         <GapList style={{ gap: theme.spacing.xl }}>
+          <FormTitle formTitle={answerSheetData.surveyTitle} />
           {answerSheetData.paragraphs.map((paragraph, paragraphIndex) => (
             // 어차피 paragraphs들은 개별로 삭제될 일 없으니까 key로 인덱스 줘도 될듯
             <li

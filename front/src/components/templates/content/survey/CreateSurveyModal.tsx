@@ -8,7 +8,7 @@ import { theme } from "../../../../css/theme";
 import { ModalContext } from "../../../../utils/contexts/modal.context";
 import { SubmitButton } from "../../../atomics/buttons/buttons";
 import { Form } from "../../../atomics/form/Form";
-import { GapBox } from "../../../atomics/boxes/Boxes";
+import { ColumnBox } from "../../../atomics/boxes/Boxes";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 import SelectUsers from "../../../organisms/content/home/SelectUsers";
 import { EndSubmitButton } from "../../../molecules/buttons/Buttons";

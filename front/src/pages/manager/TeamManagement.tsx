@@ -6,7 +6,7 @@ import {
 } from "../../client/manager/GetManagerTeams.client";
 import { GetManagerTeamsQuery } from "../../client/manager/__generated__/GetManagerTeamsQuery.graphql";
 import { useGetMyInfo } from "../../client/user/GetMyInfo.client";
-import { GapBox } from "../../components/atomics/boxes/Boxes";
+import { ColumnBox } from "../../components/atomics/boxes/Boxes";
 import Loading from "../../components/atomics/boxes/Loading";
 import { Section } from "../../components/atomics/sections/sections";
 import CenterBox from "../../components/molecules/boxes/CenterBox";
@@ -57,7 +57,7 @@ const TeamManagement = ({ managerTeamsQueryReference }: ITeamManagement) => {
           />
         )}
       </Section>
-      <GapBox style={{ width: "40%" }}>
+      <ColumnBox style={{ width: "40%" }}>
         <Section>
           <Suspense fallback={<Loading />}>
             <CreateTeamForm />
@@ -71,7 +71,7 @@ const TeamManagement = ({ managerTeamsQueryReference }: ITeamManagement) => {
             />
           </Suspense>
         </Section>
-      </GapBox>
+      </ColumnBox>
     </CenterBox>
   );
 };
