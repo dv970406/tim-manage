@@ -1,7 +1,15 @@
 import {
+  faBook,
+  faComment,
+  faFaceDiagonalMouth,
+  faHeart,
+  faHouseLeave,
+  faInfo,
+  faLips,
   faM,
   faPooStorm,
   faS,
+  faSpeaker,
   faUserSecret,
   faV,
 } from "@fortawesome/pro-solid-svg-icons";
@@ -51,12 +59,12 @@ const My = ({ getMyAllInfoQueryReference }: IMy) => {
     <ColumnBox gap={theme.spacing.md}>
       <Section>
         <RowBox style={{ justifyContent: "center", alignItems: "center" }}>
-          <NavIconButton path="" icon={faM} />
-          <NavIconButton path="post" icon={faPooStorm} />
-          <NavIconButton path="comment" icon={faPooStorm} />
-          <NavIconButton path="like" icon={faPooStorm} />
-          <NavIconButton path="answer" icon={faS} />
-          <NavIconButton path="vacation" icon={faV} />
+          <NavIconButton path="" icon={faInfo} />
+          <NavIconButton path="post" icon={faBook} />
+          <NavIconButton path="comment" icon={faComment} />
+          <NavIconButton path="like" icon={faHeart} />
+          <NavIconButton path="answer" icon={faLips} />
+          <NavIconButton path="vacation" icon={faHouseLeave} />
           <NavIconButton path="update" icon={faUserSecret} />
         </RowBox>
       </Section>

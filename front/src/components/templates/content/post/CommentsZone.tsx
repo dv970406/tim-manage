@@ -25,7 +25,7 @@ const CommentsZone = ({ post }: ICommentsZone) => {
   const commentsZoneData = useFragment(commentsZoneFragment, post);
 
   return (
-    <ColumnBox>
+    <>
       <ScrollBox>
         {/* reverse로 뒤집어야함 - createComment mutation의 updater 부분 참조 */}
         {commentsZoneData.comments
@@ -35,10 +35,8 @@ const CommentsZone = ({ post }: ICommentsZone) => {
           )
           .reverse()}
       </ScrollBox>
-      <ColumnBox>
-        <CreateComment postId={post.id} />
-      </ColumnBox>
-    </ColumnBox>
+      <CreateComment postId={post.id} />
+    </>
   );
 };
 

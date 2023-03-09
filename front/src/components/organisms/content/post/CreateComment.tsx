@@ -1,8 +1,12 @@
-import { faI } from "@fortawesome/pro-solid-svg-icons";
+import { faI, faPaperPlane } from "@fortawesome/pro-solid-svg-icons";
 import React, { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useCreateComment } from "../../../../client/post/CreateComment.client";
+import { theme } from "../../../../css/theme";
+import { RowBox } from "../../../atomics/boxes/Boxes";
+import { SubmitButton } from "../../../atomics/buttons/buttons";
 import { Form } from "../../../atomics/form/Form";
+import { Icon } from "../../../atomics/icons/icons";
 import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 
@@ -39,27 +43,34 @@ const CreateComment = ({ postId }: ICreateComment) => {
   }, [createCommentSuccess]);
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <TextInput
-        label="댓글"
-        register={register("content", {
-          required: {
-            value: true,
-            message: "댓글을 입력해주세요.",
-          },
-          maxLength: {
-            value: 100,
-            message: "댓글은 100자 이하입니다.",
-          },
-        })}
-        errorMessage={errors.content && errors.content.message}
-        placeholder="댓글을 입력하세요."
-        icon={faI}
-      />
-      <EndSubmitButton
-        onClick={handleSubmit(onSubmit)}
-        disabled={createCommentLoading || isSubmitDisabled}
-        text="댓글 추가"
-      />
+      <RowBox>
+        <TextInput
+          register={register("content", {
+            required: {
+              value: true,
+              message: "댓글을 입력해주세요.",
+            },
+            maxLength: {
+              value: 100,
+              message: "댓글은 100자 이하입니다.",
+            },
+          })}
+          noError
+          errorMessage={errors.content && errors.content.message}
+          placeholder="댓글을 입력하세요."
+          icon={faI}
+        />
+        <SubmitButton
+          onClick={handleSubmit(onSubmit)}
+          disabled={createCommentLoading || isSubmitDisabled}
+          style={{
+            width: "10%",
+            padding: theme.spacing.sm,
+          }}
+        >
+          <Icon size="lg" icon={faPaperPlane} />
+        </SubmitButton>
+      </RowBox>
     </Form>
   );
 };

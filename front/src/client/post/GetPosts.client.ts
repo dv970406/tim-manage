@@ -3,9 +3,19 @@ import { PreloadedQuery, usePreloadedQuery } from "react-relay";
 import { GetPostsQuery } from "./__generated__/GetPostsQuery.graphql";
 
 export const getPostsQuery = graphql`
-  query GetPostsQuery($keyword: String, $first: Int!, $after: DateTime) {
+  query GetPostsQuery(
+    $keyword: String
+    $orders: Orders
+    $first: Int!
+    $after: DateTime
+  ) {
     ...PostsTable_post
-      @arguments(keyword: $keyword, first: $first, after: $after)
+      @arguments(
+        keyword: $keyword
+        orders: $orders
+        first: $first
+        after: $after
+      )
   }
 `;
 

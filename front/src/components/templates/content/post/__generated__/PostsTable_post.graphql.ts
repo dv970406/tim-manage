@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2bded398b368b7260134d38681aee29a>>
+ * @generated SignedSource<<5c62a73f2de08941b90393b7d1ff5aef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -52,6 +52,11 @@ return {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "keyword"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "orders"
     }
   ],
   "kind": "Fragment",
@@ -86,6 +91,11 @@ return {
           "kind": "Variable",
           "name": "keyword",
           "variableName": "keyword"
+        },
+        {
+          "kind": "Variable",
+          "name": "orders",
+          "variableName": "orders"
         }
       ],
       "concreteType": "GetPostsOutput",
@@ -182,6 +192,6 @@ return {
 };
 })();
 
-(node as any).hash = "a49044d425c4de1488a00137b8a53a7e";
+(node as any).hash = "08604399549ed4feda5be0490376bf08";
 
 export default node;

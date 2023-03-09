@@ -87,7 +87,12 @@ const MessageTool = ({}: IMessageTool) => {
             </Suspense>
           ) : (
             <>
-              <RowBox style={{ justifyContent: "space-between" }}>
+              <RowBox
+                style={{
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
                 <SubTitle>{isUsersList ? "유저 목록" : "대화 목록"}</SubTitle>
                 <ButtonIcon
                   icon={faRotate}

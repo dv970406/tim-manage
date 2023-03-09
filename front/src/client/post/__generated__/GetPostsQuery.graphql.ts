@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c19d820aa879e81c24531a0d217f5baf>>
+ * @generated SignedSource<<eb36575ebe6d4c3768e46c3dbeff1fee>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,10 +10,16 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
+export type Orders = {
+  order1?: ReadonlyArray<string> | null;
+  order2?: ReadonlyArray<string> | null;
+  order3?: ReadonlyArray<string> | null;
+};
 export type GetPostsQuery$variables = {
   after?: any | null;
   first: number;
   keyword?: string | null;
+  orders?: Orders | null;
 };
 export type GetPostsQuery$data = {
   readonly " $fragmentSpreads": FragmentRefs<"PostsTable_post">;
@@ -39,7 +45,12 @@ v2 = {
   "kind": "LocalArgument",
   "name": "keyword"
 },
-v3 = [
+v3 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "orders"
+},
+v4 = [
   {
     "kind": "Variable",
     "name": "after",
@@ -54,9 +65,14 @@ v3 = [
     "kind": "Variable",
     "name": "keyword",
     "variableName": "keyword"
+  },
+  {
+    "kind": "Variable",
+    "name": "orders",
+    "variableName": "orders"
   }
 ],
-v4 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -68,14 +84,15 @@ return {
     "argumentDefinitions": [
       (v0/*: any*/),
       (v1/*: any*/),
-      (v2/*: any*/)
+      (v2/*: any*/),
+      (v3/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
     "name": "GetPostsQuery",
     "selections": [
       {
-        "args": (v3/*: any*/),
+        "args": (v4/*: any*/),
         "kind": "FragmentSpread",
         "name": "PostsTable_post"
       }
@@ -87,6 +104,7 @@ return {
   "operation": {
     "argumentDefinitions": [
       (v2/*: any*/),
+      (v3/*: any*/),
       (v1/*: any*/),
       (v0/*: any*/)
     ],
@@ -95,7 +113,7 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v4/*: any*/),
         "concreteType": "GetPostsOutput",
         "kind": "LinkedField",
         "name": "getPosts",
@@ -131,7 +149,7 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v4/*: any*/),
+                  (v5/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -147,7 +165,7 @@ return {
                     "name": "user",
                     "plural": false,
                     "selections": [
-                      (v4/*: any*/),
+                      (v5/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -236,9 +254,10 @@ return {
       },
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v4/*: any*/),
         "filters": [
-          "keyword"
+          "keyword",
+          "orders"
         ],
         "handle": "connection",
         "key": "PostsTable_getPosts",
@@ -248,16 +267,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a0c2e568b93aba42969cacf0c2401fe6",
+    "cacheID": "3b68fd4918e9235805d3b1e9c0badd7e",
     "id": null,
     "metadata": {},
     "name": "GetPostsQuery",
     "operationKind": "query",
-    "text": "query GetPostsQuery(\n  $keyword: String\n  $first: Int!\n  $after: DateTime\n) {\n  ...PostsTable_post_3aPcrv\n}\n\nfragment PostTableContent_post on Post {\n  id\n  title\n  user {\n    id\n    name\n  }\n  isLiked\n  countLikes\n  countComments\n  createdAt\n}\n\nfragment PostsTable_post_3aPcrv on Query {\n  getPosts(keyword: $keyword, first: $first, after: $after) {\n    ok\n    error\n    edges {\n      node {\n        ...PostTableContent_post\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query GetPostsQuery(\n  $keyword: String\n  $orders: Orders\n  $first: Int!\n  $after: DateTime\n) {\n  ...PostsTable_post_2FAYjm\n}\n\nfragment PostTableContent_post on Post {\n  id\n  title\n  user {\n    id\n    name\n  }\n  isLiked\n  countLikes\n  countComments\n  createdAt\n}\n\nfragment PostsTable_post_2FAYjm on Query {\n  getPosts(keyword: $keyword, orders: $orders, first: $first, after: $after) {\n    ok\n    error\n    edges {\n      node {\n        ...PostTableContent_post\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "70f8fed84910b17234d385b37366ca83";
+(node as any).hash = "7b03bb15bb45ad44866bf2a0b8003dac";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<63c8941be10ddc2024a16ad123f205b2>>
+ * @generated SignedSource<<ed06798767a329817ba05598b63549ca>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,10 +10,16 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
+export type Orders = {
+  order1?: ReadonlyArray<string> | null;
+  order2?: ReadonlyArray<string> | null;
+  order3?: ReadonlyArray<string> | null;
+};
 export type PostsTablePaginationQuery$variables = {
   after?: any | null;
   first: number;
   keyword?: string | null;
+  orders?: Orders | null;
 };
 export type PostsTablePaginationQuery$data = {
   readonly " $fragmentSpreads": FragmentRefs<"PostsTable_post">;
@@ -39,6 +45,11 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "keyword"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "orders"
   }
 ],
 v1 = [
@@ -56,6 +67,11 @@ v1 = [
     "kind": "Variable",
     "name": "keyword",
     "variableName": "keyword"
+  },
+  {
+    "kind": "Variable",
+    "name": "orders",
+    "variableName": "orders"
   }
 ],
 v2 = {
@@ -232,7 +248,8 @@ return {
         "alias": null,
         "args": (v1/*: any*/),
         "filters": [
-          "keyword"
+          "keyword",
+          "orders"
         ],
         "handle": "connection",
         "key": "PostsTable_getPosts",
@@ -242,16 +259,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b5db4cd51d07d6abd8129f043a3862a9",
+    "cacheID": "114b86c403a2efe724c9ebf30ed00550",
     "id": null,
     "metadata": {},
     "name": "PostsTablePaginationQuery",
     "operationKind": "query",
-    "text": "query PostsTablePaginationQuery(\n  $after: DateTime\n  $first: Int!\n  $keyword: String\n) {\n  ...PostsTable_post_3aPcrv\n}\n\nfragment PostTableContent_post on Post {\n  id\n  title\n  user {\n    id\n    name\n  }\n  isLiked\n  countLikes\n  countComments\n  createdAt\n}\n\nfragment PostsTable_post_3aPcrv on Query {\n  getPosts(keyword: $keyword, first: $first, after: $after) {\n    ok\n    error\n    edges {\n      node {\n        ...PostTableContent_post\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query PostsTablePaginationQuery(\n  $after: DateTime\n  $first: Int!\n  $keyword: String\n  $orders: Orders\n) {\n  ...PostsTable_post_2FAYjm\n}\n\nfragment PostTableContent_post on Post {\n  id\n  title\n  user {\n    id\n    name\n  }\n  isLiked\n  countLikes\n  countComments\n  createdAt\n}\n\nfragment PostsTable_post_2FAYjm on Query {\n  getPosts(keyword: $keyword, orders: $orders, first: $first, after: $after) {\n    ok\n    error\n    edges {\n      node {\n        ...PostTableContent_post\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "a49044d425c4de1488a00137b8a53a7e";
+(node as any).hash = "08604399549ed4feda5be0490376bf08";
 
 export default node;

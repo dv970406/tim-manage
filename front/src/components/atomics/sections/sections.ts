@@ -107,6 +107,10 @@ export const NotificationSection = styled.section(({ theme }) => ({
   borderRadius: theme.borderRadius.lg,
   borderTopRightRadius: 0,
   padding: theme.spacing.lg,
+  display: "flex",
+  flexDirection: "column",
+  gap: theme?.spacing.sm,
+
   position: "absolute",
   top: 25,
   right: 10,

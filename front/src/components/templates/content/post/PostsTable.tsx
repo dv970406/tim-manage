@@ -8,6 +8,8 @@ import { PostsTable_post$key } from "./__generated__/PostsTable_post.graphql";
 import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
 import { PostsTablePaginationQuery } from "./__generated__/PostsTablePaginationQuery.graphql";
 import { useGetMyInfo } from "../../../../client/user/GetMyInfo.client";
+import { ColumnBox } from "../../../atomics/boxes/Boxes";
+import OrderPosts from "../../../organisms/content/post/OrderPosts";
 
 interface IPostsTable {
   posts: PostsTable_post$key;
@@ -17,11 +19,13 @@ const getPostsFragment = graphql`
   fragment PostsTable_post on Query
   @argumentDefinitions(
     keyword: { type: "String" }
+    orders: { type: "Orders" }
+
     first: { type: "Int!" }
     after: { type: "DateTime" }
   )
   @refetchable(queryName: "PostsTablePaginationQuery") {
-    getPosts(keyword: $keyword, first: $first, after: $after)
+    getPosts(keyword: $keyword, orders: $orders, first: $first, after: $after)
       @connection(key: "PostsTable_getPosts") {
       ok
       error
@@ -54,7 +58,9 @@ const PostsTable = ({ posts }: IPostsTable) => {
   );
 
   return (
-    <>
+    <ColumnBox>
+      <OrderPosts refetch={refetch} />
+
       <SearchAndInfiniteScrollDataList
         mutateName={MODAL_NAME.CREATE_POST}
         refetch={refetch}
@@ -68,7 +74,7 @@ const PostsTable = ({ posts }: IPostsTable) => {
             post.node && <PostTableContent key={post.cursor} post={post.node} />
         )}
       </SearchAndInfiniteScrollDataList>
-    </>
+    </ColumnBox>
   );
 };
 
