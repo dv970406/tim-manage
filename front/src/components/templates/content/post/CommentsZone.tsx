@@ -27,7 +27,7 @@ const CommentsZone = ({ post }: ICommentsZone) => {
   return (
     <>
       <ScrollBox>
-        {/* reverse로 뒤집어야함 - createComment mutation의 updater 부분 참조 */}
+        {/* 메모이징 관련 이유로 reverse로 뒤집어야함 - createComment mutation의 updater 부분 참조 */}
         {commentsZoneData.comments
           .map(
             (comment: any) =>

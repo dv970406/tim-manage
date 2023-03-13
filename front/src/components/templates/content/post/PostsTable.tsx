@@ -59,7 +59,7 @@ const PostsTable = ({ posts }: IPostsTable) => {
 
   return (
     <ColumnBox>
-      <OrderPosts refetch={refetch} />
+      {/* <OrderPosts refetch={refetch} /> */}
 
       <SearchAndInfiniteScrollDataList
         mutateName={MODAL_NAME.CREATE_POST}

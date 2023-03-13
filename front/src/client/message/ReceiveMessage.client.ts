@@ -1,6 +1,7 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { Dispatch, SetStateAction, useMemo } from "react";
 import { ConnectionHandler, requestSubscription } from "react-relay";
+import { playAudio } from "../../utils/audio/audio";
 import { insertEdgeToData } from "../../utils/store/connection";
 import { environment } from "../client";
 import { ReceiveMessageSubscription } from "./__generated__/ReceiveMessageSubscription.graphql";
@@ -40,6 +41,7 @@ export const receiveMessage = ({ setHasNewMessage }: IUseReceiveMessage) => {
     onNext: (data) => {
       if (data?.receiveMessage.isMyAlarm) {
         setHasNewMessage(true);
+        playAudio("/alarm.mp3");
       }
       // 오디오 파일로 알람 넣어보기
     },

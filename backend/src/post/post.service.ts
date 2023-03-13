@@ -22,15 +22,29 @@ export class PostService {
   }
   async getPosts({
     keyword,
+    orders,
     first,
     after,
   }: GetPostsInput): Promise<GetPostsOutput> {
     try {
       const [findMyPosts, totalCount] = await this.postRepo.findAndCount({
-        order: { createdAt: 'DESC' },
+        order: {
+          createdAt: 'DESC',
+        },
         where: {
           ...(after && { createdAt: LessThan(after) }),
         },
+
+        // Apollo-Server에서는 relation 걸려있는 데이터의 개수를 세는 _count 오퍼레이터를 제공해줬었다.
+        // typeorm data mapper에선 딱히 방법이 없어서 createQueryBuilder 방식을 사용해야 된다.
+        // createQueryBuilder 사용하려면 SQL을 공부해야 하는데 지금,, 쿼리문 공부하기엔 할게 너무 많음. 일단 패스
+        ...(orders && {
+          order: {
+            ...(orders.order1[0] === 'recent' && { createdAt: 'DESC' }),
+            // ...(orders.order1[0] === 'like' && { likes: count }),
+            // ...(orders.order1[0] === 'comment' && { countComments: 'DESC' }),
+          },
+        }),
         ...(keyword && {
           where: [
             {

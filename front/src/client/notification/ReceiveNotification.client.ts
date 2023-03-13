@@ -1,6 +1,7 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { Dispatch, SetStateAction } from "react";
 import { requestSubscription, useSubscription } from "react-relay";
+import { playAudio } from "../../utils/audio/audio";
 import { POSITION } from "../../utils/constants/user.constant";
 import { insertEdgeToData } from "../../utils/store/connection";
 import { environment } from "../client";
@@ -58,9 +59,9 @@ export const receiveNotification = ({
   return requestSubscription<ReceiveNotificationSubscription>(environment, {
     subscription: receiveNotificationQuery,
     variables: {},
-    onNext: (data) => {
+    onNext: () => {
       setHasNotification(true);
-      // 오디오 파일로 알람 넣어보기
+      playAudio("/alarm.mp3");
     },
     updater: (
       proxyStore,

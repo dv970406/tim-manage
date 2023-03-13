@@ -72,11 +72,8 @@ export const SearchAndInfiniteScrollDataList = ({
   }, [keyword]);
   return (
     <>
-      <ColumnBox
-        gap={theme.spacing.sm}
-        // style={{ paddingBlock: theme.spacing.md }}
-      >
-        <Section padding={theme.spacing.lg}>
+      <ColumnBox gap={theme.spacing.sm}>
+        <Section padding={theme.spacing.md}>
           <DataToolBar
             onChange={handleChange}
             mutateName={mutateName}

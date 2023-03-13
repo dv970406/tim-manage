@@ -66,7 +66,10 @@ export const TextInput = ({
         <input
           id={label}
           placeholder={placeholder}
-          style={{ width: "100%", padding: theme.spacing.md }}
+          style={{
+            width: "100%",
+            padding: theme.spacing.md,
+          }}
           type={type}
           {...(defaultValue && { defaultValue })}
           {...(type && {
