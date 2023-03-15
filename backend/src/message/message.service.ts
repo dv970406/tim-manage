@@ -82,7 +82,8 @@ export class MessageService {
       pubsub.publish(TRIGGER_RECEIVE_MESSAGE, {
         receiveMessage: {
           ok: true,
-          edge: newRoomEdge,
+          roomEdge: newRoomEdge,
+          messageEdge: newMessageEdge,
         },
       });
 

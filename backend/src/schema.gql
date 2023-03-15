@@ -590,13 +590,6 @@ type RoomEdge {
   node: Room!
 }
 
-type ReceiveMessageOutput {
-  ok: Boolean!
-  error: String
-  edge: RoomEdge
-  isMyAlarm: Boolean
-}
-
 type MessagesConnection {
   edges: [MessageEdge!]!
   pageInfo: PageInfo!
@@ -605,6 +598,14 @@ type MessagesConnection {
 type MessageEdge {
   cursor: DateTime!
   node: Message!
+}
+
+type ReceiveMessageOutput {
+  ok: Boolean!
+  error: String
+  roomEdge: RoomEdge
+  messageEdge: MessageEdge
+  isMyAlarm: Boolean
 }
 
 type SendMessageOutput {

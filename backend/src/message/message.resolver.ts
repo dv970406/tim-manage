@@ -9,11 +9,8 @@ import {
 } from '@nestjs/graphql';
 import { LoggedInUser } from 'src/auth/auth-user.decorator';
 import { LoginGuard } from 'src/auth/auth.guard';
-import { ConnectionInput } from 'src/core/dtos/pagination.dto';
 import { User } from 'src/user/entities/user.entity';
 import { pubsub, TRIGGER_RECEIVE_MESSAGE } from 'src/utils/subscription';
-import { QueryBuilder } from 'typeorm';
-import { MessagesConnection } from './dtos/messages/message-pagination.dto';
 import { ReceiveMessageOutput } from './dtos/messages/receive-message.dto';
 import {
   SendMessageInput,
@@ -28,7 +25,7 @@ export class MessageResolver {
 
   @Subscription((type) => ReceiveMessageOutput, {
     filter: ({ receiveMessage }, _, { user: loggedInUser }) => {
-      const isRoomMember = receiveMessage.edge.node.users.find(
+      const isRoomMember = receiveMessage.roomEdge.node.users.find(
         (member) => member.id === loggedInUser.id,
       );
 
@@ -39,7 +36,8 @@ export class MessageResolver {
     resolve: (
       {
         receiveMessage: {
-          edge: { node, cursor },
+          roomEdge: { node, cursor },
+          messageEdge,
         },
       },
       _,
@@ -59,7 +57,7 @@ export class MessageResolver {
       const isMyAlarm = node.recentMessage.user.id !== loggedInUser.id;
       return {
         ok: true,
-        edge: {
+        roomEdge: {
           node: {
             ...node,
             users: filteringExceptMe,
@@ -68,6 +66,7 @@ export class MessageResolver {
           cursor,
         },
         isMyAlarm,
+        messageEdge,
       };
     },
   })
