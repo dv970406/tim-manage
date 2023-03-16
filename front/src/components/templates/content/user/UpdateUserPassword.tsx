@@ -6,6 +6,7 @@ import { theme } from "../../../../css/theme";
 import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
 import { Form } from "../../../atomics/form/Form";
 import { Section } from "../../../atomics/sections/sections";
+import { CenterFixBox } from "../../../molecules/boxes/CenterBox";
 import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 
@@ -45,15 +46,7 @@ const UpdateUserPassword = () => {
     });
   };
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        height: "100%",
-      }}
-    >
+    <CenterFixBox>
       <RowBox
         style={{
           width: "30%",
@@ -110,7 +103,7 @@ const UpdateUserPassword = () => {
           />
         </Form>
       </RowBox>
-    </div>
+    </CenterFixBox>
   );
 };
 

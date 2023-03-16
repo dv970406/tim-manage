@@ -2,6 +2,7 @@ import { faTag } from "@fortawesome/pro-solid-svg-icons";
 import React, { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useCreateTeam } from "../../../../client/manager/CreateTeam.client";
+import { ColumnBox } from "../../../atomics/boxes/Boxes";
 import { SubmitButton } from "../../../atomics/buttons/buttons";
 import { Form } from "../../../atomics/form/Form";
 import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
@@ -43,7 +44,7 @@ const CreateTeamForm = ({}: ICreateTeamForm) => {
   }, [createTeamSuccess]);
 
   return (
-    <>
+    <ColumnBox>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <FormTitle formTitle={`팀 생성`} />
         <TextInput
@@ -66,14 +67,13 @@ const CreateTeamForm = ({}: ICreateTeamForm) => {
           })}
           errorMessage={errors?.team && errors?.team.message}
         />
-
-        <EndSubmitButton
-          onClick={handleSubmit(onSubmit)}
-          disabled={createTeamLoading || isSubmitDisabled}
-          text="생성"
-        />
       </Form>
-    </>
+      <EndSubmitButton
+        onClick={handleSubmit(onSubmit)}
+        disabled={createTeamLoading || isSubmitDisabled}
+        text="생성"
+      />
+    </ColumnBox>
   );
 };
 

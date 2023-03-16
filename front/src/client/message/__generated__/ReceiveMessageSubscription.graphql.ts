@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b7533304334af0cf9e56c459bb5504a1>>
+ * @generated SignedSource<<d34e079a7fc4a2203945086bae8ce75d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,14 +12,26 @@ import { ConcreteRequest, GraphQLSubscription } from 'relay-runtime';
 export type ReceiveMessageSubscription$variables = {};
 export type ReceiveMessageSubscription$data = {
   readonly receiveMessage: {
-    readonly edge: {
+    readonly error: string | null;
+    readonly isMyAlarm: boolean | null;
+    readonly messageEdge: {
+      readonly cursor: any;
+      readonly node: {
+        readonly createdAt: any;
+        readonly id: string;
+        readonly isMine: boolean;
+        readonly message: string;
+        readonly user: {
+          readonly id: string;
+          readonly name: string;
+        };
+      };
+    } | null;
+    readonly ok: boolean;
+    readonly roomEdge: {
       readonly cursor: any | null;
       readonly node: {
         readonly id: string;
-        readonly recentMessage: {
-          readonly id: string;
-          readonly message: string;
-        } | null;
         readonly unreadMessageCount: number;
         readonly users: ReadonlyArray<{
           readonly id: string;
@@ -27,9 +39,6 @@ export type ReceiveMessageSubscription$data = {
         }>;
       };
     } | null;
-    readonly error: string | null;
-    readonly isMyAlarm: boolean | null;
-    readonly ok: boolean;
   };
 };
 export type ReceiveMessageSubscription = {
@@ -42,10 +51,27 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "cursor",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v1 = [
+v2 = [
+  (v1/*: any*/),
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "name",
+    "storageKey": null
+  }
+],
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -73,16 +99,10 @@ v1 = [
         "args": null,
         "concreteType": "RoomEdge",
         "kind": "LinkedField",
-        "name": "edge",
+        "name": "roomEdge",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "cursor",
-            "storageKey": null
-          },
+          (v0/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -91,7 +111,7 @@ v1 = [
             "name": "node",
             "plural": false,
             "selections": [
-              (v0/*: any*/),
+              (v1/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -99,16 +119,7 @@ v1 = [
                 "kind": "LinkedField",
                 "name": "users",
                 "plural": true,
-                "selections": [
-                  (v0/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "name",
-                    "storageKey": null
-                  }
-                ],
+                "selections": (v2/*: any*/),
                 "storageKey": null
               },
               {
@@ -117,24 +128,60 @@ v1 = [
                 "kind": "ScalarField",
                 "name": "unreadMessageCount",
                 "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "MessageEdge",
+        "kind": "LinkedField",
+        "name": "messageEdge",
+        "plural": false,
+        "selections": [
+          (v0/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Message",
+            "kind": "LinkedField",
+            "name": "node",
+            "plural": false,
+            "selections": [
+              (v1/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isMine",
+                "storageKey": null
               },
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "Message",
+                "kind": "ScalarField",
+                "name": "message",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "User",
                 "kind": "LinkedField",
-                "name": "recentMessage",
+                "name": "user",
                 "plural": false,
-                "selections": [
-                  (v0/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "message",
-                    "storageKey": null
-                  }
-                ],
+                "selections": (v2/*: any*/),
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "createdAt",
                 "storageKey": null
               }
             ],
@@ -160,7 +207,7 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "ReceiveMessageSubscription",
-    "selections": (v1/*: any*/),
+    "selections": (v3/*: any*/),
     "type": "Subscription",
     "abstractKey": null
   },
@@ -169,19 +216,19 @@ return {
     "argumentDefinitions": [],
     "kind": "Operation",
     "name": "ReceiveMessageSubscription",
-    "selections": (v1/*: any*/)
+    "selections": (v3/*: any*/)
   },
   "params": {
-    "cacheID": "b0875550453e4b25378e56198d1ac34d",
+    "cacheID": "b2e47ea2f42f05849fa5bad70e669f17",
     "id": null,
     "metadata": {},
     "name": "ReceiveMessageSubscription",
     "operationKind": "subscription",
-    "text": "subscription ReceiveMessageSubscription {\n  receiveMessage {\n    ok\n    error\n    edge {\n      cursor\n      node {\n        id\n        users {\n          id\n          name\n        }\n        unreadMessageCount\n        recentMessage {\n          id\n          message\n        }\n      }\n    }\n    isMyAlarm\n  }\n}\n"
+    "text": "subscription ReceiveMessageSubscription {\n  receiveMessage {\n    ok\n    error\n    roomEdge {\n      cursor\n      node {\n        id\n        users {\n          id\n          name\n        }\n        unreadMessageCount\n      }\n    }\n    messageEdge {\n      cursor\n      node {\n        id\n        isMine\n        message\n        user {\n          id\n          name\n        }\n        createdAt\n      }\n    }\n    isMyAlarm\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "e67af2d764a743e78bb37d054030d6fa";
+(node as any).hash = "533a0d6c7b5ef8f978d8e55ab1edca0e";
 
 export default node;

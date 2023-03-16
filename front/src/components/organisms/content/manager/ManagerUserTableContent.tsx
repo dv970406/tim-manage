@@ -7,6 +7,7 @@ import { POSITION } from "../../../../utils/constants/user.constant";
 import { MainText } from "../../../atomics/typographys/texts";
 import { Td, Tr } from "../../../molecules/tables/Td";
 import { ManagerUserTableContent_user$key } from "../../../templates/content/manager/__generated__/ManagerUserTableContent_user.graphql";
+import TableContent from "./TableContent";
 
 interface IManagerUserTableContent {
   user: ManagerUserTableContent_user$key;
@@ -52,11 +53,9 @@ const ManagerUserTableContent = ({
 
   const clickedUser = clickedUserId === tableContentData?.id;
   return (
-    <Tr
-      onClick={() => setClickedUserId(tableContentData?.id)}
-      style={{
-        ...(clickedUser && { backgroundColor: theme.bgColors.purple }),
-      }}
+    <TableContent
+      onClick={() => setClickedUserId(tableContentData.id)}
+      clickedItem={clickedUser}
     >
       <Td role="gridcell">
         <MainText>{tableContentData?.name}</MainText>
@@ -67,7 +66,7 @@ const ManagerUserTableContent = ({
       <Td role="gridcell">
         <MainText>{tableContentData?.team.team}</MainText>
       </Td>
-    </Tr>
+    </TableContent>
   );
 };
 

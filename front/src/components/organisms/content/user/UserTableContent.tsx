@@ -103,7 +103,7 @@ const UserTableContent = ({ user, isManager }: IUserTableContent) => {
               }}
             >
               <BoxIcon icon={faShield} color="gold" />
-              <MainText>리더</MainText>
+              <MainText style={{ whiteSpace: "nowrap" }}>리더</MainText>
             </div>
           )}
         </RowBox>

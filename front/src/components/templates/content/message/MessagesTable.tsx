@@ -71,7 +71,7 @@ const MessagesTable = ({
       setHasNewMessage,
     });
     return () => dispose();
-  }, []);
+  }, [room?.id]);
 
   const handleGetOutRoom = () => {
     setClickedRoomId("");

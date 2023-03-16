@@ -82,7 +82,7 @@ const CreateUserForm = ({}: ICreateUserForm) => {
     !watchTeam;
 
   return (
-    <>
+    <ColumnBox>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <FormTitle formTitle="새 직원" />
         <TextInput
@@ -167,14 +167,13 @@ const CreateUserForm = ({}: ICreateUserForm) => {
           })}
           errorMessage={errors.joinDate && errors.joinDate.message}
         />
-
-        <EndSubmitButton
-          onClick={handleSubmit(onSubmit)}
-          disabled={createUserLoading || isSubmitDisabled}
-          text={"직원 추가"}
-        />
       </Form>
-    </>
+      <EndSubmitButton
+        onClick={handleSubmit(onSubmit)}
+        disabled={createUserLoading || isSubmitDisabled}
+        text={"직원 추가"}
+      />
+    </ColumnBox>
   );
 };
 

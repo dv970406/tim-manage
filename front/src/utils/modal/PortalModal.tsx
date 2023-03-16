@@ -1,4 +1,4 @@
-import React, { MouseEventHandler } from "react";
+import React, { MouseEventHandler, useEffect, useState } from "react";
 import reactDom from "react-dom";
 import { ModalDialog } from "../../components/atomics/sections/sections";
 import { closeModal } from "./controlModal";

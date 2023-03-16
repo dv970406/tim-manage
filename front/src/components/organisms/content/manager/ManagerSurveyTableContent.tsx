@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { theme } from "../../../../css/theme";
 import { MainText } from "../../../atomics/typographys/texts";
 import { Td, Tr } from "../../../molecules/tables/Td";
+import TableContent from "./TableContent";
 import { ManagerSurveyTableContent_survey$key } from "./__generated__/ManagerSurveyTableContent_survey.graphql";
 
 interface IManagerSurveyTableContent {
@@ -33,16 +34,14 @@ const ManagerSurveyTableContent = ({
 
   const clickedSurvey = clickedSurveyId === tableContentData?.id;
   return (
-    <Tr
-      onClick={() => setClickedSurveyId(tableContentData?.id)}
-      style={{
-        ...(clickedSurvey && { backgroundColor: theme.bgColors.purple }),
-      }}
+    <TableContent
+      onClick={() => setClickedSurveyId(tableContentData.id)}
+      clickedItem={clickedSurvey}
     >
       <Td role="gridcell">
         <MainText>{tableContentData?.surveyTitle}</MainText>
       </Td>
-    </Tr>
+    </TableContent>
   );
 };
 

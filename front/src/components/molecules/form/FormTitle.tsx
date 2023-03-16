@@ -8,10 +8,10 @@ interface IFormTitle {
 }
 const FormTitle = ({ formTitle, formSubTitle }: IFormTitle) => {
   return (
-    <ColumnBox>
+    <>
       <SectionTitle>{formTitle}</SectionTitle>
       {formSubTitle && <SubTitle>{formSubTitle}</SubTitle>}
-    </ColumnBox>
+    </>
   );
 };
 

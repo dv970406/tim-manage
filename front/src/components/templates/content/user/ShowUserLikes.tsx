@@ -44,7 +44,6 @@ const ShowUserLikes = () => {
 
   return (
     <>
-      {" "}
       <SectionTitle>좋아요 목록</SectionTitle>
       <SearchAndInfiniteScrollDataList
         mutateName=""

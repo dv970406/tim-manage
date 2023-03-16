@@ -6,6 +6,7 @@ import { theme } from "../../../../css/theme";
 import { MainText } from "../../../atomics/typographys/texts";
 import { Td, Tr } from "../../../molecules/tables/Td";
 import { ManagerTeamTableContent_team$key } from "../../../templates/content/manager/__generated__/ManagerTeamTableContent_team.graphql";
+import TableContent from "./TableContent";
 
 interface IManagerTeamTableContent {
   team: ManagerTeamTableContent_team$key;
@@ -28,16 +29,14 @@ const ManagerTeamTableContent = ({
 
   const clickedTeam = clickedTeamId === tableContentData.id;
   return (
-    <Tr
+    <TableContent
       onClick={() => setClickedTeamId(tableContentData.id)}
-      style={{
-        ...(clickedTeam && { backgroundColor: theme.bgColors.purple }),
-      }}
+      clickedItem={clickedTeam}
     >
       <Td role="gridcell">
         <MainText>{tableContentData.team}</MainText>
       </Td>
-    </Tr>
+    </TableContent>
   );
 };
 

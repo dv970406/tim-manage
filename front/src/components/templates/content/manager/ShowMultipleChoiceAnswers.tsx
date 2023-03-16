@@ -37,18 +37,16 @@ const ShowMultipleChoiceAnswers = ({ answers }: IShowMultipleChoiceAnswers) => {
       <ScrollBox>
         {multipleChoiceFormat?.map((result, index) => (
           <li key={index}>
-            <ColumnBox>
-              <SubTitle>{result.paragraphTitle}</SubTitle>
-              <SectionText>{result.description}</SectionText>
-              <ReactApexChart
-                options={{
-                  ...pieChartOptions,
-                  labels: result.chartFormatResults.labels as string[],
-                }}
-                series={result.chartFormatResults.series as number[]}
-                type="pie"
-              />
-            </ColumnBox>
+            <SubTitle>{result.paragraphTitle}</SubTitle>
+            <SectionText>{result.description}</SectionText>
+            <ReactApexChart
+              options={{
+                ...pieChartOptions,
+                labels: result.chartFormatResults.labels as string[],
+              }}
+              series={result.chartFormatResults.series as number[]}
+              type="pie"
+            />
           </li>
         ))}
       </ScrollBox>

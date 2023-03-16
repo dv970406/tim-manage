@@ -9,7 +9,7 @@ import { useDeletePost } from "../../../../client/post/DeletePost.client";
 import { useUpdatePost } from "../../../../client/post/UpdatePost.client";
 import { theme } from "../../../../css/theme";
 import { formats, modules } from "../../../../utils/quill/props";
-import { ColumnBox } from "../../../atomics/boxes/Boxes";
+import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
 import { SubmitButton } from "../../../atomics/buttons/buttons";
 import { Form } from "../../../atomics/form/Form";
 import { SubTitle } from "../../../atomics/typographys/titles";
@@ -89,44 +89,44 @@ const MutatePostForm = ({ post }: IMutatePostForm) => {
   }, [mutatePostFormData]);
 
   return (
-    <Form>
-      <TextInput
-        defaultValue={mutatePostFormData.title}
-        register={register("title", {
-          required: { value: true, message: "제목은 필수입니다." },
-          minLength: {
-            value: 2,
-            message: "제목은 2글자 이상입니다.",
-          },
-          maxLength: {
-            value: 50,
-            message: "제목은 50글자 이하입니다.",
-          },
-        })}
-        label="게시글 제목"
-        errorMessage={errors.title && errors.title.message}
-        placeholder="게시글 제목"
-        icon={faTag}
-      />
-
-      <ColumnBox>
-        <SubTitle>게시글 내용</SubTitle>
-        <ReactQuill
-          theme="snow"
-          value={content}
-          onChange={handleChange}
-          style={{
-            borderRadius: 20,
-          }}
-          formats={formats}
-          modules={modules}
-          placeholder="내용을 입력하세요."
-          className={"text-editor"}
+    <ColumnBox>
+      <Form>
+        <TextInput
+          defaultValue={mutatePostFormData.title}
+          register={register("title", {
+            required: { value: true, message: "제목은 필수입니다." },
+            minLength: {
+              value: 2,
+              message: "제목은 2글자 이상입니다.",
+            },
+            maxLength: {
+              value: 50,
+              message: "제목은 50글자 이하입니다.",
+            },
+          })}
+          label="게시글 제목"
+          errorMessage={errors.title && errors.title.message}
+          placeholder="게시글 제목"
+          icon={faTag}
         />
-      </ColumnBox>
-      <div
-        style={{ display: "flex", gap: theme.spacing.sm, marginTop: "auto" }}
-      >
+
+        <ColumnBox>
+          <SubTitle>게시글 내용</SubTitle>
+          <ReactQuill
+            theme="snow"
+            value={content}
+            onChange={handleChange}
+            style={{
+              borderRadius: 20,
+            }}
+            formats={formats}
+            modules={modules}
+            placeholder="내용을 입력하세요."
+            className={"text-editor"}
+          />
+        </ColumnBox>
+      </Form>
+      <RowBox>
         <EndSubmitButton
           onClick={handleSubmit(onSubmit)}
           disabled={updatePostLoading || isSubmitDisabled}
@@ -137,8 +137,8 @@ const MutatePostForm = ({ post }: IMutatePostForm) => {
           disabled={deletePostLoading}
           text="삭제"
         />
-      </div>
-    </Form>
+      </RowBox>
+    </ColumnBox>
   );
 };
 

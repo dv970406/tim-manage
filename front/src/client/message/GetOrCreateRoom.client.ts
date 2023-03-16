@@ -1,5 +1,5 @@
 import { graphql } from "babel-plugin-relay/macro";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import {
   commitLocalUpdate,
   ConnectionHandler,
@@ -56,31 +56,35 @@ export const useGetOrCreateRoom = ({
   if ((roomId || userId) && !getOrCreateRoom?.ok) {
     alert(getOrCreateRoom?.error);
   }
-  if (getOrCreateRoom?.ok) {
-    // 백엔드에서 해당 room의 모든 message들의 isRead를 false => true 업데이트할 것임
-    // 따라서 그에 대한 일환으로 Store에서는 room의 unreadMessageCount를 0으로 수정
-    // Mutation이 아닌 query에서 store에 접근하려면 commitLocalUpdate 사용
-    commitLocalUpdate(environment, (proxyStore) => {
-      const roomRecord = proxyStore.get(roomId!);
 
-      if (!roomRecord) return;
-      roomRecord.setValue(
-        getOrCreateRoom.room?.unreadMessageCount,
-        "unreadMessageCount"
-      );
+  useEffect(() => {
+    if (getOrCreateRoom?.ok) {
+      // 백엔드에서 해당 room의 모든 message들의 isRead를 false => true 업데이트할 것임
+      // 따라서 그에 대한 일환으로 Store에서는 room의 unreadMessageCount를 0으로 수정
+      // Mutation이 아닌 query에서 store에 접근하려면 commitLocalUpdate 사용
+      commitLocalUpdate(environment, (proxyStore) => {
+        const roomRecord = proxyStore.get(roomId!);
 
-      const messagesOfRoomConnection = ConnectionHandler.getConnection(
-        roomRecord,
-        "MessagesTable_messagesOfRoomConnection"
-      );
+        if (!roomRecord) return;
+        roomRecord.setValue(
+          getOrCreateRoom.room?.unreadMessageCount,
+          "unreadMessageCount"
+        );
 
-      if (!messagesOfRoomConnection) return;
-      roomRecord
-        ?.getLinkedRecord("edges")
-        ?.setLinkedRecord(messagesOfRoomConnection, "node");
+        const messagesOfRoomConnection = ConnectionHandler.getConnection(
+          roomRecord,
+          "MessagesTable_messagesOfRoomConnection"
+        );
 
-      setHasNewMessage(false);
-    });
-  }
+        if (!messagesOfRoomConnection) return;
+        roomRecord
+          ?.getLinkedRecord("edges")
+          ?.setLinkedRecord(messagesOfRoomConnection, "node");
+
+        setHasNewMessage(false);
+      });
+    }
+  }, [getOrCreateRoom?.ok]);
+
   return { room: getOrCreateRoom?.room };
 };

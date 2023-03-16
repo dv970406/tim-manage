@@ -42,20 +42,16 @@ export const receiveInRoom = ({ roomId, setHasNewMessage }: IReceiveInRoom) => {
     },
     updater: (proxyStore, { receiveInRoom }) => {
       // 메시지가 왔음을 알린다. (Subscription WS 통신이므로 승인하면 바로 유저에게 알람이 날아감)
-
-      const newMessageEdge = proxyStore
-        .getRootField("receiveInRoom")
-        .getLinkedRecord("edge");
-
-      if (!newMessageEdge) return;
-
-      const getRoomRecord = proxyStore.get(roomId);
-
-      insertEdgeToData({
-        record: getRoomRecord,
-        key: "MessagesTable_messagesOfRoomConnection",
-        newEdge: newMessageEdge,
-      });
+      // const newMessageEdge = proxyStore
+      //   .getRootField("receiveInRoom")
+      //   .getLinkedRecord("edge");
+      // if (!newMessageEdge) return;
+      // const getRoomRecord = proxyStore.get(roomId);
+      // insertEdgeToData({
+      //   record: getRoomRecord,
+      //   key: "MessagesTable_messagesOfRoomConnection",
+      //   newEdge: newMessageEdge,
+      // });
     },
   });
 };

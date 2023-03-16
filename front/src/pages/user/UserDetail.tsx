@@ -60,12 +60,10 @@ const UserDetail = ({ getUserQueryReference }: IUserDetail) => {
           <NavIconButton path="vacation" icon={faV} />
         </RowBox>
       </Section>
-      <CenterFixBox>
-        <Section style={{ width: "50%" }}>
-          <Outlet context={user} />
-          {/* ShowUserVacations */}
-        </Section>
-      </CenterFixBox>
+      <Section style={{ height: "100%" }}>
+        <Outlet context={user} />
+        {/* ShowUserVacations */}
+      </Section>
     </ColumnBox>
   );
 };

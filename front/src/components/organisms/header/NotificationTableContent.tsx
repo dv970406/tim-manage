@@ -78,7 +78,6 @@ const NotificationTableContent = ({
     });
   };
 
-  console.log(notificationId);
   return (
     <ListItem
       style={{

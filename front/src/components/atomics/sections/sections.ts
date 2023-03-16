@@ -121,9 +121,12 @@ interface ISection {
   theme?: Theme;
   noneBg?: boolean;
   padding?: number;
+  flexDirection?: "row" | "column";
 }
 export const Section = styled.section(
-  ({ theme, noneBg = false, padding }: ISection) => ({
+  ({ theme, noneBg = false, padding, flexDirection = "column" }: ISection) => ({
+    display: "flex",
+    flexDirection,
     background: noneBg ? undefined : theme?.bgColors.sectionGradient,
     backdropFilter: theme?.bgColors.backdropFilter,
     padding: padding || theme?.spacing.xl,
@@ -174,9 +177,10 @@ export const ModalDialog = styled(motion.dialog)(({ theme }) => ({
   "::backdrop": {
     backgroundColor: theme.bgColors.translucent,
   },
+
   animation: `${modalShow} 0.5s`,
   width: 700,
-  height: 700,
+  minHeight: 350,
   maxHeight: "80%",
   background: theme.bgColors.gray,
   borderRadius: theme.borderRadius.lg,

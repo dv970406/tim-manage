@@ -14,6 +14,7 @@ import FormTitle from "../../../molecules/form/FormTitle";
 import Select from "../../../molecules/inputs/Select";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 import { useUpdateTeam } from "../../../../client/manager/UpdateTeam.client";
+import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
 
 interface IMutateTeamFormValue {
   team: string;
@@ -79,7 +80,7 @@ const MutateTeamForm = ({
   };
 
   return (
-    <>
+    <ColumnBox>
       <Form
         onSubmit={handleSubmit(onSubmit)}
         style={{
@@ -127,24 +128,21 @@ const MutateTeamForm = ({
             },
           })}
         />
-
-        <div
-          style={{ display: "flex", gap: theme.spacing.sm, marginTop: "auto" }}
-        >
-          <EndSubmitButton
-            onClick={handleSubmit(onSubmit)}
-            disabled={updateTeamLoading || isSubmitDisabled}
-            text="수정"
-          />
-
-          <EndSubmitButton
-            onClick={handleDeleteTeam}
-            disabled={deleteTeamLoading || !clickedTeamId}
-            text="삭제"
-          />
-        </div>
       </Form>
-    </>
+      <RowBox>
+        <EndSubmitButton
+          onClick={handleSubmit(onSubmit)}
+          disabled={updateTeamLoading || isSubmitDisabled}
+          text="수정"
+        />
+
+        <EndSubmitButton
+          onClick={handleDeleteTeam}
+          disabled={deleteTeamLoading || !clickedTeamId}
+          text="삭제"
+        />
+      </RowBox>
+    </ColumnBox>
   );
 };
 

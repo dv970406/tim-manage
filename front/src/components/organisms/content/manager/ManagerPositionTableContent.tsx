@@ -9,6 +9,7 @@ import {
   ManagerPositionTableContent_position$data,
   ManagerPositionTableContent_position$key,
 } from "../../../templates/content/manager/__generated__/ManagerPositionTableContent_position.graphql";
+import TableContent from "./TableContent";
 
 interface IManagerPositionTableContent {
   position: ManagerPositionTableContent_position$key;
@@ -34,16 +35,14 @@ const ManagerPositionTableContent = ({
 
   const clickedPosition = clickedPositionId === tableContentData.id;
   return (
-    <Tr
+    <TableContent
       onClick={() => setClickedPositionId(tableContentData.id)}
-      style={{
-        ...(clickedPosition && { backgroundColor: theme.bgColors.purple }),
-      }}
+      clickedItem={clickedPosition}
     >
       <Td role="gridcell">
         <MainText>{tableContentData.position}</MainText>
       </Td>
-    </Tr>
+    </TableContent>
   );
 };
 

@@ -70,7 +70,7 @@ const AnswerSheet = ({ survey }: IAnswerSheet) => {
     });
   };
   return (
-    <>
+    <ColumnBox>
       <Form
         onSubmit={createAnswer}
         style={{
@@ -129,13 +129,13 @@ const AnswerSheet = ({ survey }: IAnswerSheet) => {
             </li>
           ))}
         </GapList>
-        <EndSubmitButton
-          onClick={() => null}
-          text="제출"
-          disabled={answerSheetData.isAnswered}
-        />
       </Form>
-    </>
+      <EndSubmitButton
+        onClick={() => null}
+        text="제출"
+        disabled={answerSheetData.isAnswered}
+      />
+    </ColumnBox>
   );
 };
 

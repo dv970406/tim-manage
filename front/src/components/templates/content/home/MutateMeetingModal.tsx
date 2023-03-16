@@ -6,7 +6,7 @@ import { useGetMeeting } from "../../../../client/meeting/GetMeeting.client";
 import { useUpdateMeeting } from "../../../../client/meeting/UpdateMeeting.client";
 import { theme } from "../../../../css/theme";
 import { Form } from "../../../atomics/form/Form";
-import { ColumnBox } from "../../../atomics/boxes/Boxes";
+import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 import { IMeetingFormValue } from "./CreateScheduleModal";
 import SelectUsers from "../../../organisms/content/home/SelectUsers";
@@ -104,7 +104,7 @@ const MutateMeetingModal = ({ scheduleId }: IMutateMeetingModal) => {
             setAttendeesId={setAttendeesId}
           />
         </ColumnBox>
-        <div style={{ display: "flex", gap: theme.spacing.sm }}>
+        <RowBox>
           <EndSubmitButton
             onClick={handleSubmit(onSubmit)}
             disabled={updateMeetingLoading}
@@ -116,7 +116,7 @@ const MutateMeetingModal = ({ scheduleId }: IMutateMeetingModal) => {
             disabled={deleteMeetingLoading}
             text="삭제"
           />
-        </div>
+        </RowBox>
       </Form>
     </PortalModal>
   );

@@ -1,6 +1,7 @@
 import { css } from "@emotion/react";
 import { MouseEventHandler, useState } from "react";
 import { theme } from "../../../css/theme";
+import { ColumnBox } from "../../atomics/boxes/Boxes";
 import { HoverButton, SubmitButton } from "../../atomics/buttons/buttons";
 import { Icon, IIcon } from "../../atomics/icons/icons";
 import { MainText } from "../../atomics/typographys/texts";
@@ -37,16 +38,17 @@ interface ISubmitButton {
 }
 export const EndSubmitButton = ({ onClick, disabled, text }: ISubmitButton) => {
   return (
-    <div
+    <ColumnBox
       style={{
-        width: "100%",
         marginTop: "auto",
+        flex: 1,
+        justifyContent: "flex-end",
       }}
     >
       <SubmitButton onClick={onClick} disabled={disabled}>
         {text}
       </SubmitButton>
-    </div>
+    </ColumnBox>
   );
 };
 

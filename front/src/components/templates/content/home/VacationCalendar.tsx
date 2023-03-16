@@ -213,6 +213,7 @@ export default function VacationCalendar({
   useEffect(() => {
     setEvents(schedules);
   }, [schedules]);
+
   return (
     <>
       <FullCalendar

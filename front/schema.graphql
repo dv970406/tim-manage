@@ -675,7 +675,8 @@ type ReceiveInRoomOutput {
 type ReceiveMessageOutput {
   ok: Boolean!
   error: String
-  edge: RoomEdge
+  roomEdge: RoomEdge
+  messageEdge: MessageEdge
   isMyAlarm: Boolean
 }
 

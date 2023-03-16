@@ -128,9 +128,9 @@ const CreateScheduleModal = ({
             </>
           )}
         </ColumnBox>
-
-        <EndSubmitButton onClick={handleSubmit(onSubmit)} text="신청" />
       </Form>
+
+      <EndSubmitButton onClick={handleSubmit(onSubmit)} text="신청" />
     </PortalModal>
   );
 };

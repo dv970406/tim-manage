@@ -40,7 +40,6 @@ const ShowUserPosts = () => {
 
   return (
     <>
-      {" "}
       <SectionTitle>게시글 목록</SectionTitle>
       <SearchAndInfiniteScrollDataList
         loadNext={loadNext}

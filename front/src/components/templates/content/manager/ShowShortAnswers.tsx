@@ -5,6 +5,7 @@ import { graphql } from "babel-plugin-relay/macro";
 import { useFragment } from "react-relay";
 import { ShowShortAnswers_answer$key } from "./__generated__/ShowShortAnswers_answer.graphql";
 import { theme } from "../../../../css/theme";
+import React from "react";
 
 const showShortAnswersFragment = graphql`
   fragment ShowShortAnswers_answer on Survey {
@@ -34,7 +35,7 @@ const ShowShortAnswers = ({ answers }: IShowShortAnswers) => {
       <SectionTitle>주관식 답변</SectionTitle>
       <ScrollBox>
         {shortAnswerFormat?.map((result, index) => (
-          <ColumnBox key={index}>
+          <li key={index}>
             <SubTitle>
               제목{index + 1}: {result.paragraphTitle}
             </SubTitle>
@@ -43,7 +44,7 @@ const ShowShortAnswers = ({ answers }: IShowShortAnswers) => {
             </SectionText>
             <ColumnBox
               style={{
-                padding: theme.spacing.md,
+                padding: theme.spacing.sm,
                 borderBottom: `1px solid ${theme.colors.white}`,
               }}
             >
@@ -56,7 +57,7 @@ const ShowShortAnswers = ({ answers }: IShowShortAnswers) => {
                 </li>
               ))}
             </ColumnBox>
-          </ColumnBox>
+          </li>
         ))}
       </ScrollBox>
     </ColumnBox>

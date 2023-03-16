@@ -5,6 +5,7 @@ import { theme } from "../../../../css/theme";
 import { showDateFormat } from "../../../../utils/time/time";
 import { MainText } from "../../../atomics/typographys/texts";
 import { Td, Tr } from "../../../molecules/tables/Td";
+import TableContent from "./TableContent";
 import { UnConfirmedVacationTableContent_vacation$key } from "./__generated__/UnConfirmedVacationTableContent_vacation.graphql";
 
 interface IUnConfirmedVacationTableContent {
@@ -39,11 +40,9 @@ const UnConfirmedVacationTableContent = ({
   const clickedVacation = clickedVacationId === tableContentData.id;
 
   return (
-    <Tr
+    <TableContent
       onClick={() => setClickedVacationId(tableContentData.id)}
-      style={{
-        ...(clickedVacation && { backgroundColor: theme.bgColors.purple }),
-      }}
+      clickedItem={clickedVacation}
     >
       <Td role="gridcell">
         <MainText>{tableContentData.user.name}</MainText>
@@ -60,7 +59,7 @@ const UnConfirmedVacationTableContent = ({
       <Td role="gridcell">
         <MainText>{tableContentData.isHalf ? "O" : "X"}</MainText>
       </Td>
-    </Tr>
+    </TableContent>
   );
 };
 

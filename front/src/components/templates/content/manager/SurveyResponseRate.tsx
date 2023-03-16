@@ -25,14 +25,14 @@ const SurveyResponseRate = ({ answers }: ISurveyResponseRate) => {
   );
   return (
     <>
-      <ColumnBox>
+      <>
         <SectionTitle>응답률</SectionTitle>
         <SubTitle>
           총원 :{" "}
           {responseRate?.answeredEmployeeCount! +
             responseRate?.notAnsweredEmployeeCount! || "대기중"}
         </SubTitle>
-      </ColumnBox>
+      </>
       {responseRate?.answeredEmployeeCount !== undefined && (
         <ReactApexChart
           type="pie"

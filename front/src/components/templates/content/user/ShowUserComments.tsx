@@ -45,7 +45,6 @@ const ShowUserComments = () => {
 
   return (
     <>
-      {" "}
       <SectionTitle>댓글 목록</SectionTitle>
       <SearchAndInfiniteScrollDataList
         mutateName=""

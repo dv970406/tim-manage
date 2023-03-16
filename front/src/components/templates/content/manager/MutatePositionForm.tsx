@@ -10,6 +10,7 @@ import { Form } from "../../../atomics/form/Form";
 import FormTitle from "../../../molecules/form/FormTitle";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
+import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
 
 interface IMutatePositionFormValue {
   position: string;
@@ -64,7 +65,7 @@ const MutatePositionForm = ({
     deletePositionMutation({ id: clickedPositionId });
   };
   return (
-    <>
+    <ColumnBox>
       <Form
         onSubmit={handleSubmit(onSubmit)}
         style={{
@@ -95,24 +96,21 @@ const MutatePositionForm = ({
           })}
           errorMessage={errors?.position && errors?.position.message}
         />
-
-        <div
-          style={{ display: "flex", gap: theme.spacing.sm, marginTop: "auto" }}
-        >
-          <EndSubmitButton
-            onClick={handleSubmit(onSubmit)}
-            disabled={updatePositionLoading || isSubmitDisabled}
-            text="수정"
-          />
-
-          <EndSubmitButton
-            onClick={handleDeletePosition}
-            disabled={deletePositionLoading || !clickedPositionId}
-            text="삭제"
-          />
-        </div>
       </Form>
-    </>
+      <RowBox>
+        <EndSubmitButton
+          onClick={handleSubmit(onSubmit)}
+          disabled={updatePositionLoading || isSubmitDisabled}
+          text="수정"
+        />
+
+        <EndSubmitButton
+          onClick={handleDeletePosition}
+          disabled={deletePositionLoading || !clickedPositionId}
+          text="삭제"
+        />
+      </RowBox>
+    </ColumnBox>
   );
 };
 

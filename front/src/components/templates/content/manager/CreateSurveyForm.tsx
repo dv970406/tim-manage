@@ -193,7 +193,7 @@ const CreateSurveyForm = ({}: ICreateSurveyForm) => {
   };
 
   return (
-    <>
+    <ColumnBox>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <FormTitle formTitle="새 설문" />
 
@@ -259,10 +259,10 @@ const CreateSurveyForm = ({}: ICreateSurveyForm) => {
                 </RowBox>
                 <Section
                   style={{
-                    display: "flex",
                     gap: theme.spacing.md,
                     justifyContent: "center",
                   }}
+                  flexDirection="row"
                 >
                   {paragraphs[paragraphIndex].multipleChoice.map(
                     (count, choiceIndex) => (
@@ -279,13 +279,13 @@ const CreateSurveyForm = ({}: ICreateSurveyForm) => {
             </li>
           ))}
         </ScrollBox>
-        <EndSubmitButton
-          onClick={handleSubmit(onSubmit)}
-          disabled={createSurveyLoading || isSubmitDisabled}
-          text="추가"
-        />
       </Form>
-    </>
+      <EndSubmitButton
+        onClick={handleSubmit(onSubmit)}
+        disabled={createSurveyLoading || isSubmitDisabled}
+        text="추가"
+      />
+    </ColumnBox>
   );
 };
 

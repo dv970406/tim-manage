@@ -11,7 +11,7 @@ const receiveMessageQuery = graphql`
     receiveMessage {
       ok
       error
-      edge {
+      roomEdge {
         cursor
         node {
           id
@@ -20,12 +20,22 @@ const receiveMessageQuery = graphql`
             name
           }
           unreadMessageCount
-          recentMessage {
-            id
-            message
-          }
         }
       }
+      messageEdge {
+        cursor
+        node {
+          id
+          isMine
+          message
+          user {
+            id
+            name
+          }
+          createdAt
+        }
+      }
+
       isMyAlarm
     }
   }
@@ -45,12 +55,14 @@ export const receiveMessage = ({ setHasNewMessage }: IUseReceiveMessage) => {
       }
       // 오디오 파일로 알람 넣어보기
     },
-    updater: (proxyStore, { receiveMessage: { edge } }) => {
-      if (!edge?.node.id) return;
+    updater: (proxyStore, { receiveMessage: { roomEdge } }) => {
+      const roomId = roomEdge?.node.id;
+      if (!roomId) return;
 
+      // room이 이제 만들어진 방이라면 Room Connection에 추가하고 이미 존재하는 방이라면 바로 Message Connection으로
       const newRoomEdge = proxyStore
         .getRootField("receiveMessage")
-        .getLinkedRecord("edge");
+        .getLinkedRecord("roomEdge");
       if (!newRoomEdge) return;
 
       const rootRecord = proxyStore.getRoot();
@@ -62,18 +74,39 @@ export const receiveMessage = ({ setHasNewMessage }: IUseReceiveMessage) => {
 
       const isExistRoom = roomsConnection
         ?.getLinkedRecords("edges")
-        ?.find(
-          (room) => room.getLinkedRecord("node")?.getDataID() === edge?.node?.id
-        )
+        ?.find((room) => room.getLinkedRecord("node")?.getDataID() === roomId)
         ?.getLinkedRecord("node")
         ?.getDataID();
-      if (isExistRoom) return;
 
-      insertEdgeToData({
-        record: rootRecord,
-        key: "RoomsTable_getRooms",
-        newEdge: newRoomEdge,
-      });
+      if (!isExistRoom) {
+        console.log("this ?");
+        insertEdgeToData({
+          record: rootRecord,
+          key: "RoomsTable_getRooms",
+          newEdge: newRoomEdge,
+        });
+      } else {
+        // 받은 message를 그 room에 추가
+        const newMessageEdge = proxyStore
+          .getRootField("receiveMessage")
+          .getLinkedRecord("messageEdge");
+
+        if (!newMessageEdge) return;
+
+        // 받은 message를 room의 recentMessage로 갱신
+        const room = proxyStore.get(roomId);
+        const newMessage = newMessageEdge.getLinkedRecord("node");
+
+        room?.setLinkedRecord(newMessage, "recentMessage");
+
+        const getRoomRecord = proxyStore.get(roomId);
+
+        insertEdgeToData({
+          record: getRoomRecord,
+          key: "MessagesTable_messagesOfRoomConnection",
+          newEdge: newMessageEdge,
+        });
+      }
     },
   });
 };

@@ -100,7 +100,7 @@ const SelectUsers = ({ prevAttendees, setAttendeesId }: ISelectUsers) => {
     loadNext(PAGINATION_LOAD_COUNT);
   };
   return (
-    <ColumnBox>
+    <ColumnBox gap={theme.spacing.sm}>
       <label
         htmlFor="attendees"
         style={{ cursor: "pointer" }}
