@@ -71,6 +71,7 @@ export const theme: ITheme = {
     lg: "18px",
     md: "14px",
     sm: "12px",
+    xs: "10px",
   },
   bold: {
     xl: 800,
@@ -80,6 +81,7 @@ export const theme: ITheme = {
   },
 
   spacing: {
+    xs: 4,
     sm: 6,
     md: 10,
     lg: 14,
@@ -101,10 +103,6 @@ export const theme: ITheme = {
 };
 
 export const globalStyles = css`
-  @font-face {
-    font-family: NanumSquare-Regular;
-    src: url(/NanumSquareR.woff) format(woff);
-  }
   :root {
     --purple: rgb(42, 29, 163);
     --gray: rgb(26, 32, 54);
@@ -119,7 +117,7 @@ export const globalStyles = css`
     margin: 0;
     /*스크롤이 부모로 번지는 것을 막는 css*/
     overscroll-behavior: contain;
-    font-family: NanumSquare-Regular;
+    font-family: Plus Jakarta Sans, sans-serif;
   }
   a {
     text-decoration: none;
@@ -153,5 +151,13 @@ export const globalStyles = css`
   input:-webkit-autofill {
     -webkit-transition-delay: 9999s;
     transition-delay: 9999s;
+  }
+
+  /* title 한줄로 만드는 용도 */
+  .one-line {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
   }
 `;

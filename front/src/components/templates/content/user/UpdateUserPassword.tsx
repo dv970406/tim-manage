@@ -49,7 +49,7 @@ const UpdateUserPassword = () => {
     <CenterFixBox>
       <RowBox
         style={{
-          width: "30%",
+          width: 300,
         }}
       >
         <Form onSubmit={handleSubmit(onSubmit)}>

@@ -39,11 +39,8 @@ const MessageTableContent = ({ message }: IMessageTableContent) => {
 
   return (
     <li>
-      <ColumnBox
-        style={{ flexDirection: isMine ? "row-reverse" : "row" }}
-        gap={theme.spacing.sm}
-      >
-        <ColumnBox gap={theme.spacing.sm} style={{ width: "auto" }}>
+      <ColumnBox style={{ flexDirection: isMine ? "row-reverse" : "row" }}>
+        <ColumnBox gap={theme.spacing.xs} style={{ width: "auto" }}>
           <SubTitle style={{ textAlign: isMine ? "right" : "left" }}>
             {user.name}
           </SubTitle>
@@ -65,7 +62,7 @@ const MessageTableContent = ({ message }: IMessageTableContent) => {
           <SubText
             style={{
               display: "block",
-              fontSize: 10,
+              fontSize: theme.fonts.xs,
               textAlign: isMine ? "right" : "left",
             }}
           >

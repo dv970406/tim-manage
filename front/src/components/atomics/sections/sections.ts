@@ -20,15 +20,20 @@ export const SideBarSection = styled.aside`
     .sidebar_close {
       display: none;
     }
-    position: static;
   }
+
   @media (max-width: ${breakpoints.pc}) {
     &.open {
       display: flex;
       width: 275px;
-      position: absolute;
-      overflow: auto;
       z-index: 5;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      ${({ theme }) => ({
+        backgroundColor: theme.bgColors.gray,
+      })};
     }
   }
 
@@ -85,16 +90,16 @@ export const MessageSection = styled.section(
     backdropFilter: theme?.bgColors.backdropFilter,
     backgroundColor: theme?.bgColors.lightgray,
     width: 350,
-    height: 600,
+    height: 500,
     position: "fixed",
     right: 40,
     bottom: 65,
     borderRadius: theme?.borderRadius.lg,
     borderBottomRightRadius: 0,
-    padding: theme?.spacing.lg,
+    padding: theme?.spacing.md,
     zIndex: 5,
     display: "grid",
-    gridTemplateRows: isInRoom ? "5% 85% 10%" : "5% 95%",
+    gridTemplateRows: isInRoom ? "5% 80% 15%" : "5% 95%",
     gap: theme?.spacing.sm,
   })
 );

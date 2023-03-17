@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c9b9f1589973829f4c7fe4c87332ecb6>>
+ * @generated SignedSource<<ee16b8484377c6d4fa1d4c82d6362da1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type RoomTableContent_room$data = {
   readonly id: string;
   readonly recentMessage: {
+    readonly createdAt: any;
     readonly id: string;
     readonly message: string;
   } | null;
@@ -84,6 +85,13 @@ return {
           "kind": "ScalarField",
           "name": "message",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "createdAt",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -94,6 +102,6 @@ return {
 };
 })();
 
-(node as any).hash = "171617dedbc64361d259c4d4256ab00b";
+(node as any).hash = "d12aa4f2f99b8b8ee65336e5ad4db385";
 
 export default node;

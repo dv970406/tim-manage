@@ -1,23 +1,15 @@
-import {
-  faBox,
-  faComment,
-  faHeart,
-  faEllipsisVertical,
-  faRocket,
-} from "@fortawesome/pro-solid-svg-icons";
+import { faRocket } from "@fortawesome/pro-solid-svg-icons";
 import { graphql } from "babel-plugin-relay/macro";
 import React, { Dispatch, SetStateAction, useState } from "react";
-import { useFragment, usePaginationFragment } from "react-relay";
-import { useNavigate } from "react-router-dom";
+import { useFragment } from "react-relay";
 import { theme } from "../../../../css/theme";
-import { getElaspedDay } from "../../../../utils/time/time";
+import { getKoreanTimeFormat } from "../../../../utils/time/time";
 import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
 import { ListItem } from "../../../atomics/sections/sections";
 import { MainText, SubText } from "../../../atomics/typographys/texts";
 import { SubTitle } from "../../../atomics/typographys/titles";
 import { BoxIcon } from "../../../molecules/icons/Icons";
 import { RoomTableContent_room$key } from "./__generated__/RoomTableContent_room.graphql";
-import "./RoomTableContent.css";
 interface IRoomTableContent {
   room: RoomTableContent_room$key;
   setClickedRoomId: Dispatch<SetStateAction<string>>;
@@ -33,6 +25,7 @@ const roomTableContentFragment = graphql`
     recentMessage {
       id
       message
+      createdAt
     }
   }
 `;
@@ -42,6 +35,8 @@ const RoomTableContent = ({ room, setClickedRoomId }: IRoomTableContent) => {
     roomTableContentFragment,
     room
   );
+
+  const recentMessageCreatedAt = getKoreanTimeFormat(recentMessage?.createdAt);
 
   return (
     <ListItem
@@ -53,32 +48,44 @@ const RoomTableContent = ({ room, setClickedRoomId }: IRoomTableContent) => {
       <RowBox>
         <BoxIcon icon={faRocket} size="lg" bgColor={theme.bgColors.purple} />
 
-        <RowBox
-          style={{ justifyContent: "space-between", alignItems: "center" }}
-        >
-          <ColumnBox gap={theme.spacing.sm}>
+        <ColumnBox gap={theme.spacing.xs}>
+          <RowBox style={{ justifyContent: "space-between" }}>
             {users.map((user) => (
               <SubTitle key={user.id}>{user.name}</SubTitle>
             ))}
-            <MainText>{recentMessage?.message}</MainText>
-          </ColumnBox>
-          {unreadMessageCount > 0 && (
-            <div
+            {unreadMessageCount > 0 && (
+              <div
+                style={{
+                  backgroundColor: theme.bgColors.red,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderRadius: "50%",
+                  width: 20,
+                  height: 20,
+                  zIndex: 5,
+                }}
+              >
+                <SubText style={{ fontSize: theme.fonts.xs }}>
+                  {unreadMessageCount}
+                </SubText>
+              </div>
+            )}
+          </RowBox>
+          <RowBox style={{ alignItems: "center" }}>
+            <MainText className="one-line" style={{ wordBreak: "break-all" }}>
+              {recentMessage?.message}
+            </MainText>
+            <SubText
               style={{
-                backgroundColor: theme.bgColors.red,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                borderRadius: "50%",
-                width: 20,
-                height: 20,
-                zIndex: 5,
+                fontSize: theme.fonts.xs,
+                whiteSpace: "nowrap",
               }}
             >
-              <SubText style={{ fontSize: 10 }}>{unreadMessageCount}</SubText>
-            </div>
-          )}
-        </RowBox>
+              {recentMessageCreatedAt}
+            </SubText>
+          </RowBox>
+        </ColumnBox>
       </RowBox>
     </ListItem>
   );

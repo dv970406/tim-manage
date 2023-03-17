@@ -1,9 +1,4 @@
-import {
-  faBox,
-  faComment,
-  faHeart,
-  faEllipsisVertical,
-} from "@fortawesome/pro-solid-svg-icons";
+import { faBox, faComment, faHeart } from "@fortawesome/pro-solid-svg-icons";
 import { graphql } from "babel-plugin-relay/macro";
 import React, { useState } from "react";
 import { useFragment, usePaginationFragment } from "react-relay";
@@ -62,22 +57,15 @@ const PostTableContent = ({ post, comment }: IPostTableContent) => {
           size={"2x"}
         />
         <ColumnBox gap={theme.spacing.sm}>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <SectionTitle>{tableContentData?.title}</SectionTitle>
-            <ButtonIcon onClick={() => null} icon={faEllipsisVertical} />
-          </div>
-          <div>
-            {comment ? (
-              <MainText color={theme.colors.blue}>{comment}</MainText>
-            ) : (
-              <MainText>{tableContentData?.user.name}</MainText>
-            )}
-          </div>
+          <SectionTitle className="one-line">
+            {tableContentData?.title}
+          </SectionTitle>
+
+          {comment ? (
+            <MainText color={theme.colors.blue}>{comment}</MainText>
+          ) : (
+            <MainText>{tableContentData?.user.name}</MainText>
+          )}
         </ColumnBox>
       </RowBox>
 

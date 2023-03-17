@@ -58,7 +58,9 @@ const Notification = ({ unreadNotificationCount }: INotification) => {
             zIndex: 5,
           }}
         >
-          <SubText style={{ fontSize: 10 }}>{unreadNotificationCount}</SubText>
+          <SubText style={{ fontSize: theme.fonts.xs }}>
+            {unreadNotificationCount}
+          </SubText>
         </div>
       )}
       {isNotificationOpen && (

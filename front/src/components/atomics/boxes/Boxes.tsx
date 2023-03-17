@@ -38,14 +38,13 @@ export const GapList = styled.ul(({ theme }) => ({
 
 export const ListBox = styled.ul`
   display: grid;
-  width: 100%;
 
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   @media (max-width: ${breakpoints.tablet}) {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
   }
   @media (max-width: ${breakpoints.mobile}) {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
   @media (max-width: ${breakpoints.sm}) {
     grid-template-columns: 1fr;

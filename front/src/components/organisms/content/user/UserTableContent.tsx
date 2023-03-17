@@ -1,11 +1,4 @@
-import {
-  faBackpack,
-  faCrown,
-  faEllipsisVertical,
-  faShield,
-  faUser,
-  faUsers,
-} from "@fortawesome/pro-solid-svg-icons";
+import { faShield, faUser } from "@fortawesome/pro-solid-svg-icons";
 import { graphql } from "babel-plugin-relay/macro";
 import { useState } from "react";
 import { useFragment } from "react-relay";
@@ -13,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { theme } from "../../../../css/theme";
 import { POSITION } from "../../../../utils/constants/user.constant";
 import { getPositionIcon, getTeamIcon } from "../../../../utils/shared";
-import { getKoreanDateFormat } from "../../../../utils/time/time";
 import {
   RowBox,
   HorizontalDivider,
@@ -22,7 +14,6 @@ import {
 } from "../../../atomics/boxes/Boxes";
 import { SectionText, MainText } from "../../../atomics/typographys/texts";
 import { SectionTitle } from "../../../atomics/typographys/titles";
-import { ButtonIcon } from "../../../molecules/buttons/Buttons";
 import { BoxIcon } from "../../../molecules/icons/Icons";
 import { UserTableContent_user$key } from "./__generated__/UserTableContent_user.graphql";
 
@@ -53,7 +44,6 @@ const userTableContentFragment = graphql`
 const UserTableContent = ({ user, isManager }: IUserTableContent) => {
   const tableContentData = useFragment(userTableContentFragment, user);
   const navigate = useNavigate();
-  const joinDate = getKoreanDateFormat(tableContentData.joinDate);
 
   const [isHovering, setIsHovering] = useState(false);
 
@@ -72,17 +62,11 @@ const UserTableContent = ({ user, isManager }: IUserTableContent) => {
           size={"2x"}
         />
         <ColumnBox gap={theme.spacing.sm}>
-          <RowBox
-            style={{
-              justifyContent: "space-between",
-            }}
-          >
-            <SectionTitle>{tableContentData.name}</SectionTitle>
-            <ButtonIcon onClick={() => null} icon={faEllipsisVertical} />
-          </RowBox>
-          <div>
-            <MainText>{tableContentData.email}</MainText>
-          </div>
+          <SectionTitle className="one-line">
+            {tableContentData.name}
+          </SectionTitle>
+
+          <MainText>{tableContentData.email}</MainText>
         </ColumnBox>
       </RowBox>
 
@@ -95,7 +79,7 @@ const UserTableContent = ({ user, isManager }: IUserTableContent) => {
       >
         <RowBox>
           {tableContentData.isLeader && (
-            <div
+            <RowBox
               style={{
                 display: "flex",
                 gap: theme.spacing.sm,
@@ -104,15 +88,14 @@ const UserTableContent = ({ user, isManager }: IUserTableContent) => {
             >
               <BoxIcon icon={faShield} color="gold" />
               <MainText style={{ whiteSpace: "nowrap" }}>리더</MainText>
-            </div>
+            </RowBox>
           )}
         </RowBox>
         <RowBox>
-          <div
+          <RowBox
             style={{
-              display: "flex",
-              gap: theme.spacing.sm,
               alignItems: "center",
+              justifyContent: "flex-end",
             }}
           >
             <BoxIcon
@@ -126,12 +109,10 @@ const UserTableContent = ({ user, isManager }: IUserTableContent) => {
             <MainText style={{ whiteSpace: "nowrap" }}>
               {tableContentData.position.position}
             </MainText>
-          </div>
+          </RowBox>
 
-          <div
+          <RowBox
             style={{
-              display: "flex",
-              gap: theme.spacing.sm,
               alignItems: "center",
             }}
           >
@@ -139,7 +120,7 @@ const UserTableContent = ({ user, isManager }: IUserTableContent) => {
             <MainText style={{ whiteSpace: "nowrap" }}>
               {tableContentData.team.team}
             </MainText>
-          </div>
+          </RowBox>
         </RowBox>
       </RowBox>
     </ItemBox>

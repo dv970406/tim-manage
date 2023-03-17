@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8655e4f0fc8132599f34aa083e498902>>
+ * @generated SignedSource<<fbda043edd35bb1ffa2cb53bb857cdd0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -156,6 +156,13 @@ return {
                         "kind": "ScalarField",
                         "name": "message",
                         "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "createdAt",
+                        "storageKey": null
                       }
                     ],
                     "storageKey": null
@@ -220,12 +227,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "05d5bb7db95831efafa93584bc4af670",
+    "cacheID": "3f9351488c6d3b1b71d21cb7b5a37a15",
     "id": null,
     "metadata": {},
     "name": "RoomsTablePaginationQuery",
     "operationKind": "query",
-    "text": "query RoomsTablePaginationQuery(\n  $after: DateTime\n  $first: Int!\n) {\n  ...RoomsTable_room_2HEEH6\n}\n\nfragment RoomTableContent_room on Room {\n  id\n  users {\n    id\n    name\n  }\n  unreadMessageCount\n  recentMessage {\n    id\n    message\n  }\n}\n\nfragment RoomsTable_room_2HEEH6 on Query {\n  getRooms(first: $first, after: $after) {\n    ok\n    error\n    edges {\n      node {\n        ...RoomTableContent_room\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query RoomsTablePaginationQuery(\n  $after: DateTime\n  $first: Int!\n) {\n  ...RoomsTable_room_2HEEH6\n}\n\nfragment RoomTableContent_room on Room {\n  id\n  users {\n    id\n    name\n  }\n  unreadMessageCount\n  recentMessage {\n    id\n    message\n    createdAt\n  }\n}\n\nfragment RoomsTable_room_2HEEH6 on Query {\n  getRooms(first: $first, after: $after) {\n    ok\n    error\n    edges {\n      node {\n        ...RoomTableContent_room\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

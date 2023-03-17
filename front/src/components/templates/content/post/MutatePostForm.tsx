@@ -100,8 +100,8 @@ const MutatePostForm = ({ post }: IMutatePostForm) => {
               message: "제목은 2글자 이상입니다.",
             },
             maxLength: {
-              value: 50,
-              message: "제목은 50글자 이하입니다.",
+              value: 100,
+              message: "제목은 100글자 이하입니다.",
             },
           })}
           label="게시글 제목"

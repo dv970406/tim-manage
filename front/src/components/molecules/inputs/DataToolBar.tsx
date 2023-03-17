@@ -1,21 +1,11 @@
-import {
-  faCirclePlus,
-  faSearch,
-  faUsers,
-  faWaffle,
-} from "@fortawesome/pro-solid-svg-icons";
+import { faCirclePlus, faSearch } from "@fortawesome/pro-solid-svg-icons";
 import React, { ChangeEventHandler, MouseEventHandler, useState } from "react";
-import { UseFormRegisterReturn } from "react-hook-form";
-import { useGetPositions } from "../../../client/position/GetPositions.client";
-import { useGetTeams } from "../../../client/team/GetTeams.client";
 import { useGetMyInfo } from "../../../client/user/GetMyInfo.client";
 import { theme } from "../../../css/theme";
-import { DB_TABLE } from "../../../utils/constants/share.constant";
 import { openModal } from "../../../utils/modal/controlModal";
 import { RowBox } from "../../atomics/boxes/Boxes";
 import { ButtonIcon } from "../buttons/Buttons";
 import { BoxIcon } from "../icons/Icons";
-import Select from "./Select";
 interface IDataToolBar {
   onChange: ChangeEventHandler<HTMLInputElement>;
   mutateName?: string;
@@ -25,7 +15,7 @@ interface IDataToolBar {
 const DataToolBar = ({ onChange, mutateName, hasAddButton }: IDataToolBar) => {
   const [isFocusingSearch, setIsFocusingSearch] = useState(false);
 
-  const handleModal: MouseEventHandler<HTMLButtonElement> = (event) => {
+  const handleModal: MouseEventHandler<HTMLButtonElement> = () => {
     if (!mutateName) return;
     openModal(mutateName);
   };
@@ -50,7 +40,7 @@ const DataToolBar = ({ onChange, mutateName, hasAddButton }: IDataToolBar) => {
 
           transition: "border 0.2s",
           padding: theme.spacing.sm,
-          width: 300,
+          width: 250,
         }}
         onFocus={() => setIsFocusingSearch(true)}
         onBlur={() => setIsFocusingSearch(false)}
@@ -63,7 +53,6 @@ const DataToolBar = ({ onChange, mutateName, hasAddButton }: IDataToolBar) => {
           // {...register}
           onChange={onChange}
           placeholder={"키워드를 입력해주세요."}
-          style={{ width: "100%" }}
         />
       </div>
 

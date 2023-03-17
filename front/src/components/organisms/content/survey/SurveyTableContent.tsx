@@ -1,7 +1,6 @@
 import {
   faEye,
   faEyeSlash,
-  faEllipsisVertical,
   faBadgeCheck,
   faPenCircle,
 } from "@fortawesome/pro-solid-svg-icons";
@@ -52,6 +51,9 @@ const SurveyTableContent = ({ survey }: ISurveyTableContent) => {
       onClick={() => navigate(`/survey/${tableContentData.id}`)}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
+      style={{
+        opacity: tableContentData.isAnswered ? 0.4 : 1,
+      }}
     >
       <RowBox>
         <BoxIcon
@@ -60,18 +62,11 @@ const SurveyTableContent = ({ survey }: ISurveyTableContent) => {
           size={"2x"}
         />
         <ColumnBox gap={theme.spacing.sm}>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <SectionTitle>{tableContentData.surveyTitle}</SectionTitle>
-            <ButtonIcon onClick={() => null} icon={faEllipsisVertical} />
-          </div>
-          <div>
-            <MainText>{tableContentData.user.name}</MainText>
-          </div>
+          <SectionTitle className="one-line">
+            {tableContentData.surveyTitle}
+          </SectionTitle>
+
+          <MainText>{tableContentData.user.name}</MainText>
         </ColumnBox>
       </RowBox>
 
@@ -82,25 +77,14 @@ const SurveyTableContent = ({ survey }: ISurveyTableContent) => {
           alignItems: "center",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            gap: theme.spacing.sm,
-            alignItems: "center",
-          }}
-        >
-          <BoxIcon
-            icon={tableContentData.isAnonymous ? faEyeSlash : faEye}
-            bgColor={
-              tableContentData.isAnonymous
-                ? theme.bgColors.red
-                : theme.bgColors.purple
-            }
-          />
-          <MainText>
-            {tableContentData.isAnswered ? "응답됨" : "응답안됨"}
-          </MainText>
-        </div>
+        <BoxIcon
+          icon={tableContentData.isAnonymous ? faEyeSlash : faEye}
+          bgColor={
+            tableContentData.isAnonymous
+              ? theme.bgColors.red
+              : theme.bgColors.purple
+          }
+        />
 
         <MainText>{surveyCreatedAt}</MainText>
       </RowBox>

@@ -36,6 +36,7 @@ export interface IFonts {
   lg: string;
   md: string;
   sm: string;
+  xs: string;
 }
 export interface IBolds {
   xl: number;
@@ -48,6 +49,7 @@ export interface ISpacing {
   lg: number;
   md: number;
   sm: number;
+  xs: number;
 }
 export interface IBorderRadius {
   lg: number;

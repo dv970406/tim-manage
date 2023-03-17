@@ -1,22 +1,11 @@
-import {
-  faBackpack,
-  faCrown,
-  faEllipsisVertical,
-  faRocket,
-} from "@fortawesome/pro-solid-svg-icons";
+import { faRocket } from "@fortawesome/pro-solid-svg-icons";
 import { graphql } from "babel-plugin-relay/macro";
-import React, { useState } from "react";
-import { useFragment, usePaginationFragment } from "react-relay";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { useFragment } from "react-relay";
 import { ReadNotificationMutation$variables } from "../../../client/notification/__generated__/ReadNotificationMutation.graphql";
 import { theme } from "../../../css/theme";
-import {
-  getElaspedDay,
-  getKoreanDateFormat,
-  vacationDateFormat,
-} from "../../../utils/time/time";
+import { getElaspedDay, vacationDateFormat } from "../../../utils/time/time";
 import { ColumnBox, RowBox } from "../../atomics/boxes/Boxes";
-
 import { ListItem } from "../../atomics/sections/sections";
 import {
   AccentText,
