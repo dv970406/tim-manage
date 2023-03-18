@@ -4,6 +4,8 @@ import { useEffect, useState, Suspense } from "react";
 import { loadQuery, PreloadedQuery, usePreloadedQuery } from "react-relay";
 import { theme } from "../../css/theme";
 import { SCHEDULES } from "../../utils/constants/schedule.constant";
+import { NINE_HOURS_TO_MILLISEC } from "../../utils/constants/time.constant";
+import { getExpiredDate } from "../../utils/time/time";
 import { environment } from "../client";
 import { useGetMyInfo } from "../user/GetMyInfo.client";
 import { GetMeetingsQuery } from "./__generated__/GetMeetingsQuery.graphql";
@@ -59,14 +61,14 @@ export const useGetMeetings = (
         // fullCalendar 라이브러리의 형식을 맞춰주기 위해 toJSON 작업
         const start = new Date(meeting.startTime);
         const end = new Date(meeting.endTime);
-        const now = new Date();
+        const expiredDate = getExpiredDate();
 
         const amIAttend = meeting.attendees.find((attendee) => {
           if (!attendee) return;
           return attendee.id === myInfo?.id;
         });
 
-        const isExpired = start < now;
+        const isExpired = start < expiredDate;
 
         return {
           id: meeting.id,

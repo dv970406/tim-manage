@@ -5,6 +5,7 @@ import { PreloadedQuery, usePreloadedQuery } from "react-relay";
 import { theme } from "../../css/theme";
 import { SCHEDULES } from "../../utils/constants/schedule.constant";
 import { NINE_HOURS_TO_MILLISEC } from "../../utils/constants/time.constant";
+import { getExpiredDate } from "../../utils/time/time";
 import { useGetMyInfo } from "../user/GetMyInfo.client";
 import { GetVacationsQuery } from "./__generated__/GetVacationsQuery.graphql";
 
@@ -74,7 +75,7 @@ export const useGetVacations = (
         const end = new Date(
           +new Date(vacation.endDate) + NINE_HOURS_TO_MILLISEC
         );
-        const now = new Date();
+        const expiredDate = getExpiredDate();
 
         let backgroundColor;
         if (isMine && !isApproved) {
@@ -85,7 +86,7 @@ export const useGetVacations = (
           backgroundColor = theme.bgColors.yellow;
         }
 
-        const isExpired = start < now;
+        const isExpired = start < expiredDate;
         return {
           id: vacation.id,
           start,

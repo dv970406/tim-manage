@@ -1,6 +1,6 @@
 import { faRocket } from "@fortawesome/pro-solid-svg-icons";
 import { DateRangeInput, DateSelectArg } from "@fullcalendar/core";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useCreateMeeting } from "../../../../client/meeting/CreateMeeting.client";
 import { useCreateVacation } from "../../../../client/vacation/CreateVacation.client";
@@ -30,11 +30,13 @@ const CreateScheduleModal = ({
     register,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm<IMeetingFormValue>({
     mode: "onChange",
   });
   const { createVacationMutation, createVacationLoading } = useCreateVacation();
-  const { createMeetingMutation, createMeetingLoading } = useCreateMeeting();
+  const { createMeetingMutation, createMeetingLoading, createMeetingSuccess } =
+    useCreateMeeting();
 
   const [kindOfSchedule, setKindOfSchedule] = useState(SCHEDULES.VACATION);
 
@@ -65,6 +67,12 @@ const CreateScheduleModal = ({
     closeModal(MODAL_NAME.CREATE_SCHEDULE);
   };
 
+  useEffect(() => {
+    if (createMeetingSuccess) {
+      setAttendeesId([]);
+      reset();
+    }
+  }, [createMeetingSuccess]);
   return (
     <PortalModal modalName={MODAL_NAME.CREATE_SCHEDULE}>
       <Form

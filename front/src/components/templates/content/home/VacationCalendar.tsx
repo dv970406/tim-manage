@@ -34,6 +34,7 @@ import "./FullCalendarStyles.css";
 import {
   ampmFormat,
   endDateFormatForDb,
+  getExpiredDate,
   meetingTimeFormatForDb,
 } from "../../../../utils/time/time";
 import { NINE_HOURS_TO_MILLISEC } from "../../../../utils/constants/time.constant";
@@ -67,8 +68,9 @@ export default function VacationCalendar({
 
   const handleDateSelect = ({ start, end }: DateSelectArg) => {
     // 과거의 날짜는 선택할 수 없게 함
-    const now = new Date();
-    if (start < now) return;
+    const expiredDate = getExpiredDate();
+
+    if (start < expiredDate) return;
 
     const startDate = +new Date(start) + NINE_HOURS_TO_MILLISEC;
     const endDate = +new Date(end) - NINE_HOURS_TO_MILLISEC;
@@ -81,9 +83,10 @@ export default function VacationCalendar({
   const handleEventClick = (clickInfo: EventClickArg) => {
     const { type, isMine } = clickInfo.event.extendedProps;
     const { start } = clickInfo.event;
-    const now = new Date();
+    const expiredDate = getExpiredDate();
+
     const scheduleId = clickInfo.event.id;
-    if (!isMine || start! < now || !scheduleId) return;
+    if (!isMine || start! < expiredDate || !scheduleId) return;
 
     if (type === SCHEDULES.VACATION) {
       if (deleteVacationLoading) return;

@@ -20,6 +20,7 @@ export const renderEventContent = (eventContent: EventContentArg) => {
           pointerEvents: "none",
           opacity: theme.disabled.opacity,
         }),
+        overflow: "hidden",
       }}
     >
       <div>

@@ -44,6 +44,7 @@ const createMeetingQuery = graphql`
 
 export const useCreateMeeting = () => {
   const [createMeetingLoading, setIsLoading] = useState(false);
+  const [createMeetingSuccess, setIsSuccess] = useState(false);
 
   const createMeetingMutation = (
     variables: CreateMeetingMutation$variables
@@ -76,9 +77,10 @@ export const useCreateMeeting = () => {
           alert(error);
           return;
         }
+        setIsSuccess(true);
       },
     });
   };
 
-  return { createMeetingMutation, createMeetingLoading };
+  return { createMeetingMutation, createMeetingLoading, createMeetingSuccess };
 };

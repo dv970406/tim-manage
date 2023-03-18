@@ -34,7 +34,7 @@ export const TextInput = ({
 }: ITextInput) => {
   const [isFocusing, setIsFocusing] = useState(false);
   return (
-    <ColumnBox gap={theme.spacing.sm}>
+    <ColumnBox gap={theme.spacing.xs}>
       {label && (
         <label htmlFor={label} style={{ cursor: "pointer" }}>
           <SubTitle>{label}</SubTitle>

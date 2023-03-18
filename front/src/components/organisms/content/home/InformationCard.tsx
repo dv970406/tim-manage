@@ -23,7 +23,7 @@ const InformationCard = ({
       <RowBox>
         <BoxIcon icon={faRocket} size="lg" bgColor={theme.bgColors.purple} />
 
-        <ColumnBox gap={theme.spacing.sm}>
+        <ColumnBox gap={theme.spacing.xs}>
           <SubTitle style={{ textAlign: "right" }}>{mainText}</SubTitle>
 
           <DateText style={{ textAlign: "right" }}>{middleText}</DateText>

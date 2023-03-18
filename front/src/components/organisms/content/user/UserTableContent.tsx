@@ -95,7 +95,7 @@ const UserTableContent = ({ user, isManager }: IUserTableContent) => {
           <RowBox
             style={{
               alignItems: "center",
-              justifyContent: "flex-end",
+              gap: theme.spacing.xs,
             }}
           >
             <BoxIcon
@@ -114,6 +114,7 @@ const UserTableContent = ({ user, isManager }: IUserTableContent) => {
           <RowBox
             style={{
               alignItems: "center",
+              gap: theme.spacing.xs,
             }}
           >
             <BoxIcon icon={getTeamIcon(tableContentData.team.team)} />
@@ -125,15 +126,6 @@ const UserTableContent = ({ user, isManager }: IUserTableContent) => {
       </RowBox>
     </ItemBox>
   );
-  {
-    /* <ItemBox onClick={() => navigate(`/user/${tableContentData.id}`)}>
-    <MainText>{tableContentData.name}</MainText>
-    <MainText>{tableContentData.email}</MainText>
-    <MainText>{tableContentData.position.position}</MainText>
-    <MainText>{tableContentData.team.team}</MainText>
-    <MainText>{joinDate}</MainText>
-  </ItemBox> */
-  }
 };
 
 export default UserTableContent;

@@ -110,3 +110,8 @@ export const getKoreanTimeFormat = (time: Date | number) => {
 
   return date.toLocaleTimeString("ko", { hour: "2-digit", minute: "2-digit" });
 };
+
+export const getExpiredDate = () => {
+  const now = new Date();
+  return new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 9, 1);
+};
