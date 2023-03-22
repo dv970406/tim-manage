@@ -5,7 +5,7 @@ import { theme } from "../../../css/theme";
 import { ErrorText, MainText } from "../../atomics/typographys/texts";
 import { SubTitle } from "../../atomics/typographys/titles";
 import { ColumnBox } from "../../atomics/boxes/Boxes";
-import { BoxIcon } from "../icons/Icons";
+import { BoxIcon } from "../icons/BoxIcon";
 
 interface ITextArea {
   label?: string;

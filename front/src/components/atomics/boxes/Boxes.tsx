@@ -21,6 +21,13 @@ export const RowBox = styled.div(({ theme }) => ({
   width: "100%",
 }));
 
+export const CenterBox = styled.div(({ theme }) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: theme.spacing.sm,
+}));
+
 export const ScrollBox = styled.ul(({ theme }) => ({
   overflow: "auto",
   display: "flex",

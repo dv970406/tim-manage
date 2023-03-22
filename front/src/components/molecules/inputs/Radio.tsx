@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { UseFormRegister, UseFormRegisterReturn } from "react-hook-form";
 import { theme } from "../../../css/theme";
 import { SCHEDULES } from "../../../utils/constants/schedule.constant";
+import { CenterBox } from "../../atomics/boxes/Boxes";
 import { SubTitle } from "../../atomics/typographys/titles";
 
 interface IRadio {
@@ -39,14 +40,7 @@ export const Radio = ({
   disabled = false,
 }: IRadio) => {
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: theme.spacing.sm,
-      }}
-    >
+    <CenterBox>
       <SRadio
         type="radio"
         {...register}
@@ -65,6 +59,6 @@ export const Radio = ({
       >
         <SubTitle>{text}</SubTitle>
       </label>
-    </div>
+    </CenterBox>
   );
 };

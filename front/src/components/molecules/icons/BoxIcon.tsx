@@ -1,4 +1,5 @@
 import { theme } from "../../../css/theme";
+import { CenterBox } from "../../atomics/boxes/Boxes";
 import { Icon, IIcon } from "../../atomics/icons/icons";
 
 interface IBoxIcon extends IIcon {
@@ -6,19 +7,16 @@ interface IBoxIcon extends IIcon {
 }
 export const BoxIcon = ({ color, icon, bgColor, size }: IBoxIcon) => {
   return (
-    <div
+    <CenterBox
       className="avatar_bg"
       style={{
         backgroundColor: bgColor ? bgColor : theme.bgColors.gray,
         padding: theme.spacing.sm,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
         borderRadius: theme.borderRadius.sm,
         transition: "all 0.2s",
       }}
     >
       <Icon icon={icon} color={color} size={size} />
-    </div>
+    </CenterBox>
   );
 };

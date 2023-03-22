@@ -1,13 +1,7 @@
 import styled from "@emotion/styled";
 import React from "react";
+import { CenterBox } from "../../atomics/boxes/Boxes";
 
-export const CenterFixBox = styled.div(({ theme }) => ({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: "100%",
-  height: "100%",
-}));
 export const SizingBox = styled.div(({ theme }) => ({
   display: "flex",
   gap: theme.spacing.sm,
@@ -17,15 +11,15 @@ export const SizingBox = styled.div(({ theme }) => ({
   maxHeight: "90%",
 }));
 
-interface ICenterBox {
+interface ICenterFrame {
   children: React.ReactNode;
 }
-const CenterBox = ({ children }: ICenterBox) => {
+const CenterFrame = ({ children }: ICenterFrame) => {
   return (
-    <CenterFixBox>
+    <CenterBox>
       <SizingBox>{children}</SizingBox>
-    </CenterFixBox>
+    </CenterBox>
   );
 };
 
-export default CenterBox;
+export default CenterFrame;

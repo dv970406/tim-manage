@@ -2,7 +2,9 @@ import styled from "@emotion/styled";
 import { UseFormRegister, UseFormRegisterReturn } from "react-hook-form";
 import { theme } from "../../../css/theme";
 import { SCHEDULES } from "../../../utils/constants/schedule.constant";
+import { CenterBox, RowBox } from "../../atomics/boxes/Boxes";
 import { SubTitle } from "../../atomics/typographys/titles";
+import CenterFrame from "../boxes/CenterFrame";
 
 interface ICheckbox {
   id: string;
@@ -35,14 +37,7 @@ export const Checkbox = ({
   defaultChecked,
 }: ICheckbox) => {
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: theme.spacing.sm,
-      }}
-    >
+    <CenterBox>
       <SCheckbox
         type="checkbox"
         {...register}
@@ -58,6 +53,6 @@ export const Checkbox = ({
       >
         <SubTitle>{text}</SubTitle>
       </label>
-    </div>
+    </CenterBox>
   );
 };

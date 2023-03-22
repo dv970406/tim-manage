@@ -1,3 +1,4 @@
+import { Theme } from "@emotion/react";
 import styled from "@emotion/styled";
 
 export const ChoiceInput = styled.input(({ theme }) => ({
@@ -17,3 +18,21 @@ export const ChoiceInput = styled.input(({ theme }) => ({
     border: `1px solid ${theme.colors.purple}`,
   },
 }));
+
+interface IInputBox {
+  theme?: Theme;
+  isFocusingSearch?: boolean;
+}
+export const InputBox = styled.div(
+  ({ theme, isFocusingSearch }: IInputBox) => ({
+    display: "flex",
+    alignItems: "center",
+    gap: theme?.spacing.sm,
+    borderBottom: isFocusingSearch
+      ? `1px solid ${theme?.colors.purple}`
+      : `1px solid ${theme?.colors.gray}`,
+
+    transition: "border 0.2s",
+    padding: theme?.spacing.sm,
+  })
+);

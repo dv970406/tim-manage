@@ -5,7 +5,8 @@ import { theme } from "../../../css/theme";
 import { ErrorText, MainText } from "../../atomics/typographys/texts";
 import { SubTitle } from "../../atomics/typographys/titles";
 import { ColumnBox } from "../../atomics/boxes/Boxes";
-import { BoxIcon } from "../icons/Icons";
+import { BoxIcon } from "../icons/BoxIcon";
+import { InputBox } from "../../atomics/inputs/inputs";
 
 interface ITextInput {
   label?: string;
@@ -25,7 +26,6 @@ export const TextInput = ({
   placeholder = "Placeholder",
   type = "text",
   noError = false,
-
   step,
   register,
   defaultValue,
@@ -40,23 +40,13 @@ export const TextInput = ({
           <SubTitle>{label}</SubTitle>
         </label>
       )}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: theme.spacing.md,
-          border: isFocusing
-            ? `1px solid ${theme.colors.purple}`
-            : `1px solid ${theme.colors.gray}`,
-          borderRadius: theme.borderRadius.md,
-          transition: "all 0.2s",
-          width: "100%",
-        }}
+      <InputBox
         onFocus={() => setIsFocusing(true)}
         onBlur={() => setIsFocusing(false)}
+        isFocusingSearch={isFocusing}
       >
         {icon && (
-          <div style={{ padding: theme.spacing.md, paddingRight: 0 }}>
+          <div style={{}}>
             <BoxIcon
               bgColor={isFocusing ? theme.bgColors.purple : undefined}
               icon={icon}
@@ -68,7 +58,7 @@ export const TextInput = ({
           placeholder={placeholder}
           style={{
             width: "100%",
-            padding: theme.spacing.md,
+            padding: theme.spacing.xs,
           }}
           type={type}
           {...(defaultValue && { defaultValue })}
@@ -81,7 +71,7 @@ export const TextInput = ({
           {...register}
           {...(onChange && { onChange })}
         />
-      </div>
+      </InputBox>
       {!noError && <ErrorText style={{ height: 15 }}>{errorMessage}</ErrorText>}
     </ColumnBox>
   );

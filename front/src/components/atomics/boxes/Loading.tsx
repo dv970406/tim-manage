@@ -1,18 +1,18 @@
 import React from "react";
 import { BallTriangle } from "react-loader-spinner";
 import { theme } from "../../../css/theme";
-import { CenterFixBox } from "../../molecules/boxes/CenterBox";
+import { CenterBox } from "./Boxes";
 
 const Loading = () => {
   return (
-    <CenterFixBox>
+    <CenterBox style={{ width: "100%", height: "100%" }}>
       <BallTriangle
         height="80"
         width="80"
         color={theme.colors.purple}
         ariaLabel="loading"
       />
-    </CenterFixBox>
+    </CenterBox>
   );
 };
 

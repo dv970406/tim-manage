@@ -90,7 +90,7 @@ export const MessageSection = styled.section(
     backdropFilter: theme?.bgColors.backdropFilter,
     backgroundColor: theme?.bgColors.lightgray,
     width: 350,
-    height: 500,
+    height: 550,
     position: "fixed",
     right: 40,
     bottom: 65,
@@ -99,7 +99,7 @@ export const MessageSection = styled.section(
     padding: theme?.spacing.md,
     zIndex: 5,
     display: "grid",
-    gridTemplateRows: isInRoom ? "5% 80% 15%" : "5% 95%",
+    gridTemplateRows: isInRoom ? "5% 85% 10%" : "5% 95%",
     gap: theme?.spacing.sm,
   })
 );
@@ -206,11 +206,3 @@ const modalShow = keyframes`
     margin-top: 0;
   }
 `;
-
-const modalBgShow = keyframes`
-from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }`;
