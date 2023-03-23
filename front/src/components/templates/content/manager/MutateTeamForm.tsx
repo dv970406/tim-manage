@@ -4,17 +4,14 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useGetManagerTeam } from "../../../../client/manager/GetManagerTeam.client";
 import { useDeleteTeam } from "../../../../client/manager/DeleteTeam.client";
 import { theme } from "../../../../css/theme";
-import { SubmitButton } from "../../../atomics/buttons/buttons";
 import { Form } from "../../../atomics/form/Form";
-import {
-  ButtonIcon,
-  EndSubmitButton,
-} from "../../../molecules/buttons/Buttons";
+
 import FormTitle from "../../../molecules/form/FormTitle";
 import Select from "../../../molecules/inputs/Select";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 import { useUpdateTeam } from "../../../../client/manager/UpdateTeam.client";
 import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
+import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
 
 interface IMutateTeamFormValue {
   team: string;

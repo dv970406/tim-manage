@@ -1,24 +1,13 @@
-import {
-  faPooStorm,
-  faS,
-  faUserSecret,
-  faV,
-} from "@fortawesome/pro-solid-svg-icons";
-import { graphql } from "babel-plugin-relay/macro";
+import { faS, faV } from "@fortawesome/pro-solid-svg-icons";
 import { Suspense, useEffect } from "react";
-import { PreloadedQuery, usePreloadedQuery, useQueryLoader } from "react-relay";
-import { Outlet, Route, Routes, useParams } from "react-router-dom";
-import { useGetMyInfo } from "../../client/user/GetMyInfo.client";
+import { PreloadedQuery, useQueryLoader } from "react-relay";
+import { Outlet, useParams } from "react-router-dom";
 import { getUserQuery, useGetUser } from "../../client/user/GetUser.client";
 import { GetUserQuery } from "../../client/user/__generated__/GetUserQuery.graphql";
 import { RowBox, ColumnBox } from "../../components/atomics/boxes/Boxes";
 import Loading from "../../components/atomics/boxes/Loading";
 import { Section } from "../../components/atomics/sections/sections";
-import { MainText } from "../../components/atomics/typographys/texts";
-import { CenterFixBox } from "../../components/molecules/boxes/CenterBox";
-import { ButtonIcon } from "../../components/molecules/buttons/Buttons";
 import NavIconButton from "../../components/organisms/header/NavIconButton";
-import { theme } from "../../css/theme";
 import { PAGINATION_LOAD_COUNT } from "../../utils/constants/share.constant";
 
 const UserDetailPage = () => {

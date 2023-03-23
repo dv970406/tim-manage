@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useEffect } from "react";
 import { useConfirmVacation } from "../../../../client/manager/ConfirmVacation.client";
 import { ColumnBox } from "../../../atomics/boxes/Boxes";
-import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
+import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
 import Table from "../../../molecules/tables/Table";
 import UnConfirmedVacationTableContent from "../../../organisms/content/manager/UnConfirmedVacationTableContent";
 import { UnConfirmedVacationTableContent_vacation$key } from "../../../organisms/content/manager/__generated__/UnConfirmedVacationTableContent_vacation.graphql";

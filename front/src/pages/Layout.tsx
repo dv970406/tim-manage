@@ -27,7 +27,7 @@ function TemplatesLayout() {
         <Header unreadNotificationCount={myInfo?.unreadNotificationCount} />
 
         <Content>
-          <Outlet /* context={user} */ />
+          <Outlet />
         </Content>
         <MessageTool />
       </Main>

@@ -49,7 +49,6 @@ const SendMessage = ({ roomId }: ISendMessage) => {
               value: true,
               message: "메시지는 필수입니다.",
             },
-
             maxLength: {
               value: 100,
               message: "한번에 보낼 수 있는 메시지는 100자 이하입니다.",

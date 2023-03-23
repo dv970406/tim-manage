@@ -9,7 +9,7 @@ import { Options } from "react-relay/relay-hooks/useRefetchableFragmentNode";
 import { theme } from "../../../../css/theme";
 import { RowBox } from "../../../atomics/boxes/Boxes";
 import { Section } from "../../../atomics/sections/sections";
-import { ButtonIcon } from "../../../molecules/buttons/Buttons";
+import { IconButton } from "../../../molecules/buttons/IconButton";
 import { PostsTablePaginationQuery } from "../../../templates/content/post/__generated__/PostsTablePaginationQuery.graphql";
 import { PostsTable_post$key } from "../../../templates/content/post/__generated__/PostsTable_post.graphql";
 
@@ -44,21 +44,21 @@ const OrderPosts = ({ refetch }: IOrderPosts) => {
   return (
     <Section>
       <RowBox style={{ justifyContent: "center", alignItems: "center" }}>
-        <ButtonIcon
+        <IconButton
           onClick={() => handleOrder("recent")}
           color={
             clickedTab === "recent" ? theme.colors.purple : theme.colors.white
           }
           icon={faNewspaper}
         />
-        <ButtonIcon
+        <IconButton
           onClick={() => handleOrder("like")}
           color={
             clickedTab === "like" ? theme.colors.purple : theme.colors.white
           }
           icon={faHeart}
         />
-        <ButtonIcon
+        <IconButton
           onClick={() => handleOrder("comment")}
           color={
             clickedTab === "comment" ? theme.colors.purple : theme.colors.white

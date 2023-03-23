@@ -5,7 +5,7 @@ import { useCreateTeam } from "../../../../client/manager/CreateTeam.client";
 import { ColumnBox } from "../../../atomics/boxes/Boxes";
 import { SubmitButton } from "../../../atomics/buttons/buttons";
 import { Form } from "../../../atomics/form/Form";
-import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
+import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
 import FormTitle from "../../../molecules/form/FormTitle";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 

@@ -8,8 +8,11 @@ import "react-quill/dist/quill.bubble.css";
 import CommentsZone from "../../components/templates/content/post/CommentsZone";
 import ContentZone from "../../components/templates/content/post/ContentZone";
 import { theme } from "../../css/theme";
-import { ColumnBox, RowBox } from "../../components/atomics/boxes/Boxes";
-import { CenterFixBox } from "../../components/molecules/boxes/CenterBox";
+import {
+  CenterBox,
+  ColumnBox,
+  RowBox,
+} from "../../components/atomics/boxes/Boxes";
 import Loading from "../../components/atomics/boxes/Loading";
 
 const PostDetailPage = () => {
@@ -36,7 +39,7 @@ const PostDetail = ({ getPostQueryReference }: IPostDetail) => {
   const { post } = useGetPost(getPostQueryReference);
 
   return (
-    <CenterFixBox>
+    <CenterBox>
       <RowBox
         style={{
           width: "70%",
@@ -57,7 +60,7 @@ const PostDetail = ({ getPostQueryReference }: IPostDetail) => {
           {post && <CommentsZone post={post} />}{" "}
         </Section>
       </RowBox>
-    </CenterFixBox>
+    </CenterBox>
   );
 };
 export default PostDetailPage;

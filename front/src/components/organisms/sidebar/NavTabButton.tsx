@@ -3,7 +3,7 @@ import { SectionText, MainText } from "../../atomics/typographys/texts";
 import { Icon, IIcon } from "../../atomics/icons/icons";
 import { useContext } from "react";
 import { theme } from "../../../css/theme";
-import { BoxIcon } from "../../molecules/icons/Icons";
+import { BoxIcon } from "../../molecules/icons/BoxIcon";
 import { NavLink } from "react-router-dom";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -11,6 +11,7 @@ import {
   chevronTurnOnAnimation,
 } from "../../../css/animations";
 import { SideBarContext } from "../../../utils/contexts/sidebar.context";
+import { RowBox } from "../../atomics/boxes/Boxes";
 
 interface INavTabButton extends IIcon {
   icon: IconProp;
@@ -63,10 +64,8 @@ const NavTabButton = ({ icon, tabName, lists }: INavTabButton) => {
         }}
         onClick={controlClickedTab}
       >
-        <div
+        <RowBox
           style={{
-            display: "flex",
-            gap: theme.spacing.md,
             alignItems: "center",
           }}
         >
@@ -76,7 +75,7 @@ const NavTabButton = ({ icon, tabName, lists }: INavTabButton) => {
             bgColor={isTabClicked ? theme.bgColors.purple : theme.bgColors.gray}
           />
           <MainText>{tabName}</MainText>
-        </div>
+        </RowBox>
         <Icon
           icon={faChevronDown}
           animation={

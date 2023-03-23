@@ -1,15 +1,15 @@
 import React from "react";
+import { CenterBox } from "../../components/atomics/boxes/Boxes";
 import { Section } from "../../components/atomics/sections/sections";
-import { CenterFixBox } from "../../components/molecules/boxes/CenterBox";
 import CreateSurveyForm from "../../components/templates/content/manager/CreateSurveyForm";
 
 const SurveyCreatePage = () => {
   return (
-    <CenterFixBox>
+    <CenterBox>
       <Section style={{ width: "40%" }}>
         <CreateSurveyForm />
       </Section>
-    </CenterFixBox>
+    </CenterBox>
   );
 };
 

@@ -6,7 +6,7 @@ import { theme } from "../../../css/theme";
 import { NotificationSection } from "../../atomics/sections/sections";
 import { SubText } from "../../atomics/typographys/texts";
 import { SubTitle } from "../../atomics/typographys/titles";
-import { ButtonIcon } from "../../molecules/buttons/Buttons";
+import { IconButton } from "../../molecules/buttons/IconButton";
 import NotificationsTable from "./NotificationsTable";
 
 interface INotification {
@@ -34,7 +34,7 @@ const Notification = ({ unreadNotificationCount }: INotification) => {
         position: "relative",
       }}
     >
-      <ButtonIcon
+      <IconButton
         icon={faBell}
         size="lg"
         onClick={() => {

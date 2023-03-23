@@ -9,8 +9,8 @@ import { SubmitButton } from "../../../atomics/buttons/buttons";
 import { Form } from "../../../atomics/form/Form";
 import FormTitle from "../../../molecules/form/FormTitle";
 import { TextInput } from "../../../molecules/inputs/TextInput";
-import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
 import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
+import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
 
 interface IMutatePositionFormValue {
   position: string;

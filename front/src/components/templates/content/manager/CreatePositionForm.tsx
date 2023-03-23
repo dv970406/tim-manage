@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useCreatePosition } from "../../../../client/manager/CreatePosition.client";
 import { SubmitButton } from "../../../atomics/buttons/buttons";
 import { Form } from "../../../atomics/form/Form";
-import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
+import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
 import FormTitle from "../../../molecules/form/FormTitle";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 

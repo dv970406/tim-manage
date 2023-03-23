@@ -2,12 +2,8 @@ import { graphql } from "babel-plugin-relay/macro";
 import { usePaginationFragment } from "react-relay";
 import { SearchAndInfiniteScrollDataList } from "../../../organisms/shared/InfiniteScrolls";
 import SurveyTableContent from "../../../organisms/content/survey/SurveyTableContent";
-import { GetSurveysPaginationQuery } from "./__generated__/GetSurveysPaginationQuery.graphql";
 import { SurveysTable_survey$key } from "./__generated__/SurveysTable_survey.graphql";
-import DataToolBar from "../../../molecules/inputs/DataToolBar";
-import { ChangeEventHandler, useEffect, useState } from "react";
-import CreateScheduleModal from "../home/CreateScheduleModal";
-import MutateMeetingModal from "../home/MutateMeetingModal";
+
 import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
 import { SurveysTablePaginationQuery } from "./__generated__/SurveysTablePaginationQuery.graphql";
 import { useGetMyInfo } from "../../../../client/user/GetMyInfo.client";

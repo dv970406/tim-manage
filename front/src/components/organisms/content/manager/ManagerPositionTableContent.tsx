@@ -1,14 +1,9 @@
 import { graphql } from "babel-plugin-relay/macro";
 import React, { Dispatch, SetStateAction } from "react";
 import { useFragment } from "react-relay";
-import { useNavigate } from "react-router-dom";
-import { theme } from "../../../../css/theme";
 import { MainText } from "../../../atomics/typographys/texts";
 import { Td, Tr } from "../../../molecules/tables/Td";
-import {
-  ManagerPositionTableContent_position$data,
-  ManagerPositionTableContent_position$key,
-} from "../../../templates/content/manager/__generated__/ManagerPositionTableContent_position.graphql";
+import { ManagerPositionTableContent_position$key } from "../../../templates/content/manager/__generated__/ManagerPositionTableContent_position.graphql";
 import TableContent from "./TableContent";
 
 interface IManagerPositionTableContent {

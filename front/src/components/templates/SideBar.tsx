@@ -17,7 +17,7 @@ import {
   RowBox,
 } from "../atomics/boxes/Boxes";
 import { SideBarContext } from "../../utils/contexts/sidebar.context";
-import { ButtonIcon } from "../molecules/buttons/Buttons";
+import { IconButton } from "../molecules/buttons/IconButton";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { theme } from "../../css/theme";
 import { TOKEN } from "../../client/client";
@@ -80,7 +80,7 @@ const SideBar = ({ isManager, isLeader }: ISideBar) => {
             </RowBox>
             {/* sidebar_close class는 media query로 화면 크기에 따라 나타나거나 사라짐 */}
             <div className="sidebar_close">
-              <ButtonIcon onClick={handleMenuClose} icon={faClose} size="lg" />
+              <IconButton onClick={handleMenuClose} icon={faClose} size="lg" />
             </div>
           </RowBox>
           <HorizontalDivider />

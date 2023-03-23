@@ -1,17 +1,9 @@
-import {
-  faBars,
-  faBell,
-  faDoorOpen,
-  faGear,
-  faHamburger,
-  faOutdent,
-  faUser,
-} from "@fortawesome/pro-solid-svg-icons";
+import { faBars, faDoorOpen, faUser } from "@fortawesome/pro-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { TOKEN } from "../../client/client";
 import { theme } from "../../css/theme";
 import { HeaderSection } from "../atomics/sections/sections";
-import { ButtonIcon } from "../molecules/buttons/Buttons";
+import { IconButton } from "../molecules/buttons/IconButton";
 import NavIconButton from "../organisms/header/NavIconButton";
 import Notification from "../organisms/header/Notification";
 
@@ -46,13 +38,13 @@ const Header = ({ unreadNotificationCount }: IHeader) => {
         {/* 햄버거 메뉴 - media query로 show/hidden */}
         <div>
           <div className="hamburger_menu open_menu">
-            <ButtonIcon onClick={handleMenuClick} icon={faBars} size="lg" />
+            <IconButton onClick={handleMenuClick} icon={faBars} size="lg" />
           </div>
         </div>
         <div style={{ display: "flex", gap: theme.spacing.xl }}>
           <NavIconButton icon={faUser} path={`/user/my`} />
           <Notification unreadNotificationCount={unreadNotificationCount} />
-          <ButtonIcon icon={faDoorOpen} onClick={handleLogout} size="lg" />
+          <IconButton icon={faDoorOpen} onClick={handleLogout} size="lg" />
         </div>
       </nav>
     </HeaderSection>

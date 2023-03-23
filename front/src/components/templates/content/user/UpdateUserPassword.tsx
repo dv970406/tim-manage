@@ -2,12 +2,10 @@ import { faPassport } from "@fortawesome/pro-solid-svg-icons";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useUpdateUserPassword } from "../../../../client/user/UpdateUserPassword.client";
-import { theme } from "../../../../css/theme";
-import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
+
+import { CenterBox, ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
 import { Form } from "../../../atomics/form/Form";
-import { Section } from "../../../atomics/sections/sections";
-import { CenterFixBox } from "../../../molecules/boxes/CenterBox";
-import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
+import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 
 interface IUpdateUserPasswordFormValue {
@@ -46,7 +44,7 @@ const UpdateUserPassword = () => {
     });
   };
   return (
-    <CenterFixBox>
+    <CenterBox>
       <RowBox
         style={{
           width: 300,
@@ -103,7 +101,7 @@ const UpdateUserPassword = () => {
           />
         </Form>
       </RowBox>
-    </CenterFixBox>
+    </CenterBox>
   );
 };
 

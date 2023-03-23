@@ -5,10 +5,10 @@ import { useCreateWeeklyMeal } from "../../client/meal/CreateWeeklyMeal.client";
 import { SubmitButton } from "../../components/atomics/buttons/buttons";
 import { Form } from "../../components/atomics/form/Form";
 import { Section } from "../../components/atomics/sections/sections";
-import { EndSubmitButton } from "../../components/molecules/buttons/Buttons";
 import { createWorker } from "tesseract.js";
 import { ColumnBox } from "../../components/atomics/boxes/Boxes";
-import CenterBox from "../../components/molecules/boxes/CenterBox";
+import CenterFrame from "../../components/molecules/boxes/CenterFrame";
+import { EndSubmitButton } from "../../components/molecules/buttons/EndSubmitButton";
 
 interface IMealWeeklyCreateForm {
   excelFormatMeal?: File;
@@ -58,7 +58,7 @@ const MealWeeklyCreatePage = () => {
   };
 
   return (
-    <CenterBox>
+    <CenterFrame>
       <Section>
         <Form onSubmit={handleSubmit(onExcelSubmit)}>
           <input
@@ -89,7 +89,7 @@ const MealWeeklyCreatePage = () => {
           />
         </Form>
       </Section>
-    </CenterBox>
+    </CenterFrame>
   );
 };
 

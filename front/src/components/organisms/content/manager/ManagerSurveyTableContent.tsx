@@ -1,8 +1,6 @@
 import { graphql } from "babel-plugin-relay/macro";
 import React, { Dispatch, SetStateAction } from "react";
 import { useFragment } from "react-relay";
-import { useNavigate } from "react-router-dom";
-import { theme } from "../../../../css/theme";
 import { MainText } from "../../../atomics/typographys/texts";
 import { Td, Tr } from "../../../molecules/tables/Td";
 import TableContent from "./TableContent";

@@ -9,7 +9,7 @@ import { useGetMyInfo } from "../../client/user/GetMyInfo.client";
 import { ColumnBox } from "../../components/atomics/boxes/Boxes";
 import Loading from "../../components/atomics/boxes/Loading";
 import { Section } from "../../components/atomics/sections/sections";
-import CenterBox from "../../components/molecules/boxes/CenterBox";
+import CenterFrame from "../../components/molecules/boxes/CenterFrame";
 import Table from "../../components/molecules/tables/Table";
 import ManagerTeamTableContent from "../../components/organisms/content/manager/ManagerTeamTableContent";
 import CreateTeamForm from "../../components/templates/content/manager/CreateTeamForm";
@@ -47,7 +47,7 @@ const TeamManagement = ({ managerTeamsQueryReference }: ITeamManagement) => {
   if (!teams) return <></>;
 
   return (
-    <CenterBox>
+    <CenterFrame>
       <Section style={{ width: "60%" }}>
         {teams && (
           <ManagerTeamsTable
@@ -72,7 +72,7 @@ const TeamManagement = ({ managerTeamsQueryReference }: ITeamManagement) => {
           </Suspense>
         </Section>
       </ColumnBox>
-    </CenterBox>
+    </CenterFrame>
   );
 };
 export default TeamManagementPage;

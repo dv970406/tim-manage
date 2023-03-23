@@ -13,7 +13,7 @@ import { TextArea } from "../../../molecules/inputs/TextArea";
 import { ColumnBox, GapList } from "../../../atomics/boxes/Boxes";
 import { AnswerSheet_survey$key } from "./__generated__/AnswerSheet_survey.graphql";
 import FormTitle from "../../../molecules/form/FormTitle";
-import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
+import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
 
 interface IAnswerSheetFragment extends AnswerSheet_survey$key {}
 interface IAnswerSheet {
@@ -131,7 +131,7 @@ const AnswerSheet = ({ survey }: IAnswerSheet) => {
         </GapList>
       </Form>
       <EndSubmitButton
-        onClick={() => null}
+        onClick={createAnswer as any}
         text="제출"
         disabled={answerSheetData.isAnswered}
       />

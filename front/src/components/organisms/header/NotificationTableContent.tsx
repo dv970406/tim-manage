@@ -13,7 +13,7 @@ import {
   SectionText,
 } from "../../atomics/typographys/texts";
 import { SubTitle } from "../../atomics/typographys/titles";
-import { BoxIcon } from "../../molecules/icons/Icons";
+import { BoxIcon } from "../../molecules/icons/BoxIcon";
 import { NotificationTableContent_notification$key } from "./__generated__/NotificationTableContent_notification.graphql";
 
 interface INotificationTableContent {

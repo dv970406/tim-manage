@@ -6,7 +6,7 @@ import { theme } from "../../../../css/theme";
 import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
 import { ListItem } from "../../../atomics/sections/sections";
 import { SubTitle } from "../../../atomics/typographys/titles";
-import { BoxIcon } from "../../../molecules/icons/Icons";
+import { BoxIcon } from "../../../molecules/icons/BoxIcon";
 import { SpeakableUserTableContent_user$key } from "./__generated__/SpeakableUserTableContent_user.graphql";
 
 interface ISpeakableUserTableContent {

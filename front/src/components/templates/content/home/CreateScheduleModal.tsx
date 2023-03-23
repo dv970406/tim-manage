@@ -11,7 +11,7 @@ import { ColumnBox } from "../../../atomics/boxes/Boxes";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 import { Radio } from "../../../molecules/inputs/Radio";
 import SelectUsers from "../../../organisms/content/home/SelectUsers";
-import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
+import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
 import { closeModal } from "../../../../utils/modal/controlModal";
 import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
 import PortalModal from "../../../../utils/modal/PortalModal";

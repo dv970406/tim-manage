@@ -11,7 +11,7 @@ import { formats, modules } from "../../../../utils/quill/props";
 import { ColumnBox, ScrollBox } from "../../../atomics/boxes/Boxes";
 import { Form } from "../../../atomics/form/Form";
 import { SubTitle } from "../../../atomics/typographys/titles";
-import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
+import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 import "./TextEditorStyles.css";
 

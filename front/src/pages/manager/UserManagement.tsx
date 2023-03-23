@@ -8,7 +8,7 @@ import { GetManagerUsersQuery } from "../../client/manager/__generated__/GetMana
 import { useGetMyInfo } from "../../client/user/GetMyInfo.client";
 import Loading from "../../components/atomics/boxes/Loading";
 import { Section } from "../../components/atomics/sections/sections";
-import CenterBox from "../../components/molecules/boxes/CenterBox";
+import CenterFrame from "../../components/molecules/boxes/CenterFrame";
 import ManagerUsersTable from "../../components/templates/content/manager/ManagerUsersTable";
 import MutateUserForm from "../../components/templates/content/manager/MutateUserForm";
 
@@ -45,7 +45,7 @@ const UserManagement = ({ managerUsersQueryReference }: IUserManagement) => {
   if (!users) return <></>;
 
   return (
-    <CenterBox>
+    <CenterFrame>
       <Section style={{ width: "60%" }}>
         <Suspense fallback={<Loading />}>
           <ManagerUsersTable
@@ -66,7 +66,7 @@ const UserManagement = ({ managerUsersQueryReference }: IUserManagement) => {
           />
         </Suspense>
       </Section>
-    </CenterBox>
+    </CenterFrame>
   );
 };
 export default UserManagementPage;

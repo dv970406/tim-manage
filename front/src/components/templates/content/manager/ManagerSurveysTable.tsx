@@ -2,14 +2,13 @@ import { graphql } from "babel-plugin-relay/macro";
 import React, { Dispatch, SetStateAction } from "react";
 import { usePaginationFragment } from "react-relay";
 import { useDeleteSurvey } from "../../../../client/manager/DeleteSurvey.client";
-import { getSurveysQuery } from "../../../../client/survey/GetSurveys.client";
+
 import { ColumnBox, ScrollBox } from "../../../atomics/boxes/Boxes";
-import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
-import Table from "../../../molecules/tables/Table";
+import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
+
 import ManagerSurveyTableContent from "../../../organisms/content/manager/ManagerSurveyTableContent";
 import { InfiniteScrollDataTable } from "../../../organisms/shared/InfiniteScrolls";
-import { SurveysTable_survey$key } from "../survey/__generated__/SurveysTable_survey.graphql";
-import { GetManagerSurveysPaginationQuery } from "./__generated__/GetManagerSurveysPaginationQuery.graphql";
+
 import { ManagerSurveysTablePaginationQuery } from "./__generated__/ManagerSurveysTablePaginationQuery.graphql";
 import { ManagerSurveysTable_survey$key } from "./__generated__/ManagerSurveysTable_survey.graphql";
 

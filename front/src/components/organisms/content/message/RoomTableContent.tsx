@@ -8,7 +8,7 @@ import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
 import { ListItem } from "../../../atomics/sections/sections";
 import { MainText, SubText } from "../../../atomics/typographys/texts";
 import { SubTitle } from "../../../atomics/typographys/titles";
-import { BoxIcon } from "../../../molecules/icons/Icons";
+import { BoxIcon } from "../../../molecules/icons/BoxIcon";
 import { RoomTableContent_room$key } from "./__generated__/RoomTableContent_room.graphql";
 interface IRoomTableContent {
   room: RoomTableContent_room$key;

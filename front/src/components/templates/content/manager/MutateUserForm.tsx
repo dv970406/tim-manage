@@ -24,8 +24,8 @@ import { useDeleteUser } from "../../../../client/manager/DeleteUser.client";
 import { useUpdateUser } from "../../../../client/manager/UpdateUser.client";
 import { Checkbox } from "../../../molecules/inputs/Checkbox";
 import FormTitle from "../../../molecules/form/FormTitle";
-import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
 import { POSITION } from "../../../../utils/constants/user.constant";
+import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
 
 interface IMutateUserFormValue {
   name: string;

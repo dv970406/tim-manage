@@ -7,7 +7,6 @@ import { RowBox } from "../../../atomics/boxes/Boxes";
 import { SubmitButton } from "../../../atomics/buttons/buttons";
 import { Form } from "../../../atomics/form/Form";
 import { Icon } from "../../../atomics/icons/icons";
-import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 
 interface ICreateCommentForm {

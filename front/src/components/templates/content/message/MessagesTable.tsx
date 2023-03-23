@@ -6,7 +6,7 @@ import { useGetOrCreateRoom } from "../../../../client/message/GetOrCreateRoom.c
 import { receiveInRoom } from "../../../../client/message/ReceiveInRoom.client";
 import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
 import { SubTitle } from "../../../atomics/typographys/titles";
-import { ButtonIcon } from "../../../molecules/buttons/Buttons";
+import { IconButton } from "../../../molecules/buttons/IconButton";
 import MessageTableContent from "../../../organisms/content/message/MessageTableContent";
 import SendMessage from "../../../organisms/content/message/SendMessage";
 import { InfiniteScrollList } from "../../../organisms/shared/InfiniteScrolls";
@@ -82,7 +82,7 @@ const MessagesTable = ({
     <>
       <RowBox style={{ justifyContent: "space-between", alignItems: "center" }}>
         <SubTitle>{room?.users.map((user) => user.name)}님과의 대화</SubTitle>
-        <ButtonIcon icon={faDoorOpen} onClick={handleGetOutRoom} />
+        <IconButton icon={faDoorOpen} onClick={handleGetOutRoom} size="lg" />
       </RowBox>
       <InfiniteScrollList
         loadNext={loadNext}

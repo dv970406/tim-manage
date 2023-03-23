@@ -8,7 +8,7 @@ import React from "react";
 import { useToggleLike } from "../../../../client/post/ToggleLike.client";
 import { theme } from "../../../../css/theme";
 import { SectionText } from "../../../atomics/typographys/texts";
-import { ButtonIcon } from "../../../molecules/buttons/Buttons";
+import { IconButton } from "../../../molecules/buttons/IconButton";
 import { Icon } from "../../../atomics/icons/icons";
 
 interface IMetaData {
@@ -45,7 +45,7 @@ const MetaData = ({
           gap: theme.spacing.sm,
         }}
       >
-        <ButtonIcon
+        <IconButton
           size="1x"
           onClick={handleToggleLike}
           icon={isLiked ? faFullHeart : faEmptyHeart}

@@ -13,7 +13,7 @@ import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
 import { SubmitButton } from "../../../atomics/buttons/buttons";
 import { Form } from "../../../atomics/form/Form";
 import { SubTitle } from "../../../atomics/typographys/titles";
-import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
+import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 import "./TextEditorStyles.css";
 import { MutatePostForm_post$key } from "./__generated__/MutatePostForm_post.graphql";

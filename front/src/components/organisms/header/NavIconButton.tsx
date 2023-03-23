@@ -4,7 +4,7 @@ import { theme } from "../../../css/theme";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Icon } from "../../atomics/icons/icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { BoxIcon } from "../../molecules/icons/Icons";
+import { BoxIcon } from "../../molecules/icons/BoxIcon";
 
 interface INavIconButton {
   path: string;

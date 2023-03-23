@@ -17,8 +17,8 @@ import { useGetPositions } from "../../../../client/position/GetPositions.client
 import { useGetTeams } from "../../../../client/team/GetTeams.client";
 import Select from "../../../molecules/inputs/Select";
 import FormTitle from "../../../molecules/form/FormTitle";
-import { EndSubmitButton } from "../../../molecules/buttons/Buttons";
 import { closeModal } from "../../../../utils/modal/controlModal";
+import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
 
 interface ICreateUserFormValue {
   name: string;

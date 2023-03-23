@@ -12,7 +12,7 @@ import Table from "../../molecules/tables/Table";
 import { ColumnBox, ListBox, ScrollBox } from "../../atomics/boxes/Boxes";
 import { Options } from "react-relay/relay-hooks/useRefetchableFragmentNode";
 import { Section } from "../../atomics/sections/sections";
-import DataToolBar from "../../molecules/inputs/DataToolBar";
+import DataToolBar from "./DataToolBar";
 import { theme } from "../../../css/theme";
 import Loading from "../../atomics/boxes/Loading";
 

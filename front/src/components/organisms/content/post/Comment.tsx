@@ -8,7 +8,7 @@ import { getElaspedDay } from "../../../../utils/time/time";
 import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
 import { SectionText } from "../../../atomics/typographys/texts";
 import { SubTitle } from "../../../atomics/typographys/titles";
-import { ButtonIcon } from "../../../molecules/buttons/Buttons";
+import { IconButton } from "../../../molecules/buttons/IconButton";
 import { Comment_comment$key } from "./__generated__/Comment_comment.graphql";
 
 const commentFragment = graphql`
@@ -42,7 +42,7 @@ const Comment = ({ comment }: IComment) => {
       <RowBox style={{ justifyContent: "space-between" }}>
         <SubTitle>{commentData.user.name}</SubTitle>
         {commentData.isMyComment && (
-          <ButtonIcon
+          <IconButton
             icon={faEraser}
             onClick={() => handleDeleteComment(commentData.id)}
             color={theme.colors.red}

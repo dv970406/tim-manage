@@ -1,17 +1,12 @@
 import { faLock, faUser } from "@fortawesome/pro-solid-svg-icons";
-import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { useLogin } from "../../../client/user/Login.client";
 import { theme } from "../../../css/theme";
 import { ColumnBox } from "../../atomics/boxes/Boxes";
-import { SubmitButton } from "../../atomics/buttons/buttons";
 import { Form } from "../../atomics/form/Form";
 import { Section } from "../../atomics/sections/sections";
-import { ErrorText, MainText } from "../../atomics/typographys/texts";
-import { EndSubmitButton } from "../../molecules/buttons/Buttons";
+import { EndSubmitButton } from "../../molecules/buttons/EndSubmitButton";
 import { TextInput } from "../../molecules/inputs/TextInput";
-import MenuButton from "../sidebar/NavTabButton";
 
 interface ILoginForm {
   email: string;

@@ -8,7 +8,8 @@ import { ColumnBox, RowBox } from "../atomics/boxes/Boxes";
 import Loading from "../atomics/boxes/Loading";
 import { MessageSection } from "../atomics/sections/sections";
 import { SubTitle } from "../atomics/typographys/titles";
-import { ButtonIcon, CircleButton } from "../molecules/buttons/Buttons";
+import { CircleButton } from "../molecules/buttons/CircleButton";
+import { IconButton } from "../molecules/buttons/IconButton";
 import MessagesTable from "./content/message/MessagesTable";
 import RoomsTable from "./content/message/RoomsTable";
 import SpeakableUsersTable from "./content/message/SpeakableUsersTable";
@@ -94,7 +95,7 @@ const MessageTool = ({}: IMessageTool) => {
                 }}
               >
                 <SubTitle>{isUsersList ? "유저 목록" : "대화 목록"}</SubTitle>
-                <ButtonIcon
+                <IconButton
                   icon={faRotate}
                   onClick={() => setIsUsersList((prev) => !prev)}
                 />

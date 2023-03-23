@@ -14,7 +14,7 @@ import {
   useGetManagerSurveys,
 } from "../../client/manager/GetManagerSurveys.client";
 import { PAGINATION_LOAD_COUNT } from "../../utils/constants/share.constant";
-import CenterBox from "../../components/molecules/boxes/CenterBox";
+import CenterFrame from "../../components/molecules/boxes/CenterFrame";
 import Loading from "../../components/atomics/boxes/Loading";
 
 // 대표는 모두 수정 가능, 관리자는 자기가 만든 것만 수정가능
@@ -49,7 +49,7 @@ const SurveyManagement = ({
   const { answers } = useGetAnswersOfSurvey(clickedSurveyId); // useLazyLoadQuery
 
   return (
-    <CenterBox>
+    <CenterFrame>
       <Section style={{ width: "35%" }}>
         <Suspense fallback={<Loading />}>
           {answers && <ShowMultipleChoiceAnswers answers={answers} />}
@@ -73,7 +73,7 @@ const SurveyManagement = ({
           {answers && <SurveyResponseRate answers={answers} />}
         </Section>
       </ColumnBox>
-    </CenterBox>
+    </CenterFrame>
   );
 };
 export default SurveyManagementPage;

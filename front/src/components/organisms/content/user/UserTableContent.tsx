@@ -14,7 +14,7 @@ import {
 } from "../../../atomics/boxes/Boxes";
 import { SectionText, MainText } from "../../../atomics/typographys/texts";
 import { SectionTitle } from "../../../atomics/typographys/titles";
-import { BoxIcon } from "../../../molecules/icons/Icons";
+import { BoxIcon } from "../../../molecules/icons/BoxIcon";
 import { UserTableContent_user$key } from "./__generated__/UserTableContent_user.graphql";
 
 interface IUserTableContent {

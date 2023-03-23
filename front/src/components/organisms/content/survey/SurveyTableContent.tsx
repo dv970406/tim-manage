@@ -18,8 +18,8 @@ import {
 } from "../../../atomics/boxes/Boxes";
 import { MainText } from "../../../atomics/typographys/texts";
 import { SectionTitle } from "../../../atomics/typographys/titles";
-import { ButtonIcon } from "../../../molecules/buttons/Buttons";
-import { BoxIcon } from "../../../molecules/icons/Icons";
+import { IconButton } from "../../../molecules/buttons/IconButton";
+import { BoxIcon } from "../../../molecules/icons/BoxIcon";
 import { SurveyTableContent_survey$key } from "./__generated__/SurveyTableContent_survey.graphql";
 
 interface ISurveyTableContent {

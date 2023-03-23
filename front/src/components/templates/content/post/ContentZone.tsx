@@ -5,7 +5,6 @@ import { SectionTitle } from "../../../atomics/typographys/titles";
 import { useFragment } from "react-relay";
 import { ContentZone_post$key } from "./__generated__/ContentZone_post.graphql";
 import { ColumnBox } from "../../../atomics/boxes/Boxes";
-import { ButtonIcon } from "../../../molecules/buttons/Buttons";
 import {
   faComment,
   faFileXmark,
@@ -14,6 +13,7 @@ import {
 import { theme } from "../../../../css/theme";
 import { useNavigate } from "react-router-dom";
 import MetaData from "../../../organisms/content/post/MetaData";
+import { IconButton } from "../../../molecules/buttons/IconButton";
 
 interface IContentZoneFragment extends ContentZone_post$key {
   id: string;
@@ -47,7 +47,7 @@ const ContentZone = ({ post }: IContentZone) => {
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <SectionTitle>{contentZoneData?.title}</SectionTitle>
         {contentZoneData.isMyPost && (
-          <ButtonIcon
+          <IconButton
             onClick={() => navigate(`/post/update/${post.id}`)}
             icon={faFileXmark}
             color={theme.bgColors.purple}

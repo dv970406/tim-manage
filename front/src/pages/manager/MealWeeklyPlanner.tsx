@@ -5,20 +5,23 @@ import {
   useGetWeeklyMeal,
 } from "../../client/meal/GetWeeklyMeal.client";
 import { GetWeeklyMealQuery } from "../../client/meal/__generated__/GetWeeklyMealQuery.graphql";
-import { RowBox, ColumnBox } from "../../components/atomics/boxes/Boxes";
+import {
+  RowBox,
+  ColumnBox,
+  CenterBox,
+} from "../../components/atomics/boxes/Boxes";
 import {
   AnimateSection,
   Section,
 } from "../../components/atomics/sections/sections";
 import { SectionTitle } from "../../components/atomics/typographys/titles";
 import { AnimatePresence } from "framer-motion";
-import { ButtonIcon } from "../../components/molecules/buttons/Buttons";
+import { IconButton } from "../../components/molecules/buttons/IconButton";
 import { faDiagramNext, faYen } from "@fortawesome/pro-solid-svg-icons";
 import { cardAnimation } from "../../css/animations";
 import { theme } from "../../css/theme";
 import { getDayOfNow } from "../../utils/time/time";
 import { useControlTodayMeal } from "../../utils/hooks/meal/meal.hook";
-import { CenterFixBox } from "../../components/molecules/boxes/CenterBox";
 import Loading from "../../components/atomics/boxes/Loading";
 
 const MealWeeklyPlannerPage = () => {
@@ -64,7 +67,7 @@ const MealWeeklyPlanner = ({
   return (
     <ColumnBox>
       <SectionTitle>이번주 식단</SectionTitle>
-      <CenterFixBox
+      <CenterBox
         style={{
           position: "relative",
         }}
@@ -99,11 +102,11 @@ const MealWeeklyPlanner = ({
               )
           )}
           <RowBox style={{ placeSelf: "flex-end" }}>
-            <ButtonIcon onClick={getTomorrow} icon={faDiagramNext} />
-            <ButtonIcon onClick={getYesterday} icon={faYen} />
+            <IconButton onClick={getTomorrow} icon={faDiagramNext} />
+            <IconButton onClick={getYesterday} icon={faYen} />
           </RowBox>
         </AnimatePresence>
-      </CenterFixBox>
+      </CenterBox>
     </ColumnBox>
   );
 };

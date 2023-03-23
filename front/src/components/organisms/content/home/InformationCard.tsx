@@ -6,7 +6,7 @@ import { ListItem } from "../../../atomics/sections/sections";
 import { DateText, SectionText } from "../../../atomics/typographys/texts";
 import { SubTitle } from "../../../atomics/typographys/titles";
 import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
-import { BoxIcon } from "../../../molecules/icons/Icons";
+import { BoxIcon } from "../../../molecules/icons/BoxIcon";
 
 interface IInformationCard {
   mainText: string;

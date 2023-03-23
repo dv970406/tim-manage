@@ -21,11 +21,9 @@ import { Form } from "../../../atomics/form/Form";
 import { ChoiceInput } from "../../../atomics/inputs/inputs";
 import { Section } from "../../../atomics/sections/sections";
 import { MainText } from "../../../atomics/typographys/texts";
-import {
-  ButtonIcon,
-  ButtonTextIcon,
-  EndSubmitButton,
-} from "../../../molecules/buttons/Buttons";
+import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
+import { TextIconButton } from "../../../molecules/buttons/TextIconButton";
+
 import FormTitle from "../../../molecules/form/FormTitle";
 import { Checkbox } from "../../../molecules/inputs/Checkbox";
 import { TextInput } from "../../../molecules/inputs/TextInput";
@@ -224,7 +222,7 @@ const CreateSurveyForm = ({}: ICreateSurveyForm) => {
           onClick={() => setIsAnonymous((prev) => !prev)}
         />
         <RowBox style={{ gap: theme.spacing.sm }}>
-          <ButtonTextIcon
+          <TextIconButton
             onClick={addParagraphs}
             icon={faCirclePlus}
             text="추가"
@@ -251,7 +249,7 @@ const CreateSurveyForm = ({}: ICreateSurveyForm) => {
                   }
                 />
                 <RowBox style={{ gap: theme.spacing.sm }}>
-                  <ButtonTextIcon
+                  <TextIconButton
                     text="지문 추가"
                     onClick={() => addChoices(paragraphIndex)}
                     icon={faCirclePlus}

@@ -8,7 +8,7 @@ import { GetManagerPositionsQuery } from "../../client/manager/__generated__/Get
 import { ColumnBox } from "../../components/atomics/boxes/Boxes";
 import Loading from "../../components/atomics/boxes/Loading";
 import { Section } from "../../components/atomics/sections/sections";
-import CenterBox from "../../components/molecules/boxes/CenterBox";
+import CenterFrame from "../../components/molecules/boxes/CenterFrame";
 import CreatePositionForm from "../../components/templates/content/manager/CreatePositionForm";
 import ManagerPositionsTable from "../../components/templates/content/manager/ManagerPositionsTable";
 import MutatePositionForm from "../../components/templates/content/manager/MutatePositionForm";
@@ -45,7 +45,7 @@ const PositionManagement = ({
   if (!positions) return <></>;
 
   return (
-    <CenterBox>
+    <CenterFrame>
       <Section style={{ width: "60%" }}>
         {positions && (
           <ManagerPositionsTable
@@ -70,7 +70,7 @@ const PositionManagement = ({
           </Suspense>
         </Section>
       </ColumnBox>
-    </CenterBox>
+    </CenterFrame>
   );
 };
 export default PositionManagementPage;
