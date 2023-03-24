@@ -1,8 +1,6 @@
 import { faPassport } from "@fortawesome/pro-solid-svg-icons";
-import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useUpdateUserPassword } from "../../../../client/user/UpdateUserPassword.client";
-
 import { CenterBox, ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
 import { Form } from "../../../atomics/form/Form";
 import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";

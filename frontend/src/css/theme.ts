@@ -66,6 +66,7 @@ export const globalStyles = css`
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    font-family: NanumSquare, sans-serif;
   }
   a {
     text-decoration: none;
@@ -73,7 +74,6 @@ export const globalStyles = css`
   }
   body {
     color: ${theme.colors.white};
-    //font-family: ;
   }
   button {
     border: none;

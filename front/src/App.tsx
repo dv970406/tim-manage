@@ -35,6 +35,7 @@ import ShowUserComments from "./components/templates/content/user/ShowUserCommen
 import ShowUserLikes from "./components/templates/content/user/ShowUserLikes";
 import "./styles.css";
 import Layout from "./pages/Layout";
+import NotFoundPage from "./pages/NotFound";
 
 // const Layout = lazy(() => import("./pages/Layout"));
 
@@ -43,7 +44,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
-    errorElement: <ErrorPage />,
+
     children: [
       { index: true, element: <HomePage /> },
       { path: "meal", element: <MealWeeklyPlannerPage /> },
@@ -52,12 +53,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
-    errorElement: <ErrorPage />,
   },
   {
     path: "/user",
     element: <Layout />,
-    errorElement: <ErrorPage />,
     children: [
       { index: true, element: <UsersPage /> },
       {
@@ -94,6 +93,7 @@ const router = createBrowserRouter([
       {
         path: ":userId",
         element: <UserDetailPage />,
+
         children: [
           { index: true, element: <ShowUserInfo /> },
           {
@@ -107,7 +107,7 @@ const router = createBrowserRouter([
   {
     path: "/manager",
     element: <Layout />,
-    errorElement: <ErrorPage />,
+
     children: [
       // 얘도 분리가능
       { path: "user/create", element: <UserCreatePage /> },
@@ -123,7 +123,7 @@ const router = createBrowserRouter([
   {
     path: "/survey",
     element: <Layout />,
-    errorElement: <ErrorPage />,
+
     children: [
       { index: true, element: <SurveysPage /> },
       { path: ":surveyId", element: <SurveyDetailPage /> },
@@ -132,7 +132,7 @@ const router = createBrowserRouter([
   {
     path: "/post",
     element: <Layout />,
-    errorElement: <ErrorPage />,
+
     children: [
       { index: true, element: <PostsPage /> },
       { path: "update/:postId", element: <PostUpdatePage /> },
@@ -141,9 +141,10 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/*",
+    path: "*",
     element: <Layout />,
-    errorElement: <ErrorPage />,
+    errorElement: <NotFoundPage />,
+    children: [{ path: "*", element: <NotFoundPage /> }],
   },
 ]);
 function App() {

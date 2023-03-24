@@ -24,7 +24,7 @@ export const BoxIcon = ({ color, icon, bgColor, size }: IBoxIcon) => {
     </div>
   );
 };
-export const ButtonIcon = ({ color, icon }: IIcon) => {
+export const IconButton = ({ color, icon }: IIcon) => {
   return (
     <button>
       <Icon icon={icon} color={color} />;

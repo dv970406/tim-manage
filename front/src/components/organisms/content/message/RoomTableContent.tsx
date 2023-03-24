@@ -72,7 +72,9 @@ const RoomTableContent = ({ room, setClickedRoomId }: IRoomTableContent) => {
               </div>
             )}
           </RowBox>
-          <RowBox style={{ alignItems: "center" }}>
+          <RowBox
+            style={{ alignItems: "center", justifyContent: "space-between" }}
+          >
             <MainText className="one-line" style={{ wordBreak: "break-all" }}>
               {recentMessage?.message}
             </MainText>
