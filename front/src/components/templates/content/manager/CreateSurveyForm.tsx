@@ -197,7 +197,6 @@ const CreateSurveyForm = ({}: ICreateSurveyForm) => {
 
         <TextInput
           icon={faTag}
-          label="설문 제목"
           placeholder="설문 제목"
           register={register("surveyTitle", {
             required: {

@@ -16,7 +16,11 @@ const Table = ({ headers, children }: ITable) => {
         }}
       >
         <thead>
-          <tr style={{ borderBottom: `1px solid ${theme.colors.gray}` }}>
+          <tr
+            style={{
+              borderBottom: `1px solid ${theme.colors.gray}`,
+            }}
+          >
             {headers.map((header) => (
               <th
                 key={header}

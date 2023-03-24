@@ -5,7 +5,7 @@ import CreateUserForm from "../../components/templates/content/manager/CreateUse
 
 const UserCreatePage = () => {
   return (
-    <CenterBox>
+    <CenterBox style={{ width: "100%" }}>
       <Section style={{ width: "40%" }}>
         <CreateUserForm />
       </Section>

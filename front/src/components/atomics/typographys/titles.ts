@@ -7,7 +7,7 @@ export const MainTitle = styled.h1(({ theme }) => ({
 }));
 
 export const SubTitle = styled.h2(({ theme }) => ({
-  color: theme.colors.gray,
+  color: theme.colors.white,
   fontSize: theme.fonts.md,
   fontWeight: theme.bold.md,
 }));

@@ -88,7 +88,7 @@ interface IMessageSection {
 export const MessageSection = styled.section(
   ({ theme, isInRoom = false }: IMessageSection) => ({
     backdropFilter: theme?.bgColors.backdropFilter,
-    backgroundColor: theme?.bgColors.lightgray,
+    backgroundColor: theme?.bgColors.darkgray,
     width: 350,
     height: 550,
     position: "fixed",
@@ -106,7 +106,7 @@ export const MessageSection = styled.section(
 
 export const NotificationSection = styled.section(({ theme }) => ({
   backdropFilter: theme.bgColors.backdropFilter,
-  background: theme.bgColors.lightgray,
+  background: theme.bgColors.gray,
   width: 300,
   height: 300,
   borderRadius: theme.borderRadius.lg,

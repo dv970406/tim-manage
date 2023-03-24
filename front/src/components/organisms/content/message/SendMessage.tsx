@@ -8,6 +8,7 @@ import { SubmitButton } from "../../../atomics/buttons/buttons";
 import { Form } from "../../../atomics/form/Form";
 import { Icon } from "../../../atomics/icons/icons";
 import { SubText } from "../../../atomics/typographys/texts";
+import { SearchInput } from "../../../molecules/inputs/SearchInput";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 
 interface ISendMessageForm {
@@ -23,11 +24,14 @@ const SendMessage = ({ roomId }: ISendMessage) => {
     register,
     reset,
     watch,
-  } = useForm<ISendMessageForm>();
+  } = useForm<ISendMessageForm>({
+    mode: "onChange",
+  });
   const { sendMessageMutation, sendMessageLoading, sendMessageSuccess } =
     useSendMessage();
 
   const { message: watchMessage } = watch();
+
   const onSubmit: SubmitHandler<ISendMessageForm> = ({ message }) => {
     if (sendMessageLoading || !roomId) return;
 
@@ -43,7 +47,7 @@ const SendMessage = ({ roomId }: ISendMessage) => {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <RowBox>
-        <TextInput
+        <SearchInput
           register={register("message", {
             required: {
               value: true,

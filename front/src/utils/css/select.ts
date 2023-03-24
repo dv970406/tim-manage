@@ -70,26 +70,28 @@ export const orderSelectStyles: StylesConfig<
     ...styles,
     color: theme.colors.white,
   }),
-  control: (styles, { isFocused, menuIsOpen, hasValue }) => ({
-    ...styles,
-    backgroundColor: "none",
-    border: "none",
-    borderRadius: 0,
-    padding: theme.spacing.sm,
-    transition: "all 0.2s",
-    width: 250,
+  control: (styles, { isFocused, menuIsOpen, hasValue }) => {
+    return {
+      ...styles,
+      backgroundColor: "none",
+      border: "none",
+      borderRadius: 0,
+      padding: theme.spacing.sm,
+      transition: "all 0.2s",
+      width: 250,
 
-    // 라이브러리 내에서 설정된 border를 끄려면 이렇게까지 해야됐음
-    ...(((isFocused && menuIsOpen) || hasValue || !hasValue) && {
-      borderBottom: `1px solid ${theme.colors.purple}`,
-      boxShadow: "0",
-    }),
-    borderBottom: `1px solid ${theme.colors.white}`,
+      // 라이브러리 내에서 설정된 border를 끄려면 이렇게까지 해야됐음
+      ...(((isFocused && menuIsOpen) || hasValue || !hasValue) && {
+        borderBottom: `1px solid ${theme.colors.purple}`,
+        boxShadow: "0",
+      }),
+      borderBottom: `1px solid ${theme.colors.white}`,
 
-    ":hover": {
-      borderBottom: `1px solid ${theme.colors.purple}`,
-    },
-  }),
+      ":hover": {
+        borderBottom: `1px solid ${theme.colors.purple}`,
+      },
+    };
+  },
 
   option: (styles) => {
     return {

@@ -5,7 +5,7 @@ import CreateSurveyForm from "../../components/templates/content/manager/CreateS
 
 const SurveyCreatePage = () => {
   return (
-    <CenterBox>
+    <CenterBox style={{ width: "100%" }}>
       <Section style={{ width: "40%" }}>
         <CreateSurveyForm />
       </Section>

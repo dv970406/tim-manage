@@ -8,6 +8,7 @@ export interface IBgColors {
   white: string;
   green: string;
   red: string;
+  darkgray: string;
   gray: string;
   lightgray: string;
   purple: string;
@@ -21,6 +22,7 @@ export interface IColors {
   white: string;
   green: string;
   red: string;
+  darkgray: string;
   gray: string;
   lightgray: string;
   purple: string;

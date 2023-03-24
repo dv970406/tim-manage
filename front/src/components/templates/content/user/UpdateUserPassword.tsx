@@ -42,7 +42,7 @@ const UpdateUserPassword = () => {
     });
   };
   return (
-    <CenterBox>
+    <CenterBox style={{ height: "100%" }}>
       <RowBox
         style={{
           width: 300,

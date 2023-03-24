@@ -1,31 +1,50 @@
 import { Theme } from "@emotion/react";
 import styled from "@emotion/styled";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { faSearch } from "@fortawesome/pro-solid-svg-icons";
 import { ChangeEventHandler, useState } from "react";
+import { UseFormRegisterReturn } from "react-hook-form";
 import { theme } from "../../../css/theme";
-import { InputBox } from "../../atomics/inputs/inputs";
+import { BottomBorderInputBox } from "../../atomics/inputs/inputs";
+import { ErrorText } from "../../atomics/typographys/texts";
 import { BoxIcon } from "../icons/BoxIcon";
 
 interface ISearchInput {
-  onChange: ChangeEventHandler<HTMLInputElement>;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
+  register?: UseFormRegisterReturn<string>;
+  noError?: boolean;
+  errorMessage?: string;
+  placeholder?: string;
+  icon?: IconProp;
 }
-export const SearchInput = ({ onChange }: ISearchInput) => {
-  const [isFocusingSearch, setIsFocusingSearch] = useState(false);
+export const SearchInput = ({
+  onChange,
+  register,
+  noError = false,
+  errorMessage,
+  placeholder = "키워드를 입력해주세요.",
+  icon,
+}: ISearchInput) => {
+  const [isFocusing, setisFocusing] = useState(false);
 
   return (
-    <InputBox
-      onFocus={() => setIsFocusingSearch(true)}
-      onBlur={() => setIsFocusingSearch(false)}
+    <BottomBorderInputBox
+      onFocus={() => setisFocusing(true)}
+      onBlur={() => setisFocusing(false)}
+      isFocusing={isFocusing}
     >
       <BoxIcon
-        bgColor={isFocusingSearch ? theme.bgColors.purple : undefined}
-        icon={faSearch}
+        bgColor={isFocusing ? theme.bgColors.purple : undefined}
+        icon={icon ? icon : faSearch}
       />
       <input
-        // {...register}
-        onChange={onChange}
-        placeholder={"키워드를 입력해주세요."}
+        // 참고로 register와 onChange는 공존 불가
+        {...register}
+        {...(onChange && { onChange })}
+        placeholder={placeholder}
+        style={{ width: "100%" }}
       />
-    </InputBox>
+      {!noError && <ErrorText style={{ height: 15 }}>{errorMessage}</ErrorText>}
+    </BottomBorderInputBox>
   );
 };

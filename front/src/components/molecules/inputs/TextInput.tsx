@@ -6,7 +6,7 @@ import { ErrorText, MainText } from "../../atomics/typographys/texts";
 import { SubTitle } from "../../atomics/typographys/titles";
 import { ColumnBox } from "../../atomics/boxes/Boxes";
 import { BoxIcon } from "../icons/BoxIcon";
-import { InputBox } from "../../atomics/inputs/inputs";
+import { FullBorderInputBox } from "../../atomics/inputs/inputs";
 
 interface ITextInput {
   label?: string;
@@ -40,13 +40,13 @@ export const TextInput = ({
           <SubTitle>{label}</SubTitle>
         </label>
       )}
-      <InputBox
+      <FullBorderInputBox
         onFocus={() => setIsFocusing(true)}
         onBlur={() => setIsFocusing(false)}
-        isFocusingSearch={isFocusing}
+        isFocusing={isFocusing}
       >
         {icon && (
-          <div style={{}}>
+          <div>
             <BoxIcon
               bgColor={isFocusing ? theme.bgColors.purple : undefined}
               icon={icon}
@@ -71,7 +71,7 @@ export const TextInput = ({
           {...register}
           {...(onChange && { onChange })}
         />
-      </InputBox>
+      </FullBorderInputBox>
       {!noError && <ErrorText style={{ height: 15 }}>{errorMessage}</ErrorText>}
     </ColumnBox>
   );

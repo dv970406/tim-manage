@@ -35,7 +35,7 @@ interface IPostUpdate {
 const PostUpdate = ({ getPostQueryReference }: IPostUpdate) => {
   const { post } = useGetPost(getPostQueryReference);
   return (
-    <CenterBox>
+    <CenterBox style={{ width: "100%" }}>
       <Section style={{ width: "40%" }}>
         {post && <MutatePostForm post={post} />}
       </Section>

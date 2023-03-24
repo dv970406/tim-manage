@@ -16,7 +16,7 @@ interface ICenterFrame {
 }
 const CenterFrame = ({ children }: ICenterFrame) => {
   return (
-    <CenterBox>
+    <CenterBox style={{ width: "100%" }}>
       <SizingBox>{children}</SizingBox>
     </CenterBox>
   );

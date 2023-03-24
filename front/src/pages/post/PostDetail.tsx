@@ -39,7 +39,7 @@ const PostDetail = ({ getPostQueryReference }: IPostDetail) => {
   const { post } = useGetPost(getPostQueryReference);
 
   return (
-    <CenterBox>
+    <CenterBox style={{ width: "100%" }}>
       <RowBox
         style={{
           width: "70%",
