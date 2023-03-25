@@ -32,6 +32,7 @@ export const SearchInput = ({
       onFocus={() => setisFocusing(true)}
       onBlur={() => setisFocusing(false)}
       isFocusing={isFocusing}
+      width={300}
     >
       <BoxIcon
         bgColor={isFocusing ? theme.bgColors.purple : undefined}

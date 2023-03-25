@@ -258,6 +258,7 @@ const CreateSurveyForm = ({}: ICreateSurveyForm) => {
                   style={{
                     gap: theme.spacing.md,
                     justifyContent: "center",
+                    height: 80,
                   }}
                   flexDirection="row"
                 >

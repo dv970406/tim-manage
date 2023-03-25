@@ -7,7 +7,7 @@ export const ChoiceInput = styled.input(({ theme }) => ({
   transition: "border 0.2s ease-in-out",
   textAlign: "center",
   gap: theme.spacing.md,
-  border: `1px solid ${theme.colors.gray}`,
+  border: `2px solid ${theme.colors.gray}`,
   borderRadius: theme.borderRadius.md,
   padding: theme.spacing.sm,
   "&:hover": {
@@ -33,11 +33,15 @@ export const FullBorderInputBox = styled.div(
       : `2px solid ${theme?.colors.gray}`,
     borderRadius: theme?.borderRadius.sm,
     transition: "border 0.2s",
-    padding: theme?.spacing.lg,
+    padding: theme?.spacing.md,
   })
 );
+
+interface IBottomBorderInputBox extends IInputBox {
+  width?: string | number;
+}
 export const BottomBorderInputBox = styled.div(
-  ({ theme, isFocusing }: IInputBox) => ({
+  ({ theme, isFocusing, width }: IBottomBorderInputBox) => ({
     display: "flex",
     alignItems: "center",
     gap: theme?.spacing.sm,
@@ -47,6 +51,6 @@ export const BottomBorderInputBox = styled.div(
 
     transition: "border 0.2s",
     padding: theme?.spacing.sm,
-    width: "100%",
+    ...(width && { width }),
   })
 );
