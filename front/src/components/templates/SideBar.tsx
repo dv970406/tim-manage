@@ -97,7 +97,7 @@ const SideBar = ({ isManager, isLeader }: ISideBar) => {
                   { name: "미승인 휴가", path: "/manager/vacation" },
                   { name: "직책 관리", path: "/manager/position" },
                   { name: "팀 관리", path: "/manager/team" },
-                  { name: "식단 추가", path: "/manager/meal/create" },
+                  // { name: "식단 추가", path: "/manager/meal/create" },
                 ]}
               />
             )}
@@ -113,7 +113,7 @@ const SideBar = ({ isManager, isLeader }: ISideBar) => {
               icon={faHome}
               lists={[
                 { name: "홈페이지", path: "/" },
-                { name: "식단표", path: "/meal" },
+                // { name: "식단표", path: "/meal" },
               ]}
             />
             <NavTabButton

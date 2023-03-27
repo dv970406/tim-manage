@@ -7,18 +7,11 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import {
   DateRangeInput,
   DateSelectArg,
-  EventApi,
   EventClickArg,
   EventDropArg,
   EventInput,
 } from "@fullcalendar/core";
-import React, {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import {
   filteringSchedulesButtons,
   renderEventContent,
@@ -26,10 +19,7 @@ import {
 import { useDeleteVacation } from "../../../../client/vacation/DeleteVacation.client";
 import { useUpdateVacation } from "../../../../client/vacation/UpdateVacation.client";
 import { useUpdateMeeting } from "../../../../client/meeting/UpdateMeeting.client";
-import {
-  MODAL,
-  SCHEDULES,
-} from "../../../../utils/constants/schedule.constant";
+import { SCHEDULES } from "../../../../utils/constants/schedule.constant";
 import "./FullCalendarStyles.css";
 import {
   ampmFormat,
