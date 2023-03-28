@@ -41,7 +41,7 @@ interface IBottomBorderInputBox extends IInputBox {
   width?: string | number;
 }
 export const BottomBorderInputBox = styled.div(
-  ({ theme, isFocusing, width }: IBottomBorderInputBox) => ({
+  ({ theme, isFocusing, width = "100%" }: IBottomBorderInputBox) => ({
     display: "flex",
     alignItems: "center",
     gap: theme?.spacing.sm,

@@ -72,7 +72,7 @@ export const SearchAndInfiniteScrollDataList = ({
   }, [keyword]);
   return (
     <>
-      <ColumnBox gap={theme.spacing.sm}>
+      <ColumnBox gap={theme.spacing.xl}>
         <Section padding={theme.spacing.md}>
           <DataToolBar
             onChange={handleChange}

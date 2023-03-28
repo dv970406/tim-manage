@@ -16,6 +16,7 @@ interface ISearchInput {
   errorMessage?: string;
   placeholder?: string;
   icon?: IconProp;
+  width?: string | number;
 }
 export const SearchInput = ({
   onChange,
@@ -24,6 +25,7 @@ export const SearchInput = ({
   errorMessage,
   placeholder = "키워드를 입력해주세요.",
   icon,
+  width,
 }: ISearchInput) => {
   const [isFocusing, setisFocusing] = useState(false);
 
@@ -32,7 +34,7 @@ export const SearchInput = ({
       onFocus={() => setisFocusing(true)}
       onBlur={() => setisFocusing(false)}
       isFocusing={isFocusing}
-      width={300}
+      width={width}
     >
       <BoxIcon
         bgColor={isFocusing ? theme.bgColors.purple : undefined}
@@ -43,7 +45,6 @@ export const SearchInput = ({
         {...register}
         {...(onChange && { onChange })}
         placeholder={placeholder}
-        style={{ width: "100%" }}
       />
       {!noError && <ErrorText style={{ height: 15 }}>{errorMessage}</ErrorText>}
     </BottomBorderInputBox>

@@ -29,7 +29,7 @@ const DataToolBar = ({ onChange, mutateName, hasAddButton }: IDataToolBar) => {
         justifyContent: "space-between",
       }}
     >
-      <SearchInput onChange={onChange} />
+      <SearchInput onChange={onChange} width={300} />
 
       {(mutateName === "create-post" || myInfo?.isManager) && hasAddButton && (
         <IconButton

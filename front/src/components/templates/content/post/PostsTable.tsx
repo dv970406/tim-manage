@@ -3,13 +3,12 @@ import React from "react";
 import { usePaginationFragment } from "react-relay";
 import { SearchAndInfiniteScrollDataList } from "../../../organisms/shared/InfiniteScrolls";
 import PostTableContent from "../../../organisms/content/post/PostTableContent";
-import { GetPostsPaginationQuery } from "../../../organisms/content/post/__generated__/GetPostsPaginationQuery.graphql";
+
 import { PostsTable_post$key } from "./__generated__/PostsTable_post.graphql";
 import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
 import { PostsTablePaginationQuery } from "./__generated__/PostsTablePaginationQuery.graphql";
-import { useGetMyInfo } from "../../../../client/user/GetMyInfo.client";
+
 import { ColumnBox } from "../../../atomics/boxes/Boxes";
-import OrderPosts from "../../../organisms/content/post/OrderPosts";
 
 interface IPostsTable {
   posts: PostsTable_post$key;

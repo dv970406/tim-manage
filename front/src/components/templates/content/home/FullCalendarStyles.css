@@ -4,6 +4,7 @@
   --fc-button-active-bg-color: rgb(42, 29, 163);
   --fc-border-color: rgb(42, 46, 93);
 }
+
 .fc .fc-button-primary {
   border: none;
   /* 라이브러리 내부적으로 선언되어있음 */
