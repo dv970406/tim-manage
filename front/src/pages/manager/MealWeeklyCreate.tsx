@@ -53,7 +53,6 @@ const MealWeeklyCreatePage = () => {
       data: { text },
       // @ts-ignore
     } = await worker.recognize(imageFormatMeal[0]);
-    console.log(text);
     await worker.terminate();
   };
 

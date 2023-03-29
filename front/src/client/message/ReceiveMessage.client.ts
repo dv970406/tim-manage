@@ -79,7 +79,6 @@ export const receiveMessage = ({ setHasNewMessage }: IUseReceiveMessage) => {
         ?.getDataID();
 
       if (!isExistRoom) {
-        console.log("this ?");
         insertEdgeToData({
           record: rootRecord,
           key: "RoomsTable_getRooms",

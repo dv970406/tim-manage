@@ -12,7 +12,6 @@ export const useAlert = () => {
   const enqueueAlert = ({ message, type }: IEnqueueAlert) => {
     setAlertOn(true);
 
-    console.log("isAlertOn : ", isAlertOn);
     return (
       <>
         <RowBox
@@ -36,7 +35,6 @@ export const useAlert = () => {
     if (isAlertOn) {
       setTimeout(() => {
         setAlertOn(false);
-        console.log("falsed!!");
       }, 2000);
     }
   }, [isAlertOn]);

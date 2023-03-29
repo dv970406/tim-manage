@@ -96,7 +96,6 @@ const SelectUsers = ({ prevAttendees, setAttendeesId }: ISelectUsers) => {
 
   const getMoreData = () => {
     if (!hasNext || isLoadingNext) return;
-    console.log("reached");
     loadNext(PAGINATION_LOAD_COUNT);
   };
   return (

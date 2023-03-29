@@ -22,7 +22,6 @@ export const useInfiniteScroll = (
   useEffect(() => {
     if (!ref.current) return;
     const observer = new IntersectionObserver(callback, options);
-    console.log("감지");
     observer.observe(ref.current);
     return () => observer.disconnect();
   }, [ref, options, callback]);
