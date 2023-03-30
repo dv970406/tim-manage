@@ -56,7 +56,7 @@ import { Notification } from './notification/entities/notification.entity';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       subscriptions: {
-        // graphql-ws로 대체함
+        // 클라이언트로 graphql-ws를 사용하기에 graphql-ws로 대체함
         // 'subscriptions-transport-ws': {
         //   onConnect: ({ token }) => {
         //     console.log('token : ', token);

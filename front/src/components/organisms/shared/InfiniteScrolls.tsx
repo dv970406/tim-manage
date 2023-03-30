@@ -48,7 +48,7 @@ export const SearchAndInfiniteScrollDataList = ({
   // 스크롤이 바닥에 닿았는지 감지해서 relay의 loadNext를 실행시키는 훅
   const ref = useInfiniteScroll(async (entry, observer) => {
     observer.unobserve(entry.target);
-    console.log(hasNext, isLoadingNext);
+
     if (hasNext && !isLoadingNext) {
       loadNext(PAGINATION_LOAD_COUNT);
     }
@@ -105,7 +105,7 @@ export const InfiniteScrollDataTable = ({
 }: IInfiniteScrollDataTable) => {
   const ref = useInfiniteScroll(async (entry, observer) => {
     observer.unobserve(entry.target);
-    console.log(hasNext, isLoadingNext);
+
     if (hasNext && !isLoadingNext) {
       loadNext(PAGINATION_LOAD_COUNT);
     }
@@ -133,7 +133,7 @@ export const InfiniteScrollList = ({
 }: IScrollList) => {
   const ref = useInfiniteScroll(async (entry, observer) => {
     observer.unobserve(entry.target);
-    console.log(hasNext, isLoadingNext);
+
     if (hasNext && !isLoadingNext) {
       loadNext(PAGINATION_LOAD_COUNT);
     }

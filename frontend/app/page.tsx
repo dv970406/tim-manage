@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import React, { Suspense } from "react";
 import SummaryInfo from "../src/components/organisms/content/SummaryInfo";
 import { faFolder } from "@fortawesome/pro-solid-svg-icons";
@@ -23,7 +23,7 @@ export default function Page() {
   console.log(data);
 
   return (
-    <Suspense fallback={"l;oading..."}>
+    <Suspense fallback={"loading..."}>
       <div
         style={{
           display: "grid",
