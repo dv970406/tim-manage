@@ -129,6 +129,11 @@ export const globalStyles = css`
   body {
     color: ${theme.colors.white};
   }
+
+  body.modal-open {
+    overflow: hidden;
+  }
+
   button {
     border: none;
     background: none;

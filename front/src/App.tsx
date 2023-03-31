@@ -6,7 +6,6 @@ import { environment } from "./client/client";
 import { globalStyles, theme } from "./css/theme";
 import SurveyManagementPage from "./pages/manager/SurveyManagement";
 import UserManagementPage from "./pages/manager/UserManagement";
-import ErrorPage from "./pages/Error";
 import HomePage from "./pages/Home";
 import LoginPage from "./pages/Login";
 import PostDetailPage from "./pages/post/PostDetail";
@@ -33,7 +32,6 @@ import ShowUserInfo from "./components/templates/content/user/ShowUserInfo";
 import ShowUserAnswers from "./components/templates/content/user/ShowUserAnswers";
 import ShowUserComments from "./components/templates/content/user/ShowUserComments";
 import ShowUserLikes from "./components/templates/content/user/ShowUserLikes";
-import "./styles.css";
 import Layout from "./pages/Layout";
 import NotFoundPage from "./pages/NotFound";
 
