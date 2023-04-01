@@ -1,32 +1,5 @@
-import { Theme } from "@emotion/react";
 import styled from "@emotion/styled";
 import { breakpoints } from "../../../css/media-query/media-query";
-
-interface IColumnBox {
-  theme?: Theme;
-  gap?: number;
-}
-export const ColumnBox = styled.div(({ theme, gap }: IColumnBox) => ({
-  display: "flex",
-  flexDirection: "column",
-  // 0값도 들어갈 수 있으므로 || 대신 ??
-  gap: gap ?? theme?.spacing.xl,
-  width: "100%",
-  height: "100%",
-}));
-
-export const RowBox = styled.div(({ theme }) => ({
-  display: "flex",
-  gap: theme.spacing.md,
-  width: "100%",
-}));
-
-export const CenterBox = styled.div(({ theme }) => ({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  gap: theme.spacing.sm,
-}));
 
 export const ScrollBox = styled.ul(({ theme }) => ({
   overflow: "auto",
@@ -43,7 +16,7 @@ export const GapList = styled.ul(({ theme }) => ({
   gap: theme.spacing.md,
 }));
 
-export const ListBox = styled.ul`
+export const GridBox = styled.ul`
   display: grid;
 
   grid-template-columns: repeat(4, 1fr);
@@ -62,7 +35,7 @@ export const ListBox = styled.ul`
   })}
 `;
 
-export const ItemBox = styled.li(({ theme }) => ({
+export const GridItem = styled.li(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -79,15 +52,4 @@ export const ItemBox = styled.li(({ theme }) => ({
 
   transition: "all 0.3s",
   cursor: "pointer",
-}));
-
-export const HorizontalDivider = styled.div(({ theme }) => ({
-  height: "1px",
-  width: "100%",
-  background: theme.bgColors.silver,
-}));
-export const VerticalDivider = styled.div(({ theme }) => ({
-  width: "1px",
-  height: "100%",
-  background: theme.bgColors.silver,
 }));
