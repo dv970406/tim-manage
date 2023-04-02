@@ -1,6 +1,6 @@
 import { MouseEventHandler } from "react";
-import { ColumnBox } from "../../atomics/boxes/Boxes";
-import { SubmitButton } from "../../atomics/buttons/buttons";
+import { ColumnBox } from "../../atomics/boxes/FlexBox";
+import { SubmitButton } from "../../atomics/buttons/SubmitButton";
 
 interface IEndSubmitButton {
   onClick: MouseEventHandler<HTMLButtonElement>;

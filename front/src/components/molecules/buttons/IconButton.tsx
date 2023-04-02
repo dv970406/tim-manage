@@ -1,5 +1,5 @@
 import { MouseEventHandler, useState } from "react";
-import { Icon, IIcon } from "../../atomics/icons/icons";
+import { Icon, IIcon } from "../../atomics/icons/icon";
 
 export interface IIconButton extends IIcon {
   onClick: MouseEventHandler<HTMLButtonElement>;
