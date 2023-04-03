@@ -2,10 +2,9 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import React, { ChangeEventHandler, useState } from "react";
 import { UseFormRegister, UseFormRegisterReturn } from "react-hook-form";
 import { theme } from "../../../css/theme";
+import { ColumnBox } from "../../atomics/boxes/FlexBox";
 import { ErrorText, MainText } from "../../atomics/typographys/texts";
 import { SubTitle } from "../../atomics/typographys/titles";
-import { ColumnBox } from "../../atomics/boxes/Boxes";
-import { BoxIcon } from "../icons/BoxIcon";
 
 interface ITextArea {
   label?: string;

@@ -2,11 +2,11 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import React, { ChangeEventHandler, useState } from "react";
 import { UseFormRegister, UseFormRegisterReturn } from "react-hook-form";
 import { theme } from "../../../css/theme";
+import { ColumnBox } from "../../atomics/boxes/FlexBox";
+import { FullBorderInput } from "../../atomics/inputs/FullBorderInput";
 import { ErrorText, MainText } from "../../atomics/typographys/texts";
 import { SubTitle } from "../../atomics/typographys/titles";
-import { ColumnBox } from "../../atomics/boxes/Boxes";
-import { BoxIcon } from "../icons/BoxIcon";
-import { FullBorderInputBox } from "../../atomics/inputs/inputs";
+import { IconBox } from "../boxes/IconBox";
 
 interface ITextInput {
   label?: string;
@@ -40,14 +40,14 @@ export const TextInput = ({
           <SubTitle>{label}</SubTitle>
         </label>
       )}
-      <FullBorderInputBox
+      <FullBorderInput
         onFocus={() => setIsFocusing(true)}
         onBlur={() => setIsFocusing(false)}
         isFocusing={isFocusing}
       >
         {icon && (
           <div>
-            <BoxIcon
+            <IconBox
               bgColor={isFocusing ? theme.bgColors.purple : undefined}
               icon={icon}
             />
@@ -71,7 +71,7 @@ export const TextInput = ({
           {...register}
           {...(onChange && { onChange })}
         />
-      </FullBorderInputBox>
+      </FullBorderInput>
       {!noError && <ErrorText style={{ height: 15 }}>{errorMessage}</ErrorText>}
     </ColumnBox>
   );

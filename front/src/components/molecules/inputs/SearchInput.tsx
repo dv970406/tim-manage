@@ -1,13 +1,11 @@
-import { Theme } from "@emotion/react";
-import styled from "@emotion/styled";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { faSearch } from "@fortawesome/pro-solid-svg-icons";
 import { ChangeEventHandler, useState } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 import { theme } from "../../../css/theme";
-import { BottomBorderInputBox } from "../../atomics/inputs/inputs";
+import { BottomBorderInput } from "../../atomics/inputs/BottomBorderInput";
 import { ErrorText } from "../../atomics/typographys/texts";
-import { BoxIcon } from "../icons/BoxIcon";
+import { IconBox } from "../boxes/IconBox";
 
 interface ISearchInput {
   onChange?: ChangeEventHandler<HTMLInputElement>;
@@ -30,13 +28,13 @@ export const SearchInput = ({
   const [isFocusing, setisFocusing] = useState(false);
 
   return (
-    <BottomBorderInputBox
+    <BottomBorderInput
       onFocus={() => setisFocusing(true)}
       onBlur={() => setisFocusing(false)}
       isFocusing={isFocusing}
       width={width}
     >
-      <BoxIcon
+      <IconBox
         bgColor={isFocusing ? theme.bgColors.purple : undefined}
         icon={icon ? icon : faSearch}
       />
@@ -47,6 +45,6 @@ export const SearchInput = ({
         placeholder={placeholder}
       />
       {!noError && <ErrorText style={{ height: 15 }}>{errorMessage}</ErrorText>}
-    </BottomBorderInputBox>
+    </BottomBorderInput>
   );
 };

@@ -1,8 +1,6 @@
 import styled from "@emotion/styled";
 import { UseFormRegister, UseFormRegisterReturn } from "react-hook-form";
-import { theme } from "../../../css/theme";
-import { SCHEDULES } from "../../../utils/constants/schedule.constant";
-import { CenterBox } from "../../atomics/boxes/Boxes";
+import { CenterBox } from "../../atomics/boxes/FlexBox";
 import { SubTitle } from "../../atomics/typographys/titles";
 
 interface IRadio {

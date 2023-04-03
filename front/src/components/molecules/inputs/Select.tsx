@@ -2,11 +2,11 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import React, { useState } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 import { theme } from "../../../css/theme";
-import { ColumnBox } from "../../atomics/boxes/Boxes";
-import { FullBorderInputBox } from "../../atomics/inputs/inputs";
+import { ColumnBox } from "../../atomics/boxes/FlexBox";
+import { FullBorderInput } from "../../atomics/inputs/FullBorderInput";
 import { ErrorText } from "../../atomics/typographys/texts";
 import { SubTitle } from "../../atomics/typographys/titles";
-import { BoxIcon } from "../icons/BoxIcon";
+import { IconBox } from "../boxes/IconBox";
 
 interface ISelect {
   icon: IconProp;
@@ -33,13 +33,13 @@ const Select = ({
       <label>
         <SubTitle>{label}</SubTitle>
       </label>
-      <FullBorderInputBox
+      <FullBorderInput
         onFocus={() => setIsFocusing(true)}
         onBlur={() => setIsFocusing(false)}
         isFocusing={isFocusing}
       >
         {icon && (
-          <BoxIcon
+          <IconBox
             bgColor={isFocusing ? theme.bgColors.purple : undefined}
             icon={icon}
           />
@@ -52,7 +52,7 @@ const Select = ({
           style={{ width: "100%" }}
         />
         <datalist id={listName}>{list}</datalist>
-      </FullBorderInputBox>
+      </FullBorderInput>
       <ErrorText style={{ height: 15 }}>{errorMessage}</ErrorText>
     </ColumnBox>
   );
