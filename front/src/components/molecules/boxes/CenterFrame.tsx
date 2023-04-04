@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import React from "react";
-import { CenterBox } from "../../atomics/boxes/Boxes";
+import { CenterBox } from "../../atomics/boxes/FlexBox";
 
 export const SizingBox = styled.div(({ theme }) => ({
   display: "flex",

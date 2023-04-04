@@ -1,11 +1,11 @@
 import { theme } from "../../../css/theme";
-import { CenterBox } from "../../atomics/boxes/Boxes";
-import { Icon, IIcon } from "../../atomics/icons/icons";
+import { CenterBox } from "../../atomics/boxes/FlexBox";
+import { Icon, IIcon } from "../../atomics/icons/icon";
 
-interface IBoxIcon extends IIcon {
+interface IIconBox extends IIcon {
   bgColor?: string;
 }
-export const BoxIcon = ({ color, icon, bgColor, size }: IBoxIcon) => {
+export const IconBox = ({ color, icon, bgColor, size }: IIconBox) => {
   return (
     <CenterBox
       className="avatar_bg"
