@@ -1,12 +1,11 @@
 import { faRocket } from "@fortawesome/pro-solid-svg-icons";
-import { DateInput } from "@fullcalendar/core";
 import React from "react";
 import { theme } from "../../../../css/theme";
+import { ColumnBox, RowBox } from "../../../atomics/boxes/FlexBox";
 import { ListItem } from "../../../atomics/sections/sections";
 import { DateText, SectionText } from "../../../atomics/typographys/texts";
 import { SubTitle } from "../../../atomics/typographys/titles";
-import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
-import { BoxIcon } from "../../../molecules/icons/BoxIcon";
+import { IconBox } from "../../../molecules/boxes/IconBox";
 
 interface IInformationCard {
   mainText: string;
@@ -19,19 +18,17 @@ const InformationCard = ({
   endText,
 }: IInformationCard) => {
   return (
-    <ListItem>
-      <RowBox>
-        <BoxIcon icon={faRocket} size="lg" bgColor={theme.bgColors.purple} />
+    <RowBox>
+      <IconBox icon={faRocket} size="lg" bgColor={theme.bgColors.purple} />
 
-        <ColumnBox gap={theme.spacing.xs}>
-          <SubTitle style={{ textAlign: "right" }}>{mainText}</SubTitle>
+      <ColumnBox gap={theme.spacing.xs}>
+        <SubTitle style={{ textAlign: "right" }}>{mainText}</SubTitle>
 
-          <DateText style={{ textAlign: "right" }}>{middleText}</DateText>
+        <DateText style={{ textAlign: "right" }}>{middleText}</DateText>
 
-          <SectionText style={{ textAlign: "right" }}>{endText}</SectionText>
-        </ColumnBox>
-      </RowBox>
-    </ListItem>
+        <SectionText style={{ textAlign: "right" }}>{endText}</SectionText>
+      </ColumnBox>
+    </RowBox>
   );
 };
 

@@ -1,18 +1,15 @@
 import { graphql } from "babel-plugin-relay/macro";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import ReactSelect, { GroupBase, MultiValue, StylesConfig } from "react-select";
-import {
-  useSelectUsers,
-  useSelectUsersPagination,
-} from "../../../../client/user/SelectUsers.client";
+import { useSelectUsers } from "../../../../client/user/SelectUsers.client";
 import { theme } from "../../../../css/theme";
 import { SubTitle } from "../../../atomics/typographys/titles";
-import { ColumnBox } from "../../../atomics/boxes/Boxes";
 import { usePaginationFragment } from "react-relay";
 import { SelectUsersPaginationQuery } from "./__generated__/SelectUsersPaginationQuery.graphql";
 import { SelectUsers_user$key } from "./__generated__/SelectUsers_user.graphql";
 import { PAGINATION_LOAD_COUNT } from "../../../../utils/constants/share.constant";
 import { userSelectStyles } from "../../../../utils/css/select";
+import { ColumnBox } from "../../../atomics/boxes/FlexBox";
 
 export interface IAttendee {
   readonly id: string;
