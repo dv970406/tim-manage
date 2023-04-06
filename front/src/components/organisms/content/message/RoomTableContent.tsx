@@ -4,11 +4,11 @@ import React, { Dispatch, SetStateAction, useState } from "react";
 import { useFragment } from "react-relay";
 import { theme } from "../../../../css/theme";
 import { getKoreanTimeFormat } from "../../../../utils/time/time";
-import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
+import { ColumnBox, RowBox } from "../../../atomics/boxes/FlexBox";
 import { ListItem } from "../../../atomics/sections/sections";
 import { MainText, SubText } from "../../../atomics/typographys/texts";
 import { SubTitle } from "../../../atomics/typographys/titles";
-import { BoxIcon } from "../../../molecules/icons/BoxIcon";
+import { IconBox } from "../../../molecules/boxes/IconBox";
 import { RoomTableContent_room$key } from "./__generated__/RoomTableContent_room.graphql";
 interface IRoomTableContent {
   room: RoomTableContent_room$key;
@@ -46,7 +46,7 @@ const RoomTableContent = ({ room, setClickedRoomId }: IRoomTableContent) => {
       onClick={() => setClickedRoomId(id)}
     >
       <RowBox>
-        <BoxIcon icon={faRocket} size="lg" bgColor={theme.bgColors.purple} />
+        <IconBox icon={faRocket} size="lg" bgColor={theme.bgColors.purple} />
 
         <ColumnBox gap={theme.spacing.xs}>
           <RowBox style={{ justifyContent: "space-between" }}>

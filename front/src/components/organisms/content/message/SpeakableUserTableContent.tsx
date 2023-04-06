@@ -3,10 +3,10 @@ import { graphql } from "babel-plugin-relay/macro";
 import React, { Dispatch, SetStateAction } from "react";
 import { useFragment } from "react-relay";
 import { theme } from "../../../../css/theme";
-import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
+import { ColumnBox, RowBox } from "../../../atomics/boxes/FlexBox";
 import { ListItem } from "../../../atomics/sections/sections";
 import { SubTitle } from "../../../atomics/typographys/titles";
-import { BoxIcon } from "../../../molecules/icons/BoxIcon";
+import { IconBox } from "../../../molecules/boxes/IconBox";
 import { SpeakableUserTableContent_user$key } from "./__generated__/SpeakableUserTableContent_user.graphql";
 
 interface ISpeakableUserTableContent {
@@ -37,7 +37,7 @@ const SpeakableUserTableContent = ({
       onClick={() => setClickedUserId(id)}
     >
       <RowBox>
-        <BoxIcon icon={faRocket} size="lg" bgColor={theme.bgColors.purple} />
+        <IconBox icon={faRocket} size="lg" bgColor={theme.bgColors.purple} />
 
         <RowBox
           style={{ justifyContent: "space-between", alignItems: "center" }}

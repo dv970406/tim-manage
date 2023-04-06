@@ -2,11 +2,8 @@ import { graphql } from "babel-plugin-relay/macro";
 import React from "react";
 import { useFragment } from "react-relay";
 import { theme } from "../../../../css/theme";
-import {
-  getElaspedDay,
-  getKoreanTimeFormat,
-} from "../../../../utils/time/time";
-import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
+import { getKoreanTimeFormat } from "../../../../utils/time/time";
+import { ColumnBox, RowBox } from "../../../atomics/boxes/FlexBox";
 import { MainText, SubText } from "../../../atomics/typographys/texts";
 import { SubTitle } from "../../../atomics/typographys/titles";
 import { MessageTableContent_message$key } from "./__generated__/MessageTableContent_message.graphql";
