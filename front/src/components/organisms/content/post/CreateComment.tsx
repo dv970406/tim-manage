@@ -3,10 +3,10 @@ import React, { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useCreateComment } from "../../../../client/post/CreateComment.client";
 import { theme } from "../../../../css/theme";
-import { RowBox } from "../../../atomics/boxes/Boxes";
-import { SubmitButton } from "../../../atomics/buttons/buttons";
-import { Form } from "../../../atomics/form/Form";
-import { Icon } from "../../../atomics/icons/icons";
+import { RowBox } from "../../../atomics/boxes/FlexBox";
+import { SubmitButton } from "../../../atomics/buttons/SubmitButton";
+import { Icon } from "../../../atomics/icons/icon";
+import Form from "../../../molecules/form/Form";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 
 interface ICreateCommentForm {

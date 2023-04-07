@@ -5,16 +5,12 @@ import { useFragment, usePaginationFragment } from "react-relay";
 import { useNavigate } from "react-router-dom";
 import { theme } from "../../../../css/theme";
 import { getElaspedDay } from "../../../../utils/time/time";
-import {
-  RowBox,
-  HorizontalDivider,
-  ColumnBox,
-  ItemBox,
-} from "../../../atomics/boxes/Boxes";
+import { HorizontalDivider } from "../../../atomics/boxes/Divider";
+import { ColumnBox, RowBox } from "../../../atomics/boxes/FlexBox";
+import { GridItem } from "../../../atomics/boxes/ListBox";
 import { MainText } from "../../../atomics/typographys/texts";
 import { SectionTitle } from "../../../atomics/typographys/titles";
-import { IconButton } from "../../../molecules/buttons/IconButton";
-import { BoxIcon } from "../../../molecules/icons/BoxIcon";
+import { IconBox } from "../../../molecules/boxes/IconBox";
 import { PostTableContent_post$key } from "./__generated__/PostTableContent_post.graphql";
 
 interface IPostTableContent {
@@ -45,13 +41,13 @@ const PostTableContent = ({ post, comment }: IPostTableContent) => {
   const postCreatedAt = getElaspedDay(tableContentData?.createdAt);
 
   return (
-    <ItemBox
+    <GridItem
       onClick={() => navigate(`/post/${tableContentData?.id}`)}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
       <RowBox>
-        <BoxIcon
+        <IconBox
           bgColor={isHovering ? theme.bgColors.purple : theme.bgColors.gray}
           icon={faBox}
           size={"2x"}
@@ -90,7 +86,7 @@ const PostTableContent = ({ post, comment }: IPostTableContent) => {
               alignItems: "center",
             }}
           >
-            <BoxIcon
+            <IconBox
               color={
                 tableContentData?.isLiked
                   ? theme.bgColors.red
@@ -107,13 +103,13 @@ const PostTableContent = ({ post, comment }: IPostTableContent) => {
               alignItems: "center",
             }}
           >
-            <BoxIcon icon={faComment} />
+            <IconBox icon={faComment} />
             <MainText>{tableContentData?.countComments}</MainText>
           </div>
         </div>
         <MainText>{postCreatedAt}</MainText>
       </RowBox>
-    </ItemBox>
+    </GridItem>
   );
 };
 

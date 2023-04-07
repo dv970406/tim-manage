@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import { RefetchFnDynamic } from "react-relay";
 import { Options } from "react-relay/relay-hooks/useRefetchableFragmentNode";
 import { theme } from "../../../../css/theme";
-import { RowBox } from "../../../atomics/boxes/Boxes";
+import { CenterBox, RowBox } from "../../../atomics/boxes/FlexBox";
 import { Section } from "../../../atomics/sections/sections";
 import { IconButton } from "../../../molecules/buttons/IconButton";
 import { PostsTablePaginationQuery } from "../../../templates/content/post/__generated__/PostsTablePaginationQuery.graphql";
@@ -43,7 +43,7 @@ const OrderPosts = ({ refetch }: IOrderPosts) => {
   }, [orders]);
   return (
     <Section>
-      <RowBox style={{ justifyContent: "center", alignItems: "center" }}>
+      <CenterBox>
         <IconButton
           onClick={() => handleOrder("recent")}
           color={
@@ -65,7 +65,7 @@ const OrderPosts = ({ refetch }: IOrderPosts) => {
           }
           icon={faComment}
         />
-      </RowBox>
+      </CenterBox>
     </Section>
   );
 };

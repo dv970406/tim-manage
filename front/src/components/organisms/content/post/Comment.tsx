@@ -5,7 +5,7 @@ import { useFragment } from "react-relay";
 import { useDeleteComment } from "../../../../client/post/DeleteComment.client";
 import { theme } from "../../../../css/theme";
 import { getElaspedDay } from "../../../../utils/time/time";
-import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
+import { RowBox } from "../../../atomics/boxes/FlexBox";
 import { SectionText } from "../../../atomics/typographys/texts";
 import { SubTitle } from "../../../atomics/typographys/titles";
 import { IconButton } from "../../../molecules/buttons/IconButton";
@@ -38,7 +38,7 @@ const Comment = ({ comment }: IComment) => {
     });
   };
   return (
-    <li>
+    <>
       <RowBox style={{ justifyContent: "space-between" }}>
         <SubTitle>{commentData.user.name}</SubTitle>
         {commentData.isMyComment && (
@@ -53,7 +53,7 @@ const Comment = ({ comment }: IComment) => {
       <div>
         <SectionText>{getElaspedDay(commentData.createdAt)}</SectionText>
       </div>
-    </li>
+    </>
   );
 };
 

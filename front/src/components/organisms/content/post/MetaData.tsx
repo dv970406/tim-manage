@@ -9,7 +9,7 @@ import { useToggleLike } from "../../../../client/post/ToggleLike.client";
 import { theme } from "../../../../css/theme";
 import { SectionText } from "../../../atomics/typographys/texts";
 import { IconButton } from "../../../molecules/buttons/IconButton";
-import { Icon } from "../../../atomics/icons/icons";
+import { Icon } from "../../../atomics/icons/icon";
 
 interface IMetaData {
   postId: string;
