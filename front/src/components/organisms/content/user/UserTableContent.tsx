@@ -6,15 +6,12 @@ import { useNavigate } from "react-router-dom";
 import { theme } from "../../../../css/theme";
 import { POSITION } from "../../../../utils/constants/user.constant";
 import { getPositionIcon, getTeamIcon } from "../../../../utils/shared";
-import {
-  RowBox,
-  HorizontalDivider,
-  ColumnBox,
-  ItemBox,
-} from "../../../atomics/boxes/Boxes";
+import { HorizontalDivider } from "../../../atomics/boxes/Divider";
+import { ColumnBox, RowBox } from "../../../atomics/boxes/FlexBox";
+import { GridItem } from "../../../atomics/boxes/ListBox";
 import { SectionText, MainText } from "../../../atomics/typographys/texts";
 import { SectionTitle } from "../../../atomics/typographys/titles";
-import { BoxIcon } from "../../../molecules/icons/BoxIcon";
+import { IconBox } from "../../../molecules/boxes/IconBox";
 import { UserTableContent_user$key } from "./__generated__/UserTableContent_user.graphql";
 
 interface IUserTableContent {
@@ -48,7 +45,7 @@ const UserTableContent = ({ user, isManager }: IUserTableContent) => {
   const [isHovering, setIsHovering] = useState(false);
 
   return (
-    <ItemBox
+    <GridItem
       onClick={
         isManager ? () => navigate(`/user/${tableContentData.id}`) : () => null
       }
@@ -56,7 +53,7 @@ const UserTableContent = ({ user, isManager }: IUserTableContent) => {
       onMouseLeave={() => setIsHovering(false)}
     >
       <RowBox>
-        <BoxIcon
+        <IconBox
           bgColor={isHovering ? theme.bgColors.purple : theme.bgColors.gray}
           icon={faUser}
           size={"2x"}
@@ -86,7 +83,7 @@ const UserTableContent = ({ user, isManager }: IUserTableContent) => {
                 alignItems: "center",
               }}
             >
-              <BoxIcon icon={faShield} color="gold" />
+              <IconBox icon={faShield} color="gold" />
               <MainText style={{ whiteSpace: "nowrap" }}>리더</MainText>
             </RowBox>
           )}
@@ -98,7 +95,7 @@ const UserTableContent = ({ user, isManager }: IUserTableContent) => {
               gap: theme.spacing.xs,
             }}
           >
-            <BoxIcon
+            <IconBox
               icon={getPositionIcon(tableContentData.position.position)}
               color={
                 tableContentData.position.position === POSITION["대표"]
@@ -117,14 +114,14 @@ const UserTableContent = ({ user, isManager }: IUserTableContent) => {
               gap: theme.spacing.xs,
             }}
           >
-            <BoxIcon icon={getTeamIcon(tableContentData.team.team)} />
+            <IconBox icon={getTeamIcon(tableContentData.team.team)} />
             <MainText style={{ whiteSpace: "nowrap" }}>
               {tableContentData.team.team}
             </MainText>
           </RowBox>
         </RowBox>
       </RowBox>
-    </ItemBox>
+    </GridItem>
   );
 };
 
