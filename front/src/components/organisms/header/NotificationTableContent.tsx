@@ -5,7 +5,7 @@ import { useFragment } from "react-relay";
 import { ReadNotificationMutation$variables } from "../../../client/notification/__generated__/ReadNotificationMutation.graphql";
 import { theme } from "../../../css/theme";
 import { getElaspedDay, vacationDateFormat } from "../../../utils/time/time";
-import { ColumnBox, RowBox } from "../../atomics/boxes/Boxes";
+import { ColumnBox, RowBox } from "../../atomics/boxes/FlexBox";
 import { ListItem } from "../../atomics/sections/sections";
 import {
   AccentText,
@@ -13,7 +13,7 @@ import {
   SectionText,
 } from "../../atomics/typographys/texts";
 import { SubTitle } from "../../atomics/typographys/titles";
-import { BoxIcon } from "../../molecules/icons/BoxIcon";
+import { IconBox } from "../../molecules/boxes/IconBox";
 import { NotificationTableContent_notification$key } from "./__generated__/NotificationTableContent_notification.graphql";
 
 interface INotificationTableContent {
@@ -82,7 +82,7 @@ const NotificationTableContent = ({
           justifyContent: "space-between",
         }}
       >
-        <BoxIcon icon={faRocket} size="lg" bgColor={theme.bgColors.purple} />
+        <IconBox icon={faRocket} size="lg" bgColor={theme.bgColors.purple} />
 
         <ColumnBox style={{ placeSelf: "flex-end" }} gap={theme.spacing.sm}>
           <DateText style={{ textAlign: "right" }}>

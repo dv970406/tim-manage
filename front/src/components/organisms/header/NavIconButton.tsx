@@ -1,10 +1,7 @@
-import React from "react";
-import { faUser, faGear, faBell } from "@fortawesome/pro-solid-svg-icons";
 import { theme } from "../../../css/theme";
 import { NavLink, useNavigate } from "react-router-dom";
-import { Icon } from "../../atomics/icons/icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { BoxIcon } from "../../molecules/icons/BoxIcon";
+import { IconBox } from "../../molecules/boxes/IconBox";
 
 interface INavIconButton {
   path: string;
@@ -15,7 +12,7 @@ const NavIconButton = ({ path, icon }: INavIconButton) => {
     <li>
       <NavLink to={path} end>
         {({ isActive }) => (
-          <BoxIcon
+          <IconBox
             icon={icon}
             bgColor={isActive ? theme.bgColors.purple : undefined}
           />

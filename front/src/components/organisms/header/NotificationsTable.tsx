@@ -1,9 +1,7 @@
 import { graphql } from "babel-plugin-relay/macro";
-import React, { useState } from "react";
 import { usePaginationFragment } from "react-relay";
 import { useReadNotification } from "../../../client/notification/ReadNotification.client";
-import { ColumnBox } from "../../atomics/boxes/Boxes";
-import { InfiniteScrollList } from "../shared/InfiniteScrolls";
+import { InfiniteScrollList } from "../scrolls/InfiniteScrollList";
 import NotificationTableContent from "./NotificationTableContent";
 import { NotificationsTablePaginationQuery } from "./__generated__/NotificationsTablePaginationQuery.graphql";
 import { NotificationsTable_notification$key } from "./__generated__/NotificationsTable_notification.graphql";
@@ -40,7 +38,6 @@ const NotificationsTable = ({ notifications }: INotificationsTable) => {
     data: { getNotifications },
     loadNext,
     isLoadingNext,
-    refetch,
     hasNext,
   } = usePaginationFragment<
     NotificationsTablePaginationQuery,
