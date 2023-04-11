@@ -2,10 +2,10 @@ import { faLock, faUser } from "@fortawesome/pro-solid-svg-icons";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useLogin } from "../../../client/user/Login.client";
 import { theme } from "../../../css/theme";
-import { ColumnBox } from "../../atomics/boxes/Boxes";
-import { Form } from "../../atomics/form/Form";
+import { ColumnBox } from "../../atomics/boxes/FlexBox";
 import { Section } from "../../atomics/sections/sections";
 import { EndSubmitButton } from "../../molecules/buttons/EndSubmitButton";
+import Form from "../../molecules/form/Form";
 import { TextInput } from "../../molecules/inputs/TextInput";
 
 interface ILoginForm {
