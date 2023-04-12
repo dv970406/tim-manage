@@ -4,17 +4,16 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useDeleteMeeting } from "../../../../client/meeting/DeleteMeeting.client";
 import { useGetMeeting } from "../../../../client/meeting/GetMeeting.client";
 import { useUpdateMeeting } from "../../../../client/meeting/UpdateMeeting.client";
-import { theme } from "../../../../css/theme";
-import { Form } from "../../../atomics/form/Form";
-import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 import { IMeetingFormValue } from "./CreateScheduleModal";
 import SelectUsers from "../../../organisms/content/home/SelectUsers";
 import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
 import { closeModal } from "../../../../utils/modal/controlModal";
 import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
-import { useSelectUsers } from "../../../../client/user/SelectUsers.client";
 import PortalModal from "../../../../utils/modal/PortalModal";
+import Form from "../../../molecules/form/Form";
+import { RowBox } from "../../../atomics/boxes/FlexBox";
+import MeetingInfo from "../../../organisms/content/home/MeetingInfo";
 
 interface IMutateMeetingModal {
   scheduleId: string;
@@ -65,32 +64,24 @@ const MutateMeetingModal = ({ scheduleId }: IMutateMeetingModal) => {
 
   return (
     <PortalModal modalName={MODAL_NAME.MUTATE_MEETING}>
-      <Form onSubmit={handleSubmit(onSubmit)} method="dialog">
-        <div>
-          <TextInput
-            label="제목"
-            register={register("title", {
-              required: {
-                value: true,
-                message: "제목은 필수입니다.",
-              },
-              minLength: {
-                value: 2,
-                message: "제목은 2글자 이상입니다.",
-              },
-              maxLength: {
-                value: 15,
-                message: "제목은 15글자 이하입니다.",
-              },
-            })}
-            defaultValue={meeting?.title}
-            type="text"
-            icon={faRocket}
-            placeholder="회의명을 입력하세요."
-            errorMessage={errors?.title && errors?.title.message}
-          />
-        </div>
-        <SelectUsers
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <MeetingInfo
+          register={register("title", {
+            required: {
+              value: true,
+              message: "제목은 필수입니다.",
+            },
+            minLength: {
+              value: 2,
+              message: "제목은 2글자 이상입니다.",
+            },
+            maxLength: {
+              value: 15,
+              message: "제목은 15글자 이하입니다.",
+            },
+          })}
+          defaultValue={meeting?.title}
+          errorMessage={errors?.title && errors?.title.message}
           prevAttendees={meeting?.attendees as any}
           setAttendeesId={setAttendeesId}
         />
