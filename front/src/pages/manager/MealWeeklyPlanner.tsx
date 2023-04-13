@@ -1,28 +1,24 @@
-import { Suspense, useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect } from "react";
 import { PreloadedQuery, useQueryLoader } from "react-relay";
 import {
   getWeeklyMealQuery,
   useGetWeeklyMeal,
 } from "../../client/meal/GetWeeklyMeal.client";
 import { GetWeeklyMealQuery } from "../../client/meal/__generated__/GetWeeklyMealQuery.graphql";
-import {
-  RowBox,
-  ColumnBox,
-  CenterBox,
-} from "../../components/atomics/boxes/Boxes";
-import {
-  AnimateSection,
-  Section,
-} from "../../components/atomics/sections/sections";
+import { AnimateSection } from "../../components/atomics/sections/sections";
 import { SectionTitle } from "../../components/atomics/typographys/titles";
 import { AnimatePresence } from "framer-motion";
 import { IconButton } from "../../components/molecules/buttons/IconButton";
 import { faDiagramNext, faYen } from "@fortawesome/pro-solid-svg-icons";
 import { cardAnimation } from "../../css/animations";
 import { theme } from "../../css/theme";
-import { getDayOfNow } from "../../utils/time/time";
 import { useControlTodayMeal } from "../../utils/hooks/meal/meal.hook";
-import Loading from "../../components/atomics/boxes/Loading";
+import Loading from "../../components/molecules/shared/Loading";
+import {
+  CenterBox,
+  ColumnBox,
+  RowBox,
+} from "../../components/atomics/boxes/FlexBox";
 
 const MealWeeklyPlannerPage = () => {
   const [getWeeklyMealQueryReference, loadGetWeeklyMealQuery] =

@@ -21,16 +21,19 @@ function TemplatesLayout() {
   const { myInfo } = useGetMyInfo();
 
   return (
-    <Body>
-      <SideBar isManager={myInfo?.isManager} isLeader={myInfo?.isLeader} />
-      <Main>
-        <Header unreadNotificationCount={myInfo?.unreadNotificationCount} />
+    <>
+      <Body>
+        <SideBar isManager={myInfo?.isManager} isLeader={myInfo?.isLeader} />
+        <Main>
+          <Header unreadNotificationCount={myInfo?.unreadNotificationCount} />
 
-        <Content>
-          <Outlet />
-        </Content>
-        <MessageTool />
-      </Main>
-    </Body>
+          <Content>
+            <Outlet />
+          </Content>
+          <MessageTool />
+        </Main>
+      </Body>
+      <div id="modal-root"></div>
+    </>
   );
 }

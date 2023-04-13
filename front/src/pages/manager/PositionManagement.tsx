@@ -5,14 +5,13 @@ import {
   useGetManagerPositions,
 } from "../../client/manager/GetManagerPositions.client";
 import { GetManagerPositionsQuery } from "../../client/manager/__generated__/GetManagerPositionsQuery.graphql";
-import { ColumnBox } from "../../components/atomics/boxes/Boxes";
-import Loading from "../../components/atomics/boxes/Loading";
+import Loading from "../../components/molecules/shared/Loading";
 import { Section } from "../../components/atomics/sections/sections";
 import CenterFrame from "../../components/molecules/boxes/CenterFrame";
 import CreatePositionForm from "../../components/templates/content/manager/CreatePositionForm";
 import ManagerPositionsTable from "../../components/templates/content/manager/ManagerPositionsTable";
 import MutatePositionForm from "../../components/templates/content/manager/MutatePositionForm";
-import { theme } from "../../css/theme";
+import { ColumnBox } from "../../components/atomics/boxes/FlexBox";
 
 const PositionManagementPage = () => {
   const [managerPositionsQueryReference, loadManagerPositionsQuery] =

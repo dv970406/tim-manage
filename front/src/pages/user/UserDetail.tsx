@@ -4,11 +4,11 @@ import { PreloadedQuery, useQueryLoader } from "react-relay";
 import { Outlet, useParams } from "react-router-dom";
 import { getUserQuery, useGetUser } from "../../client/user/GetUser.client";
 import { GetUserQuery } from "../../client/user/__generated__/GetUserQuery.graphql";
-import { RowBox, ColumnBox } from "../../components/atomics/boxes/Boxes";
-import Loading from "../../components/atomics/boxes/Loading";
+import Loading from "../../components/molecules/shared/Loading";
 import { Section } from "../../components/atomics/sections/sections";
 import NavIconButton from "../../components/organisms/header/NavIconButton";
 import { PAGINATION_LOAD_COUNT } from "../../utils/constants/share.constant";
+import { ColumnBox, RowBox } from "../../components/atomics/boxes/FlexBox";
 
 const UserDetailPage = () => {
   const { userId } = useParams();

@@ -1,25 +1,18 @@
-import React, { ChangeEventHandler, MouseEventHandler, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import readXlsxFile from "read-excel-file";
 import { useCreateWeeklyMeal } from "../../client/meal/CreateWeeklyMeal.client";
-import { SubmitButton } from "../../components/atomics/buttons/buttons";
-import { Form } from "../../components/atomics/form/Form";
 import { Section } from "../../components/atomics/sections/sections";
 import { createWorker } from "tesseract.js";
-import { ColumnBox } from "../../components/atomics/boxes/Boxes";
 import CenterFrame from "../../components/molecules/boxes/CenterFrame";
 import { EndSubmitButton } from "../../components/molecules/buttons/EndSubmitButton";
+import Form from "../../components/molecules/form/Form";
 
 interface IMealWeeklyCreateForm {
   excelFormatMeal?: File;
   imageFormatMeal?: File;
 }
 const MealWeeklyCreatePage = () => {
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm<IMealWeeklyCreateForm>();
+  const { register, handleSubmit } = useForm<IMealWeeklyCreateForm>();
 
   const { createWeeklyMealMutation, createWeeklyMealLoading } =
     useCreateWeeklyMeal();
@@ -49,10 +42,10 @@ const MealWeeklyCreatePage = () => {
     await worker.loadLanguage("kor+eng");
     await worker.initialize("kor+eng");
 
-    const {
-      data: { text },
-      // @ts-ignore
-    } = await worker.recognize(imageFormatMeal[0]);
+    // const {
+    //   data,
+    //   // @ts-ignore
+    // } = await worker.recognize(imageFormatMeal[0]);
     await worker.terminate();
   };
 

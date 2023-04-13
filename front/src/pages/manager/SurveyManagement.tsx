@@ -1,12 +1,10 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { PreloadedQuery, useQueryLoader } from "react-relay";
 import { GetManagerSurveysQuery } from "../../client/manager/__generated__/GetManagerSurveysQuery.graphql";
-import { ColumnBox, RowBox } from "../../components/atomics/boxes/Boxes";
 import { Section } from "../../components/atomics/sections/sections";
 import ManagerSurveysTable from "../../components/templates/content/manager/ManagerSurveysTable";
 import ShowShortAnswers from "../../components/templates/content/manager/ShowShortAnswers";
 import ShowMultipleChoiceAnswers from "../../components/templates/content/manager/ShowMultipleChoiceAnswers";
-import { theme } from "../../css/theme";
 import { useGetAnswersOfSurvey } from "../../client/manager/GetAnswersOfSurvey.client";
 import SurveyResponseRate from "../../components/templates/content/manager/SurveyResponseRate";
 import {
@@ -15,7 +13,8 @@ import {
 } from "../../client/manager/GetManagerSurveys.client";
 import { PAGINATION_LOAD_COUNT } from "../../utils/constants/share.constant";
 import CenterFrame from "../../components/molecules/boxes/CenterFrame";
-import Loading from "../../components/atomics/boxes/Loading";
+import Loading from "../../components/molecules/shared/Loading";
+import { ColumnBox } from "../../components/atomics/boxes/FlexBox";
 
 // 대표는 모두 수정 가능, 관리자는 자기가 만든 것만 수정가능
 const SurveyManagementPage = () => {

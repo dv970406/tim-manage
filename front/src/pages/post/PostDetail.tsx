@@ -4,16 +4,10 @@ import { useParams } from "react-router-dom";
 import { getPostQuery, useGetPost } from "../../client/post/GetPost.client";
 import { GetPostQuery } from "../../client/post/__generated__/GetPostQuery.graphql";
 import { Section } from "../../components/atomics/sections/sections";
-import "react-quill/dist/quill.bubble.css";
 import CommentsZone from "../../components/templates/content/post/CommentsZone";
 import ContentZone from "../../components/templates/content/post/ContentZone";
-import { theme } from "../../css/theme";
-import {
-  CenterBox,
-  ColumnBox,
-  RowBox,
-} from "../../components/atomics/boxes/Boxes";
-import Loading from "../../components/atomics/boxes/Loading";
+import Loading from "../../components/molecules/shared/Loading";
+import { CenterBox, RowBox } from "../../components/atomics/boxes/FlexBox";
 
 const PostDetailPage = () => {
   const { postId } = useParams();

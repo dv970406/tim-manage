@@ -15,12 +15,12 @@ import {
   useGetMyAllInfo,
 } from "../../client/user/GetMyAllInfo.client";
 import { GetMyAllInfoQuery } from "../../client/user/__generated__/GetMyAllInfoQuery.graphql";
-import { RowBox, ColumnBox } from "../../components/atomics/boxes/Boxes";
-import Loading from "../../components/atomics/boxes/Loading";
+import Loading from "../../components/molecules/shared/Loading";
 import { Section } from "../../components/atomics/sections/sections";
 import NavIconButton from "../../components/organisms/header/NavIconButton";
 import { theme } from "../../css/theme";
 import { PAGINATION_LOAD_COUNT } from "../../utils/constants/share.constant";
+import { ColumnBox, RowBox } from "../../components/atomics/boxes/FlexBox";
 
 const MyPage = () => {
   const [getMyAllInfoQueryReference, loadUserQuery] =

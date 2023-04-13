@@ -1,12 +1,11 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { PreloadedQuery, useQueryLoader } from "react-relay";
-import { useConfirmVacation } from "../../client/manager/ConfirmVacation.client";
 import {
   getUnConfirmedByMeVacationsQuery,
   useGetUnConfirmedByMeVacations,
 } from "../../client/manager/GetUnConfirmedByMeVacations.client";
 import { GetUnConfirmedByMeVacationsQuery } from "../../client/manager/__generated__/GetUnConfirmedByMeVacationsQuery.graphql";
-import Loading from "../../components/atomics/boxes/Loading";
+import Loading from "../../components/molecules/shared/Loading";
 import { Section } from "../../components/atomics/sections/sections";
 import CenterFrame from "../../components/molecules/boxes/CenterFrame";
 import UnConfirmedVacationsTable from "../../components/templates/content/manager/UnConfirmedVacationsTable";

@@ -1,5 +1,5 @@
 import { EventInput } from "@fullcalendar/core";
-import React, { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { PreloadedQuery, useQueryLoader } from "react-relay";
 import {
   getMeetingsQuery,
@@ -17,11 +17,11 @@ import { SCHEDULES } from "../utils/constants/schedule.constant";
 import MyTeamVacations from "../components/templates/content/home/MyTeamVacations";
 import TodayMeetings from "../components/templates/content/home/TodayMeetings";
 import VacationCalendar from "../components/templates/content/home/VacationCalendar";
-import { ColumnBox, RowBox } from "../components/atomics/boxes/Boxes";
-import Loading from "../components/atomics/boxes/Loading";
+import Loading from "../components/molecules/shared/Loading";
 import "../css/media-query/Home.css";
 import styled from "@emotion/styled/macro";
 import { breakpoints } from "../css/media-query/media-query";
+import { ColumnBox, RowBox } from "../components/atomics/boxes/FlexBox";
 
 const HomePage = () => {
   const [getVacationsQueryReference, loadGetVacationsQuery] =
@@ -105,27 +105,29 @@ const Home = ({
   }
 
   return (
-    <HomeFrame>
-      <CalendarZone>
-        <Suspense fallback={<Loading />}>
-          <VacationCalendar
-            schedules={schedules}
-            setFilteringSchedules={setFilteringSchedules}
-          />
-        </Suspense>
-      </CalendarZone>
-      <RecentSchedulesZone>
-        <Section>
-          <TodayMeetings todayMeetings={todayMeetings} />
-        </Section>
-        <Section>
-          <MyTeamVacations
-            myTeam={myInfo?.team?.team}
-            myTeamVacations={myTeamVacations}
-          />
-        </Section>
-      </RecentSchedulesZone>
-    </HomeFrame>
+    <>
+      <HomeFrame>
+        <CalendarZone>
+          <Suspense fallback={<Loading />}>
+            <VacationCalendar
+              schedules={schedules}
+              setFilteringSchedules={setFilteringSchedules}
+            />
+          </Suspense>
+        </CalendarZone>
+        <RecentSchedulesZone>
+          <Section>
+            <TodayMeetings todayMeetings={todayMeetings} />
+          </Section>
+          <Section>
+            <MyTeamVacations
+              myTeam={myInfo?.team?.team}
+              myTeamVacations={myTeamVacations}
+            />
+          </Section>
+        </RecentSchedulesZone>
+      </HomeFrame>
+    </>
   );
 };
 

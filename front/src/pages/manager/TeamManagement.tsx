@@ -5,17 +5,13 @@ import {
   useGetManagerTeams,
 } from "../../client/manager/GetManagerTeams.client";
 import { GetManagerTeamsQuery } from "../../client/manager/__generated__/GetManagerTeamsQuery.graphql";
-import { useGetMyInfo } from "../../client/user/GetMyInfo.client";
-import { ColumnBox } from "../../components/atomics/boxes/Boxes";
-import Loading from "../../components/atomics/boxes/Loading";
+import Loading from "../../components/molecules/shared/Loading";
 import { Section } from "../../components/atomics/sections/sections";
 import CenterFrame from "../../components/molecules/boxes/CenterFrame";
-import Table from "../../components/molecules/tables/Table";
-import ManagerTeamTableContent from "../../components/organisms/content/manager/ManagerTeamTableContent";
 import CreateTeamForm from "../../components/templates/content/manager/CreateTeamForm";
 import ManagerTeamsTable from "../../components/templates/content/manager/ManagerTeamsTable";
 import MutateTeamForm from "../../components/templates/content/manager/MutateTeamForm";
-import { theme } from "../../css/theme";
+import { ColumnBox } from "../../components/atomics/boxes/FlexBox";
 
 // 여기서 nominateLeader도 처리
 const TeamManagementPage = () => {

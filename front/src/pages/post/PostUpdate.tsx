@@ -3,12 +3,10 @@ import { PreloadedQuery, useQueryLoader } from "react-relay";
 import { useParams } from "react-router-dom";
 import { getPostQuery, useGetPost } from "../../client/post/GetPost.client";
 import { GetPostQuery } from "../../client/post/__generated__/GetPostQuery.graphql";
-import { useGetUser } from "../../client/user/GetUser.client";
-import { GetUserQuery } from "../../client/user/__generated__/GetUserQuery.graphql";
-import { CenterBox } from "../../components/atomics/boxes/Boxes";
-import Loading from "../../components/atomics/boxes/Loading";
+import Loading from "../../components/molecules/shared/Loading";
 import { Section } from "../../components/atomics/sections/sections";
 import MutatePostForm from "../../components/templates/content/post/MutatePostForm";
+import { CenterBox } from "../../components/atomics/boxes/FlexBox";
 
 const PostUpdatePage = () => {
   const { postId } = useParams();
