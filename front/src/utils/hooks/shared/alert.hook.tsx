@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { RowBox } from "../../../components/atomics/boxes/Boxes";
-import { MainText } from "../../../components/atomics/typographys/texts";
+import { RowBox } from "../../../components/atomics/boxes/FlexBox";
+import { MainText } from "../../../components/atomics/typographys/Main";
 import { theme } from "../../../css/theme";
 
 interface IEnqueueAlert {

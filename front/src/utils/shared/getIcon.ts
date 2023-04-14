@@ -1,5 +1,4 @@
 import {
-  faBaby,
   faBusinessFront,
   faCitrus,
   faCompass,
@@ -9,11 +8,10 @@ import {
   faHeadSideGoggles,
   faSeedling,
   faSpiderWeb,
-  faThoughtBubble,
   faUser,
   faVrCardboard,
 } from "@fortawesome/pro-solid-svg-icons";
-import { POSITION, TEAM } from "./constants/user.constant";
+import { POSITION, TEAM } from "../constants/user.constant";
 
 export const getTeamIcon = (team: string) => {
   switch (team) {

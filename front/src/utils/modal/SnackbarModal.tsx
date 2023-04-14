@@ -1,12 +1,11 @@
-import styled from "@emotion/styled";
 import reactDom from "react-dom";
-import { ModalDialog } from "../../components/atomics/sections/sections";
+import { ModalSection } from "../../components/atomics/boxes/Modal";
 
 interface ISnackbarModal {
   message: string;
 }
 const SnackbarModal = ({ message }: ISnackbarModal) => {
-  const content = <ModalDialog>{message}</ModalDialog>;
+  const content = <ModalSection>{message}</ModalSection>;
   return reactDom.createPortal(
     content,
     document.querySelector("#snackbar") as HTMLElement
