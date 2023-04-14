@@ -3,7 +3,7 @@ import { PreloadedQuery, useQueryLoader } from "react-relay";
 import { useParams } from "react-router-dom";
 import { getPostQuery, useGetPost } from "../../client/post/GetPost.client";
 import { GetPostQuery } from "../../client/post/__generated__/GetPostQuery.graphql";
-import { Section } from "../../components/atomics/sections/sections";
+import { Section } from "../../components/atomics/boxes/Sections";
 import CommentsZone from "../../components/templates/content/post/CommentsZone";
 import ContentZone from "../../components/templates/content/post/ContentZone";
 import Loading from "../../components/molecules/shared/Loading";
@@ -47,8 +47,6 @@ const PostDetail = ({ getPostQueryReference }: IPostDetail) => {
         <Section
           style={{
             width: "40%",
-            display: "grid",
-            gridTemplateRows: "12fr 1fr",
           }}
         >
           {post && <CommentsZone post={post} />}{" "}

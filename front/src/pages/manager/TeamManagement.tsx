@@ -6,7 +6,7 @@ import {
 } from "../../client/manager/GetManagerTeams.client";
 import { GetManagerTeamsQuery } from "../../client/manager/__generated__/GetManagerTeamsQuery.graphql";
 import Loading from "../../components/molecules/shared/Loading";
-import { Section } from "../../components/atomics/sections/sections";
+import { Section } from "../../components/atomics/boxes/Sections";
 import CenterFrame from "../../components/molecules/boxes/CenterFrame";
 import CreateTeamForm from "../../components/templates/content/manager/CreateTeamForm";
 import ManagerTeamsTable from "../../components/templates/content/manager/ManagerTeamsTable";

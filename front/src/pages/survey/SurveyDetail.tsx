@@ -7,7 +7,7 @@ import {
 } from "../../client/survey/GetSurvey.client";
 import { GetSurveyQuery } from "../../client/survey/__generated__/GetSurveyQuery.graphql";
 import Loading from "../../components/molecules/shared/Loading";
-import { Section } from "../../components/atomics/sections/sections";
+import { Section } from "../../components/atomics/boxes/Sections";
 import AnswerSheet from "../../components/templates/content/survey/AnswerSheet";
 import { ColumnBox, RowBox } from "../../components/atomics/boxes/FlexBox";
 
@@ -38,7 +38,7 @@ const SurveyDetail = ({ getSurveyQueryReference }: ISurveyDetail) => {
   const { survey } = useGetSurvey(getSurveyQueryReference);
 
   return (
-    <RowBox>
+    <>
       <Section style={{ width: "40%" }}>
         {survey && <AnswerSheet survey={survey} />}
       </Section>
@@ -50,7 +50,7 @@ const SurveyDetail = ({ getSurveyQueryReference }: ISurveyDetail) => {
         <Section style={{ height: "50%" }}></Section>
         <Section style={{ height: "50%" }}></Section>
       </ColumnBox>
-    </RowBox>
+    </>
   );
 };
 

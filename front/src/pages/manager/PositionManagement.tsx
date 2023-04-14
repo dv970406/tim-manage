@@ -6,7 +6,7 @@ import {
 } from "../../client/manager/GetManagerPositions.client";
 import { GetManagerPositionsQuery } from "../../client/manager/__generated__/GetManagerPositionsQuery.graphql";
 import Loading from "../../components/molecules/shared/Loading";
-import { Section } from "../../components/atomics/sections/sections";
+import { Section } from "../../components/atomics/boxes/Sections";
 import CenterFrame from "../../components/molecules/boxes/CenterFrame";
 import CreatePositionForm from "../../components/templates/content/manager/CreatePositionForm";
 import ManagerPositionsTable from "../../components/templates/content/manager/ManagerPositionsTable";

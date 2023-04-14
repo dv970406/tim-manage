@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { getPostQuery, useGetPost } from "../../client/post/GetPost.client";
 import { GetPostQuery } from "../../client/post/__generated__/GetPostQuery.graphql";
 import Loading from "../../components/molecules/shared/Loading";
-import { Section } from "../../components/atomics/sections/sections";
+import { Section } from "../../components/atomics/boxes/Sections";
 import MutatePostForm from "../../components/templates/content/post/MutatePostForm";
 import { CenterBox } from "../../components/atomics/boxes/FlexBox";
 

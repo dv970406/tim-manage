@@ -16,7 +16,7 @@ import {
 } from "../../client/user/GetMyAllInfo.client";
 import { GetMyAllInfoQuery } from "../../client/user/__generated__/GetMyAllInfoQuery.graphql";
 import Loading from "../../components/molecules/shared/Loading";
-import { Section } from "../../components/atomics/sections/sections";
+import { Section } from "../../components/atomics/boxes/Sections";
 import NavIconButton from "../../components/organisms/header/NavIconButton";
 import { theme } from "../../css/theme";
 import { PAGINATION_LOAD_COUNT } from "../../utils/constants/share.constant";
@@ -45,7 +45,7 @@ const My = ({ getMyAllInfoQueryReference }: IMy) => {
   const { myAllInfo } = useGetMyAllInfo(getMyAllInfoQueryReference);
 
   return (
-    <ColumnBox gap={theme.spacing.md}>
+    <ColumnBox gap={theme.spacing.md} style={{ width: "100%" }}>
       <Section>
         <RowBox style={{ justifyContent: "center", alignItems: "center" }}>
           <NavIconButton path="" icon={faInfo} />

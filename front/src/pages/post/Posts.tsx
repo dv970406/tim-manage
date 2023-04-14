@@ -3,7 +3,7 @@ import { PreloadedQuery, useQueryLoader } from "react-relay";
 import { getPostsQuery, useGetPosts } from "../../client/post/GetPosts.client";
 import { GetPostsQuery } from "../../client/post/__generated__/GetPostsQuery.graphql";
 import Loading from "../../components/molecules/shared/Loading";
-import { Section } from "../../components/atomics/sections/sections";
+import { Section } from "../../components/atomics/boxes/Sections";
 import PostsTable from "../../components/templates/content/post/PostsTable";
 import { PAGINATION_LOAD_COUNT } from "../../utils/constants/share.constant";
 

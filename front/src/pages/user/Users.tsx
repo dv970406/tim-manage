@@ -3,7 +3,7 @@ import { PreloadedQuery, useQueryLoader } from "react-relay";
 import { getUsersQuery, useGetUsers } from "../../client/user/GetUsers.client";
 import { GetUsersQuery } from "../../client/user/__generated__/GetUsersQuery.graphql";
 import Loading from "../../components/molecules/shared/Loading";
-import { Section } from "../../components/atomics/sections/sections";
+import { Section } from "../../components/atomics/boxes/Sections";
 import UsersTable from "../../components/templates/content/user/UsersTable";
 import { PAGINATION_LOAD_COUNT } from "../../utils/constants/share.constant";
 import CreateUserForm from "../../components/templates/content/manager/CreateUserModal";

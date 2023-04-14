@@ -5,20 +5,20 @@ import {
   useGetWeeklyMeal,
 } from "../../client/meal/GetWeeklyMeal.client";
 import { GetWeeklyMealQuery } from "../../client/meal/__generated__/GetWeeklyMealQuery.graphql";
-import { AnimateSection } from "../../components/atomics/sections/sections";
-import { SectionTitle } from "../../components/atomics/typographys/titles";
+import { AnimateSection } from "../../components/atomics/boxes/Sections";
 import { AnimatePresence } from "framer-motion";
 import { IconButton } from "../../components/molecules/buttons/IconButton";
 import { faDiagramNext, faYen } from "@fortawesome/pro-solid-svg-icons";
 import { cardAnimation } from "../../css/animations";
 import { theme } from "../../css/theme";
-import { useControlTodayMeal } from "../../utils/hooks/meal/meal.hook";
+import { useControlTodayMeal } from "../../utils/hooks/meal.hook";
 import Loading from "../../components/molecules/shared/Loading";
 import {
   CenterBox,
   ColumnBox,
   RowBox,
 } from "../../components/atomics/boxes/FlexBox";
+import { SectionTitle } from "../../components/atomics/typographys/Etc";
 
 const MealWeeklyPlannerPage = () => {
   const [getWeeklyMealQueryReference, loadGetWeeklyMealQuery] =

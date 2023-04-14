@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import { PreloadedQuery, useQueryLoader } from "react-relay";
 import { GetManagerSurveysQuery } from "../../client/manager/__generated__/GetManagerSurveysQuery.graphql";
-import { Section } from "../../components/atomics/sections/sections";
+import { Section } from "../../components/atomics/boxes/Sections";
 import ManagerSurveysTable from "../../components/templates/content/manager/ManagerSurveysTable";
 import ShowShortAnswers from "../../components/templates/content/manager/ShowShortAnswers";
 import ShowMultipleChoiceAnswers from "../../components/templates/content/manager/ShowMultipleChoiceAnswers";

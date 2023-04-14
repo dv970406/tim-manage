@@ -6,7 +6,7 @@ import {
 } from "../../client/manager/GetUnConfirmedByMeVacations.client";
 import { GetUnConfirmedByMeVacationsQuery } from "../../client/manager/__generated__/GetUnConfirmedByMeVacationsQuery.graphql";
 import Loading from "../../components/molecules/shared/Loading";
-import { Section } from "../../components/atomics/sections/sections";
+import { Section } from "../../components/atomics/boxes/Sections";
 import CenterFrame from "../../components/molecules/boxes/CenterFrame";
 import UnConfirmedVacationsTable from "../../components/templates/content/manager/UnConfirmedVacationsTable";
 
@@ -48,7 +48,7 @@ const UnConfirmedVacations = ({
   if (!unConfirmedByMeVacations) return <></>;
 
   return (
-    <CenterFrame>
+    <CenterFrame minWidth="50%">
       <Section>
         {unConfirmedByMeVacations && (
           <UnConfirmedVacationsTable

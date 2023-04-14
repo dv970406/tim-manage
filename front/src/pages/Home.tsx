@@ -12,7 +12,7 @@ import {
   useGetVacations,
 } from "../client/vacation/GetVacations.client";
 import { GetVacationsQuery } from "../client/vacation/__generated__/GetVacationsQuery.graphql";
-import { Section } from "../components/atomics/sections/sections";
+import { Section } from "../components/atomics/boxes/Sections";
 import { SCHEDULES } from "../utils/constants/schedule.constant";
 import MyTeamVacations from "../components/templates/content/home/MyTeamVacations";
 import TodayMeetings from "../components/templates/content/home/TodayMeetings";
@@ -51,6 +51,7 @@ const HomeFrame = styled(RowBox)`
     display: grid;
     grid-template-rows: 2fr 1fr;
   }
+  width: 100%;
 `;
 const CalendarZone = styled(Section)`
   width: 75%;

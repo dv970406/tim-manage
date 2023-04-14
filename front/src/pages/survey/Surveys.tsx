@@ -6,7 +6,7 @@ import {
 } from "../../client/survey/GetSurveys.client";
 import { GetSurveysQuery } from "../../client/survey/__generated__/GetSurveysQuery.graphql";
 import Loading from "../../components/molecules/shared/Loading";
-import { Section } from "../../components/atomics/sections/sections";
+import { Section } from "../../components/atomics/boxes/Sections";
 import SurveysTable from "../../components/templates/content/survey/SurveysTable";
 import { PAGINATION_LOAD_COUNT } from "../../utils/constants/share.constant";
 

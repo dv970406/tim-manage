@@ -7,7 +7,7 @@ import {
 import { GetManagerUsersQuery } from "../../client/manager/__generated__/GetManagerUsersQuery.graphql";
 import { useGetMyInfo } from "../../client/user/GetMyInfo.client";
 import Loading from "../../components/molecules/shared/Loading";
-import { Section } from "../../components/atomics/sections/sections";
+import { Section } from "../../components/atomics/boxes/Sections";
 import CenterFrame from "../../components/molecules/boxes/CenterFrame";
 import ManagerUsersTable from "../../components/templates/content/manager/ManagerUsersTable";
 import MutateUserForm from "../../components/templates/content/manager/MutateUserForm";

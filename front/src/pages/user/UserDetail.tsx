@@ -5,10 +5,14 @@ import { Outlet, useParams } from "react-router-dom";
 import { getUserQuery, useGetUser } from "../../client/user/GetUser.client";
 import { GetUserQuery } from "../../client/user/__generated__/GetUserQuery.graphql";
 import Loading from "../../components/molecules/shared/Loading";
-import { Section } from "../../components/atomics/sections/sections";
+import { Section } from "../../components/atomics/boxes/Sections";
 import NavIconButton from "../../components/organisms/header/NavIconButton";
 import { PAGINATION_LOAD_COUNT } from "../../utils/constants/share.constant";
-import { ColumnBox, RowBox } from "../../components/atomics/boxes/FlexBox";
+import {
+  CenterBox,
+  ColumnBox,
+  RowBox,
+} from "../../components/atomics/boxes/FlexBox";
 
 const UserDetailPage = () => {
   const { userId } = useParams();
@@ -36,24 +40,28 @@ const UserDetail = ({ getUserQueryReference }: IUserDetail) => {
   const { user } = useGetUser(getUserQueryReference);
 
   return (
-    <ColumnBox>
-      <Section>
-        <RowBox
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          {" "}
-          <NavIconButton path="" icon={faS} />
-          <NavIconButton path="vacation" icon={faV} />
-        </RowBox>
-      </Section>
-      <Section style={{ height: "100%" }}>
-        <Outlet context={user} />
-        {/* ShowUserVacations */}
-      </Section>
-    </ColumnBox>
+    <CenterBox style={{ width: "100%" }}>
+      <ColumnBox
+        style={{ flexDirection: "column", width: "60%", height: "100%" }}
+      >
+        <Section>
+          <RowBox
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {" "}
+            <NavIconButton path="" icon={faS} />
+            <NavIconButton path="vacation" icon={faV} />
+          </RowBox>
+        </Section>
+        <Section style={{ height: "100%" }}>
+          <Outlet context={user} />
+          {/* ShowUserVacations */}
+        </Section>
+      </ColumnBox>
+    </CenterBox>
   );
 };
 
