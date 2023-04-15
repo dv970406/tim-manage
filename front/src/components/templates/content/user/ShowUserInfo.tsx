@@ -1,8 +1,7 @@
 import { graphql } from "babel-plugin-relay/macro";
-import React from "react";
 import { useFragment } from "react-relay";
-import { useOutlet, useOutletContext } from "react-router-dom";
-import { ColumnBox } from "../../../atomics/boxes/Boxes";
+import { useOutletContext } from "react-router-dom";
+import { ColumnBox } from "../../../atomics/boxes/FlexBox";
 import { ShowUserInfo_user$key } from "./__generated__/ShowUserInfo_user.graphql";
 
 const showUserInfoFragment = graphql`

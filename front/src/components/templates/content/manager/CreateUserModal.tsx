@@ -1,24 +1,20 @@
-import { SubTitle } from "../../../atomics/typographys/titles";
-import { theme } from "../../../../css/theme";
-import { ColumnBox } from "../../../atomics/boxes/Boxes";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
   faCalendar,
   faMailbox,
-  faMailBulk,
   faTag,
   faUsers,
   faWaffle,
 } from "@fortawesome/pro-solid-svg-icons";
-import { Form } from "../../../atomics/form/Form";
 import { useCreateUser } from "../../../../client/manager/CreateUser.client";
 import { useGetPositions } from "../../../../client/position/GetPositions.client";
 import { useGetTeams } from "../../../../client/team/GetTeams.client";
 import Select from "../../../molecules/inputs/Select";
-import FormTitle from "../../../molecules/form/FormTitle";
-import { closeModal } from "../../../../utils/modal/controlModal";
 import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
+import { ColumnBox } from "../../../atomics/boxes/FlexBox";
+import Form from "../../../molecules/shared/Form";
+import PortalModal from "../../../../utils/modal/PortalModal";
 
 interface ICreateUserFormValue {
   name: string;
@@ -27,8 +23,10 @@ interface ICreateUserFormValue {
   position: string;
   team: string;
 }
-interface ICreateUserForm {}
-const CreateUserForm = ({}: ICreateUserForm) => {
+interface ICreateUserModal {
+  onClose: () => void;
+}
+const CreateUserModal = ({ onClose }: ICreateUserModal) => {
   const {
     register,
     formState: { errors },
@@ -48,11 +46,9 @@ const CreateUserForm = ({}: ICreateUserForm) => {
   const { createUserMutation, createUserLoading } = useCreateUser();
 
   const onSubmit: SubmitHandler<ICreateUserFormValue> = ({
-    name,
-    email,
-    joinDate,
     position,
     team,
+    ...createUserInfo
   }) => {
     if (createUserLoading) return;
     const positionId = positions?.find(
@@ -62,14 +58,12 @@ const CreateUserForm = ({}: ICreateUserForm) => {
 
     if (!positionId || !teamId) return;
     createUserMutation({
-      name,
-      email,
-      joinDate,
       positionId,
       teamId,
+      ...createUserInfo,
     });
 
-    closeModal(`create-user`);
+    onClose();
   };
 
   const isSubmitDisabled =
@@ -82,9 +76,8 @@ const CreateUserForm = ({}: ICreateUserForm) => {
     !watchTeam;
 
   return (
-    <ColumnBox>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <FormTitle formTitle="새 직원" />
+    <PortalModal onClose={onClose}>
+      <Form onSubmit={handleSubmit(onSubmit)} formTitle="새 직원">
         <TextInput
           icon={faTag}
           label="이름"
@@ -167,14 +160,14 @@ const CreateUserForm = ({}: ICreateUserForm) => {
           })}
           errorMessage={errors.joinDate && errors.joinDate.message}
         />
+        <EndSubmitButton
+          onClick={handleSubmit(onSubmit)}
+          disabled={createUserLoading || isSubmitDisabled}
+          text={"직원 추가"}
+        />
       </Form>
-      <EndSubmitButton
-        onClick={handleSubmit(onSubmit)}
-        disabled={createUserLoading || isSubmitDisabled}
-        text={"직원 추가"}
-      />
-    </ColumnBox>
+    </PortalModal>
   );
 };
 
-export default CreateUserForm;
+export default CreateUserModal;

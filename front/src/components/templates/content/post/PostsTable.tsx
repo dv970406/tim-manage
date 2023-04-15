@@ -1,14 +1,13 @@
 import { graphql } from "babel-plugin-relay/macro";
-import React from "react";
+import React, { useState } from "react";
 import { usePaginationFragment } from "react-relay";
-import { SearchAndInfiniteScrollDataList } from "../../../organisms/shared/InfiniteScrolls";
+import { SearchAndInfiniteScrollList } from "../../../organisms/scrolls/SearchAndInfiniteScrollList";
 import PostTableContent from "../../../organisms/content/post/PostTableContent";
-
 import { PostsTable_post$key } from "./__generated__/PostsTable_post.graphql";
 import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
 import { PostsTablePaginationQuery } from "./__generated__/PostsTablePaginationQuery.graphql";
-
-import { ColumnBox } from "../../../atomics/boxes/Boxes";
+import { ColumnBox } from "../../../atomics/boxes/FlexBox";
+import CreatePostModal from "./CreatePostModal";
 
 interface IPostsTable {
   posts: PostsTable_post$key;
@@ -19,7 +18,6 @@ const getPostsFragment = graphql`
   @argumentDefinitions(
     keyword: { type: "String" }
     orders: { type: "Orders" }
-
     first: { type: "Int!" }
     after: { type: "DateTime" }
   )
@@ -55,25 +53,33 @@ const PostsTable = ({ posts }: IPostsTable) => {
     getPostsFragment,
     posts
   );
+  const [createPostModal, setCreatePostModal] = useState(false);
 
   return (
-    <ColumnBox>
-      {/* <OrderPosts refetch={refetch} /> */}
+    <>
+      <ColumnBox>
+        {/* <OrderPosts refetch={refetch} /> */}
 
-      <SearchAndInfiniteScrollDataList
-        mutateName={MODAL_NAME.CREATE_POST}
-        refetch={refetch}
-        loadNext={loadNext}
-        hasNext={hasNext}
-        isLoadingNext={isLoadingNext}
-        hasAddButton={true}
-      >
-        {edges.map(
-          (post) =>
-            post.node && <PostTableContent key={post.cursor} post={post.node} />
-        )}
-      </SearchAndInfiniteScrollDataList>
-    </ColumnBox>
+        <SearchAndInfiniteScrollList
+          mutateName={MODAL_NAME.CREATE_POST}
+          refetch={refetch}
+          loadNext={loadNext}
+          hasNext={hasNext}
+          isLoadingNext={isLoadingNext}
+          openModal={() => setCreatePostModal(true)}
+        >
+          {edges.map(
+            (post) =>
+              post.node && (
+                <PostTableContent key={post.cursor} post={post.node} />
+              )
+          )}
+        </SearchAndInfiniteScrollList>
+      </ColumnBox>
+      {createPostModal && (
+        <CreatePostModal onClose={() => setCreatePostModal(false)} />
+      )}
+    </>
   );
 };
 

@@ -1,4 +1,3 @@
-import { SideBarSection } from "../atomics/sections/sections";
 import NavTabButton from "../organisms/sidebar/NavTabButton";
 import {
   faClose,
@@ -9,50 +8,57 @@ import {
   faUser,
 } from "@fortawesome/pro-solid-svg-icons";
 
-import { useEffect, useState } from "react";
-import {
-  ColumnBox,
-  GapList,
-  HorizontalDivider,
-  RowBox,
-} from "../atomics/boxes/Boxes";
+import { useState } from "react";
 import { SideBarContext } from "../../utils/contexts/sidebar.context";
 import { IconButton } from "../molecules/buttons/IconButton";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { theme } from "../../css/theme";
-import { TOKEN } from "../../client/client";
+import { ColumnBox, RowBox } from "../atomics/boxes/FlexBox";
+import { HorizontalDivider } from "../atomics/boxes/Divider";
+import styled from "@emotion/styled";
+import { useCheckManager } from "../../utils/hooks/checkManager.hook";
+import { breakpoints } from "../../css/media-query/media-query";
+
+export const SideBarSection = styled.aside`
+  display: none;
+  @media (min-width: ${breakpoints.pc}) {
+    display: flex;
+    width: 275px;
+    .sidebar_close {
+      display: none;
+    }
+  }
+
+  @media (max-width: ${breakpoints.pc}) {
+    &.open {
+      display: flex;
+      width: 275px;
+      z-index: 5;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      ${({ theme }) => ({
+        backgroundColor: theme.bgColors.gray,
+      })};
+    }
+  }
+
+  ${({ theme }) => ({
+    background: theme.bgColors.sectionGradient,
+    flexDirection: "column",
+    alignItems: "center",
+    padding: theme.spacing.md,
+    borderRadius: theme.borderRadius.lg,
+  })}
+`;
 
 interface ISideBar {
   isManager?: boolean;
   isLeader?: boolean;
 }
 const SideBar = ({ isManager, isLeader }: ISideBar) => {
-  const navigate = useNavigate();
-
-  const { pathname } = useLocation();
-
-  useEffect(() => {
-    const token = localStorage.getItem(TOKEN);
-    if (!token) {
-      navigate("/login");
-      return;
-    }
-
-    // manager페이지인데 manager아닌 사람이 접근하려고 할 때 접근 제한
-    const isManagerOnlyPage = pathname.includes("manager");
-    // 단, manager/vacation은 leader는 접근 가능
-    const isManagerVacationPage = pathname.includes("/manager/vacation");
-
-    if (isManagerOnlyPage) {
-      if (isManager) return;
-      if (isManagerVacationPage && isLeader) return;
-      alert("관리자만 접근할 수 있습니다.");
-
-      navigate("/");
-    }
-  }, []);
-
-  const [clickedTabs, setClickedTabs] = useState<string[]>([]);
+  useCheckManager({ isManager, isLeader });
 
   const handleMenuClose = () => {
     const sideBar = document.querySelector(".sidebar");
@@ -61,13 +67,15 @@ const SideBar = ({ isManager, isLeader }: ISideBar) => {
     const hamburgerMenu = document.querySelector(".hamburger_menu");
     hamburgerMenu?.classList.add("open");
   };
+
+  const [clickedTabs, setClickedTabs] = useState<string[]>([]);
   return (
     <SideBarContext.Provider value={{ clickedTabs, setClickedTabs }}>
       <SideBarSection className="sidebar">
         <nav style={{ width: "100%" }}>
           <RowBox
             style={{
-              justifyContent: "space-between",
+              justifyContent: "center",
               alignItems: "center",
               padding: theme.spacing.md,
             }}
@@ -75,7 +83,12 @@ const SideBar = ({ isManager, isLeader }: ISideBar) => {
             <RowBox>
               <NavLink to="/" end>
                 {/* 이 부분 추후 이미지로 변경 */}
-                <img src="/logo.png" width={170} height={30} />
+                <img
+                  src="/logo.png"
+                  alt="TIM_SOLUTION"
+                  width={170}
+                  height={30}
+                />
               </NavLink>
             </RowBox>
             {/* sidebar_close class는 media query로 화면 크기에 따라 나타나거나 사라짐 */}
@@ -84,7 +97,7 @@ const SideBar = ({ isManager, isLeader }: ISideBar) => {
             </div>
           </RowBox>
           <HorizontalDivider />
-          <GapList>
+          <ColumnBox style={{ gap: theme.spacing.md }}>
             {isManager && (
               <NavTabButton
                 tabName="관리자"
@@ -134,7 +147,7 @@ const SideBar = ({ isManager, isLeader }: ISideBar) => {
                 // { name: "게시글 추가", path: "/post/create" },
               ]}
             />
-          </GapList>
+          </ColumnBox>
         </nav>
       </SideBarSection>
     </SideBarContext.Provider>

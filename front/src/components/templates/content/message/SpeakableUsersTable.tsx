@@ -2,12 +2,8 @@ import { graphql } from "babel-plugin-relay/macro";
 import React, { Dispatch, SetStateAction } from "react";
 import { usePaginationFragment } from "react-relay";
 import { useGetMyInfo } from "../../../../client/user/GetMyInfo.client";
-import { SubTitle } from "../../../atomics/typographys/titles";
 import SpeakableUserTableContent from "../../../organisms/content/message/SpeakableUserTableContent";
-import {
-  InfiniteScrollList,
-  SearchAndInfiniteScrollDataList,
-} from "../../../organisms/shared/InfiniteScrolls";
+import { SearchAndInfiniteScrollList } from "../../../organisms/scrolls/SearchAndInfiniteScrollList";
 import { SpeakableUsersPaginationQuery } from "./__generated__/SpeakableUsersPaginationQuery.graphql";
 import { SpeakableUsersTable_user$key } from "./__generated__/SpeakableUsersTable_user.graphql";
 interface ISpeakableUsersTable {
@@ -60,14 +56,12 @@ const SpeakableUsersTable = ({
   const { myInfo } = useGetMyInfo();
   return (
     <>
-      <SearchAndInfiniteScrollDataList
-        mutateName=""
+      <SearchAndInfiniteScrollList
         refetch={refetch}
         loadNext={loadNext}
         isLoadingNext={isLoadingNext}
         hasNext={hasNext}
         noGrid
-        hasAddButton={false}
       >
         {edges?.map(
           (user) =>
@@ -80,7 +74,7 @@ const SpeakableUsersTable = ({
               />
             )
         )}
-      </SearchAndInfiniteScrollDataList>
+      </SearchAndInfiniteScrollList>
     </>
   );
 };

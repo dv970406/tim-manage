@@ -1,6 +1,12 @@
-import React, { useEffect } from "react";
-import { ContentSection } from "../atomics/sections/sections";
+import styled from "@emotion/styled";
+import React from "react";
 
+const ContentSection = styled.article(({ theme }) => ({
+  display: "flex",
+  width: "100%",
+  height: "100%",
+  gap: theme.spacing.xl,
+}));
 interface IContent {
   children: React.ReactNode;
 }

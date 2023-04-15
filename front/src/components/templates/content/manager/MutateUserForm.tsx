@@ -1,11 +1,7 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Section } from "../../../atomics/sections/sections";
-import { SectionTitle, SubTitle } from "../../../atomics/typographys/titles";
 import { theme } from "../../../../css/theme";
-import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { SubmitButton } from "../../../atomics/buttons/buttons";
 import {
   faCalendar,
   faMailbox,
@@ -13,19 +9,18 @@ import {
   faUsers,
   faWaffle,
 } from "@fortawesome/pro-solid-svg-icons";
-import { Form } from "../../../atomics/form/Form";
 import { useGetPositions } from "../../../../client/position/GetPositions.client";
 import { useGetTeams } from "../../../../client/team/GetTeams.client";
 import Select from "../../../molecules/inputs/Select";
 import { useGetManagerUser } from "../../../../client/manager/GetManagerUser.client";
-import { Radio } from "../../../molecules/inputs/Radio";
-import { isInt } from "@fullcalendar/core/internal";
 import { useDeleteUser } from "../../../../client/manager/DeleteUser.client";
 import { useUpdateUser } from "../../../../client/manager/UpdateUser.client";
 import { Checkbox } from "../../../molecules/inputs/Checkbox";
-import FormTitle from "../../../molecules/form/FormTitle";
 import { POSITION } from "../../../../utils/constants/user.constant";
 import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
+import { ColumnBox, RowBox } from "../../../atomics/boxes/FlexBox";
+import Form from "../../../molecules/shared/Form";
+import { SubmitButton } from "../../../molecules/buttons/SubmitButton";
 
 interface IMutateUserFormValue {
   name: string;
@@ -100,13 +95,11 @@ const MutateUserForm = ({
   useEffect(() => {
     setIsManager(user?.isManager);
   }, [user]);
+
   const onSubmit: SubmitHandler<IMutateUserFormValue> = ({
-    name,
-    email,
-    joinDate,
     position,
     team,
-    availableVacation,
+    ...updatedUserInfo
   }) => {
     if (updateUserLoading) return;
     const positionId = positions?.find(
@@ -118,13 +111,10 @@ const MutateUserForm = ({
 
     updateUserMutation({
       userId: clickedUserId,
-      name,
-      email,
-      joinDate,
       positionId,
       teamId,
-      availableVacation,
       ...(myPosition === POSITION["대표"] && { isManager }),
+      ...updatedUserInfo,
     });
   };
   const { deleteUserMutation, deleteUserLoading } = useDeleteUser();
@@ -135,17 +125,17 @@ const MutateUserForm = ({
   };
 
   return (
-    <ColumnBox>
-      <Form
-        onSubmit={handleSubmit(onSubmit)}
-        style={{
-          ...(!clickedUserId && {
-            opacity: theme.disabled.opacity,
-            pointerEvents: "none",
-          }),
-        }}
-      >
-        <FormTitle formTitle="유저 수정" />
+    <Form
+      onSubmit={handleSubmit(onSubmit)}
+      style={{
+        ...(!clickedUserId && {
+          opacity: theme.disabled.opacity,
+          pointerEvents: "none",
+        }),
+      }}
+      formTitle="유저 수정"
+    >
+      <ColumnBox>
         <TextInput
           icon={faTag}
           label="이름"
@@ -262,21 +252,21 @@ const MutateUserForm = ({
             onClick={() => setIsManager((prev) => !prev)}
           />
         )}
-      </Form>
-      <RowBox>
-        <EndSubmitButton
+      </ColumnBox>
+      <RowBox style={{ flexGrow: 1 }}>
+        <SubmitButton
           onClick={handleSubmit(onSubmit)}
           disabled={updateUserLoading || isSubmitDisabled}
           text="수정"
         />
 
-        <EndSubmitButton
+        <SubmitButton
           onClick={handleDeleteUser}
           disabled={deleteUserLoading || !clickedUserId || user?.id === myId}
           text="삭제"
         />
       </RowBox>
-    </ColumnBox>
+    </Form>
   );
 };
 

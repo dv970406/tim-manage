@@ -1,23 +1,37 @@
+import styled from "@emotion/styled";
 import { faBars, faDoorOpen, faUser } from "@fortawesome/pro-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
-import { TOKEN } from "../../client/client";
+import { breakpoints } from "../../css/media-query/media-query";
 import { theme } from "../../css/theme";
-import { HeaderSection } from "../atomics/sections/sections";
+import { useLogout } from "../../utils/hooks/shared/logout.hook";
 import { IconButton } from "../molecules/buttons/IconButton";
 import NavIconButton from "../organisms/header/NavIconButton";
 import Notification from "../organisms/header/Notification";
 
+const HeaderSection = styled.header`
+  @media (min-width: ${breakpoints.pc}) {
+    .hamburger_menu {
+      display: none;
+    }
+  }
+  @media (max-width: ${breakpoints.pc}) {
+    .hamburger_menu {
+      display: none;
+    }
+    .open_menu {
+      display: block;
+    }
+  }
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`;
 interface IHeader {
   unreadNotificationCount?: number;
 }
 const Header = ({ unreadNotificationCount }: IHeader) => {
-  const navigate = useNavigate();
-  const handleLogout = () => {
-    localStorage.removeItem(TOKEN);
-    navigate("/login");
-    // 로그아웃 시 cache(store) 초기화 목적의 새로고침
-    window.location.reload();
-  };
+  const { handleLogout } = useLogout();
 
   const handleMenuClick = () => {
     const sideBar = document.querySelector(".sidebar");

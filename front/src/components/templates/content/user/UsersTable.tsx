@@ -1,12 +1,14 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { usePaginationFragment } from "react-relay";
 import { useGetMyInfo } from "../../../../client/user/GetMyInfo.client";
-import { SearchAndInfiniteScrollDataList } from "../../../organisms/shared/InfiniteScrolls";
+import { SearchAndInfiniteScrollList } from "../../../organisms/scrolls/SearchAndInfiniteScrollList";
 import UserTableContent from "../../../organisms/content/user/UserTableContent";
 import { UsersTable_user$key } from "./__generated__/UsersTable_user.graphql";
 import OrderUsers from "../../../organisms/content/user/OrderUsers";
 import { UsersTablePaginationQuery } from "./__generated__/UsersTablePaginationQuery.graphql";
-import { ColumnBox } from "../../../atomics/boxes/Boxes";
+import { ColumnBox } from "../../../atomics/boxes/FlexBox";
+import CreateUserModal from "../manager/CreateUserModal";
+import { useState } from "react";
 interface IUsersTable {
   users: UsersTable_user$key;
 }
@@ -53,30 +55,37 @@ const UsersTable = ({ users }: IUsersTable) => {
     getUsersFragment,
     users
   );
+  const [createUserModal, setCreateUserModal] = useState(false);
 
   return (
-    <ColumnBox>
-      <OrderUsers refetch={refetch} />
-      <SearchAndInfiniteScrollDataList
-        mutateName="create-user"
-        refetch={refetch}
-        isLoadingNext={isLoadingNext}
-        loadNext={loadNext}
-        hasNext={hasNext}
-        hasAddButton={myInfo?.isManager!}
-      >
-        {edges.map(
-          (user) =>
-            user.node && (
-              <UserTableContent
-                key={user.cursor}
-                user={user.node}
-                isManager={myInfo?.isManager}
-              />
-            )
-        )}
-      </SearchAndInfiniteScrollDataList>
-    </ColumnBox>
+    <>
+      <ColumnBox>
+        <OrderUsers refetch={refetch} />
+        <SearchAndInfiniteScrollList
+          {...(myInfo?.isManager && {
+            openModal: () => setCreateUserModal(true),
+          })}
+          refetch={refetch}
+          isLoadingNext={isLoadingNext}
+          loadNext={loadNext}
+          hasNext={hasNext}
+        >
+          {edges.map(
+            (user) =>
+              user.node && (
+                <UserTableContent
+                  key={user.cursor}
+                  user={user.node}
+                  isManager={myInfo?.isManager}
+                />
+              )
+          )}
+        </SearchAndInfiniteScrollList>
+      </ColumnBox>
+      {createUserModal && (
+        <CreateUserModal onClose={() => setCreateUserModal(false)} />
+      )}
+    </>
   );
 };
 

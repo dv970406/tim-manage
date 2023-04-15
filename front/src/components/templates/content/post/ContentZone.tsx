@@ -1,19 +1,15 @@
-import React from "react";
 import ReactQuill from "react-quill";
 import { graphql } from "babel-plugin-relay/macro";
-import { SectionTitle } from "../../../atomics/typographys/titles";
 import { useFragment } from "react-relay";
 import { ContentZone_post$key } from "./__generated__/ContentZone_post.graphql";
-import { ColumnBox } from "../../../atomics/boxes/Boxes";
-import {
-  faComment,
-  faFileXmark,
-  faHeart as faFullHeart,
-} from "@fortawesome/pro-solid-svg-icons";
+import { faFileXmark } from "@fortawesome/pro-solid-svg-icons";
 import { theme } from "../../../../css/theme";
 import { useNavigate } from "react-router-dom";
 import MetaData from "../../../organisms/content/post/MetaData";
 import { IconButton } from "../../../molecules/buttons/IconButton";
+import { ColumnBox, RowBox } from "../../../atomics/boxes/FlexBox";
+import "react-quill/dist/quill.bubble.css";
+import { SectionTitle } from "../../../atomics/typographys/Etc";
 
 interface IContentZoneFragment extends ContentZone_post$key {
   id: string;
@@ -44,7 +40,7 @@ const ContentZone = ({ post }: IContentZone) => {
 
   return (
     <ColumnBox style={{ height: "100%" }}>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <RowBox style={{ justifyContent: "space-between" }}>
         <SectionTitle>{contentZoneData?.title}</SectionTitle>
         {contentZoneData.isMyPost && (
           <IconButton
@@ -53,7 +49,7 @@ const ContentZone = ({ post }: IContentZone) => {
             color={theme.bgColors.purple}
           />
         )}
-      </div>
+      </RowBox>
       {/* bubble 테마와 reaonly 쓰면 표현하기 쉬워짐 (참고로 텍스트 에디터에서는 snow theme 썼음)  */}
       <ReactQuill
         value={contentZoneData?.content}

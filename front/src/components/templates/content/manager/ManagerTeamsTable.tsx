@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from "react";
-import Table from "../../../molecules/tables/Table";
+import { Table } from "../../../molecules/tables/Table";
 import ManagerTeamTableContent from "../../../organisms/content/manager/ManagerTeamTableContent";
 import { ManagerTeamTableContent_team$key } from "./__generated__/ManagerTeamTableContent_team.graphql";
 

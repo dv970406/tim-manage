@@ -1,25 +1,21 @@
-import { faRocket } from "@fortawesome/pro-solid-svg-icons";
-import React, { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useDeleteMeeting } from "../../../../client/meeting/DeleteMeeting.client";
 import { useGetMeeting } from "../../../../client/meeting/GetMeeting.client";
 import { useUpdateMeeting } from "../../../../client/meeting/UpdateMeeting.client";
-import { TextInput } from "../../../molecules/inputs/TextInput";
 import { IMeetingFormValue } from "./CreateScheduleModal";
-import SelectUsers from "../../../organisms/content/home/SelectUsers";
 import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
-import { closeModal } from "../../../../utils/modal/controlModal";
-import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
-import PortalModal from "../../../../utils/modal/PortalModal";
-import Form from "../../../molecules/form/Form";
+import Form from "../../../molecules/shared/Form";
 import { RowBox } from "../../../atomics/boxes/FlexBox";
 import MeetingInfo from "../../../organisms/content/home/MeetingInfo";
+import PortalModal from "../../../../utils/modal/PortalModal";
 
 interface IMutateMeetingModal {
   scheduleId: string;
+  onClose: () => void;
 }
 
-const MutateMeetingModal = ({ scheduleId }: IMutateMeetingModal) => {
+const MutateMeetingModal = ({ scheduleId, onClose }: IMutateMeetingModal) => {
   const { meeting } = useGetMeeting(scheduleId);
 
   const prevAttendeesIds =
@@ -31,7 +27,6 @@ const MutateMeetingModal = ({ scheduleId }: IMutateMeetingModal) => {
     register,
     formState: { errors },
     setValue,
-    reset,
   } = useForm<IMeetingFormValue>({
     mode: "onChange",
   });
@@ -52,18 +47,18 @@ const MutateMeetingModal = ({ scheduleId }: IMutateMeetingModal) => {
       attendeesIds,
     });
 
-    closeModal(MODAL_NAME.MUTATE_MEETING);
+    onClose();
   };
 
   const handleDeleteVacation = () => {
     if (deleteMeetingLoading || !scheduleId) return;
     deleteMeetingMutation({ id: scheduleId });
 
-    closeModal(MODAL_NAME.MUTATE_MEETING);
+    onClose();
   };
 
   return (
-    <PortalModal modalName={MODAL_NAME.MUTATE_MEETING}>
+    <PortalModal onClose={onClose}>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <MeetingInfo
           register={register("title", {
@@ -85,20 +80,20 @@ const MutateMeetingModal = ({ scheduleId }: IMutateMeetingModal) => {
           prevAttendees={meeting?.attendees as any}
           setAttendeesId={setAttendeesId}
         />
-      </Form>
-      <RowBox style={{ flex: 1 }}>
-        <EndSubmitButton
-          onClick={handleSubmit(onSubmit)}
-          disabled={updateMeetingLoading}
-          text="수정"
-        />
+        <RowBox style={{ flexGrow: 1 }}>
+          <EndSubmitButton
+            onClick={handleSubmit(onSubmit)}
+            disabled={updateMeetingLoading}
+            text="수정"
+          />
 
-        <EndSubmitButton
-          onClick={handleDeleteVacation}
-          disabled={deleteMeetingLoading}
-          text="삭제"
-        />
-      </RowBox>
+          <EndSubmitButton
+            onClick={handleDeleteVacation}
+            disabled={deleteMeetingLoading}
+            text="삭제"
+          />
+        </RowBox>
+      </Form>
     </PortalModal>
   );
 };

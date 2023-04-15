@@ -1,119 +1,38 @@
 import {
   faCirclePlus,
-  faPlus,
   faRuler,
   faTable,
   faTag,
 } from "@fortawesome/pro-solid-svg-icons";
-import React, {
-  ChangeEvent,
-  ChangeEventHandler,
-  useReducer,
-  useState,
-} from "react";
+import { ChangeEvent, useReducer, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useCreateSurvey } from "../../../../client/manager/CreateSurvey.client";
 import { theme } from "../../../../css/theme";
-import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
-import { closeModal } from "../../../../utils/modal/controlModal";
-import { ColumnBox, RowBox, ScrollBox } from "../../../atomics/boxes/Boxes";
-import { Form } from "../../../atomics/form/Form";
-import { ChoiceInput } from "../../../atomics/inputs/inputs";
-import { Section } from "../../../atomics/sections/sections";
-import { MainText } from "../../../atomics/typographys/texts";
+import PortalModal from "../../../../utils/modal/PortalModal";
+import {
+  ACTION_TYPES,
+  initialParagraph,
+  paragraphsReducer,
+} from "../../../../utils/reducer/survey.reducer";
+import { RowBox } from "../../../atomics/boxes/FlexBox";
+import { ScrollBox } from "../../../atomics/boxes/ScrollBox";
+import { ChoiceInput } from "../../../atomics/inputs/ChoiceInput";
+import { Section } from "../../../atomics/boxes/Sections";
 import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
 import { TextIconButton } from "../../../molecules/buttons/TextIconButton";
-
-import FormTitle from "../../../molecules/form/FormTitle";
+import Form from "../../../molecules/shared/Form";
 import { Checkbox } from "../../../molecules/inputs/Checkbox";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 
 interface ICreateSurveyFormValue {
   surveyTitle: string;
 }
-interface IParagraph {
-  paragraphTitle: string;
-  description?: string;
-  multipleChoice: string[];
+
+interface ICreateSurveyModal {
+  onClose: () => void;
 }
-interface ICreateSurveyForm {}
 
-interface IActionTypes {
-  type: string;
-  value?: string;
-  choiceIndex?: number;
-  paragraphIndex?: number;
-}
-const ACTION_TYPES = {
-  ADD_CHOICE: "ADD_CHOICE",
-  ADD_PARAGRAPH: "ADD_PARAGRAPH",
-  ADD_PARAGRAPH_TITLE: "ADD_PARAGRAPH_TITLE",
-  ADD_PARAGRAPH_DESCRIPTION: "ADD_DESCRIPTION",
-  ADD_SURVEY_TITLE: "ADD_SURVEY_TITLE",
-  ADD_CHOICE_VALUE: "ADD_CHOICE_VALUE",
-};
-const paragraphsReducer = (
-  paragraphs: IParagraph[],
-  action: IActionTypes
-): IParagraph[] => {
-  const { type, value, choiceIndex, paragraphIndex } = action;
-  //
-  let copiedParagraphs = [...JSON.parse(JSON.stringify(paragraphs))];
-
-  const isParagraphIndexExist =
-    Number.isInteger(paragraphIndex) && paragraphIndex !== undefined;
-  const isChoiceIndexExist =
-    Number.isInteger(choiceIndex) && choiceIndex !== undefined;
-
-  switch (type) {
-    case ACTION_TYPES.ADD_PARAGRAPH:
-      copiedParagraphs.push({
-        paragraphTitle: "",
-        description: "",
-        multipleChoice: [],
-      });
-      return copiedParagraphs;
-    case ACTION_TYPES.ADD_CHOICE:
-      if (!isParagraphIndexExist) return copiedParagraphs;
-
-      if (copiedParagraphs[paragraphIndex].multipleChoice.length >= 5)
-        return copiedParagraphs;
-      copiedParagraphs[paragraphIndex].multipleChoice.push("");
-
-      return copiedParagraphs;
-
-    case ACTION_TYPES.ADD_PARAGRAPH_TITLE:
-      if (!isParagraphIndexExist || !value) return copiedParagraphs;
-
-      copiedParagraphs[paragraphIndex].paragraphTitle = value;
-
-      return copiedParagraphs;
-
-    case ACTION_TYPES.ADD_PARAGRAPH_DESCRIPTION:
-      if (!isParagraphIndexExist) return copiedParagraphs;
-
-      copiedParagraphs[paragraphIndex].description = value;
-      return copiedParagraphs;
-
-    case ACTION_TYPES.ADD_CHOICE_VALUE:
-      if (!isParagraphIndexExist || !isChoiceIndexExist || !value)
-        return copiedParagraphs;
-      const findMultipleChoiceOfMatchingParagraph =
-        copiedParagraphs[paragraphIndex].multipleChoice;
-
-      findMultipleChoiceOfMatchingParagraph[choiceIndex] = value;
-      copiedParagraphs[paragraphIndex].multipleChoice =
-        findMultipleChoiceOfMatchingParagraph;
-      return copiedParagraphs;
-  }
-  return copiedParagraphs;
-};
-
-const initialParagraph: IParagraph[] = [
-  { paragraphTitle: "", description: "", multipleChoice: [] },
-];
-
-const CreateSurveyForm = ({}: ICreateSurveyForm) => {
+const CreateSurveyModal = ({ onClose }: ICreateSurveyModal) => {
   const {
     register,
     formState: { errors },
@@ -140,7 +59,7 @@ const CreateSurveyForm = ({}: ICreateSurveyForm) => {
       paragraphs,
     });
 
-    closeModal(MODAL_NAME.CREATE_SURVEY);
+    onClose();
   };
 
   const isSubmitDisabled = !!errors.surveyTitle || !watchSurveyTitle;
@@ -191,10 +110,8 @@ const CreateSurveyForm = ({}: ICreateSurveyForm) => {
   };
 
   return (
-    <ColumnBox>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <FormTitle formTitle="새 설문" />
-
+    <PortalModal onClose={onClose}>
+      <Form onSubmit={handleSubmit(onSubmit)} formTitle="새 설문">
         <TextInput
           icon={faTag}
           placeholder="설문 제목"
@@ -277,14 +194,14 @@ const CreateSurveyForm = ({}: ICreateSurveyForm) => {
             </li>
           ))}
         </ScrollBox>
+        <EndSubmitButton
+          onClick={handleSubmit(onSubmit)}
+          disabled={createSurveyLoading || isSubmitDisabled}
+          text="추가"
+        />
       </Form>
-      <EndSubmitButton
-        onClick={handleSubmit(onSubmit)}
-        disabled={createSurveyLoading || isSubmitDisabled}
-        text="추가"
-      />
-    </ColumnBox>
+    </PortalModal>
   );
 };
 
-export default CreateSurveyForm;
+export default CreateSurveyModal;

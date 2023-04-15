@@ -2,10 +2,8 @@ import { faTag } from "@fortawesome/pro-solid-svg-icons";
 import React, { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useCreatePosition } from "../../../../client/manager/CreatePosition.client";
-import { SubmitButton } from "../../../atomics/buttons/buttons";
-import { Form } from "../../../atomics/form/Form";
 import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
-import FormTitle from "../../../molecules/form/FormTitle";
+import Form from "../../../molecules/shared/Form";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 
 interface ICreatePositionFormValue {
@@ -46,8 +44,7 @@ const CreatePositionForm = ({}: ICreatePositionForm) => {
   }, [createPositionSuccess]);
   return (
     <>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <FormTitle formTitle={`직책 생성`} />
+      <Form onSubmit={handleSubmit(onSubmit)} formTitle={`직책 생성`}>
         <TextInput
           icon={faTag}
           label="직책"

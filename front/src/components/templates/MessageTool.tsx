@@ -4,15 +4,39 @@ import { useGetRooms } from "../../client/message/GetRooms.client";
 import { receiveMessage } from "../../client/message/ReceiveMessage.client";
 import { useGetSpeakableUsers } from "../../client/user/GetSpeakableUsers.client";
 import { theme } from "../../css/theme";
-import { ColumnBox, RowBox } from "../atomics/boxes/Boxes";
-import Loading from "../atomics/boxes/Loading";
-import { MessageSection } from "../atomics/sections/sections";
-import { SubTitle } from "../atomics/typographys/titles";
-import { CircleButton } from "../molecules/buttons/CircleButton";
+import Loading from "../molecules/shared/Loading";
+import { CircleIconButton } from "../molecules/buttons/CircleIconButton";
 import { IconButton } from "../molecules/buttons/IconButton";
 import MessagesTable from "./content/message/MessagesTable";
 import RoomsTable from "./content/message/RoomsTable";
 import SpeakableUsersTable from "./content/message/SpeakableUsersTable";
+import { RowBox } from "../atomics/boxes/FlexBox";
+import styled from "@emotion/styled";
+import { Theme } from "@emotion/react";
+import { SubTitle } from "../atomics/typographys/Sub";
+
+interface IMessageSection {
+  theme?: Theme;
+  isInRoom?: boolean;
+}
+const MessageSection = styled.section(
+  ({ theme, isInRoom = false }: IMessageSection) => ({
+    backdropFilter: theme?.bgColors.backdropFilter,
+    backgroundColor: theme?.bgColors.darkgray,
+    width: 400,
+    height: 550,
+    position: "fixed",
+    right: 40,
+    bottom: 65,
+    borderRadius: theme?.borderRadius.lg,
+    borderBottomRightRadius: 0,
+    padding: theme?.spacing.xl,
+    zIndex: 5,
+    display: "grid",
+    gridTemplateRows: isInRoom ? "5% 85% 10%" : "5% 95%",
+    gap: theme?.spacing.sm,
+  })
+);
 
 interface IMessageTool {}
 const MessageTool = ({}: IMessageTool) => {
@@ -46,7 +70,7 @@ const MessageTool = ({}: IMessageTool) => {
           bottom: 20,
         }}
       >
-        <CircleButton
+        <CircleIconButton
           bgColor={theme.bgColors.purple}
           onClick={() => {
             setIsMessageToolOpen((prev) => !prev);
@@ -98,6 +122,7 @@ const MessageTool = ({}: IMessageTool) => {
                 <IconButton
                   icon={faRotate}
                   onClick={() => setIsUsersList((prev) => !prev)}
+                  size="lg"
                 />
               </RowBox>
               {isUsersList ? (

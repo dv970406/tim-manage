@@ -1,9 +1,8 @@
 import { EventInput } from "@fullcalendar/core";
-import { vacationDateFormat } from "../../../../utils/time/time";
-import { ScrollBox } from "../../../atomics/boxes/ListBox";
-import { ListItem } from "../../../atomics/sections/sections";
-import { AccentText, SectionText } from "../../../atomics/typographys/texts";
-import { SectionTitle } from "../../../atomics/typographys/titles";
+import { vacationDateFormat } from "../../../../utils/shared/time";
+import { ScrollBox } from "../../../atomics/boxes/ScrollBox";
+import { AccentText, SectionTitle } from "../../../atomics/typographys/Etc";
+import { SubText } from "../../../atomics/typographys/Sub";
 import InformationCard from "../../../organisms/content/home/InformationCard";
 
 interface IMyTeamVacations {
@@ -16,26 +15,22 @@ const MyTeamVacations = ({ myTeamVacations, myTeam }: IMyTeamVacations) => {
       <SectionTitle>{myTeam} 휴가 계획</SectionTitle>
       <ScrollBox>
         {myTeamVacations.map((vacation) => (
-          <ListItem>
-            <InformationCard
-              key={vacation.id}
-              mainText={vacation.user.name}
-              middleText={
-                <>
-                  {vacationDateFormat(vacation.start as Date)}
-                  {` ~ `}
-                  {vacationDateFormat(vacation.end as Date)}(
-                  <AccentText style={{ textAlign: "right" }}>
-                    {vacation.duration}일
-                  </AccentText>
-                  )
-                </>
-              }
-              endText={
-                <SectionText>{vacation.isHalf ? "반차" : "연차"}</SectionText>
-              }
-            />
-          </ListItem>
+          <InformationCard
+            key={vacation.id}
+            mainText={vacation.user.name}
+            middleText={
+              <>
+                {vacationDateFormat(vacation.start as Date)}
+                {` ~ `}
+                {vacationDateFormat(vacation.end as Date)}(
+                <AccentText style={{ textAlign: "right" }}>
+                  {vacation.duration}일
+                </AccentText>
+                )
+              </>
+            }
+            endText={<SubText>{vacation.isHalf ? "반차" : "연차"}</SubText>}
+          />
         ))}
       </ScrollBox>
     </>

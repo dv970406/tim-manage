@@ -1,8 +1,7 @@
 import React, { Dispatch, SetStateAction, useEffect } from "react";
 import { useConfirmVacation } from "../../../../client/manager/ConfirmVacation.client";
-import { ColumnBox } from "../../../atomics/boxes/Boxes";
 import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
-import Table from "../../../molecules/tables/Table";
+import { Table } from "../../../molecules/tables/Table";
 import UnConfirmedVacationTableContent from "../../../organisms/content/manager/UnConfirmedVacationTableContent";
 import { UnConfirmedVacationTableContent_vacation$key } from "../../../organisms/content/manager/__generated__/UnConfirmedVacationTableContent_vacation.graphql";
 
@@ -34,7 +33,7 @@ const UnConfirmedVacationsTable = ({
   }, [confirmVacationSuccess]);
 
   return (
-    <ColumnBox>
+    <>
       <Table headers={["이름", "시작일", "종료일", "기간", "반차여부"]}>
         {unConfirmedVacations.map(
           (vacation: any) =>
@@ -53,7 +52,7 @@ const UnConfirmedVacationsTable = ({
         disabled={confirmVacationLoading || !clickedVacationId}
         onClick={handleConfirmVacation}
       />
-    </ColumnBox>
+    </>
   );
 };
 

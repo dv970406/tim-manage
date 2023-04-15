@@ -1,10 +1,9 @@
 import { graphql } from "babel-plugin-relay/macro";
-import { useFragment, usePaginationFragment } from "react-relay";
+import { usePaginationFragment } from "react-relay";
 import { useOutletContext } from "react-router-dom";
-import { RowBox, ListBox } from "../../../atomics/boxes/Boxes";
-import { SectionTitle } from "../../../atomics/typographys/titles";
+import { SectionTitle } from "../../../atomics/typographys/Etc";
 import PostTableContent from "../../../organisms/content/post/PostTableContent";
-import { SearchAndInfiniteScrollDataList } from "../../../organisms/shared/InfiniteScrolls";
+import { SearchAndInfiniteScrollList } from "../../../organisms/scrolls/SearchAndInfiniteScrollList";
 import { ShowUserComments_comment$key } from "./__generated__/ShowUserComments_comment.graphql";
 
 // 여기도 connection으로
@@ -46,13 +45,11 @@ const ShowUserComments = () => {
   return (
     <>
       <SectionTitle>댓글 목록</SectionTitle>
-      <SearchAndInfiniteScrollDataList
-        mutateName=""
+      <SearchAndInfiniteScrollList
         loadNext={loadNext}
         hasNext={hasNext}
         isLoadingNext={isLoadingNext}
         refetch={refetch}
-        hasAddButton={false}
       >
         {edges?.map(
           (comment) =>
@@ -64,7 +61,7 @@ const ShowUserComments = () => {
               />
             )
         )}
-      </SearchAndInfiniteScrollDataList>
+      </SearchAndInfiniteScrollList>
     </>
   );
 };

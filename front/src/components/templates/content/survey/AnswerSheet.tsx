@@ -1,19 +1,15 @@
 import { graphql } from "babel-plugin-relay/macro";
 import React, { ChangeEvent, FormEventHandler, useState } from "react";
 import { useFragment } from "react-relay";
-import { useNavigate } from "react-router-dom";
+
 import { useCreateAnswer } from "../../../../client/survey/CreateAnswer.client";
 import { theme } from "../../../../css/theme";
-import { SubmitButton } from "../../../atomics/buttons/buttons";
-import { Form } from "../../../atomics/form/Form";
-import { SectionText } from "../../../atomics/typographys/texts";
-import { SectionTitle, SubTitle } from "../../../atomics/typographys/titles";
 import { Radio } from "../../../molecules/inputs/Radio";
 import { TextArea } from "../../../molecules/inputs/TextArea";
-import { ColumnBox, GapList } from "../../../atomics/boxes/Boxes";
 import { AnswerSheet_survey$key } from "./__generated__/AnswerSheet_survey.graphql";
-import FormTitle from "../../../molecules/form/FormTitle";
 import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
+import Form from "../../../molecules/shared/Form";
+import { SubText, SubTitle } from "../../../atomics/typographys/Sub";
 
 interface IAnswerSheetFragment extends AnswerSheet_survey$key {}
 interface IAnswerSheet {
@@ -70,17 +66,24 @@ const AnswerSheet = ({ survey }: IAnswerSheet) => {
     });
   };
   return (
-    <ColumnBox>
+    <>
       <Form
+        formTitle={answerSheetData.surveyTitle}
         onSubmit={createAnswer}
         style={{
           ...(answerSheetData.isAnswered && {
             pointerEvents: "none",
           }),
+          flex: 1,
         }}
       >
-        <GapList style={{ gap: theme.spacing.xl }}>
-          <FormTitle formTitle={answerSheetData.surveyTitle} />
+        <ul
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: theme.spacing.xl,
+          }}
+        >
           {answerSheetData.paragraphs.map((paragraph, paragraphIndex) => (
             // 어차피 paragraphs들은 개별로 삭제될 일 없으니까 key로 인덱스 줘도 될듯
             <li
@@ -92,10 +95,10 @@ const AnswerSheet = ({ survey }: IAnswerSheet) => {
               }}
             >
               <SubTitle>{paragraph.paragraphTitle}</SubTitle>
-              <SectionText>{paragraph.description}</SectionText>
+              <SubText>{paragraph.description}</SubText>
               {/* paragraphs와 같은 이유로 multipleChoice도 개별 삭제 위험 X => key로 인덱스 사용*/}
               {paragraph.multipleChoice.length > 0 ? (
-                <GapList style={{ flexDirection: "row" }}>
+                <ul style={{ display: "flex", gap: theme.spacing.md }}>
                   {paragraph.multipleChoice?.map((choice, i) => (
                     <li key={i}>
                       <Radio
@@ -114,7 +117,7 @@ const AnswerSheet = ({ survey }: IAnswerSheet) => {
                       />
                     </li>
                   ))}
-                </GapList>
+                </ul>
               ) : (
                 <TextArea
                   placeholder="답변"
@@ -128,14 +131,14 @@ const AnswerSheet = ({ survey }: IAnswerSheet) => {
               )}
             </li>
           ))}
-        </GapList>
+        </ul>
+        <EndSubmitButton
+          onClick={createAnswer as any}
+          text="제출"
+          disabled={answerSheetData.isAnswered}
+        />
       </Form>
-      <EndSubmitButton
-        onClick={createAnswer as any}
-        text="제출"
-        disabled={answerSheetData.isAnswered}
-      />
-    </ColumnBox>
+    </>
   );
 };
 

@@ -1,11 +1,12 @@
-import { SubTitle, SectionTitle } from "../../../atomics/typographys/titles";
-import { ColumnBox, ScrollBox } from "../../../atomics/boxes/Boxes";
-import { SectionText, MainText } from "../../../atomics/typographys/texts";
 import { graphql } from "babel-plugin-relay/macro";
 import { useFragment } from "react-relay";
 import { ShowShortAnswers_answer$key } from "./__generated__/ShowShortAnswers_answer.graphql";
 import { theme } from "../../../../css/theme";
-import React from "react";
+import { ColumnBox } from "../../../atomics/boxes/FlexBox";
+import { ScrollBox } from "../../../atomics/boxes/ScrollBox";
+import { SectionTitle } from "../../../atomics/typographys/Etc";
+import { SubText, SubTitle } from "../../../atomics/typographys/Sub";
+import { MainText } from "../../../atomics/typographys/Main";
 
 const showShortAnswersFragment = graphql`
   fragment ShowShortAnswers_answer on Survey {
@@ -39,9 +40,9 @@ const ShowShortAnswers = ({ answers }: IShowShortAnswers) => {
             <SubTitle>
               제목{index + 1}: {result.paragraphTitle}
             </SubTitle>
-            <SectionText>
+            <SubText>
               설명{index + 1}: {result.description}
-            </SectionText>
+            </SubText>
             <ColumnBox
               style={{
                 padding: theme.spacing.sm,

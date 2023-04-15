@@ -1,12 +1,11 @@
 import { graphql } from "babel-plugin-relay/macro";
 import React from "react";
-import { useFragment, usePaginationFragment } from "react-relay";
+import { usePaginationFragment } from "react-relay";
 import { useOutletContext } from "react-router-dom";
-import { RowBox } from "../../../atomics/boxes/Boxes";
-import { MainText } from "../../../atomics/typographys/texts";
-import Table from "../../../molecules/tables/Table";
+import { RowBox } from "../../../atomics/boxes/FlexBox";
+import { MainText } from "../../../atomics/typographys/Main";
 import UserVacationTableContent from "../../../organisms/content/user/UserVacationTableContent";
-import { InfiniteScrollDataTable } from "../../../organisms/shared/InfiniteScrolls";
+import { InfiniteScrollTable } from "../../../organisms/scrolls/InfiniteScrollTable";
 import { ShowUserVacationsPaginationQuery } from "./__generated__/ShowUserVacationsPaginationQuery.graphql";
 import { ShowUserVacations_vacation$key } from "./__generated__/ShowUserVacations_vacation.graphql";
 
@@ -52,7 +51,7 @@ const ShowUserVacations = () => {
 
         <MainText>남은 연차 : {availableVacation}</MainText>
       </RowBox>
-      <InfiniteScrollDataTable
+      <InfiniteScrollTable
         hasNext={hasNext}
         loadNext={loadNext}
         isLoadingNext={isLoadingNext}
@@ -67,7 +66,7 @@ const ShowUserVacations = () => {
               />
             )
         )}
-      </InfiniteScrollDataTable>
+      </InfiniteScrollTable>
     </>
   );
 };

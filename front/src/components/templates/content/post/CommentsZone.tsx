@@ -1,9 +1,10 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useFragment } from "react-relay";
-import { ColumnBox, ScrollBox } from "../../../atomics/boxes/Boxes";
 import { CommentsZone_post$key } from "./__generated__/CommentsZone_post.graphql";
 import Comment from "../../../organisms/content/post/Comment";
 import CreateComment from "../../../organisms/content/post/CreateComment";
+import { ScrollBox } from "../../../atomics/boxes/ScrollBox";
+import { ColumnBox } from "../../../atomics/boxes/FlexBox";
 
 interface ICommentsZoneFragment extends CommentsZone_post$key {
   id: string;
@@ -26,7 +27,7 @@ const CommentsZone = ({ post }: ICommentsZone) => {
 
   return (
     <>
-      <ScrollBox>
+      <ScrollBox style={{ flexGrow: 1 }}>
         {/* 메모이징 관련 이유로 reverse로 뒤집어야함 - createComment mutation의 updater 부분 참조 */}
         {commentsZoneData.comments
           .map(
@@ -35,6 +36,7 @@ const CommentsZone = ({ post }: ICommentsZone) => {
           )
           .reverse()}
       </ScrollBox>
+
       <CreateComment postId={post.id} />
     </>
   );

@@ -1,11 +1,9 @@
 import { graphql } from "babel-plugin-relay/macro";
-import { useFragment, usePaginationFragment } from "react-relay";
+import { usePaginationFragment } from "react-relay";
 import { useOutletContext } from "react-router-dom";
-import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
-import { RowBox, ListBox } from "../../../atomics/boxes/Boxes";
-import { SectionTitle } from "../../../atomics/typographys/titles";
+import { SectionTitle } from "../../../atomics/typographys/Etc";
 import PostTableContent from "../../../organisms/content/post/PostTableContent";
-import { SearchAndInfiniteScrollDataList } from "../../../organisms/shared/InfiniteScrolls";
+import { SearchAndInfiniteScrollList } from "../../../organisms/scrolls/SearchAndInfiniteScrollList";
 import { ShowUserPosts_post$key } from "./__generated__/ShowUserPosts_post.graphql";
 
 // 여기도 connection으로
@@ -41,12 +39,11 @@ const ShowUserPosts = () => {
   return (
     <>
       <SectionTitle>게시글 목록</SectionTitle>
-      <SearchAndInfiniteScrollDataList
+      <SearchAndInfiniteScrollList
         loadNext={loadNext}
         hasNext={hasNext}
         isLoadingNext={isLoadingNext}
         refetch={refetch}
-        hasAddButton={false}
       >
         {myPostsConnection?.edges?.map(
           (post) =>
@@ -54,7 +51,7 @@ const ShowUserPosts = () => {
               <PostTableContent key={post.cursor} post={post.node} />
             )
         )}
-      </SearchAndInfiniteScrollDataList>
+      </SearchAndInfiniteScrollList>
     </>
   );
 };

@@ -1,19 +1,17 @@
 import { faTag } from "@fortawesome/pro-solid-svg-icons";
 import { graphql } from "babel-plugin-relay/macro";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import ReactQuill, { Quill } from "react-quill";
+import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useFragment } from "react-relay";
 import { useDeletePost } from "../../../../client/post/DeletePost.client";
 import { useUpdatePost } from "../../../../client/post/UpdatePost.client";
-import { theme } from "../../../../css/theme";
-import { formats, modules } from "../../../../utils/quill/props";
-import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
-import { SubmitButton } from "../../../atomics/buttons/buttons";
-import { Form } from "../../../atomics/form/Form";
-import { SubTitle } from "../../../atomics/typographys/titles";
+import { formats, modules } from "../../../../utils/shared/quill";
+import { ColumnBox, RowBox } from "../../../atomics/boxes/FlexBox";
+import { SubTitle } from "../../../atomics/typographys/Sub";
 import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
+import Form from "../../../molecules/shared/Form";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 import "./TextEditorStyles.css";
 import { MutatePostForm_post$key } from "./__generated__/MutatePostForm_post.graphql";
@@ -44,7 +42,7 @@ const mutatePostFormFragment = graphql`
 const MutatePostForm = ({ post }: IMutatePostForm) => {
   const mutatePostFormData = useFragment(mutatePostFormFragment, post);
 
-  const [content, setContent] = useState(mutatePostFormData.content);
+  const contentRef = useRef<any>(mutatePostFormData.content);
 
   const {
     handleSubmit,
@@ -53,8 +51,6 @@ const MutatePostForm = ({ post }: IMutatePostForm) => {
     watch,
     setValue,
   } = useForm<IMutatePostFormValue>({
-    // useForm의 defaultValues는 비동기 데이터는 잘 안먹힘 - TextInput에 defaultValue로 넣자
-    // defaultValues: mutatePostFormData.title,
     mode: "onChange",
   });
 
@@ -64,6 +60,8 @@ const MutatePostForm = ({ post }: IMutatePostForm) => {
   const { updatePostMutation, updatePostLoading } = useUpdatePost();
   const onSubmit: SubmitHandler<IMutatePostFormValue> = ({ title }) => {
     if (updatePostLoading) return;
+
+    const content = contentRef?.current?.value || "";
 
     updatePostMutation({
       postId: post.id,
@@ -80,8 +78,6 @@ const MutatePostForm = ({ post }: IMutatePostForm) => {
     });
   };
 
-  const handleChange = (text: string) => setContent(text);
-
   useEffect(() => {
     if (mutatePostFormData) {
       setValue("title", mutatePostFormData.title);
@@ -90,7 +86,7 @@ const MutatePostForm = ({ post }: IMutatePostForm) => {
 
   return (
     <ColumnBox>
-      <Form>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <TextInput
           defaultValue={mutatePostFormData.title}
           register={register("title", {
@@ -113,9 +109,9 @@ const MutatePostForm = ({ post }: IMutatePostForm) => {
         <ColumnBox>
           <SubTitle>게시글 내용</SubTitle>
           <ReactQuill
+            ref={contentRef}
+            defaultValue={mutatePostFormData.content}
             theme="snow"
-            value={content}
-            onChange={handleChange}
             style={{
               borderRadius: 20,
             }}

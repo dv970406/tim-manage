@@ -1,11 +1,11 @@
-import { ApexOptions } from "apexcharts";
 import { graphql } from "babel-plugin-relay/macro";
 import ReactApexChart from "react-apexcharts";
 import { useFragment } from "react-relay";
-import { pieChartOptions } from "../../../../utils/chart/options";
-import { ColumnBox, ScrollBox } from "../../../atomics/boxes/Boxes";
-import { SectionText } from "../../../atomics/typographys/texts";
-import { SubTitle, SectionTitle } from "../../../atomics/typographys/titles";
+import { pieChartOptions } from "../../../../utils/shared/chart";
+import { ColumnBox } from "../../../atomics/boxes/FlexBox";
+import { ScrollBox } from "../../../atomics/boxes/ScrollBox";
+import { SectionTitle } from "../../../atomics/typographys/Etc";
+import { SubText, SubTitle } from "../../../atomics/typographys/Sub";
 import { ShowMultipleChoiceAnswers_answer$key } from "./__generated__/ShowMultipleChoiceAnswers_answer.graphql";
 
 const showMultipleChoiceAnswersFragment = graphql`
@@ -38,7 +38,7 @@ const ShowMultipleChoiceAnswers = ({ answers }: IShowMultipleChoiceAnswers) => {
         {multipleChoiceFormat?.map((result, index) => (
           <li key={index}>
             <SubTitle>{result.paragraphTitle}</SubTitle>
-            <SectionText>{result.description}</SectionText>
+            <SubText>{result.description}</SubText>
             <ReactApexChart
               options={{
                 ...pieChartOptions,

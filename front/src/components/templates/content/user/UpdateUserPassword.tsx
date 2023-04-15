@@ -1,9 +1,9 @@
 import { faPassport } from "@fortawesome/pro-solid-svg-icons";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useUpdateUserPassword } from "../../../../client/user/UpdateUserPassword.client";
-import { CenterBox, ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
-import { Form } from "../../../atomics/form/Form";
+import { CenterBox, RowBox } from "../../../atomics/boxes/FlexBox";
 import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
+import Form from "../../../molecules/shared/Form";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 
 interface IUpdateUserPasswordFormValue {

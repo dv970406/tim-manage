@@ -1,17 +1,16 @@
-import { faPlus, faTag, faWaffle } from "@fortawesome/pro-solid-svg-icons";
-import React, { Dispatch, SetStateAction, useEffect } from "react";
+import { faTag, faWaffle } from "@fortawesome/pro-solid-svg-icons";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useGetManagerTeam } from "../../../../client/manager/GetManagerTeam.client";
 import { useDeleteTeam } from "../../../../client/manager/DeleteTeam.client";
 import { theme } from "../../../../css/theme";
-import { Form } from "../../../atomics/form/Form";
-
-import FormTitle from "../../../molecules/form/FormTitle";
 import Select from "../../../molecules/inputs/Select";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 import { useUpdateTeam } from "../../../../client/manager/UpdateTeam.client";
-import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
 import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
+import { ColumnBox, RowBox } from "../../../atomics/boxes/FlexBox";
+import Form from "../../../molecules/shared/Form";
+import { SubmitButton } from "../../../molecules/buttons/SubmitButton";
 
 interface IMutateTeamFormValue {
   team: string;
@@ -61,7 +60,7 @@ const MutateTeamForm = ({
   }) => {
     if (updateTeamLoading) return;
 
-    // 동명이인 문제 있음..
+    // 동명이인 문제 있음.. select태그 대신 datalist태그를 썼을 때의 문제
     const leaderId = team?.users.find((user) => user.name === leaderName)?.id;
 
     updateTeamMutation({
@@ -77,7 +76,7 @@ const MutateTeamForm = ({
   };
 
   return (
-    <ColumnBox>
+    <>
       <Form
         onSubmit={handleSubmit(onSubmit)}
         style={{
@@ -86,8 +85,8 @@ const MutateTeamForm = ({
             pointerEvents: "none",
           }),
         }}
+        formTitle={`${team?.team || "팀"} 수정`}
       >
-        <FormTitle formTitle={`${team?.team || "팀"} 수정`} />
         <TextInput
           icon={faTag}
           label="팀"
@@ -125,21 +124,21 @@ const MutateTeamForm = ({
             },
           })}
         />
-      </Form>
-      <RowBox>
-        <EndSubmitButton
-          onClick={handleSubmit(onSubmit)}
-          disabled={updateTeamLoading || isSubmitDisabled}
-          text="수정"
-        />
+        <RowBox style={{ width: "100%" }}>
+          <SubmitButton
+            onClick={handleSubmit(onSubmit)}
+            disabled={updateTeamLoading || isSubmitDisabled}
+            text="수정"
+          />
 
-        <EndSubmitButton
-          onClick={handleDeleteTeam}
-          disabled={deleteTeamLoading || !clickedTeamId}
-          text="삭제"
-        />
-      </RowBox>
-    </ColumnBox>
+          <SubmitButton
+            onClick={handleDeleteTeam}
+            disabled={deleteTeamLoading || !clickedTeamId}
+            text="삭제"
+          />
+        </RowBox>
+      </Form>
+    </>
   );
 };
 

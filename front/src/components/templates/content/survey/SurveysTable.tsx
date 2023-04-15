@@ -1,12 +1,14 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { usePaginationFragment } from "react-relay";
-import { SearchAndInfiniteScrollDataList } from "../../../organisms/shared/InfiniteScrolls";
 import SurveyTableContent from "../../../organisms/content/survey/SurveyTableContent";
 import { SurveysTable_survey$key } from "./__generated__/SurveysTable_survey.graphql";
-
 import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
 import { SurveysTablePaginationQuery } from "./__generated__/SurveysTablePaginationQuery.graphql";
 import { useGetMyInfo } from "../../../../client/user/GetMyInfo.client";
+import { ColumnBox } from "../../../atomics/boxes/FlexBox";
+import { SearchAndInfiniteScrollList } from "../../../organisms/scrolls/SearchAndInfiniteScrollList";
+import CreateSurveyModal from "../manager/CreateSurveyModal";
+import { useState } from "react";
 
 interface ISurveysTable {
   surveys: SurveysTable_survey$key;
@@ -57,23 +59,32 @@ const SurveysTable = ({ surveys }: ISurveysTable) => {
   >(getSurveysFragment, surveys);
 
   const { myInfo } = useGetMyInfo();
+  const [createSurveyModal, setCreateSurveyModal] = useState(false);
+
   return (
     <>
-      <SearchAndInfiniteScrollDataList
-        mutateName={MODAL_NAME.CREATE_SURVEY}
-        refetch={refetch}
-        isLoadingNext={isLoadingNext}
-        hasNext={hasNext}
-        loadNext={loadNext}
-        hasAddButton={myInfo?.isManager!}
-      >
-        {edges.map(
-          (survey) =>
-            survey.node && (
-              <SurveyTableContent key={survey.cursor} survey={survey.node} />
-            )
-        )}
-      </SearchAndInfiniteScrollDataList>
+      <ColumnBox>
+        <SearchAndInfiniteScrollList
+          mutateName={MODAL_NAME.CREATE_SURVEY}
+          refetch={refetch}
+          isLoadingNext={isLoadingNext}
+          hasNext={hasNext}
+          loadNext={loadNext}
+          {...(myInfo?.isManager && {
+            openModal: () => setCreateSurveyModal(true),
+          })}
+        >
+          {edges.map(
+            (survey) =>
+              survey.node && (
+                <SurveyTableContent key={survey.cursor} survey={survey.node} />
+              )
+          )}
+        </SearchAndInfiniteScrollList>
+      </ColumnBox>
+      {createSurveyModal && (
+        <CreateSurveyModal onClose={() => setCreateSurveyModal(false)} />
+      )}
     </>
   );
 };

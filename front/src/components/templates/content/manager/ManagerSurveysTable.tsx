@@ -2,13 +2,9 @@ import { graphql } from "babel-plugin-relay/macro";
 import React, { Dispatch, SetStateAction } from "react";
 import { usePaginationFragment } from "react-relay";
 import { useDeleteSurvey } from "../../../../client/manager/DeleteSurvey.client";
-
-import { ColumnBox, ScrollBox } from "../../../atomics/boxes/Boxes";
 import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
-
 import ManagerSurveyTableContent from "../../../organisms/content/manager/ManagerSurveyTableContent";
-import { InfiniteScrollDataTable } from "../../../organisms/shared/InfiniteScrolls";
-
+import { InfiniteScrollTable } from "../../../organisms/scrolls/InfiniteScrollTable";
 import { ManagerSurveysTablePaginationQuery } from "./__generated__/ManagerSurveysTablePaginationQuery.graphql";
 import { ManagerSurveysTable_survey$key } from "./__generated__/ManagerSurveysTable_survey.graphql";
 
@@ -68,26 +64,24 @@ const ManagerSurveysTable = ({
 
   return (
     <>
-      <ScrollBox>
-        <InfiniteScrollDataTable
-          headers={["내 설문"]}
-          loadNext={loadNext}
-          hasNext={hasNext}
-          isLoadingNext={isLoadingNext}
-        >
-          {edges.map(
-            (survey) =>
-              survey.node && (
-                <ManagerSurveyTableContent
-                  key={survey.cursor}
-                  survey={survey.node}
-                  clickedSurveyId={clickedSurveyId}
-                  setClickedSurveyId={setClickedSurveyId}
-                />
-              )
-          )}
-        </InfiniteScrollDataTable>
-      </ScrollBox>
+      <InfiniteScrollTable
+        headers={["내 설문"]}
+        loadNext={loadNext}
+        hasNext={hasNext}
+        isLoadingNext={isLoadingNext}
+      >
+        {edges.map(
+          (survey) =>
+            survey.node && (
+              <ManagerSurveyTableContent
+                key={survey.cursor}
+                survey={survey.node}
+                clickedSurveyId={clickedSurveyId}
+                setClickedSurveyId={setClickedSurveyId}
+              />
+            )
+        )}
+      </InfiniteScrollTable>
 
       <EndSubmitButton
         text="삭제"

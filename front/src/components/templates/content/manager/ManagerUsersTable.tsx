@@ -1,13 +1,11 @@
 import { graphql } from "babel-plugin-relay/macro";
 import React, { Dispatch, SetStateAction } from "react";
 import { usePaginationFragment } from "react-relay";
-import { InfiniteScrollDataTable } from "../../../organisms/shared/InfiniteScrolls";
-import Table from "../../../molecules/tables/Table";
 import ManagerUserTableContent from "../../../organisms/content/manager/ManagerUserTableContent";
-import { GetManagerUsersPaginationQuery } from "./__generated__/GetManagerUsersPaginationQuery.graphql";
 import { ManagerUsersTable_user$key } from "./__generated__/ManagerUsersTable_user.graphql";
-import { ScrollBox } from "../../../atomics/boxes/Boxes";
 import { ManagerUsersTablePaginationQuery } from "./__generated__/ManagerUsersTablePaginationQuery.graphql";
+import { ScrollBox } from "../../../atomics/boxes/ScrollBox";
+import { InfiniteScrollTable } from "../../../organisms/scrolls/InfiniteScrollTable";
 
 interface IManagerUsersTable {
   clickedUserId: string;
@@ -50,7 +48,6 @@ const ManagerUsersTable = ({
     },
     loadNext,
     isLoadingNext,
-    refetch,
     hasNext,
   } = usePaginationFragment<
     ManagerUsersTablePaginationQuery,
@@ -59,7 +56,7 @@ const ManagerUsersTable = ({
 
   return (
     <ScrollBox>
-      <InfiniteScrollDataTable
+      <InfiniteScrollTable
         headers={["이름", "직책", "팀"]}
         loadNext={loadNext}
         isLoadingNext={isLoadingNext}
@@ -77,7 +74,7 @@ const ManagerUsersTable = ({
               />
             )
         )}
-      </InfiniteScrollDataTable>
+      </InfiniteScrollTable>
     </ScrollBox>
   );
 };

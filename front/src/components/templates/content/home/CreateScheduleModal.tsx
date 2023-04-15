@@ -1,25 +1,19 @@
-import { faRocket } from "@fortawesome/pro-solid-svg-icons";
-import { DateRangeInput, DateSelectArg } from "@fullcalendar/core";
-import { useContext, useEffect, useState } from "react";
+import { DateRangeInput } from "@fullcalendar/core";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useCreateMeeting } from "../../../../client/meeting/CreateMeeting.client";
 import { useCreateVacation } from "../../../../client/vacation/CreateVacation.client";
-import { theme } from "../../../../css/theme";
 import { SCHEDULES } from "../../../../utils/constants/schedule.constant";
-import { TextInput } from "../../../molecules/inputs/TextInput";
-import { Radio } from "../../../molecules/inputs/Radio";
-import SelectUsers from "../../../organisms/content/home/SelectUsers";
 import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
-import { closeModal } from "../../../../utils/modal/controlModal";
-import { MODAL_NAME } from "../../../../utils/constants/modal.constant";
 import PortalModal from "../../../../utils/modal/PortalModal";
 import { ColumnBox } from "../../../atomics/boxes/FlexBox";
-import Form from "../../../molecules/form/Form";
+import Form from "../../../molecules/shared/Form";
 import SelectKindOfSchedule from "../../../organisms/content/home/SelectKindOfSchedule";
 import MeetingInfo from "../../../organisms/content/home/MeetingInfo";
 
 interface ICreateScheduleModal {
   selectedDate: DateRangeInput;
+  onClose: () => void;
 }
 export interface IMeetingFormValue {
   title: string;
@@ -27,6 +21,7 @@ export interface IMeetingFormValue {
 
 const CreateScheduleModal = ({
   selectedDate: { start, end },
+  onClose,
 }: ICreateScheduleModal) => {
   const {
     register,
@@ -66,7 +61,7 @@ const CreateScheduleModal = ({
       });
     }
 
-    closeModal(MODAL_NAME.CREATE_SCHEDULE);
+    onClose();
   };
 
   useEffect(() => {
@@ -77,41 +72,32 @@ const CreateScheduleModal = ({
   }, [createMeetingSuccess]);
 
   return (
-    <PortalModal modalName={MODAL_NAME.CREATE_SCHEDULE}>
-      <Form
-        onSubmit={handleSubmit(onSubmit)}
-        style={{
-          justifyContent: "space-between",
-          height: "100%",
-        }}
-      >
-        <ColumnBox>
-          <SelectKindOfSchedule setKindOfSchedule={setKindOfSchedule} />
+    <PortalModal onClose={onClose}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <SelectKindOfSchedule setKindOfSchedule={setKindOfSchedule} />
 
-          {kindOfSchedule === SCHEDULES.MEETING && (
-            <MeetingInfo
-              register={register("title", {
-                required: {
-                  value: true,
-                  message: "제목은 필수입니다.",
-                },
-                minLength: {
-                  value: 2,
-                  message: "제목은 2글자 이상입니다.",
-                },
-                maxLength: {
-                  value: 15,
-                  message: "제목은 15글자 이하입니다.",
-                },
-              })}
-              errorMessage={errors?.title && errors?.title.message}
-              setAttendeesId={setAttendeesId}
-            />
-          )}
-        </ColumnBox>
+        {kindOfSchedule === SCHEDULES.MEETING && (
+          <MeetingInfo
+            register={register("title", {
+              required: {
+                value: true,
+                message: "제목은 필수입니다.",
+              },
+              minLength: {
+                value: 2,
+                message: "제목은 2글자 이상입니다.",
+              },
+              maxLength: {
+                value: 15,
+                message: "제목은 15글자 이하입니다.",
+              },
+            })}
+            errorMessage={errors?.title && errors?.title.message}
+            setAttendeesId={setAttendeesId}
+          />
+        )}
+        <EndSubmitButton onClick={handleSubmit(onSubmit)} text="신청" />
       </Form>
-
-      <EndSubmitButton onClick={handleSubmit(onSubmit)} text="신청" />
     </PortalModal>
   );
 };

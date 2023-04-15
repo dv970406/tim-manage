@@ -5,12 +5,10 @@ import { useGetManagerPosition } from "../../../../client/manager/GetManagerPosi
 import { useDeletePosition } from "../../../../client/manager/DeletePosition.client";
 import { useUpdatePosition } from "../../../../client/manager/UpdatePosition.client";
 import { theme } from "../../../../css/theme";
-import { SubmitButton } from "../../../atomics/buttons/buttons";
-import { Form } from "../../../atomics/form/Form";
-import FormTitle from "../../../molecules/form/FormTitle";
 import { TextInput } from "../../../molecules/inputs/TextInput";
-import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
 import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
+import { ColumnBox, RowBox } from "../../../atomics/boxes/FlexBox";
+import Form from "../../../molecules/shared/Form";
 
 interface IMutatePositionFormValue {
   position: string;
@@ -65,7 +63,7 @@ const MutatePositionForm = ({
     deletePositionMutation({ id: clickedPositionId });
   };
   return (
-    <ColumnBox>
+    <>
       <Form
         onSubmit={handleSubmit(onSubmit)}
         style={{
@@ -74,8 +72,8 @@ const MutatePositionForm = ({
             pointerEvents: "none",
           }),
         }}
+        formTitle={`${position?.position || "직책"} 수정`}
       >
-        <FormTitle formTitle={`${position?.position || "직책"} 수정`} />
         <TextInput
           icon={faTag}
           label="직책"
@@ -96,21 +94,21 @@ const MutatePositionForm = ({
           })}
           errorMessage={errors?.position && errors?.position.message}
         />
-      </Form>
-      <RowBox>
-        <EndSubmitButton
-          onClick={handleSubmit(onSubmit)}
-          disabled={updatePositionLoading || isSubmitDisabled}
-          text="수정"
-        />
+        <RowBox>
+          <EndSubmitButton
+            onClick={handleSubmit(onSubmit)}
+            disabled={updatePositionLoading || isSubmitDisabled}
+            text="수정"
+          />
 
-        <EndSubmitButton
-          onClick={handleDeletePosition}
-          disabled={deletePositionLoading || !clickedPositionId}
-          text="삭제"
-        />
-      </RowBox>
-    </ColumnBox>
+          <EndSubmitButton
+            onClick={handleDeletePosition}
+            disabled={deletePositionLoading || !clickedPositionId}
+            text="삭제"
+          />
+        </RowBox>
+      </Form>
+    </>
   );
 };
 

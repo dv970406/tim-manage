@@ -4,12 +4,12 @@ import React, { Dispatch, SetStateAction, useEffect } from "react";
 import { usePaginationFragment } from "react-relay";
 import { useGetOrCreateRoom } from "../../../../client/message/GetOrCreateRoom.client";
 import { receiveInRoom } from "../../../../client/message/ReceiveInRoom.client";
-import { ColumnBox, RowBox } from "../../../atomics/boxes/Boxes";
-import { SubTitle } from "../../../atomics/typographys/titles";
+import { RowBox } from "../../../atomics/boxes/FlexBox";
+import { SubTitle } from "../../../atomics/typographys/Sub";
 import { IconButton } from "../../../molecules/buttons/IconButton";
 import MessageTableContent from "../../../organisms/content/message/MessageTableContent";
 import SendMessage from "../../../organisms/content/message/SendMessage";
-import { InfiniteScrollList } from "../../../organisms/shared/InfiniteScrolls";
+import { InfiniteScrollList } from "../../../organisms/scrolls/InfiniteScrollList";
 import { MessagesTablePaginationQuery } from "./__generated__/MessagesTablePaginationQuery.graphql";
 import { MessagesTable_message$key } from "./__generated__/MessagesTable_message.graphql";
 
