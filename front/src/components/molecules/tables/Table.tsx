@@ -1,12 +1,12 @@
 import React from "react";
 import { theme } from "../../../css/theme";
-import { SubTitle } from "../../atomics/typographys/titles";
+import { SubTitle } from "../../atomics/typographys/Sub";
 
 interface ITable {
   headers: string[];
   children: React.ReactNode;
 }
-const Table = ({ headers, children }: ITable) => {
+export const Table = ({ headers, children }: ITable) => {
   return (
     <>
       <table
@@ -39,5 +39,3 @@ const Table = ({ headers, children }: ITable) => {
     </>
   );
 };
-
-export default Table;

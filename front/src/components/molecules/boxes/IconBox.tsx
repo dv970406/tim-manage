@@ -1,6 +1,6 @@
 import { theme } from "../../../css/theme";
 import { CenterBox } from "../../atomics/boxes/FlexBox";
-import { Icon, IIcon } from "../../atomics/icons/icon";
+import { Icon, IIcon } from "../../atomics/icons/Icon";
 
 interface IIconBox extends IIcon {
   bgColor?: string;

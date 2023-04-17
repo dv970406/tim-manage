@@ -1,7 +1,8 @@
 import styled from "@emotion/styled";
-import { UseFormRegister, UseFormRegisterReturn } from "react-hook-form";
+import { UseFormRegisterReturn } from "react-hook-form";
 import { CenterBox } from "../../atomics/boxes/FlexBox";
-import { SubTitle } from "../../atomics/typographys/titles";
+import { Label } from "../../atomics/typographys/Label";
+import { SubTitle } from "../../atomics/typographys/Sub";
 
 interface IRadio {
   value: string;
@@ -49,14 +50,7 @@ export const Radio = ({
         disabled={disabled}
         defaultChecked={defaultChecked}
       />
-      <label
-        style={{
-          cursor: "pointer",
-        }}
-        htmlFor={value}
-      >
-        <SubTitle>{text}</SubTitle>
-      </label>
+      <Label cursor="pointer" labelId={value} text={text} />
     </CenterBox>
   );
 };

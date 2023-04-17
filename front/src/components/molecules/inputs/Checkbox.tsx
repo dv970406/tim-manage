@@ -1,7 +1,8 @@
 import styled from "@emotion/styled";
-import { UseFormRegister, UseFormRegisterReturn } from "react-hook-form";
+import { UseFormRegisterReturn } from "react-hook-form";
 import { CenterBox } from "../../atomics/boxes/FlexBox";
-import { SubTitle } from "../../atomics/typographys/titles";
+import { Label } from "../../atomics/typographys/Label";
+import { SubTitle } from "../../atomics/typographys/Sub";
 
 interface ICheckbox {
   id: string;
@@ -42,14 +43,7 @@ export const Checkbox = ({
         defaultChecked={defaultChecked}
         onClick={onClick}
       />
-      <label
-        style={{
-          cursor: "pointer",
-        }}
-        htmlFor={id}
-      >
-        <SubTitle>{text}</SubTitle>
-      </label>
+      <Label labelId={id} text={text} />
     </CenterBox>
   );
 };

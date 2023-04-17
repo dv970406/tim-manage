@@ -1,10 +1,9 @@
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import React, { ChangeEventHandler, useState } from "react";
-import { UseFormRegister, UseFormRegisterReturn } from "react-hook-form";
+import { ChangeEventHandler, useState } from "react";
+import { UseFormRegisterReturn } from "react-hook-form";
 import { theme } from "../../../css/theme";
 import { ColumnBox } from "../../atomics/boxes/FlexBox";
-import { ErrorText, MainText } from "../../atomics/typographys/texts";
-import { SubTitle } from "../../atomics/typographys/titles";
+import { ErrorText } from "../../atomics/typographys/Etc";
+import { Label } from "../../atomics/typographys/Label";
 
 interface ITextArea {
   label?: string;
@@ -27,11 +26,7 @@ export const TextArea = ({
   const [isFocusing, setIsFocusing] = useState(false);
   return (
     <ColumnBox>
-      {label && (
-        <label htmlFor={label} style={{ cursor: "pointer" }}>
-          <SubTitle>{label}</SubTitle>
-        </label>
-      )}
+      {label && <Label text={label} labelId={label} cursor="pointer" />}
       <textarea
         disabled={disabled}
         defaultValue={defaultValue}

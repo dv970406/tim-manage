@@ -4,8 +4,8 @@ import { UseFormRegisterReturn } from "react-hook-form";
 import { theme } from "../../../css/theme";
 import { ColumnBox } from "../../atomics/boxes/FlexBox";
 import { FullBorderInput } from "../../atomics/inputs/FullBorderInput";
-import { ErrorText } from "../../atomics/typographys/texts";
-import { SubTitle } from "../../atomics/typographys/titles";
+import { ErrorText } from "../../atomics/typographys/Etc";
+import { Label } from "../../atomics/typographys/Label";
 import { IconBox } from "../boxes/IconBox";
 
 interface ISelect {
@@ -30,9 +30,8 @@ const Select = ({
 
   return (
     <ColumnBox gap={theme.spacing.sm}>
-      <label>
-        <SubTitle>{label}</SubTitle>
-      </label>
+      <Label cursor="pointer" text={label} />
+
       <FullBorderInput
         onFocus={() => setIsFocusing(true)}
         onBlur={() => setIsFocusing(false)}

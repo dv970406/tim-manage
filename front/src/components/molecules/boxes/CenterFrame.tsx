@@ -1,22 +1,31 @@
+import { Theme } from "@emotion/react";
 import styled from "@emotion/styled";
 import React from "react";
 import { CenterBox } from "../../atomics/boxes/FlexBox";
 
-export const SizingBox = styled.div(({ theme }) => ({
-  display: "flex",
-  gap: theme.spacing.sm,
-  minWidth: "60%",
-  minHeight: "50%",
-  height: "90%",
-}));
+interface ISizingBox {
+  theme?: Theme;
+  minWidth?: string | number;
+}
+export const SizingBox = styled.div(
+  ({ theme, minWidth = "70%" }: ISizingBox) => ({
+    display: "flex",
+    gap: theme?.spacing.sm,
+    minWidth,
+    minHeight: "80%",
+    maxHeight: "95%",
+  })
+);
 
 interface ICenterFrame {
   children: React.ReactNode;
+  minWidth?: string | number;
+  flexDirection?: "row" | "column";
 }
-const CenterFrame = ({ children }: ICenterFrame) => {
+const CenterFrame = ({ children, minWidth }: ICenterFrame) => {
   return (
     <CenterBox style={{ width: "100%" }}>
-      <SizingBox>{children}</SizingBox>
+      <SizingBox minWidth={minWidth}>{children}</SizingBox>
     </CenterBox>
   );
 };

@@ -1,7 +1,7 @@
 import { MouseEventHandler } from "react";
-import { HoverButton } from "../../atomics/buttons/HoverButton";
-import { Icon, IIcon } from "../../atomics/icons/icon";
-import { MainText } from "../../atomics/typographys/texts";
+import { HoverButton } from "./HoverButton";
+import { Icon, IIcon } from "../../atomics/icons/Icon";
+import { MainText } from "../../atomics/typographys/Main";
 
 interface ITextIconButton extends IIcon {
   text: string;

@@ -4,7 +4,7 @@ import { ChangeEventHandler, useState } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 import { theme } from "../../../css/theme";
 import { BottomBorderInput } from "../../atomics/inputs/BottomBorderInput";
-import { ErrorText } from "../../atomics/typographys/texts";
+import { ErrorText } from "../../atomics/typographys/Etc";
 import { IconBox } from "../boxes/IconBox";
 
 interface ISearchInput {

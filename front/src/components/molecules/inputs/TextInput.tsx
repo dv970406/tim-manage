@@ -1,11 +1,11 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import React, { ChangeEventHandler, useState } from "react";
-import { UseFormRegister, UseFormRegisterReturn } from "react-hook-form";
+import { ChangeEventHandler, useState } from "react";
+import { UseFormRegisterReturn } from "react-hook-form";
 import { theme } from "../../../css/theme";
 import { ColumnBox } from "../../atomics/boxes/FlexBox";
 import { FullBorderInput } from "../../atomics/inputs/FullBorderInput";
-import { ErrorText, MainText } from "../../atomics/typographys/texts";
-import { SubTitle } from "../../atomics/typographys/titles";
+import { ErrorText } from "../../atomics/typographys/Etc";
+import { Label } from "../../atomics/typographys/Label";
 import { IconBox } from "../boxes/IconBox";
 
 interface ITextInput {
@@ -34,12 +34,9 @@ export const TextInput = ({
 }: ITextInput) => {
   const [isFocusing, setIsFocusing] = useState(false);
   return (
-    <ColumnBox gap={theme.spacing.xs}>
-      {label && (
-        <label htmlFor={label} style={{ cursor: "pointer" }}>
-          <SubTitle>{label}</SubTitle>
-        </label>
-      )}
+    <ColumnBox gap={theme.spacing.xs} style={{ width: "100%" }}>
+      {label && <Label text={label} labelId={label} cursor="pointer" />}
+
       <FullBorderInput
         onFocus={() => setIsFocusing(true)}
         onBlur={() => setIsFocusing(false)}

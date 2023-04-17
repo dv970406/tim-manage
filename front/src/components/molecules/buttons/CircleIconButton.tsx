@@ -1,7 +1,7 @@
 import { Theme } from "@emotion/react";
 import styled from "@emotion/styled";
-import { HoverButton } from "../../atomics/buttons/HoverButton";
-import { Icon } from "../../atomics/icons/icon";
+import { HoverButton } from "./HoverButton";
+import { Icon } from "../../atomics/icons/Icon";
 import { IIconButton } from "./IconButton";
 
 interface ICircleIconButton extends IIconButton {
@@ -19,6 +19,7 @@ const SCircleIconButton = styled(HoverButton)(
     borderRadius: "50%",
   })
 );
+
 export const CircleIconButton = ({
   onClick,
   icon,

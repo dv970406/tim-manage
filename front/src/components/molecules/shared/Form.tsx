@@ -1,21 +1,20 @@
 import styled from "@emotion/styled";
-import React, { CSSProperties } from "react";
-import { SectionTitle, SubTitle } from "../../atomics/typographys/titles";
+import React, { CSSProperties, FormEventHandler } from "react";
+import { SectionTitle } from "../../atomics/typographys/Etc";
+import { SubTitle } from "../../atomics/typographys/Sub";
 
 const SForm = styled.form(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   gap: theme.spacing.sm,
   width: "100%",
-  height: "100%",
-  color: theme.colors.white,
 }));
 
 interface IForm {
   formTitle?: string;
   formSubTitle?: string;
   children: React.ReactNode;
-  onSubmit?: any;
+  onSubmit?: FormEventHandler<HTMLFormElement>;
   style?: CSSProperties;
 }
 export default function Form({
