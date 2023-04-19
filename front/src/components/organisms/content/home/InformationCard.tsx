@@ -2,9 +2,9 @@ import { faRocket } from "@fortawesome/pro-solid-svg-icons";
 import React from "react";
 import { theme } from "../../../../css/theme";
 import { ColumnBox, RowBox } from "../../../atomics/boxes/FlexBox";
-import { ListItem } from "../../../atomics/sections/sections";
-import { DateText, SectionText } from "../../../atomics/typographys/texts";
-import { SubTitle } from "../../../atomics/typographys/titles";
+import { ListItem } from "../../../atomics/boxes/ScrollBox";
+import { DateText } from "../../../atomics/typographys/Etc";
+import { SubText, SubTitle } from "../../../atomics/typographys/Sub";
 import { IconBox } from "../../../molecules/boxes/IconBox";
 
 interface IInformationCard {
@@ -18,17 +18,19 @@ const InformationCard = ({
   endText,
 }: IInformationCard) => {
   return (
-    <RowBox>
-      <IconBox icon={faRocket} size="lg" bgColor={theme.bgColors.purple} />
+    <ListItem>
+      <RowBox>
+        <IconBox icon={faRocket} size="lg" bgColor={theme.bgColors.purple} />
 
-      <ColumnBox gap={theme.spacing.xs}>
-        <SubTitle style={{ textAlign: "right" }}>{mainText}</SubTitle>
+        <ColumnBox gap={theme.spacing.xs} style={{ width: "100%" }}>
+          <SubTitle style={{ textAlign: "right" }}>{mainText}</SubTitle>
 
-        <DateText style={{ textAlign: "right" }}>{middleText}</DateText>
+          <DateText style={{ textAlign: "right" }}>{middleText}</DateText>
 
-        <SectionText style={{ textAlign: "right" }}>{endText}</SectionText>
-      </ColumnBox>
-    </RowBox>
+          <SubText style={{ textAlign: "right" }}>{endText}</SubText>
+        </ColumnBox>
+      </RowBox>
+    </ListItem>
   );
 };
 

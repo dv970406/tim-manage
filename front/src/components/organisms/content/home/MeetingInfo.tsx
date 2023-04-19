@@ -1,6 +1,6 @@
 import { faRocket } from "@fortawesome/pro-solid-svg-icons";
-import React, { Dispatch, SetStateAction } from "react";
-import { UseFormRegister, UseFormRegisterReturn } from "react-hook-form";
+import { Dispatch, SetStateAction } from "react";
+import { UseFormRegisterReturn } from "react-hook-form";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 import SelectUsers, { IAttendee } from "./SelectUsers";
 

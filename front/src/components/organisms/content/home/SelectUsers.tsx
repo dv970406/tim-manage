@@ -1,15 +1,16 @@
 import { graphql } from "babel-plugin-relay/macro";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import ReactSelect, { GroupBase, MultiValue, StylesConfig } from "react-select";
+import { Dispatch, SetStateAction, useState } from "react";
+import ReactSelect from "react-select";
 import { useSelectUsers } from "../../../../client/user/SelectUsers.client";
 import { theme } from "../../../../css/theme";
-import { SubTitle } from "../../../atomics/typographys/titles";
 import { usePaginationFragment } from "react-relay";
 import { SelectUsersPaginationQuery } from "./__generated__/SelectUsersPaginationQuery.graphql";
 import { SelectUsers_user$key } from "./__generated__/SelectUsers_user.graphql";
 import { PAGINATION_LOAD_COUNT } from "../../../../utils/constants/share.constant";
 import { userSelectStyles } from "../../../../utils/css/select";
 import { ColumnBox } from "../../../atomics/boxes/FlexBox";
+import { SubTitle } from "../../../atomics/typographys/Sub";
+import { useSelectedUsers } from "../../../../utils/hooks/selectedUsers.hook";
 
 export interface IAttendee {
   readonly id: string;
@@ -65,36 +66,22 @@ const SelectUsers = ({ prevAttendees, setAttendeesId }: ISelectUsers) => {
     users
   );
 
-  const prevSelectedUsers = prevAttendees?.map((user) => ({
-    value: user.id,
-    label: user.name,
-  }));
-
-  const [selectedUsers, setSelectedUsers] = useState(prevSelectedUsers);
-
-  useEffect(() => {
-    setSelectedUsers(prevSelectedUsers);
-  }, [prevAttendees]);
-
-  const handleChangeSelect = (selectedUsersArray: any) => {
-    const attendeesIdArray = selectedUsersArray.map(
-      (user: ISelectFormat) => user.value
-    );
-    setSelectedUsers(selectedUsersArray);
-    setAttendeesId(attendeesIdArray);
-  };
+  const { selectedUsers, handleChangeSelect } = useSelectedUsers({
+    prevAttendees,
+    setAttendeesId,
+  });
 
   const selectableUsers = edges.map((user) => ({
     value: user.node.id,
     label: user.node.name,
   }));
 
-  const [menuIsOpen, setMenuIsOpen] = useState(false);
-
   const getMoreData = () => {
     if (!hasNext || isLoadingNext) return;
     loadNext(PAGINATION_LOAD_COUNT);
   };
+
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
   return (
     <ColumnBox gap={theme.spacing.sm}>
       <label

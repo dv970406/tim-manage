@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { theme } from "../../../../css/theme";
 import { SCHEDULES } from "../../../../utils/constants/schedule.constant";
 import { Radio } from "../../../molecules/inputs/Radio";
