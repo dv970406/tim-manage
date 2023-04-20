@@ -1,12 +1,10 @@
 import { graphql } from "babel-plugin-relay/macro";
 import React, { Dispatch, SetStateAction } from "react";
 import { useFragment } from "react-relay";
-import { useNavigate } from "react-router-dom";
-import { theme } from "../../../../css/theme";
-import { MainText } from "../../../atomics/typographys/texts";
-import { Td, Tr } from "../../../molecules/tables/Td";
+import { MainText } from "../../../atomics/typographys/Main";
 import { ManagerTeamTableContent_team$key } from "../../../templates/content/manager/__generated__/ManagerTeamTableContent_team.graphql";
-import TableContent from "./TableContent";
+import TableContent from "../../../molecules/tables/TableContent";
+import { Td } from "../../../atomics/table/Table";
 
 interface IManagerTeamTableContent {
   team: ManagerTeamTableContent_team$key;
@@ -25,16 +23,19 @@ const ManagerTeamTableContent = ({
   clickedTeamId,
   setClickedTeamId,
 }: IManagerTeamTableContent) => {
-  const tableContentData = useFragment(managerTeamTableContentFragment, team);
+  const { id: teamId, team: teamName } = useFragment(
+    managerTeamTableContentFragment,
+    team
+  );
 
-  const clickedTeam = clickedTeamId === tableContentData.id;
+  const clickedTeam = clickedTeamId === teamId;
   return (
     <TableContent
-      onClick={() => setClickedTeamId(tableContentData.id)}
+      onClick={() => setClickedTeamId(teamId)}
       clickedItem={clickedTeam}
     >
       <Td role="gridcell">
-        <MainText>{tableContentData.team}</MainText>
+        <MainText>{teamName}</MainText>
       </Td>
     </TableContent>
   );

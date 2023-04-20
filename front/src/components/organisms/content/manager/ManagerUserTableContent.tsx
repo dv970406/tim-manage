@@ -1,13 +1,11 @@
 import { graphql } from "babel-plugin-relay/macro";
-import React, { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { useFragment } from "react-relay";
-import { useNavigate } from "react-router-dom";
-import { theme } from "../../../../css/theme";
 import { POSITION } from "../../../../utils/constants/user.constant";
-import { MainText } from "../../../atomics/typographys/texts";
-import { Td, Tr } from "../../../molecules/tables/Td";
+import { MainText } from "../../../atomics/typographys/Main";
 import { ManagerUserTableContent_user$key } from "../../../templates/content/manager/__generated__/ManagerUserTableContent_user.graphql";
-import TableContent from "./TableContent";
+import TableContent from "../../../molecules/tables/TableContent";
+import { Td } from "../../../atomics/table/Table";
 
 interface IManagerUserTableContent {
   user: ManagerUserTableContent_user$key;
@@ -40,31 +38,34 @@ const ManagerUserTableContent = ({
   setClickedUserId,
   myPosition,
 }: IManagerUserTableContent) => {
-  const tableContentData = useFragment(managerUserTableContentFragment, user);
+  const {
+    id: userId,
+    isManager,
+    name,
+    position,
+    team,
+  } = useFragment(managerUserTableContentFragment, user);
 
   // 관리자인 사람과 대표님은 리스트에서 제외, 단 대표님이라면 모두 보이게함
   if (myPosition === POSITION["대표"]) {
-  } else if (
-    tableContentData?.isManager ||
-    tableContentData?.position?.position === POSITION["대표"]
-  ) {
+  } else if (isManager || position?.position === POSITION["대표"]) {
     return <></>;
   }
 
-  const clickedUser = clickedUserId === tableContentData?.id;
+  const clickedUser = clickedUserId === userId;
   return (
     <TableContent
-      onClick={() => setClickedUserId(tableContentData.id)}
+      onClick={() => setClickedUserId(userId)}
       clickedItem={clickedUser}
     >
       <Td role="gridcell">
-        <MainText>{tableContentData?.name}</MainText>
+        <MainText>{name}</MainText>
       </Td>
       <Td role="gridcell">
-        <MainText>{tableContentData?.position.position}</MainText>
+        <MainText>{position.position}</MainText>
       </Td>
       <Td role="gridcell">
-        <MainText>{tableContentData?.team.team}</MainText>
+        <MainText>{team.team}</MainText>
       </Td>
     </TableContent>
   );

@@ -1,9 +1,9 @@
 import { graphql } from "babel-plugin-relay/macro";
-import React, { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { useFragment } from "react-relay";
-import { MainText } from "../../../atomics/typographys/texts";
-import { Td, Tr } from "../../../molecules/tables/Td";
-import TableContent from "./TableContent";
+import { Td } from "../../../atomics/table/Table";
+import { MainText } from "../../../atomics/typographys/Main";
+import TableContent from "../../../molecules/tables/TableContent";
 import { ManagerSurveyTableContent_survey$key } from "./__generated__/ManagerSurveyTableContent_survey.graphql";
 
 interface IManagerSurveyTableContent {
@@ -25,19 +25,19 @@ const ManagerSurveyTableContent = ({
   clickedSurveyId,
   setClickedSurveyId,
 }: IManagerSurveyTableContent) => {
-  const tableContentData = useFragment(
+  const { id: surveyId, surveyTitle } = useFragment(
     managerSurveyTableContentFragment,
     survey
   );
 
-  const clickedSurvey = clickedSurveyId === tableContentData?.id;
+  const clickedSurvey = clickedSurveyId === surveyId;
   return (
     <TableContent
-      onClick={() => setClickedSurveyId(tableContentData.id)}
+      onClick={() => setClickedSurveyId(surveyId)}
       clickedItem={clickedSurvey}
     >
       <Td role="gridcell">
-        <MainText>{tableContentData?.surveyTitle}</MainText>
+        <MainText>{surveyTitle}</MainText>
       </Td>
     </TableContent>
   );

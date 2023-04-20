@@ -1,10 +1,10 @@
 import { graphql } from "babel-plugin-relay/macro";
-import React, { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { useFragment } from "react-relay";
-import { MainText } from "../../../atomics/typographys/texts";
-import { Td, Tr } from "../../../molecules/tables/Td";
+import { MainText } from "../../../atomics/typographys/Main";
 import { ManagerPositionTableContent_position$key } from "../../../templates/content/manager/__generated__/ManagerPositionTableContent_position.graphql";
-import TableContent from "./TableContent";
+import TableContent from "../../../molecules/tables/TableContent";
+import { Td } from "../../../atomics/table/Table";
 
 interface IManagerPositionTableContent {
   position: ManagerPositionTableContent_position$key;
@@ -23,19 +23,19 @@ const ManagerPositionTableContent = ({
   clickedPositionId,
   setClickedPositionId,
 }: IManagerPositionTableContent) => {
-  const tableContentData = useFragment(
+  const { id: positionId, position: positionName } = useFragment(
     managerPositionTableContentFragment,
     position
   );
 
-  const clickedPosition = clickedPositionId === tableContentData.id;
+  const clickedPosition = clickedPositionId === positionId;
   return (
     <TableContent
-      onClick={() => setClickedPositionId(tableContentData.id)}
+      onClick={() => setClickedPositionId(positionId)}
       clickedItem={clickedPosition}
     >
       <Td role="gridcell">
-        <MainText>{tableContentData.position}</MainText>
+        <MainText>{positionName}</MainText>
       </Td>
     </TableContent>
   );
