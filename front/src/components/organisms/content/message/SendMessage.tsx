@@ -4,10 +4,11 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useSendMessage } from "../../../../client/message/SendMessage.client";
 import { theme } from "../../../../css/theme";
 import { RowBox } from "../../../atomics/boxes/FlexBox";
-import { SubmitButton } from "../../../atomics/buttons/SubmitButton";
-import { Icon } from "../../../atomics/icons/icon";
-import Form from "../../../molecules/form/Form";
-import { SearchInput } from "../../../molecules/inputs/SearchInput";
+import { Icon } from "../../../atomics/icons/Icon";
+import { IconButton } from "../../../molecules/buttons/IconButton";
+import { SubmitButton } from "../../../molecules/buttons/SubmitButton";
+import Form from "../../../molecules/shared/Form";
+import { TextInput } from "../../../molecules/inputs/TextInput";
 
 interface ISendMessageForm {
   message: string;
@@ -45,7 +46,7 @@ const SendMessage = ({ roomId }: ISendMessage) => {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <RowBox>
-        <SearchInput
+        <TextInput
           register={register("message", {
             required: {
               value: true,
@@ -65,7 +66,6 @@ const SendMessage = ({ roomId }: ISendMessage) => {
           onClick={handleSubmit(onSubmit)}
           disabled={sendMessageLoading || !watchMessage || !!errors.message}
           style={{
-            width: "10%",
             padding: theme.spacing.sm,
           }}
         >

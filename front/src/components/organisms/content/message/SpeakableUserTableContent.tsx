@@ -4,8 +4,8 @@ import React, { Dispatch, SetStateAction } from "react";
 import { useFragment } from "react-relay";
 import { theme } from "../../../../css/theme";
 import { ColumnBox, RowBox } from "../../../atomics/boxes/FlexBox";
-import { ListItem } from "../../../atomics/sections/sections";
-import { SubTitle } from "../../../atomics/typographys/titles";
+import { ListItem } from "../../../atomics/boxes/ScrollBox";
+import { SubTitle } from "../../../atomics/typographys/Sub";
 import { IconBox } from "../../../molecules/boxes/IconBox";
 import { SpeakableUserTableContent_user$key } from "./__generated__/SpeakableUserTableContent_user.graphql";
 

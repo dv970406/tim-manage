@@ -2,10 +2,10 @@ import { graphql } from "babel-plugin-relay/macro";
 import React from "react";
 import { useFragment } from "react-relay";
 import { theme } from "../../../../css/theme";
-import { getKoreanTimeFormat } from "../../../../utils/time/time";
+import { getKoreanTimeFormat } from "../../../../utils/shared/time";
 import { ColumnBox, RowBox } from "../../../atomics/boxes/FlexBox";
-import { MainText, SubText } from "../../../atomics/typographys/texts";
-import { SubTitle } from "../../../atomics/typographys/titles";
+import { MainText } from "../../../atomics/typographys/Main";
+import { SubText, SubTitle } from "../../../atomics/typographys/Sub";
 import { MessageTableContent_message$key } from "./__generated__/MessageTableContent_message.graphql";
 
 interface IMessageTableContent {

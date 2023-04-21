@@ -1,13 +1,13 @@
 import { faRocket } from "@fortawesome/pro-solid-svg-icons";
 import { graphql } from "babel-plugin-relay/macro";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { useFragment } from "react-relay";
 import { theme } from "../../../../css/theme";
-import { getKoreanTimeFormat } from "../../../../utils/time/time";
+import { getKoreanTimeFormat } from "../../../../utils/shared/time";
 import { ColumnBox, RowBox } from "../../../atomics/boxes/FlexBox";
-import { ListItem } from "../../../atomics/sections/sections";
-import { MainText, SubText } from "../../../atomics/typographys/texts";
-import { SubTitle } from "../../../atomics/typographys/titles";
+import { ListItem } from "../../../atomics/boxes/ScrollBox";
+import { MainText } from "../../../atomics/typographys/Main";
+import { SubText, SubTitle } from "../../../atomics/typographys/Sub";
 import { IconBox } from "../../../molecules/boxes/IconBox";
 import { RoomTableContent_room$key } from "./__generated__/RoomTableContent_room.graphql";
 interface IRoomTableContent {
@@ -31,10 +31,12 @@ const roomTableContentFragment = graphql`
 `;
 
 const RoomTableContent = ({ room, setClickedRoomId }: IRoomTableContent) => {
-  const { users, id, unreadMessageCount, recentMessage } = useFragment(
-    roomTableContentFragment,
-    room
-  );
+  const {
+    users,
+    id: roomId,
+    unreadMessageCount,
+    recentMessage,
+  } = useFragment(roomTableContentFragment, room);
 
   const recentMessageCreatedAt = getKoreanTimeFormat(recentMessage?.createdAt);
 
@@ -43,12 +45,12 @@ const RoomTableContent = ({ room, setClickedRoomId }: IRoomTableContent) => {
       style={{
         cursor: "pointer",
       }}
-      onClick={() => setClickedRoomId(id)}
+      onClick={() => setClickedRoomId(roomId)}
     >
       <RowBox>
         <IconBox icon={faRocket} size="lg" bgColor={theme.bgColors.purple} />
 
-        <ColumnBox gap={theme.spacing.xs}>
+        <ColumnBox gap={theme.spacing.xs} style={{ width: "100%" }}>
           <RowBox style={{ justifyContent: "space-between" }}>
             {users.map((user) => (
               <SubTitle key={user.id}>{user.name}</SubTitle>
@@ -73,7 +75,10 @@ const RoomTableContent = ({ room, setClickedRoomId }: IRoomTableContent) => {
             )}
           </RowBox>
           <RowBox
-            style={{ alignItems: "center", justifyContent: "space-between" }}
+            style={{
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
           >
             <MainText className="one-line" style={{ wordBreak: "break-all" }}>
               {recentMessage?.message}
