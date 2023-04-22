@@ -7,9 +7,10 @@ import { faHeart as faEmptyHeart } from "@fortawesome/pro-light-svg-icons";
 import React from "react";
 import { useToggleLike } from "../../../../client/post/ToggleLike.client";
 import { theme } from "../../../../css/theme";
-import { SectionText } from "../../../atomics/typographys/texts";
 import { IconButton } from "../../../molecules/buttons/IconButton";
-import { Icon } from "../../../atomics/icons/icon";
+import { Icon } from "../../../atomics/icons/Icon";
+import { RowBox } from "../../../atomics/boxes/FlexBox";
+import { SubText } from "../../../atomics/typographys/Sub";
 
 interface IMetaData {
   postId: string;
@@ -32,16 +33,14 @@ const MetaData = ({
     });
   };
   return (
-    <div
+    <RowBox
       style={{
         placeSelf: "flex-end",
-        display: "flex",
         gap: theme.spacing.lg,
       }}
     >
-      <div
+      <RowBox
         style={{
-          display: "flex",
           gap: theme.spacing.sm,
         }}
       >
@@ -51,13 +50,13 @@ const MetaData = ({
           icon={isLiked ? faFullHeart : faEmptyHeart}
           color={isLiked ? theme.colors.red : theme.colors.white}
         />
-        <SectionText>{countLikes}</SectionText>
-      </div>
-      <div style={{ display: "flex", gap: theme.spacing.sm }}>
+        <SubText>{countLikes}</SubText>
+      </RowBox>
+      <RowBox style={{ gap: theme.spacing.sm }}>
         <Icon size="1x" icon={faComment} />
-        <SectionText>{countComments}</SectionText>
-      </div>
-    </div>
+        <SubText>{countComments}</SubText>
+      </RowBox>
+    </RowBox>
   );
 };
 

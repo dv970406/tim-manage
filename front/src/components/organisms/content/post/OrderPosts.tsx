@@ -7,8 +7,8 @@ import React, { useEffect, useState } from "react";
 import { RefetchFnDynamic } from "react-relay";
 import { Options } from "react-relay/relay-hooks/useRefetchableFragmentNode";
 import { theme } from "../../../../css/theme";
-import { CenterBox, RowBox } from "../../../atomics/boxes/FlexBox";
-import { Section } from "../../../atomics/sections/sections";
+import { CenterBox } from "../../../atomics/boxes/FlexBox";
+import { Section } from "../../../atomics/boxes/Sections";
 import { IconButton } from "../../../molecules/buttons/IconButton";
 import { PostsTablePaginationQuery } from "../../../templates/content/post/__generated__/PostsTablePaginationQuery.graphql";
 import { PostsTable_post$key } from "../../../templates/content/post/__generated__/PostsTable_post.graphql";
@@ -27,10 +27,16 @@ interface IOrders {
   order3?: string[];
 }
 
+const SORT = {
+  RECENT: "recent",
+  LIKE: "like",
+  COMMENT: "comment",
+};
+
 const OrderPosts = ({ refetch }: IOrderPosts) => {
   const [orders, setOrders] = useState<IOrders | null>(null);
 
-  const [clickedTab, setClickedTab] = useState("recent");
+  const [clickedTab, setClickedTab] = useState(SORT.RECENT);
 
   const handleOrder = (order: string) => {
     setClickedTab(order);
@@ -45,23 +51,27 @@ const OrderPosts = ({ refetch }: IOrderPosts) => {
     <Section>
       <CenterBox>
         <IconButton
-          onClick={() => handleOrder("recent")}
+          onClick={() => handleOrder(SORT.RECENT)}
           color={
-            clickedTab === "recent" ? theme.colors.purple : theme.colors.white
+            clickedTab === SORT.RECENT
+              ? theme.colors.purple
+              : theme.colors.white
           }
           icon={faNewspaper}
         />
         <IconButton
-          onClick={() => handleOrder("like")}
+          onClick={() => handleOrder(SORT.LIKE)}
           color={
-            clickedTab === "like" ? theme.colors.purple : theme.colors.white
+            clickedTab === SORT.LIKE ? theme.colors.purple : theme.colors.white
           }
           icon={faHeart}
         />
         <IconButton
-          onClick={() => handleOrder("comment")}
+          onClick={() => handleOrder(SORT.COMMENT)}
           color={
-            clickedTab === "comment" ? theme.colors.purple : theme.colors.white
+            clickedTab === SORT.COMMENT
+              ? theme.colors.purple
+              : theme.colors.white
           }
           icon={faComment}
         />

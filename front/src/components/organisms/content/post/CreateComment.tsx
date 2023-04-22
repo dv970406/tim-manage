@@ -4,9 +4,10 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useCreateComment } from "../../../../client/post/CreateComment.client";
 import { theme } from "../../../../css/theme";
 import { RowBox } from "../../../atomics/boxes/FlexBox";
-import { SubmitButton } from "../../../atomics/buttons/SubmitButton";
-import { Icon } from "../../../atomics/icons/icon";
-import Form from "../../../molecules/form/Form";
+import { Icon } from "../../../atomics/icons/Icon";
+import { IconButton } from "../../../molecules/buttons/IconButton";
+import { SubmitButton } from "../../../molecules/buttons/SubmitButton";
+import Form from "../../../molecules/shared/Form";
 import { TextInput } from "../../../molecules/inputs/TextInput";
 
 interface ICreateCommentForm {
@@ -63,7 +64,6 @@ const CreateComment = ({ postId }: ICreateComment) => {
           onClick={handleSubmit(onSubmit)}
           disabled={createCommentLoading || isSubmitDisabled}
           style={{
-            width: "10%",
             padding: theme.spacing.sm,
           }}
         >

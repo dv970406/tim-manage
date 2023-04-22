@@ -1,15 +1,15 @@
 import { faBox, faComment, faHeart } from "@fortawesome/pro-solid-svg-icons";
 import { graphql } from "babel-plugin-relay/macro";
 import React, { useState } from "react";
-import { useFragment, usePaginationFragment } from "react-relay";
+import { useFragment } from "react-relay";
 import { useNavigate } from "react-router-dom";
 import { theme } from "../../../../css/theme";
-import { getElaspedDay } from "../../../../utils/time/time";
+import { getElaspedDay } from "../../../../utils/shared/time";
 import { HorizontalDivider } from "../../../atomics/boxes/Divider";
 import { ColumnBox, RowBox } from "../../../atomics/boxes/FlexBox";
-import { GridItem } from "../../../atomics/boxes/ListBox";
-import { MainText } from "../../../atomics/typographys/texts";
-import { SectionTitle } from "../../../atomics/typographys/titles";
+import { GridItem } from "../../../atomics/boxes/GridBox";
+import { SectionTitle } from "../../../atomics/typographys/Etc";
+import { MainText } from "../../../atomics/typographys/Main";
 import { IconBox } from "../../../molecules/boxes/IconBox";
 import { PostTableContent_post$key } from "./__generated__/PostTableContent_post.graphql";
 
@@ -33,34 +33,40 @@ const postTableContentFragment = graphql`
 `;
 
 const PostTableContent = ({ post, comment }: IPostTableContent) => {
-  const tableContentData = useFragment(postTableContentFragment, post);
+  const {
+    id: postId,
+    isLiked,
+    title,
+    user,
+    countLikes,
+    countComments,
+    createdAt,
+  } = useFragment(postTableContentFragment, post);
 
   const navigate = useNavigate();
   const [isHovering, setIsHovering] = useState(false);
 
-  const postCreatedAt = getElaspedDay(tableContentData?.createdAt);
+  const postCreatedAt = getElaspedDay(createdAt);
 
   return (
     <GridItem
-      onClick={() => navigate(`/post/${tableContentData?.id}`)}
+      onClick={() => navigate(`/post/${postId}`)}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
-      <RowBox>
+      <RowBox style={{ width: "100%" }}>
         <IconBox
           bgColor={isHovering ? theme.bgColors.purple : theme.bgColors.gray}
           icon={faBox}
           size={"2x"}
         />
         <ColumnBox gap={theme.spacing.sm}>
-          <SectionTitle className="one-line">
-            {tableContentData?.title}
-          </SectionTitle>
+          <SectionTitle className="one-line">{title}</SectionTitle>
 
           {comment ? (
             <MainText color={theme.colors.blue}>{comment}</MainText>
           ) : (
-            <MainText>{tableContentData?.user.name}</MainText>
+            <MainText>{user.name}</MainText>
           )}
         </ColumnBox>
       </RowBox>
@@ -70,6 +76,7 @@ const PostTableContent = ({ post, comment }: IPostTableContent) => {
         style={{
           justifyContent: "space-between",
           alignItems: "center",
+          width: "100%",
         }}
       >
         <div
@@ -87,14 +94,10 @@ const PostTableContent = ({ post, comment }: IPostTableContent) => {
             }}
           >
             <IconBox
-              color={
-                tableContentData?.isLiked
-                  ? theme.bgColors.red
-                  : theme.bgColors.white
-              }
+              color={isLiked ? theme.bgColors.red : theme.bgColors.white}
               icon={faHeart}
             />
-            <MainText>{tableContentData?.countLikes}</MainText>
+            <MainText>{countLikes}</MainText>
           </div>
           <div
             style={{
@@ -104,7 +107,7 @@ const PostTableContent = ({ post, comment }: IPostTableContent) => {
             }}
           >
             <IconBox icon={faComment} />
-            <MainText>{tableContentData?.countComments}</MainText>
+            <MainText>{countComments}</MainText>
           </div>
         </div>
         <MainText>{postCreatedAt}</MainText>

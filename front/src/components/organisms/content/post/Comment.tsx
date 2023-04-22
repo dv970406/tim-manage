@@ -4,10 +4,10 @@ import React from "react";
 import { useFragment } from "react-relay";
 import { useDeleteComment } from "../../../../client/post/DeleteComment.client";
 import { theme } from "../../../../css/theme";
-import { getElaspedDay } from "../../../../utils/time/time";
+import { getElaspedDay } from "../../../../utils/shared/time";
 import { RowBox } from "../../../atomics/boxes/FlexBox";
-import { SectionText } from "../../../atomics/typographys/texts";
-import { SubTitle } from "../../../atomics/typographys/titles";
+import { MainText } from "../../../atomics/typographys/Main";
+import { SubText, SubTitle } from "../../../atomics/typographys/Sub";
 import { IconButton } from "../../../molecules/buttons/IconButton";
 import { Comment_comment$key } from "./__generated__/Comment_comment.graphql";
 
@@ -38,7 +38,7 @@ const Comment = ({ comment }: IComment) => {
     });
   };
   return (
-    <>
+    <li>
       <RowBox style={{ justifyContent: "space-between" }}>
         <SubTitle>{commentData.user.name}</SubTitle>
         {commentData.isMyComment && (
@@ -49,11 +49,11 @@ const Comment = ({ comment }: IComment) => {
           />
         )}
       </RowBox>
-      <SectionText>{commentData.content}</SectionText>
+      <MainText>{commentData.content}</MainText>
       <div>
-        <SectionText>{getElaspedDay(commentData.createdAt)}</SectionText>
+        <SubText>{getElaspedDay(commentData.createdAt)}</SubText>
       </div>
-    </>
+    </li>
   );
 };
 
