@@ -1,8 +1,9 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useFragment } from "react-relay";
-import { showDateFormat } from "../../../../utils/time/time";
-import { MainText } from "../../../atomics/typographys/texts";
-import { Td, Tr } from "../../../molecules/tables/Td";
+import { showDateFormat } from "../../../../utils/shared/time";
+import { Td } from "../../../atomics/table/Table";
+import { MainText } from "../../../atomics/typographys/Main";
+import TableContent from "../../../molecules/tables/TableContent";
 import { UserVacationTableContent_vacation$key } from "./__generated__/UserVacationTableContent_vacation.graphql";
 
 interface IUserVacationTableContent {
@@ -24,35 +25,37 @@ const userVacationTableContentFragment = graphql`
   }
 `;
 const UserVacationTableContent = ({ vacation }: IUserVacationTableContent) => {
-  const tableContentData = useFragment(
-    userVacationTableContentFragment,
-    vacation
-  );
-  if (!tableContentData) return <></>;
-
   const {
-    confirmed: { byCeo, byLeader, byManager },
-  } = tableContentData;
+    id: vacationId,
+    confirmed,
+    duration,
+    endDate,
+    isHalf,
+    startDate,
+  } = useFragment(userVacationTableContentFragment, vacation);
+  if (!vacationId) return <></>;
+
+  const { byCeo, byLeader, byManager } = confirmed;
   const isApproved = byCeo && byLeader && byManager;
 
   return (
-    <Tr style={{ cursor: "auto" }}>
+    <TableContent>
       <Td role="gridcell">
-        <MainText>{showDateFormat(tableContentData.startDate)}</MainText>
+        <MainText>{showDateFormat(startDate)}</MainText>
       </Td>
       <Td role="gridcell">
-        <MainText>{showDateFormat(tableContentData.endDate)}</MainText>
+        <MainText>{showDateFormat(endDate)}</MainText>
       </Td>
       <Td role="gridcell">
-        <MainText>{tableContentData.duration}</MainText>
+        <MainText>{duration}</MainText>
       </Td>
       <Td role="gridcell">
-        <MainText>{tableContentData.isHalf ? "O" : "X"}</MainText>
+        <MainText>{isHalf ? "O" : "X"}</MainText>
       </Td>
       <Td role="gridcell">
         <MainText>{isApproved ? "승인" : "미승인"}</MainText>
       </Td>
-    </Tr>
+    </TableContent>
   );
 };
 

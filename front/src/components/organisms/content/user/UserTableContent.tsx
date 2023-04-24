@@ -5,12 +5,12 @@ import { useFragment } from "react-relay";
 import { useNavigate } from "react-router-dom";
 import { theme } from "../../../../css/theme";
 import { POSITION } from "../../../../utils/constants/user.constant";
-import { getPositionIcon, getTeamIcon } from "../../../../utils/shared";
+import { getPositionIcon, getTeamIcon } from "../../../../utils/shared/getIcon";
 import { HorizontalDivider } from "../../../atomics/boxes/Divider";
 import { ColumnBox, RowBox } from "../../../atomics/boxes/FlexBox";
-import { GridItem } from "../../../atomics/boxes/ListBox";
-import { SectionText, MainText } from "../../../atomics/typographys/texts";
-import { SectionTitle } from "../../../atomics/typographys/titles";
+import { GridItem } from "../../../atomics/boxes/GridBox";
+import { SectionTitle } from "../../../atomics/typographys/Etc";
+import { MainText } from "../../../atomics/typographys/Main";
 import { IconBox } from "../../../molecules/boxes/IconBox";
 import { UserTableContent_user$key } from "./__generated__/UserTableContent_user.graphql";
 
@@ -39,31 +39,34 @@ const userTableContentFragment = graphql`
   }
 `;
 const UserTableContent = ({ user, isManager }: IUserTableContent) => {
-  const tableContentData = useFragment(userTableContentFragment, user);
+  const {
+    id: userId,
+    email,
+    isLeader,
+    name,
+    position,
+    team,
+  } = useFragment(userTableContentFragment, user);
   const navigate = useNavigate();
 
   const [isHovering, setIsHovering] = useState(false);
 
   return (
     <GridItem
-      onClick={
-        isManager ? () => navigate(`/user/${tableContentData.id}`) : () => null
-      }
+      onClick={isManager ? () => navigate(`/user/${userId}`) : () => null}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
-      <RowBox>
+      <RowBox style={{ width: "100%" }}>
         <IconBox
           bgColor={isHovering ? theme.bgColors.purple : theme.bgColors.gray}
           icon={faUser}
           size={"2x"}
         />
         <ColumnBox gap={theme.spacing.sm}>
-          <SectionTitle className="one-line">
-            {tableContentData.name}
-          </SectionTitle>
+          <SectionTitle className="one-line">{name}</SectionTitle>
 
-          <MainText>{tableContentData.email}</MainText>
+          <MainText>{email}</MainText>
         </ColumnBox>
       </RowBox>
 
@@ -72,10 +75,11 @@ const UserTableContent = ({ user, isManager }: IUserTableContent) => {
         style={{
           justifyContent: "space-between",
           alignItems: "center",
+          width: "100%",
         }}
       >
         <RowBox>
-          {tableContentData.isLeader && (
+          {isLeader && (
             <RowBox
               style={{
                 display: "flex",
@@ -96,15 +100,13 @@ const UserTableContent = ({ user, isManager }: IUserTableContent) => {
             }}
           >
             <IconBox
-              icon={getPositionIcon(tableContentData.position.position)}
+              icon={getPositionIcon(position.position)}
               color={
-                tableContentData.position.position === POSITION["대표"]
-                  ? "gold"
-                  : undefined
+                position.position === POSITION["대표"] ? "gold" : undefined
               }
             />
             <MainText style={{ whiteSpace: "nowrap" }}>
-              {tableContentData.position.position}
+              {position.position}
             </MainText>
           </RowBox>
 
@@ -114,10 +116,8 @@ const UserTableContent = ({ user, isManager }: IUserTableContent) => {
               gap: theme.spacing.xs,
             }}
           >
-            <IconBox icon={getTeamIcon(tableContentData.team.team)} />
-            <MainText style={{ whiteSpace: "nowrap" }}>
-              {tableContentData.team.team}
-            </MainText>
+            <IconBox icon={getTeamIcon(team.team)} />
+            <MainText style={{ whiteSpace: "nowrap" }}>{team.team}</MainText>
           </RowBox>
         </RowBox>
       </RowBox>

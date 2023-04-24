@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { RefetchFnDynamic } from "react-relay";
 import ReactSelect from "react-select";
-import { useGetPositions } from "../../../../client/position/GetPositions.client";
-import { useGetTeams } from "../../../../client/team/GetTeams.client";
-import { ISelectFormat } from "../home/SelectUsers";
 import { Options } from "react-relay/relay-hooks/useRefetchableFragmentNode";
 import { UsersTable_user$key } from "../../../templates/content/user/__generated__/UsersTable_user.graphql";
 import { UsersTablePaginationQuery } from "../../../templates/content/user/__generated__/UsersTablePaginationQuery.graphql";
 import { orderSelectStyles } from "../../../../utils/css/select";
 import { theme } from "../../../../css/theme";
 import { RowBox } from "../../../atomics/boxes/FlexBox";
+import { useOrderUsers } from "../../../../utils/hooks/orderUsers.hook";
 
 interface IOrderUsers {
   refetch: RefetchFnDynamic<
@@ -19,57 +17,16 @@ interface IOrderUsers {
   >;
 }
 
-interface IOrders {
-  order1?: string[];
-  order2?: string[];
-  order3?: string[];
-}
-
 const OrderUsers = ({ refetch }: IOrderUsers) => {
-  const { positions } = useGetPositions();
-  const { teams } = useGetTeams();
-
-  const selectablePositions = positions?.map((position) => ({
-    value: position.id,
-    label: position.position,
-  }));
-
-  const selectableTeams = teams?.map((team) => ({
-    value: team.id,
-    label: team.team,
-  }));
-
-  // 메모이징 활용할 예정
-  const [selectedPositions, setSelectedPositions] = useState<ISelectFormat[]>(
-    []
-  );
-  const [selectedTeams, setSelectedTeams] = useState<ISelectFormat[]>([]);
-
-  const [orders, setOrders] = useState<IOrders | null>(null);
-
-  // order1 : positions
-  const handleChangePositions = (selectedPositions: any) => {
-    setSelectedPositions(selectedPositions);
-    const selectedPositionsId = selectedPositions.map(
-      (position: ISelectFormat) => position.value
-    );
-    setOrders((prev) => ({
-      ...prev,
-      order1: selectedPositionsId,
-    }));
-  };
-
-  // order2 : teams
-  const handleChangeTeams = (selectedTeams: any) => {
-    setSelectedTeams(selectedTeams);
-    const selectedTeamsId = selectedTeams.map(
-      (team: ISelectFormat) => team.value
-    );
-    setOrders((prev) => ({
-      ...prev,
-      order2: selectedTeamsId,
-    }));
-  };
+  const {
+    orders,
+    selectablePositions,
+    selectableTeams,
+    selectedPositions,
+    selectedTeams,
+    handleChangePositions,
+    handleChangeTeams,
+  } = useOrderUsers();
 
   useEffect(() => {
     if (!orders) return;
