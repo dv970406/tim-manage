@@ -4,15 +4,11 @@ import React from "react";
 import { useFragment } from "react-relay";
 import { ReadNotificationMutation$variables } from "../../../client/notification/__generated__/ReadNotificationMutation.graphql";
 import { theme } from "../../../css/theme";
-import { getElaspedDay, vacationDateFormat } from "../../../utils/time/time";
+import { getElaspedDay, vacationDateFormat } from "../../../utils/shared/time";
 import { ColumnBox, RowBox } from "../../atomics/boxes/FlexBox";
-import { ListItem } from "../../atomics/sections/sections";
-import {
-  AccentText,
-  DateText,
-  SectionText,
-} from "../../atomics/typographys/texts";
-import { SubTitle } from "../../atomics/typographys/titles";
+import { ListItem } from "../../atomics/boxes/ScrollBox";
+import { AccentText, DateText } from "../../atomics/typographys/Etc";
+import { SubText, SubTitle } from "../../atomics/typographys/Sub";
 import { IconBox } from "../../molecules/boxes/IconBox";
 import { NotificationTableContent_notification$key } from "./__generated__/NotificationTableContent_notification.graphql";
 
@@ -57,7 +53,8 @@ const NotificationTableContent = ({
     confirmedVacation,
     isRead,
   } = useFragment(notificationTableContentFragment, notification);
-  const confirmedDate = getElaspedDay(confirmedVacation.createdAt);
+
+  const confirmedDate = getElaspedDay(confirmedVacation?.createdAt);
 
   const handleReadNotification = () => {
     if (readNotificationLoading) return;
@@ -70,14 +67,13 @@ const NotificationTableContent = ({
   return (
     <ListItem
       style={{
-        cursor: "pointer",
+        cursor: isRead ? "default" : "pointer",
         opacity: isRead ? theme.disabled.opacity : 1,
       }}
-      onClick={handleReadNotification}
+      {...(!isRead && { onClick: handleReadNotification })}
     >
-      <div
+      <RowBox
         style={{
-          display: "flex",
           gap: theme.spacing.lg,
           justifyContent: "space-between",
         }}
@@ -95,9 +91,9 @@ const NotificationTableContent = ({
             )
           </DateText>
 
-          <SectionText style={{ textAlign: "right" }}>
+          <SubText style={{ textAlign: "right" }}>
             {confirmedByWho?.name}님이 승인했습니다!
-          </SectionText>
+          </SubText>
 
           <RowBox style={{ placeSelf: "flex-end", width: "auto" }}>
             {confirmedVacation?.confirmed.byCeo ? (
@@ -124,7 +120,7 @@ const NotificationTableContent = ({
           </RowBox>
           <SubTitle style={{ textAlign: "right" }}>{confirmedDate}</SubTitle>
         </ColumnBox>
-      </div>
+      </RowBox>
     </ListItem>
   );
 };

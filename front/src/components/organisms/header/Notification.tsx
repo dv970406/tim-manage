@@ -1,14 +1,31 @@
+import styled from "@emotion/styled";
 import { faBell } from "@fortawesome/pro-solid-svg-icons";
 import React, { useEffect, useState } from "react";
 import { useGetNotifications } from "../../../client/notification/GetNotifications.client";
 import { receiveNotification } from "../../../client/notification/ReceiveNotification.client";
 import { theme } from "../../../css/theme";
-import { NotificationSection } from "../../atomics/sections/sections";
-import { SubText } from "../../atomics/typographys/texts";
-import { SubTitle } from "../../atomics/typographys/titles";
+import { CenterBox, RowBox } from "../../atomics/boxes/FlexBox";
+import { SubText, SubTitle } from "../../atomics/typographys/Sub";
 import { IconButton } from "../../molecules/buttons/IconButton";
 import NotificationsTable from "./NotificationsTable";
 
+const NotificationSection = styled.section(({ theme }) => ({
+  backdropFilter: theme.bgColors.backdropFilter,
+  background: theme.bgColors.gray,
+  width: 300,
+  height: 300,
+  borderRadius: theme.borderRadius.lg,
+  borderTopRightRadius: 0,
+  padding: theme.spacing.lg,
+  display: "flex",
+  flexDirection: "column",
+  gap: theme?.spacing.sm,
+
+  position: "absolute",
+  top: 25,
+  right: 10,
+  zIndex: 5,
+}));
 interface INotification {
   unreadNotificationCount?: number;
 }
@@ -26,32 +43,25 @@ const Notification = ({ unreadNotificationCount }: INotification) => {
 
   const { notifications } = useGetNotifications();
 
+  const handleNotificationTab = () => {
+    setIsNotificationOpen((prev) => !prev);
+    setHasNotification(false);
+  };
   return (
-    <div
+    <RowBox
       style={{
-        display: "flex",
         alignItems: "center",
         position: "relative",
       }}
     >
-      <IconButton
-        icon={faBell}
-        size="lg"
-        onClick={() => {
-          setIsNotificationOpen((prev) => !prev);
-          setHasNotification(false);
-        }}
-      />
+      <IconButton icon={faBell} size="lg" onClick={handleNotificationTab} />
       {(hasNotification || !!unreadNotificationCount) && (
-        <div
+        <CenterBox
           style={{
             position: "absolute",
             top: -5,
             right: -10,
             backgroundColor: theme.bgColors.red,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
             borderRadius: "50%",
             width: 20,
             height: 20,
@@ -61,7 +71,7 @@ const Notification = ({ unreadNotificationCount }: INotification) => {
           <SubText style={{ fontSize: theme.fonts.xs }}>
             {unreadNotificationCount}
           </SubText>
-        </div>
+        </CenterBox>
       )}
       {isNotificationOpen && (
         <NotificationSection>
@@ -70,7 +80,7 @@ const Notification = ({ unreadNotificationCount }: INotification) => {
           <NotificationsTable notifications={notifications} />
         </NotificationSection>
       )}
-    </div>
+    </RowBox>
   );
 };
 

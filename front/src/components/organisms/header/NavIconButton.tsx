@@ -1,5 +1,5 @@
 import { theme } from "../../../css/theme";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { IconBox } from "../../molecules/boxes/IconBox";
 
