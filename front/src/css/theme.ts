@@ -1,4 +1,3 @@
-import { css } from "@emotion/react";
 import {
   IBgColors,
   IBolds,
@@ -70,8 +69,8 @@ export const theme: ITheme = {
     blue: "rgb(12,197,234)",
   },
   fonts: {
-    xl: "30px",
-    lg: "18px",
+    xl: "26px",
+    lg: "19px",
     md: "14px",
     sm: "12px",
     xs: "10px",
@@ -104,68 +103,3 @@ export const theme: ITheme = {
     lg: 1200,
   },
 };
-
-export const globalStyles = css`
-  :root {
-    --purple: rgb(42, 29, 163);
-    --gray: rgb(26, 32, 54);
-  }
-
-  input {
-    all: unset;
-  }
-  * {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-    /*스크롤이 부모로 번지는 것을 막는 css*/
-    overscroll-behavior: contain;
-    font-family: Plus Jakarta Sans, sans-serif;
-  }
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
-  body {
-    color: ${theme.colors.white};
-  }
-
-  body.modal-open {
-    overflow: hidden;
-  }
-
-  button {
-    border: none;
-    background: none;
-    outline: none;
-    cursor: pointer;
-  }
-  p {
-    margin: 0;
-  }
-  li {
-    list-style: none;
-  }
-  *::-webkit-scrollbar {
-    display: none;
-  }
-  input[type="number"]::-webkit-outer-spin-button,
-  input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  /* 자동완성 선택시 배경 흰색으로 바뀌는 것 방지 */
-  input:-webkit-autofill {
-    -webkit-transition-delay: 9999s;
-    transition-delay: 9999s;
-  }
-
-  /* title 한줄로 만드는 용도 */
-  .one-line {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    overflow: hidden;
-  }
-`;
