@@ -1,8 +1,8 @@
 import { PAGINATION_LOAD_COUNT } from "../../../utils/constants/share.constant";
-import { useInfiniteScroll } from "../../../utils/hooks/scroll/infiniteScroll.hook";
-import { ScrollBox } from "../../atomics/boxes/ListBox";
+import { useInfiniteScroll } from "../../../utils/hooks/shared/infiniteScroll.hook";
+import { ScrollBox } from "../../atomics/boxes/ScrollBox";
 import Loading from "../../molecules/shared/Loading";
-import Table from "../../molecules/tables/Table";
+import { Table } from "../../molecules/tables/Table";
 import { IInfiniteScroll, ObserveBox } from "./SearchAndInfiniteScrollList";
 
 interface IInfiniteScrollTable extends IInfiniteScroll {

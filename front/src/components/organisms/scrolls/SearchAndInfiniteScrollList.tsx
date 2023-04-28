@@ -7,15 +7,15 @@ import React, {
 } from "react";
 import { LoadMoreFn, RefetchFnDynamic } from "react-relay";
 import { PAGINATION_LOAD_COUNT } from "../../../utils/constants/share.constant";
-import { useInfiniteScroll } from "../../../utils/hooks/scroll/infiniteScroll.hook";
-import Table from "../../molecules/tables/Table";
+import { useInfiniteScroll } from "../../../utils/hooks/shared/infiniteScroll.hook";
 import { Options } from "react-relay/relay-hooks/useRefetchableFragmentNode";
-import { Section } from "../../atomics/sections/sections";
+import { Section } from "../../atomics/boxes/Sections";
 import DataToolBar from "./DataToolBar";
 import { theme } from "../../../css/theme";
 import Loading from "../../molecules/shared/Loading";
 import { ColumnBox } from "../../atomics/boxes/FlexBox";
-import { GridBox, ScrollBox } from "../../atomics/boxes/ListBox";
+import { ScrollBox } from "../../atomics/boxes/ScrollBox";
+import { GridBox } from "../../atomics/boxes/GridBox";
 
 export const ObserveBox = styled.div`
   height: 5px;
@@ -32,7 +32,7 @@ interface ISearchAndInfiniteScrollList extends IInfiniteScroll {
   refetch: RefetchFnDynamic<any, any, Options>;
   mutateName?: string;
   noGrid?: boolean;
-  hasAddButton: boolean;
+  openModal?: () => void;
 }
 
 // Search, Pagination(Infinite Scroll) 구현하는 컴포넌트
@@ -42,9 +42,8 @@ export const SearchAndInfiniteScrollList = ({
   isLoadingNext,
   loadNext,
   refetch,
-  mutateName,
   noGrid,
-  hasAddButton,
+  openModal,
 }: ISearchAndInfiniteScrollList) => {
   // 스크롤이 바닥에 닿았는지 감지해서 relay의 loadNext를 실행시키는 훅
   const ref = useInfiniteScroll(async (entry, observer) => {
@@ -58,6 +57,7 @@ export const SearchAndInfiniteScrollList = ({
   // keyword가 변화할 때 마다 refetch하는 기능(검색 기능)
   const [keyword, setKeyword] = useState<string | undefined>(undefined);
   const [isPending, startTransition] = useTransition();
+
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) =>
     startTransition(() => setKeyword(event.currentTarget.value));
 
@@ -75,11 +75,7 @@ export const SearchAndInfiniteScrollList = ({
     <>
       <ColumnBox gap={theme.spacing.xl}>
         <Section padding={theme.spacing.md}>
-          <DataToolBar
-            onChange={handleChange}
-            mutateName={mutateName}
-            hasAddButton={hasAddButton}
-          />
+          <DataToolBar onChange={handleChange} openModal={openModal} />
         </Section>
         {noGrid ? (
           <ScrollBox>{children}</ScrollBox>

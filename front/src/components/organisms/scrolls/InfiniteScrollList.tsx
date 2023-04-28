@@ -1,6 +1,6 @@
 import { PAGINATION_LOAD_COUNT } from "../../../utils/constants/share.constant";
-import { useInfiniteScroll } from "../../../utils/hooks/scroll/infiniteScroll.hook";
-import { ScrollBox } from "../../atomics/boxes/ListBox";
+import { useInfiniteScroll } from "../../../utils/hooks/shared/infiniteScroll.hook";
+import { ScrollBox } from "../../atomics/boxes/ScrollBox";
 import Loading from "../../molecules/shared/Loading";
 import { IInfiniteScroll, ObserveBox } from "./SearchAndInfiniteScrollList";
 
@@ -27,6 +27,9 @@ export const InfiniteScrollList = ({
       <ScrollBox
         style={{
           flexDirection: direction === "reverse" ? "column-reverse" : "column",
+
+          // scrollbar와 간격을 두기 위한 목적의 paddingRight
+          paddingRight: 20,
         }}
       >
         {direction === "reverse" && isLoadingNext && <Loading />}

@@ -1,26 +1,18 @@
-import { Theme } from "@emotion/react";
-import styled from "@emotion/styled";
-import { faCirclePlus, faSearch } from "@fortawesome/pro-solid-svg-icons";
-import React, { ChangeEventHandler, MouseEventHandler, useState } from "react";
-import { useGetMyInfo } from "../../../client/user/GetMyInfo.client";
+import { faCirclePlus } from "@fortawesome/pro-solid-svg-icons";
+import React, { ChangeEventHandler, MouseEventHandler } from "react";
 import { theme } from "../../../css/theme";
-import { openModal } from "../../../utils/modal/controlModal";
 import { RowBox } from "../../atomics/boxes/FlexBox";
 import { IconButton } from "../../molecules/buttons/IconButton";
 import { SearchInput } from "../../molecules/inputs/SearchInput";
 interface IDataToolBar {
   onChange: ChangeEventHandler<HTMLInputElement>;
-  mutateName?: string;
-  hasAddButton?: boolean;
+  openModal?: () => void;
 }
 
-const DataToolBar = ({ onChange, mutateName, hasAddButton }: IDataToolBar) => {
+const DataToolBar = ({ onChange, openModal }: IDataToolBar) => {
   const handleModal: MouseEventHandler<HTMLButtonElement> = () => {
-    if (!mutateName) return;
-    openModal(mutateName);
+    if (openModal) openModal();
   };
-
-  const { myInfo } = useGetMyInfo();
 
   return (
     <RowBox
@@ -31,7 +23,7 @@ const DataToolBar = ({ onChange, mutateName, hasAddButton }: IDataToolBar) => {
     >
       <SearchInput onChange={onChange} width={300} />
 
-      {(mutateName === "create-post" || myInfo?.isManager) && hasAddButton && (
+      {openModal && (
         <IconButton
           onClick={handleModal}
           color={theme.bgColors.green}
