@@ -1,7 +1,5 @@
 import { faChevronDown } from "@fortawesome/pro-solid-svg-icons";
-import { SectionText, MainText } from "../../atomics/typographys/texts";
-import { Icon, IIcon } from "../../atomics/icons/icon";
-import { useContext } from "react";
+import { Icon, IIcon } from "../../atomics/icons/Icon";
 import { theme } from "../../../css/theme";
 import { NavLink } from "react-router-dom";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
@@ -9,9 +7,11 @@ import {
   chevronTurnOffAnimation,
   chevronTurnOnAnimation,
 } from "../../../css/animations";
-import { SideBarContext } from "../../../utils/contexts/sidebar.context";
 import { RowBox } from "../../atomics/boxes/FlexBox";
 import { IconBox } from "../../molecules/boxes/IconBox";
+import { useClickedTab } from "../../../utils/hooks/clickedTab.hook";
+import { MainText } from "../../atomics/typographys/Main";
+import { SubText } from "../../atomics/typographys/Sub";
 
 interface INavTabButton extends IIcon {
   icon: IconProp;
@@ -23,24 +23,7 @@ interface INavTabButton extends IIcon {
 }
 
 const NavTabButton = ({ icon, tabName, lists }: INavTabButton) => {
-  const { clickedTabs, setClickedTabs } = useContext(SideBarContext);
-
-  const isTabClicked = clickedTabs.includes(tabName);
-
-  const controlClickedTab = () => {
-    if (isTabClicked) {
-      setClickedTabs((prev) => {
-        const copiedClickedTabs = [...prev];
-        const tabIndex = copiedClickedTabs.findIndex(
-          (clickedTabName) => clickedTabName === tabName
-        );
-        copiedClickedTabs.splice(tabIndex, 1);
-        return copiedClickedTabs;
-      });
-    } else {
-      setClickedTabs((prev) => [...prev, tabName]);
-    }
-  };
+  const { isTabClicked, controlClickedTab } = useClickedTab(tabName);
   return (
     <li
       style={{
@@ -113,7 +96,7 @@ const NavTabButton = ({ icon, tabName, lists }: INavTabButton) => {
                     borderRadius: theme.borderRadius.lg,
                   }}
                 />
-                <SectionText>{list.name}</SectionText>
+                <SubText>{list.name}</SubText>
               </li>
             )}
           </NavLink>
