@@ -1,9 +1,5 @@
 import { graphql } from "babel-plugin-relay/macro";
-import {
-  PreloadedQuery,
-  useLazyLoadQuery,
-  usePreloadedQuery,
-} from "react-relay";
+import { useLazyLoadQuery } from "react-relay";
 import { GetManagerSurveyQuery } from "./__generated__/GetManagerSurveyQuery.graphql";
 
 export const getManagerSurveyQuery = graphql`

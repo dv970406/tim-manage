@@ -1,9 +1,5 @@
 import { graphql } from "babel-plugin-relay/macro";
-import {
-  PreloadedQuery,
-  useLazyLoadQuery,
-  usePreloadedQuery,
-} from "react-relay";
+import { useLazyLoadQuery } from "react-relay";
 import { GetAnswersOfSurveyQuery } from "./__generated__/GetAnswersOfSurveyQuery.graphql";
 
 export const getAnswersOfSurveyQuery = graphql`

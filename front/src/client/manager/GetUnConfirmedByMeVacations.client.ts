@@ -1,4 +1,3 @@
-import { EventInput } from "@fullcalendar/core";
 import { graphql } from "babel-plugin-relay/macro";
 import { PreloadedQuery, usePreloadedQuery } from "react-relay";
 import { GetUnConfirmedByMeVacationsQuery } from "./__generated__/GetUnConfirmedByMeVacationsQuery.graphql";

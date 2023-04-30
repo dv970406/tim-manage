@@ -1,9 +1,5 @@
 import { graphql } from "babel-plugin-relay/macro";
-import {
-  PreloadedQuery,
-  useLazyLoadQuery,
-  usePreloadedQuery,
-} from "react-relay";
+import { useLazyLoadQuery } from "react-relay";
 import { GetManagerPositionQuery } from "./__generated__/GetManagerPositionQuery.graphql";
 
 export const getManagerPositionQuery = graphql`

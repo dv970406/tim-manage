@@ -1,6 +1,6 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useState } from "react";
-import { commitMutation, useMutation } from "react-relay";
+import { commitMutation } from "react-relay";
 import { environment } from "../client";
 import {
   DeleteTeamMutation,

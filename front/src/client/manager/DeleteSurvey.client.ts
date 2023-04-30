@@ -1,7 +1,7 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useState } from "react";
-import { commitMutation, ConnectionHandler } from "react-relay";
-import { deleteEdgeOfData } from "../../utils/store/connection";
+import { commitMutation } from "react-relay";
+import { deleteEdgeOfData } from "../../utils/shared/connection";
 import { environment } from "../client";
 import {
   DeleteSurveyMutation,
@@ -25,9 +25,7 @@ export const useDeleteSurvey = () => {
     setIsLoading(true);
     commitMutation<DeleteSurveyMutation>(environment, {
       mutation: deleteSurveyQuery,
-      variables: {
-        id: "1",
-      },
+      variables,
       onCompleted: ({ deleteSurvey: { ok, error } }) => {
         setIsLoading(false);
         if (!ok) {
