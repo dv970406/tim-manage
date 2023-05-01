@@ -1,12 +1,10 @@
 import { EventInput } from "@fullcalendar/core";
 import { graphql } from "babel-plugin-relay/macro";
-import { useEffect, useState, Suspense } from "react";
-import { loadQuery, PreloadedQuery, usePreloadedQuery } from "react-relay";
+import { useEffect, useState } from "react";
+import { PreloadedQuery, usePreloadedQuery } from "react-relay";
 import { theme } from "../../css/theme";
 import { SCHEDULES } from "../../utils/constants/schedule.constant";
-import { NINE_HOURS_TO_MILLISEC } from "../../utils/constants/time.constant";
-import { getExpiredDate } from "../../utils/time/time";
-import { environment } from "../client";
+import { getExpiredDate } from "../../utils/shared/time";
 import { useGetMyInfo } from "../user/GetMyInfo.client";
 import { GetMeetingsQuery } from "./__generated__/GetMeetingsQuery.graphql";
 
