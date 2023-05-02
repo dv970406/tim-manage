@@ -1,5 +1,5 @@
 import { graphql } from "babel-plugin-relay/macro";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { commitMutation } from "react-relay";
 import { useNavigate } from "react-router-dom";
 import { environment } from "../client";
@@ -36,7 +36,7 @@ export const useCreateWeeklyMeal = () => {
     commitMutation<CreateWeeklyMealMutation>(environment, {
       mutation: createWeeklyMealQuery,
       variables,
-      updater: (proxyStore, response) => {
+      updater: (proxyStore) => {
         const addWeeklyMealPayload = proxyStore
           .getRootField("createWeeklyMeal")
           .getLinkedRecord("weeklyMeal");
@@ -45,10 +45,7 @@ export const useCreateWeeklyMeal = () => {
 
         const rootGetWeeklyMeal = proxyStore.get("client:root:getWeeklyMeal");
 
-        const oldWeeklyMeal = rootGetWeeklyMeal?.setLinkedRecord(
-          addWeeklyMealPayload,
-          "weeklyMeal"
-        );
+        rootGetWeeklyMeal?.setLinkedRecord(addWeeklyMealPayload, "weeklyMeal");
       },
 
       onCompleted: ({ createWeeklyMeal: { ok, error } }) => {
