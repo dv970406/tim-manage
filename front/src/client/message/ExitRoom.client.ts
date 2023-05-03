@@ -1,8 +1,6 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useState } from "react";
-import { commitMutation, ConnectionHandler, useMutation } from "react-relay";
-import { useNavigate } from "react-router-dom";
-import { deleteEdgeOfData } from "../../utils/store/connection";
+import { commitMutation } from "react-relay";
 import { environment } from "../client";
 import {
   ExitRoomMutation,

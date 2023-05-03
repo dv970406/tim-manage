@@ -1,7 +1,6 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { Dispatch, SetStateAction } from "react";
 import { requestSubscription } from "react-relay";
-import { insertEdgeToData } from "../../utils/store/connection";
 import { environment } from "../client";
 import { ReceiveInRoomSubscription } from "./__generated__/ReceiveInRoomSubscription.graphql";
 

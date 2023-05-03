@@ -1,8 +1,8 @@
 import { graphql } from "babel-plugin-relay/macro";
-import { Dispatch, SetStateAction, useMemo } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { ConnectionHandler, requestSubscription } from "react-relay";
-import { playAudio } from "../../utils/audio/audio";
-import { insertEdgeToData } from "../../utils/store/connection";
+import { playAudio } from "../../utils/shared/audio";
+import { insertEdgeToData } from "../../utils/shared/connection";
 import { environment } from "../client";
 import { ReceiveMessageSubscription } from "./__generated__/ReceiveMessageSubscription.graphql";
 
