@@ -1,7 +1,6 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useLazyLoadQuery } from "react-relay";
 import { PAGINATION_LOAD_COUNT } from "../../utils/constants/share.constant";
-import { POSITION } from "../../utils/constants/user.constant";
 import { GetNotificationsQuery } from "./__generated__/GetNotificationsQuery.graphql";
 
 const getNotificationsQuery = graphql`
