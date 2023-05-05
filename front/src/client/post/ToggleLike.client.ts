@@ -1,11 +1,10 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useState } from "react";
-import { commitMutation, ConnectionHandler, useMutation } from "react-relay";
-import { useNavigate } from "react-router-dom";
+import { commitMutation } from "react-relay";
 import {
   deleteEdgeOfData,
   insertEdgeToData,
-} from "../../utils/store/connection";
+} from "../../utils/shared/connection";
 import { environment } from "../client";
 import {
   ToggleLikeMutation,
