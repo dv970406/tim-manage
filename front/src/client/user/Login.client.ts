@@ -1,11 +1,10 @@
 import { graphql } from "babel-plugin-relay/macro";
-import { useEffect, useState } from "react";
-import { commitMutation, useMutation } from "react-relay";
-import { NavigateFunction, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { commitMutation } from "react-relay";
+import { useNavigate } from "react-router-dom";
 import { environment, TOKEN } from "../client";
 import {
   LoginMutation,
-  LoginMutation$data,
   LoginMutation$variables,
 } from "./__generated__/LoginMutation.graphql";
 

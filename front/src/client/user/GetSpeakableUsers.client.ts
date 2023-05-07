@@ -2,7 +2,6 @@ import { graphql } from "babel-plugin-relay/macro";
 import { useLazyLoadQuery } from "react-relay";
 import { PAGINATION_LOAD_COUNT } from "../../utils/constants/share.constant";
 import { GetSpeakableUsersQuery } from "./__generated__/GetSpeakableUsersQuery.graphql";
-import { GetUsersQuery } from "./__generated__/GetUsersQuery.graphql";
 
 export const getSpeakableUsersQuery = graphql`
   query GetSpeakableUsersQuery(

@@ -1,6 +1,5 @@
 import { graphql } from "babel-plugin-relay/macro";
-import { useEffect, useState } from "react";
-import { useLazyLoadQuery, usePaginationFragment } from "react-relay";
+import { useLazyLoadQuery } from "react-relay";
 import { PAGINATION_LOAD_COUNT } from "../../utils/constants/share.constant";
 import { SelectUsersQuery } from "./__generated__/SelectUsersQuery.graphql";
 
