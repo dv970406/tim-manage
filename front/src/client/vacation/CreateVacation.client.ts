@@ -1,7 +1,7 @@
 import { graphql } from "babel-plugin-relay/macro";
-import { useEffect, useState } from "react";
-import { commitMutation, ConnectionHandler } from "react-relay";
-import { insertEdgeToData } from "../../utils/store/connection";
+import { useState } from "react";
+import { commitMutation } from "react-relay";
+import { insertEdgeToData } from "../../utils/shared/connection";
 import { environment } from "../client";
 import {
   CreateVacationMutation,

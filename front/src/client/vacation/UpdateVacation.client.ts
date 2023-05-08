@@ -1,5 +1,5 @@
 import { graphql } from "babel-plugin-relay/macro";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { commitMutation } from "react-relay";
 import { environment } from "../client";
 import {
