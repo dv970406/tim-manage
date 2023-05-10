@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
-import { DB_TABLE } from 'src/core/variables/constants';
-import { LessThan, Like, MoreThan } from 'typeorm';
+import { LessThan, Like } from 'typeorm';
 import {
   CreateSurveyInput,
   CreateSurveyOutput,
@@ -18,8 +17,6 @@ import {
 } from './dtos/survey/get-surveys.dto';
 import { Survey, SurveyForm } from './entities/survey.entity';
 import { SurveyRepository } from './repositories/survey.repository';
-import { ConnectionInput } from 'src/core/dtos/pagination.dto';
-import { GetAnswersOfsurveyInput } from './dtos/answer/get-answersOfSurvey.dto';
 import {
   MultipleChoiceFormat,
   ResponseRate,
@@ -84,17 +81,15 @@ export class SurveyService {
     // 객관식 지문에 대한 답변이 몇 개인지 센다.
     const chartFormatResults = choicesOfParagraphs?.map(
       (targetChoices, choiceIndex) => {
-        const countResultMatchWithChoice = targetChoices.map(
-          (targetChoice, targetIndex) => {
-            let count = 0;
+        const countResultMatchWithChoice = targetChoices.map((targetChoice) => {
+          let count = 0;
 
-            resultsOfAnswers?.map((answer) => {
-              const answerValue = answer.results[choiceIndex];
-              if (targetChoice === answerValue) count += 1;
-            });
-            return count;
-          },
-        );
+          resultsOfAnswers?.map((answer) => {
+            const answerValue = answer.results[choiceIndex];
+            if (targetChoice === answerValue) count += 1;
+          });
+          return count;
+        });
 
         return {
           labels: targetChoices,

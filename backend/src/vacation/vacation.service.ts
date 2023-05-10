@@ -397,6 +397,14 @@ export class VacationService {
       const remaniningVacation =
         +loggedInUser.availableVacation + +findVacation.duration;
 
+      const findNotificationOfTargetVacation =
+        await this.notificationRepo.findBy({
+          confirmedVacation: { id: vacationId },
+        });
+
+      findNotificationOfTargetVacation.forEach((notification) =>
+        this.notificationRepo.delete({ id: notification.id }),
+      );
       await this.vacationRepo.delete({ id: vacationId });
       await this.userRepo.save([
         {
