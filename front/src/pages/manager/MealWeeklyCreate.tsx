@@ -17,42 +17,42 @@ const MealWeeklyCreatePage = () => {
   const { createWeeklyMealMutation, createWeeklyMealLoading } =
     useCreateWeeklyMeal();
   // File.
-  const onExcelSubmit: SubmitHandler<IMealWeeklyCreateForm> = async ({
-    excelFormatMeal,
-  }) => {
-    if (createWeeklyMealLoading) return;
+  // const onExcelSubmit: SubmitHandler<IMealWeeklyCreateForm> = async ({
+  //   excelFormatMeal,
+  // }) => {
+  //   if (createWeeklyMealLoading) return;
 
-    // @ts-ignore
-    const jsonFormatMeal = await readXlsxFile(excelFormatMeal[0]);
+  //   // @ts-ignore
+  //   const jsonFormatMeal = await readXlsxFile(excelFormatMeal[0]);
 
-    const stringJson = JSON.stringify(jsonFormatMeal);
-    createWeeklyMealMutation({
-      excelToJson: stringJson,
-    });
-  };
+  //   const stringJson = JSON.stringify(jsonFormatMeal);
+  //   createWeeklyMealMutation({
+  //     excelToJson: stringJson,
+  //   });
+  // };
 
-  const onImageSubmit: SubmitHandler<IMealWeeklyCreateForm> = async ({
-    imageFormatMeal,
-  }) => {
-    if (!imageFormatMeal) return;
-    const worker = await createWorker({
-      logger: (m) => console.log(m),
-    });
-    await worker.load();
-    await worker.loadLanguage("kor+eng");
-    await worker.initialize("kor+eng");
+  // const onImageSubmit: SubmitHandler<IMealWeeklyCreateForm> = async ({
+  //   imageFormatMeal,
+  // }) => {
+  //   if (!imageFormatMeal) return;
+  //   const worker = await createWorker({
+  //     logger: (m) => console.log(m),
+  //   });
+  //   await worker.load();
+  //   await worker.loadLanguage("kor+eng");
+  //   await worker.initialize("kor+eng");
 
-    // const {
-    //   data,
-    //   // @ts-ignore
-    // } = await worker.recognize(imageFormatMeal[0]);
-    await worker.terminate();
-  };
+  //   // const {
+  //   //   data,
+  //   //   // @ts-ignore
+  //   // } = await worker.recognize(imageFormatMeal[0]);
+  //   await worker.terminate();
+  // };
 
   return (
     <CenterFrame>
       <Section>
-        <Form onSubmit={handleSubmit(onExcelSubmit)}>
+        <Form onSubmit={() => null /* handleSubmit(onExcelSubmit) */}>
           <input
             {...register("excelFormatMeal")}
             type="file"
@@ -60,14 +60,14 @@ const MealWeeklyCreatePage = () => {
             accept=".xlsx,.csv"
           />
           <EndSubmitButton
-            onClick={handleSubmit(onExcelSubmit)}
+            onClick={() => null /* handleSubmit(onExcelSubmit) */}
             disabled={createWeeklyMealLoading}
             text="식단 추가"
           />
         </Form>
       </Section>
       <Section>
-        <Form onSubmit={handleSubmit(onImageSubmit)}>
+        <Form onSubmit={() => null /* handleSubmit(onImageSubmit) */}>
           <input
             {...register("imageFormatMeal")}
             type="file"
@@ -75,7 +75,7 @@ const MealWeeklyCreatePage = () => {
             accept=".png,.jpg"
           />
           <EndSubmitButton
-            onClick={handleSubmit(onImageSubmit)}
+            onClick={() => null /* handleSubmit(onImageSubmit) */}
             disabled={createWeeklyMealLoading}
             text="식단 이미지 추가"
           />
