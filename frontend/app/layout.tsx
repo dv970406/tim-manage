@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import { ThemeProvider, Global } from "@emotion/react";
 import { globalStyles, theme } from "../src/css/theme";

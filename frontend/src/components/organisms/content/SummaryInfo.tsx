@@ -2,7 +2,7 @@ import React from "react";
 import { Section } from "../../atomics/sections/sections";
 import { MainText } from "../../atomics/typographys/texts";
 import { SubTitle } from "../../atomics/typographys/titles";
-import { BoxIcon } from "../../molecules/icons/icons";
+import { IconBox } from "../../molecules/icons/icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { theme } from "../../../css/theme";
 
@@ -28,7 +28,7 @@ const SummaryInfo = ({ subTitle, text, icon }: ISummaryInfo) => {
             <MainText>{text}</MainText>
           </div>
         </div>
-        <BoxIcon icon={icon} size="lg" bgColor={theme.bgColors.purple} />
+        <IconBox icon={icon} size="lg" bgColor={theme.bgColors.purple} />
       </div>
     </Section>
   );

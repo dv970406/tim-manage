@@ -1,10 +1,11 @@
+"use client";
 import { faChevronDown } from "@fortawesome/pro-solid-svg-icons";
 import { MainText } from "../../atomics/typographys/texts";
 import styled from "@emotion/styled";
 import { Icon, IIcon } from "../../atomics/icons/icons";
 import { CSSProperties, useRef, useState } from "react";
 import { theme } from "../../../css/theme";
-import { BoxIcon } from "../../molecules/icons/icons";
+import { IconBox } from "../../molecules/icons/icons";
 
 interface IMenuButton extends IIcon {
   text: string;
@@ -50,7 +51,7 @@ const MenuButton = ({ icon, text }: IMenuButton) => {
           alignItems: "center",
         }}
       >
-        <BoxIcon
+        <IconBox
           icon={icon}
           color={isClicked ? theme.colors.white : theme.colors.purple}
           bgColor={isClicked ? theme.bgColors.purple : theme.bgColors.gray}

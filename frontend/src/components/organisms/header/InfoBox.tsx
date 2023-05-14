@@ -1,5 +1,5 @@
 import React from "react";
-import { IconButton, ButtonTextIcon } from "../../molecules/icons/icons";
+import { IconButton, TextIconButton } from "../../molecules/icons/icons";
 import { faUser, faGear, faBell } from "@fortawesome/pro-solid-svg-icons";
 import { theme } from "../../../css/theme";
 
@@ -14,7 +14,7 @@ const InfoBox = () => {
       }}
     >
       <input />
-      <ButtonTextIcon icon={faUser} text="Sign In" />
+      <TextIconButton icon={faUser} text="Sign In" />
       <IconButton icon={faGear} />
       <IconButton icon={faBell} />
     </div>
