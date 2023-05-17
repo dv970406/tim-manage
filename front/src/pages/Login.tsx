@@ -9,11 +9,11 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const { myInfo } = useGetMyInfo();
 
-  useEffect(() => {
-    if (myInfo?.id) {
-      navigate("/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (myInfo?.id) {
+  //     navigate("/");
+  //   }
+  // }, []);
   return (
     <Body>
       <article

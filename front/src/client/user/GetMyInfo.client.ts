@@ -52,6 +52,9 @@ export const useGetMyInfo = () => {
       localStorage.removeItem(TOKEN);
       navigate("/login");
     }
+    if (getMyInfo?.user?.id) {
+      navigate("/");
+    }
   }, []);
 
   return { myInfo: getMyInfo?.user };
