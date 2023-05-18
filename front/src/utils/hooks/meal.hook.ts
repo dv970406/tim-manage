@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { getDayOfNow } from "../shared/time";
+import { getDayOfNow } from "../func/time";
 
 export const useControlTodayMeal = () => {
   const [isBack, setIsBack] = useState(false);

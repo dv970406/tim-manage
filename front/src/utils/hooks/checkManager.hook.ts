@@ -6,6 +6,8 @@ interface IUseCheckManager {
   isManager?: boolean;
   isLeader?: boolean;
 }
+
+// 관리자만이 접근할 수 있는 페이지에서 본인이 관리자인지 체크하는 로직
 export const useCheckManager = ({
   isManager = false,
   isLeader = false,

@@ -16,7 +16,7 @@ import {
   endDateFormatForDb,
   getExpiredDate,
   meetingTimeFormatForDb,
-} from "../shared/time";
+} from "../func/time";
 
 interface IUseSchedules {
   schedules: EventInput[];
