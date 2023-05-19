@@ -19,6 +19,8 @@ export const ACTION_TYPES = {
   ADD_CHOICE_VALUE: "ADD_CHOICE_VALUE",
 };
 
+// 설문 로직이다. 제목, 설명, 객관식 단락을 늘리거나, 답안의 경우의 수를 컨트롤할 수 있다.
+// 설문 로직이 꽤 복잡한데 그 로직을 state로 컴포넌트 내에서 쓰면 코드가 지저분해져서 reducer를 사용해보았다.
 export const paragraphsReducer = (
   paragraphs: IParagraph[],
   action: IActionTypes
