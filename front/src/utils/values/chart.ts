@@ -1,5 +1,6 @@
 import { ApexOptions } from "apexcharts";
 
+// 공통적으로 쓰일 차트 옵션
 export const pieChartOptions: ApexOptions = {
   chart: {
     type: "pie",

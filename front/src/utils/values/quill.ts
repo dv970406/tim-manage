@@ -1,3 +1,4 @@
+// 텍스트 에디터의 옵션
 export const modules = {
   toolbar: [
     [{ header: [1, 2, 3, false] }],
