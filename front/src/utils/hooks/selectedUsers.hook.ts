@@ -8,6 +8,8 @@ interface IUseSelectableUsers {
   prevAttendees?: IAttendee[];
   setAttendeesId: Dispatch<SetStateAction<string[]>>;
 }
+
+// Meeting 인원 지정 중 선택된 인원의 정보를 담아놓는 훅
 export const useSelectedUsers = ({
   prevAttendees,
   setAttendeesId,

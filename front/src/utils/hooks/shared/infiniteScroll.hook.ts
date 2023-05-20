@@ -5,6 +5,7 @@ type IntersectHandler = (
   observer: IntersectionObserver
 ) => void;
 
+// 무한 스크롤을 구현하는 로직
 export const useInfiniteScroll = (
   onIntersect: IntersectHandler,
   options?: IntersectionObserverInit

@@ -23,6 +23,8 @@ interface IUseSchedules {
   setOpenCreateScheduleModal: Dispatch<SetStateAction<boolean>>;
   setOpenMutateMeetingModal: Dispatch<SetStateAction<boolean>>;
 }
+
+// Calendar와 관련된 로직들을 처리하는 훅
 export const useSchedules = ({
   schedules,
   setOpenCreateScheduleModal,
