@@ -1,15 +1,16 @@
-import { DateInput } from "@fullcalendar/core";
 import {
   NINE_HOURS_TO_MILLISEC,
   ONE_DAY_MILLISEC,
 } from "../constants/time.constant";
 
+// 시간을 PM/AM 단위로 변환한다.
 export const ampmFormat = (time: Date | number) => {
   const hours = new Date(time).getUTCHours();
   const hoursByAMPM = hours >= 12 ? `${hours - 12}PM` : `${hours}AM`;
   return hoursByAMPM;
 };
 
+// 시간 포맷을 00:00으로 만든다.
 export const meetingTimeFormat = (time: Date | number) => {
   const hour = String(new Date(time).getHours()).padStart(2, "0");
   const minute = String(new Date(time).getMinutes()).padStart(2, "0");
@@ -17,6 +18,7 @@ export const meetingTimeFormat = (time: Date | number) => {
   return `${hour}:${minute}`;
 };
 
+// TimeZone 포맷을 00월 00일로 표현
 export const vacationDateFormat = (time: Date | number) => {
   // 캘린더 라이브러리가 제공하는 타임 포맷에서 -9시간을 해줘야 우리 시각이 됨
   const getRightDateFormat = new Date(

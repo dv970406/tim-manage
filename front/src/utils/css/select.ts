@@ -1,6 +1,7 @@
 import { GroupBase, StylesConfig } from "react-select";
 import { theme } from "../../css/theme";
 
+// react-select 라이브러리에서 css 스타일링을 정하는 방법이다.
 export const userSelectStyles: StylesConfig<
   unknown,
   true,

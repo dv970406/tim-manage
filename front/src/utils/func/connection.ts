@@ -6,7 +6,7 @@ interface IDeleteEdgeOfData {
   dataId: string | null | undefined;
 }
 
-// Relay Store의 데이터 더미에서 특정 데이터를 삭제함
+// Relay Store의 pagination이 가능한 데이터 더미에서 특정 데이터를 삭제함
 export const deleteEdgeOfData = ({
   record,
   key,
@@ -26,7 +26,7 @@ interface IInsertEdgeToData {
   options?: any;
 }
 
-// Relay Store의 데이터 더미 맨 끝에 특정 데이터를 추가함
+// Relay Store의 pagination이 가능한 데이터 더미 맨 끝에 특정 데이터를 추가함
 export const insertEdgeToData = ({
   record,
   key,
