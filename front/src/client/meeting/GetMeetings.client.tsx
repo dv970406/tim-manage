@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { PreloadedQuery, usePreloadedQuery } from "react-relay";
 import { theme } from "../../css/theme";
 import { SCHEDULES } from "../../utils/constants/schedule.constant";
-import { getExpiredDate } from "../../utils/shared/time";
+import { getExpiredDate } from "../../utils/func/time";
 import { useGetMyInfo } from "../user/GetMyInfo.client";
 import { GetMeetingsQuery } from "./__generated__/GetMeetingsQuery.graphql";
 

@@ -2,7 +2,7 @@ import { graphql } from "babel-plugin-relay/macro";
 import { useState } from "react";
 import { commitMutation } from "react-relay";
 import { useNavigate } from "react-router-dom";
-import { insertEdgeToData } from "../../utils/shared/connection";
+import { insertEdgeToData } from "../../utils/func/connection";
 import { environment } from "../client";
 import {
   CreateAnswerMutation,

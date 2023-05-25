@@ -5,7 +5,7 @@ import { PreloadedQuery, usePreloadedQuery } from "react-relay";
 import { theme } from "../../css/theme";
 import { SCHEDULES } from "../../utils/constants/schedule.constant";
 import { NINE_HOURS_TO_MILLISEC } from "../../utils/constants/time.constant";
-import { getExpiredDate } from "../../utils/shared/time";
+import { getExpiredDate } from "../../utils/func/time";
 import { useGetMyInfo } from "../user/GetMyInfo.client";
 import { GetVacationsQuery } from "./__generated__/GetVacationsQuery.graphql";
 

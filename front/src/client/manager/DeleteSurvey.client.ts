@@ -1,7 +1,7 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { useState } from "react";
 import { commitMutation } from "react-relay";
-import { deleteEdgeOfData } from "../../utils/shared/connection";
+import { deleteEdgeOfData } from "../../utils/func/connection";
 import { environment } from "../client";
 import {
   DeleteSurveyMutation,

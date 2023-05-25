@@ -4,7 +4,7 @@ import { commitMutation } from "react-relay";
 import {
   deleteEdgeOfData,
   insertEdgeToData,
-} from "../../utils/shared/connection";
+} from "../../utils/func/connection";
 import { environment } from "../client";
 import {
   ToggleLikeMutation,

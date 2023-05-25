@@ -6,8 +6,6 @@ import Loading from "../../components/molecules/shared/Loading";
 import { Section } from "../../components/atomics/boxes/Sections";
 import UsersTable from "../../components/templates/content/user/UsersTable";
 import { PAGINATION_LOAD_COUNT } from "../../utils/constants/share.constant";
-import CreateUserForm from "../../components/templates/content/manager/CreateUserModal";
-import PortalModal from "../../utils/modal/PortalModal";
 
 const UsersPage = () => {
   const [getUsersQueryReference, loadUsersQuery] =

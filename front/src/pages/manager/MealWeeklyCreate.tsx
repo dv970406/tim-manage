@@ -1,8 +1,6 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import readXlsxFile from "read-excel-file";
 import { useCreateWeeklyMeal } from "../../client/meal/CreateWeeklyMeal.client";
 import { Section } from "../../components/atomics/boxes/Sections";
-import { createWorker } from "tesseract.js";
 import CenterFrame from "../../components/molecules/boxes/CenterFrame";
 import { EndSubmitButton } from "../../components/molecules/buttons/EndSubmitButton";
 import Form from "../../components/molecules/shared/Form";
