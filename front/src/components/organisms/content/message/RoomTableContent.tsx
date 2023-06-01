@@ -3,7 +3,7 @@ import { graphql } from "babel-plugin-relay/macro";
 import React, { Dispatch, SetStateAction } from "react";
 import { useFragment } from "react-relay";
 import { theme } from "../../../../css/theme";
-import { getKoreanTimeFormat } from "../../../../utils/shared/time";
+import { getKoreanTimeFormat } from "../../../../utils/func/time";
 import { ColumnBox, RowBox } from "../../../atomics/boxes/FlexBox";
 import { ListItem } from "../../../atomics/boxes/ScrollBox";
 import { MainText } from "../../../atomics/typographys/Main";

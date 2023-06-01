@@ -4,7 +4,7 @@ import React from "react";
 import { useFragment } from "react-relay";
 import { useDeleteComment } from "../../../../client/post/DeleteComment.client";
 import { theme } from "../../../../css/theme";
-import { getElaspedDay } from "../../../../utils/shared/time";
+import { getElaspedDay } from "../../../../utils/func/time";
 import { RowBox } from "../../../atomics/boxes/FlexBox";
 import { MainText } from "../../../atomics/typographys/Main";
 import { SubText, SubTitle } from "../../../atomics/typographys/Sub";

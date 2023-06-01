@@ -5,7 +5,7 @@ import { useFragment } from "react-relay";
 import { useNavigate } from "react-router-dom";
 import { theme } from "../../../../css/theme";
 import { POSITION } from "../../../../utils/constants/user.constant";
-import { getPositionIcon, getTeamIcon } from "../../../../utils/shared/getIcon";
+import { getPositionIcon, getTeamIcon } from "../../../../utils/func/icon";
 import { HorizontalDivider } from "../../../atomics/boxes/Divider";
 import { ColumnBox, RowBox } from "../../../atomics/boxes/FlexBox";
 import { GridItem } from "../../../atomics/boxes/GridBox";

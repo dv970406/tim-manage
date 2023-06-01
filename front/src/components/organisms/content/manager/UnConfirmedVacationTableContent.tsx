@@ -1,7 +1,7 @@
 import { graphql } from "babel-plugin-relay/macro";
 import { Dispatch, SetStateAction } from "react";
 import { useFragment } from "react-relay";
-import { showDateFormat } from "../../../../utils/shared/time";
+import { showDateFormat } from "../../../../utils/func/time";
 import { Td } from "../../../atomics/table/Table";
 import { MainText } from "../../../atomics/typographys/Main";
 import TableContent from "../../../molecules/tables/TableContent";

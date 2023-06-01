@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useFragment } from "react-relay";
 import { useNavigate } from "react-router-dom";
 import { theme } from "../../../../css/theme";
-import { getElaspedDay } from "../../../../utils/shared/time";
+import { getElaspedDay } from "../../../../utils/func/time";
 import { HorizontalDivider } from "../../../atomics/boxes/Divider";
 import { ColumnBox, RowBox } from "../../../atomics/boxes/FlexBox";
 import { GridItem } from "../../../atomics/boxes/GridBox";
