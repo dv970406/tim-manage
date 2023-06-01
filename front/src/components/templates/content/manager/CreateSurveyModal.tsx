@@ -8,7 +8,7 @@ import { ChangeEvent, useReducer, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useCreateSurvey } from "../../../../client/manager/CreateSurvey.client";
 import { theme } from "../../../../css/theme";
-import PortalModal from "../../../../utils/modal/PortalModal";
+import PortalModal from "../../../molecules/shared/PortalModal";
 import {
   ACTION_TYPES,
   initialParagraph,

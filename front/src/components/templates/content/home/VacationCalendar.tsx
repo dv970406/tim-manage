@@ -9,7 +9,7 @@ import {
   renderEventContent,
 } from "./VacationCalendar.logic";
 import "./FullCalendarStyles.css";
-import { ampmFormat } from "../../../../utils/shared/time";
+import { ampmFormat } from "../../../../utils/func/time";
 import { useSchedules } from "../../../../utils/hooks/schedules.hook";
 
 // lazy loading

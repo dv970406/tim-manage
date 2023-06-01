@@ -1,7 +1,7 @@
 import { graphql } from "babel-plugin-relay/macro";
 import ReactApexChart from "react-apexcharts";
 import { useFragment } from "react-relay";
-import { pieChartOptions } from "../../../../utils/shared/chart";
+import { pieChartOptions } from "../../../../utils/values/chart";
 import { SectionTitle } from "../../../atomics/typographys/Etc";
 import { SubTitle } from "../../../atomics/typographys/Sub";
 import { SurveyResponseRate_answer$key } from "./__generated__/SurveyResponseRate_answer.graphql";

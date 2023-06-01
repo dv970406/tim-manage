@@ -8,7 +8,7 @@ import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
 import Form from "../../../molecules/shared/Form";
 import { RowBox } from "../../../atomics/boxes/FlexBox";
 import MeetingInfo from "../../../organisms/content/home/MeetingInfo";
-import PortalModal from "../../../../utils/modal/PortalModal";
+import PortalModal from "../../../molecules/shared/PortalModal";
 
 interface IMutateMeetingModal {
   scheduleId: string;

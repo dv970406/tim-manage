@@ -4,7 +4,7 @@ import React from "react";
 import { useFragment } from "react-relay";
 import { ReadNotificationMutation$variables } from "../../../client/notification/__generated__/ReadNotificationMutation.graphql";
 import { theme } from "../../../css/theme";
-import { getElaspedDay, vacationDateFormat } from "../../../utils/shared/time";
+import { getElaspedDay, vacationDateFormat } from "../../../utils/func/time";
 import { ColumnBox, RowBox } from "../../atomics/boxes/FlexBox";
 import { ListItem } from "../../atomics/boxes/ScrollBox";
 import { AccentText, DateText } from "../../atomics/typographys/Etc";

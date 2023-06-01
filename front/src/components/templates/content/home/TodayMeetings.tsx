@@ -1,6 +1,6 @@
 import { EventInput } from "@fullcalendar/core";
 import React from "react";
-import { meetingTimeFormat } from "../../../../utils/shared/time";
+import { meetingTimeFormat } from "../../../../utils/func/time";
 import { ScrollBox } from "../../../atomics/boxes/ScrollBox";
 import { AccentText, SectionTitle } from "../../../atomics/typographys/Etc";
 import InformationCard from "../../../organisms/content/home/InformationCard";

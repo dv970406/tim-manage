@@ -1,7 +1,7 @@
 import { graphql } from "babel-plugin-relay/macro";
 import ReactApexChart from "react-apexcharts";
 import { useFragment } from "react-relay";
-import { pieChartOptions } from "../../../../utils/shared/chart";
+import { pieChartOptions } from "../../../../utils/values/chart";
 import { ColumnBox } from "../../../atomics/boxes/FlexBox";
 import { ScrollBox } from "../../../atomics/boxes/ScrollBox";
 import { SectionTitle } from "../../../atomics/typographys/Etc";

@@ -5,7 +5,7 @@ import { useCreateMeeting } from "../../../../client/meeting/CreateMeeting.clien
 import { useCreateVacation } from "../../../../client/vacation/CreateVacation.client";
 import { SCHEDULES } from "../../../../utils/constants/schedule.constant";
 import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
-import PortalModal from "../../../../utils/modal/PortalModal";
+import PortalModal from "../../../molecules/shared/PortalModal";
 import { ColumnBox } from "../../../atomics/boxes/FlexBox";
 import Form from "../../../molecules/shared/Form";
 import SelectKindOfSchedule from "../../../organisms/content/home/SelectKindOfSchedule";

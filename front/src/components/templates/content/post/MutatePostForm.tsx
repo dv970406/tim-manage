@@ -7,7 +7,7 @@ import "react-quill/dist/quill.snow.css";
 import { useFragment } from "react-relay";
 import { useDeletePost } from "../../../../client/post/DeletePost.client";
 import { useUpdatePost } from "../../../../client/post/UpdatePost.client";
-import { formats, modules } from "../../../../utils/shared/quill";
+import { formats, modules } from "../../../../utils/values/quill";
 import { ColumnBox, RowBox } from "../../../atomics/boxes/FlexBox";
 import { SubTitle } from "../../../atomics/typographys/Sub";
 import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";

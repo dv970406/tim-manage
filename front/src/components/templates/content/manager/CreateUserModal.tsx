@@ -14,7 +14,7 @@ import Select from "../../../molecules/inputs/Select";
 import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
 import { ColumnBox } from "../../../atomics/boxes/FlexBox";
 import Form from "../../../molecules/shared/Form";
-import PortalModal from "../../../../utils/modal/PortalModal";
+import PortalModal from "../../../molecules/shared/PortalModal";
 
 interface ICreateUserFormValue {
   name: string;

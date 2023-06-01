@@ -1,5 +1,5 @@
 import { EventInput } from "@fullcalendar/core";
-import { vacationDateFormat } from "../../../../utils/shared/time";
+import { vacationDateFormat } from "../../../../utils/func/time";
 import { ScrollBox } from "../../../atomics/boxes/ScrollBox";
 import { AccentText, SectionTitle } from "../../../atomics/typographys/Etc";
 import { SubText } from "../../../atomics/typographys/Sub";
