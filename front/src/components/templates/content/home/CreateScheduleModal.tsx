@@ -6,7 +6,6 @@ import { useCreateVacation } from "../../../../client/vacation/CreateVacation.cl
 import { SCHEDULES } from "../../../../utils/constants/schedule.constant";
 import { EndSubmitButton } from "../../../molecules/buttons/EndSubmitButton";
 import PortalModal from "../../../molecules/shared/PortalModal";
-import { ColumnBox } from "../../../atomics/boxes/FlexBox";
 import Form from "../../../molecules/shared/Form";
 import SelectKindOfSchedule from "../../../organisms/content/home/SelectKindOfSchedule";
 import MeetingInfo from "../../../organisms/content/home/MeetingInfo";

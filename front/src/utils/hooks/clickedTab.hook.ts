@@ -7,6 +7,7 @@ export const useClickedTab = (tabName: string) => {
 
   const isTabClicked = clickedTabs.includes(tabName);
 
+  // 탭을 끄고 켤 수 있는 함수
   const controlClickedTab = () => {
     if (isTabClicked) {
       setClickedTabs((prev) => {
