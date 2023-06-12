@@ -9,10 +9,7 @@ import {
 } from '@nestjs/graphql';
 import { LoggedInUser } from 'src/auth/auth-user.decorator';
 import { LoginGuard, ManagerGuard } from 'src/auth/auth.guard';
-import { ConnectionInput } from 'src/core/dtos/pagination.dto';
 import { User } from 'src/user/entities/user.entity';
-import { UserService } from 'src/user/user.service';
-import { GetAnswersOfsurveyInput } from './dtos/answer/get-answersOfSurvey.dto';
 import {
   MultipleChoiceFormat,
   ResponseRate,
@@ -34,33 +31,33 @@ import {
 import { Survey } from './entities/survey.entity';
 import { SurveyService } from './survey.service';
 
-@Resolver((of) => Survey)
+@Resolver(() => Survey)
 export class SurveyResolver {
   constructor(private readonly surveyService: SurveyService) {}
-  @ResolveField((type) => ResponseRate)
+  @ResolveField(() => ResponseRate)
   responseRate(@Parent() survey: Survey): Promise<ResponseRate> {
     return this.surveyService.responseRate(survey);
   }
 
-  @ResolveField((type) => [MultipleChoiceFormat])
+  @ResolveField(() => [MultipleChoiceFormat])
   multipleChoiceFormat(
     @Parent() survey: Survey,
   ): Promise<MultipleChoiceFormat[]> {
     return this.surveyService.multipleChoiceFormat(survey);
   }
 
-  @ResolveField((type) => [ShortAnswerFormat])
+  @ResolveField(() => [ShortAnswerFormat])
   shortAnswerFormat(@Parent() survey: Survey): Promise<ShortAnswerFormat[]> {
     return this.surveyService.shortAnswerFormat(survey);
   }
-  @ResolveField((type) => Boolean)
+  @ResolveField(() => Boolean)
   isMySurvey(
     @LoggedInUser() loggedInUser: User,
     @Parent() survey: Survey,
   ): Promise<boolean> {
     return this.surveyService.isMySurvey(loggedInUser, survey);
   }
-  @ResolveField((type) => Boolean)
+  @ResolveField(() => Boolean)
   isAnswered(
     @Parent() survey: Survey,
     @LoggedInUser() loggedInUser: User,
@@ -69,7 +66,7 @@ export class SurveyResolver {
   }
 
   // Survey는 복수형이 없는데 그냥 's'를 붙여 의미상 복수형으로 생각하자
-  @Query((type) => GetSurveysOutput)
+  @Query(() => GetSurveysOutput)
   @UseGuards(LoginGuard)
   getSurveys(
     @LoggedInUser() loggedInUser: User,
@@ -78,7 +75,7 @@ export class SurveyResolver {
     return this.surveyService.getSurveys(loggedInUser, getSurveysInput);
   }
 
-  @Query((type) => GetSurveyOutput)
+  @Query(() => GetSurveyOutput)
   @UseGuards(LoginGuard)
   getSurvey(
     @LoggedInUser() loggedInUser: User,
@@ -87,7 +84,7 @@ export class SurveyResolver {
     return this.surveyService.getSurvey(loggedInUser, getSurveyInput);
   }
 
-  @Mutation((type) => CreateSurveyOutput)
+  @Mutation(() => CreateSurveyOutput)
   @UseGuards(ManagerGuard)
   createSurvey(
     @LoggedInUser() loggedInUser: User,
@@ -96,7 +93,7 @@ export class SurveyResolver {
     return this.surveyService.createSurvey(loggedInUser, createSurveyInput);
   }
 
-  @Mutation((type) => DeleteSurveyOutput)
+  @Mutation(() => DeleteSurveyOutput)
   @UseGuards(ManagerGuard)
   deleteSurvey(
     @LoggedInUser() loggedInUser: User,

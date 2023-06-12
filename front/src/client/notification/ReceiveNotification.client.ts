@@ -75,12 +75,15 @@ export const receiveNotification = ({
       // 승인이 되었음을 알린다. (Subscription WS 통신이므로 승인하면 바로 유저에게 알람이 날아감)
       const rootRecord = proxyStore.getRoot();
 
+      // 새로 받은 알림의 edge를 가져온다
       const newNotificationEdge = proxyStore
         .getRootField("receiveNotification")
         .getLinkedRecord("edge");
 
+      // 없다면 로직이 실행될 필요가 없으므로 Return
       if (!newNotificationEdge) return;
 
+      // key의 edge에 새로운 알림 정보를 저장할 것임
       insertEdgeToData({
         record: rootRecord,
         key: "NotificationsTable_getNotifications",

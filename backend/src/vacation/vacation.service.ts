@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ConnectionInput } from 'src/core/dtos/pagination.dto';
-import { DB_TABLE } from 'src/core/variables/constants';
 import { POSITION_CEO } from 'src/core/variables/position';
 import { NotificationRepository } from 'src/notification/notification.repository';
 import { User } from 'src/user/entities/user.entity';
@@ -27,7 +25,6 @@ import {
   UpdateVacationInput,
   UpdateVacationOutput,
 } from './dtos/update-vacation.dto';
-import { VacationsConnection } from './dtos/vacation-pagination.dto';
 import { VacationRepository } from './vacation.repository';
 
 @Injectable()
@@ -197,6 +194,7 @@ export class VacationService {
         throw new Error('남은 연차가 없습니다.');
       }
 
+      // eslint-disable-next-line prefer-const
       let confirmed = {
         byManager: false,
         byCeo: false,

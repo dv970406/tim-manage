@@ -99,6 +99,7 @@ export class SurveyService {
     );
 
     // 차트 라이브러리 포맷에 맞게 변경한다.
+    // eslint-disable-next-line prefer-const
     let multipleChoiceFormat = [];
     findSurvey.paragraphs.forEach((paragraph, index) => {
       if (paragraph.multipleChoice.length > 0) {
@@ -139,6 +140,7 @@ export class SurveyService {
     }));
 
     // 차트 라이브러리 포맷에 맞게 변경한다.
+    // eslint-disable-next-line prefer-const
     let shortAnswerFormat = [];
     findSurvey.paragraphs.forEach((paragraph, index) => {
       if (paragraph.multipleChoice.length === 0) {
